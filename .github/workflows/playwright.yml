@@ -18,9 +18,11 @@ jobs:
         npm run dev &
         export SERVER_PID=$!
         trap 'kill $SERVER_PID' EXIT
+    - name: Check to see if web server is online
+      run: fuser -v 5010/tcp
     - name: Wait for vite dev server to be ready
       run: |
-        while ! nc -z localhost 5010; do sleep 1; done
+        while ! nc -v -z localhost 5010; do sleep 1; done
         echo "Vite Dev Server is ready!"
     - name: Run Playwright tests
       run: npx playwright test
