@@ -1,12 +1,8 @@
 name: Playwright Tests
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+on: [push, pull_request]
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,8 +13,22 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Start vite dev server
+      run: |
+        npm run dev &
+        export SERVER_PID=$!
+        trap 'kill $SERVER_PID' EXIT
+      env: 
+        SERVER_PORT: 5010
+    - name: Wait for vite dev server to be ready
+      run: |
+        while ! nc -z localhost $SERVER_PORT; do sleep 1; done
+        echo "Vite Dev Server is ready!"
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Stop Vite Dev Server
+      run: |
+        kill $SERVER_PID 
     - uses: actions/upload-artifact@v3
       if: always()
       with:
