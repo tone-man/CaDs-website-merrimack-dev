@@ -18,11 +18,9 @@ jobs:
         npm run dev &
         export SERVER_PID=$!
         trap 'kill $SERVER_PID' EXIT
-      env: 
-        SERVER_PORT: 5010
     - name: Wait for vite dev server to be ready
       run: |
-        while ! nc -z localhost $SERVER_PORT; do sleep 1; done
+        while ! nc -z localhost 5010; do sleep 1; done
         echo "Vite Dev Server is ready!"
     - name: Run Playwright tests
       run: npx playwright test
