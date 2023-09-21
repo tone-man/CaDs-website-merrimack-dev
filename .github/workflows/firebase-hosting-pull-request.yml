@@ -11,6 +11,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: hosting
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CADS_WEBSITE_MERRIMACK_DEV }}'
@@ -18,3 +19,5 @@ jobs:
           channelId: pull-request
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+      - name: Echo the URL
+        run: echo "URL is ${{steps.hosting.outputs.urls}}"
