@@ -23,6 +23,6 @@ jobs:
           projectId: cads-website-merrimack-dev
           channelId: main
         env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks\
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
       - name: Echo the URL
         run: echo "URL is ${{steps.hosting.outputs.urls}}"
