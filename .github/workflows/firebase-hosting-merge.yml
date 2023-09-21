@@ -30,4 +30,8 @@ jobs:
       - name: Install playwright browsers
         run: npx playwright install --with-deps
       - name: Run tests
-        run: npx playwright test -u $first_url
+        run: |
+          urls="${{ steps.hosting.outputs.urls }}"
+          # Remove brackets and quotes from the URL
+          first_url=$(echo "$urls" | sed 's/\[//;s/\]//;s/"//g')
+          npx playwright test -u $first_url
