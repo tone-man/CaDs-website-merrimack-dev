@@ -15,7 +15,18 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Check Playwright test status
+      id: test-status
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "Playwright tests passed"
+          echo "::set-output name=success::true"
+        else
+          echo "Playwright tests failed"
+          echo "::set-output name=success::false"
+        fi
     - name: Deploy Preview Channel
+      if: ${{steps.test-status.outputs.success == 'true'}}
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
