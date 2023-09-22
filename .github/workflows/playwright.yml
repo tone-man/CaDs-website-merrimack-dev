@@ -20,13 +20,13 @@ jobs:
       run: |
         if [ $? -eq 0 ]; then
           echo "Playwright tests passed"
-          echo "{success}={true}" >> $GITHUB_OUTPUT
+          echo "::set-output name=success::true"
         else
           echo "Playwright tests failed"
-          echo "{success}={false}" >> $GITHUB_OUTPUT
+          echo "::set-output name=success::false"
         fi
     - name: Deploy Preview Channel
-      if: steps.test-status.outputs.success == true
+      if: ${{steps.test-status.outputs.success == 'true'}}
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
