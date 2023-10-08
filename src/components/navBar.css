@@ -1,0 +1,97 @@
+/* https://medium.com/wdstack/bootstrap-4-custom-navbar-1f6a2da5ed3c#:~:text=Change%20the%20Navbar%20Color%20or%20Transparency&text=You%20can%20specify%20the%20background,darker%20text%20color%20(black). */
+.single-row{
+    display: flex;
+    }
+    
+
+.logInButton{
+    color: RGB(20, 54, 100);
+    background-color: white;
+}
+.navbar.second-navbar {
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    position:sticky;
+    top: 0;
+    width: 100%;
+}
+
+.dropdown-menu {
+    z-index: 2
+}
+
+.logo {
+    width: 16.25rem;
+}
+
+.navbar-custom {
+    background-color: RGB(20, 54, 100);
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand{
+    max-width: 17.25rem;
+    padding: 0 !important;
+    height: 12rem !important
+}
+.navbar-custom .navbar-text {
+    color: rgba(255, 255, 255, .8);
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+   
+    letter-spacing: .0375rem;
+    color: #ffffff;
+}
+
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+   
+    color: RGB(249, 222, 74)
+}
+
+.searchIcon {
+    width: 80px;
+    background-color: white;
+    color: black;
+    font-size: 30px;
+    border:none !important; 
+}
+
+.searchIcon:hover {
+    text-decoration: underline red;
+    border-color: RGB(20, 54, 100);
+    background-color: RGB(20, 54, 100);
+    /* color: black; */
+    color: RGB(249, 222, 74);
+    border:none !important; 
+}
+
+.searchBar {
+    padding: 10px 10px 10px 10px;
+    background: RGB(20, 54, 100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchIcon2 {
+    background-color: transparent !important;
+    color: darkslategrey;
+    font-size: 15px;
+    border:none !important; 
+}
+
+.searchIcon2:hover {
+    color: white;
+}
+
+
+
+
+.test {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
