@@ -1,0 +1,71 @@
+@font-face {
+    font-family: Gotham-Regular;
+    src: url(../fonts/Gotham\ Regular.otf);
+}
+
+* {
+    font-family: Gotham-Regular;
+}
+
+.logInButton{
+    color: rgb(20, 54, 100);
+    background-color: white;
+}
+
+/* https://medium.com/wdstack/bootstrap-4-custom-navbar-1f6a2da5ed3c#:~:text=Change%20the%20Navbar%20Color%20or%20Transparency&text=You%20can%20specify%20the%20background,darker%20text%20color%20(black). */
+.navbar.second-navbar {
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    top: 0;
+    width: 100%;
+}
+
+.logo {
+    width: 16.25rem;
+}
+
+.navbar-custom {
+    background-color: rgb(20, 54, 100);
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover{
+    color: rgb(249, 222, 74);
+}
+
+.searchBarToggle {
+    width: 80px;
+    background-color: white;
+    color: black;
+    font-size: 30px;
+    border:none !important; 
+}
+
+.searchBarToggle:hover {
+    text-decoration: underline rgb(255, 0, 0);
+    border-color: rgb(20, 54, 100);
+    background-color: rgb(20, 54, 100);
+    color: rgb(249, 222, 74);
+    border:none !important; 
+}
+
+.searchBar {
+    padding: 20px 10px 20px 10px;
+    background: rgb(20, 54, 100);
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.searchIcon {
+    background-color: transparent !important;
+    color: darkslategrey;
+    border:none !important; 
+}
+
+.searchIcon:hover {
+    color: white;
+}
