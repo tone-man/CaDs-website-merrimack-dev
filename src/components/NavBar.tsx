@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { Button, FormControl, Navbar, Nav, Image, InputGroup } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import '../css/navBar.css';
 import merrimackLogo from '../imgs/logo.webp';
@@ -11,6 +11,7 @@ import merrimackLogo from '../imgs/logo.webp';
 const NavBar = () => {
     const [isFocused, setIsFocused] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const searchBarRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         const searchBar = document.getElementById('searchBar');
@@ -27,7 +28,14 @@ const NavBar = () => {
     }
 
     function search() {
-        console.log("search functionality");
+        if (searchBarRef.current) {
+            const searchText = searchBarRef.current.value;
+            if (searchText) {
+              console.log("Search text:", searchText);
+              searchBarRef.current.value = "";
+              console.log("new" + searchBarRef.current.value)
+            }
+          }
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
@@ -57,7 +65,7 @@ const NavBar = () => {
         <div>
             <Navbar expand="lg" className="navbar-custom">
                 <div className="container">
-                    <Navbar.Toggle className="ms-auto" aria-controls="navBarContent"/>
+                    <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
                             <Nav.Link href="#" >Home</Nav.Link>
@@ -66,9 +74,9 @@ const NavBar = () => {
                         <Nav className="ms-auto">
                             {isLoggedIn ? (
                                 <Nav.Link href="#">
-                                    <div className= 'mr-auto' style={{ width: '50px', height: '50px' }}>
+                                    <div className='mr-auto' style={{ width: '50px', height: '50px' }}>
                                         <Image
-                                        className="rounded-circle overflow-hidden"
+                                            className="rounded-circle overflow-hidden"
                                             src={merrimackLogo}
                                             alt="Profile Picture"
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -93,7 +101,7 @@ const NavBar = () => {
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />
                     </Navbar.Brand>
                     <div>
-                        <Button className="searchBarToggle" onFocus={toggleSearch} onDoubleClick={toggleSearch}>
+                        <Button className="searchBarToggle" onClick={toggleSearch}>
                             <i className={isFocused ? "bi bi-x" : "bi bi-search"}></i>
                         </Button>
                     </div>
@@ -101,9 +109,10 @@ const NavBar = () => {
                 <div id="searchBar" style={{ display: 'none' }}>
                     <div className="input-group searchBar">
                         <InputGroup className='container'>
-                            <FormControl
+                            <FormControl id="searchBar"
                                 placeholder="Search.."
                                 aria-label="Search"
+                                ref={searchBarRef} // Set the ref here
                             />
                             <Button className="searchIcon">
                                 <i className={"bi bi-search"} style={{ fontSize: '25px' }} onClick={search}></i>
