@@ -1,0 +1,63 @@
+@font-face {
+    font-family: Gotham-Regular;
+    src: url(../fonts/Gotham\ Regular.otf);
+}
+
+* {
+    font-family: Gotham-Regular;
+}
+
+footer {
+    border-top: 5px solid rgb(249, 222, 74);
+    min-height: 400px;
+    background: RGB(30, 30, 30);
+    width: 100%;
+}
+
+footer .footerImage {
+    margin-top: 20px;
+    height: auto;
+    width: 280px;
+}
+
+/* Create polygon cut out: https://bennettfeely.com/clippy/ */
+footer .banner {
+    position: relative;
+    background-color: rgb(255, 224, 2);
+    color: black;
+    height: 260px;
+    clip-path: polygon(100% 100%, 50% 90%, 0 100%, 0 0, 100% 0);
+}
+
+footer .banner .logo {
+    display: block;
+    margin: auto;
+    padding-top: 20px;
+    width: 160px;
+    height: auto;
+}
+
+footer .banner .socials {
+    display: grid;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    width: 150px;
+}
+
+footer .banner .socials .icon {
+    color: black;
+    opacity: .5;
+}
+
+footer .banner .socials .icon:hover {
+    opacity: .7;
+}
+
+.footerText {
+    color: white;
+    font-size: 1rem;
+    margin-top: 5px;
+}
