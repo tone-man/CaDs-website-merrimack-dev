@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 // import './App.css'
 
@@ -28,6 +29,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <Footer/>
     </>
   )
 }
