@@ -7,20 +7,18 @@ import Events from './components/Events';
 import pic from './imgs/projectpic.webp'
 import EventsCarousel from './components/EventsCarousel';
 
-// import './App.css'
-
 function App() {
   const [count, setCount] = useState(0)
 
+
   return (
     <>
-      <NavBar />
-
+      let events = [{ }]
       <div>
-
+        <NavBar />
       </div>
       <div style={{ height: '200vh', background: 'lightblue' }}>
-       <EventsCarousel/>
+        <EventsCarousel />
       </div>
       <h1>Vite + React</h1>
 
