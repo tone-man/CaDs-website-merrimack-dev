@@ -1,9 +1,7 @@
 import { useState } from 'react'
 
 import NavBar from './components/NavBar';
-import Events from './components/Events';
-
-import pic from './imgs/projectpic.webp'
+import EventsCarousel from './components/EventsCarousel';
 
 // import './App.css'
 
@@ -13,18 +11,20 @@ function App() {
   return (
     <>
       <NavBar />
-      
+
       <div>
 
       </div>
-     <div style={{height: '200vh', background: 'lightblue'}}> <Events imgSource={pic} link='link' longerDescription='LongerDesc' briefDescription='brief' caption='caption'/></div>
+      <div style={{ height: '200vh', background: 'lightblue' }}>
+       <EventsCarousel/>
+      </div>
       <h1>Vite + React</h1>
-      
+
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-      
+
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

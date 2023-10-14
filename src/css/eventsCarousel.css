@@ -1,0 +1,39 @@
+
+.headerText {
+    margin:auto;
+    margin-top: 10px;
+    padding-top: 10px;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+}
+
+.custom-carousel {
+    background: rgb(65, 65, 65);
+    color: black;
+    border-radius: 40px;
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nested-container {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 40px;
+    box-shadow: 10px 10px  5px rgb(31, 31, 31);
+
+    width: 80%;
+    background-color: white;
+}
