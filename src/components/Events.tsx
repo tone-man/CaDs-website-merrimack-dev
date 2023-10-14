@@ -2,7 +2,7 @@
 import { Accordion, Button, Card } from 'react-bootstrap';
 import '../css/events.css';
 
-interface myEventProps {
+export interface myEventProps {
     imgSource: string,
     caption: string,
     briefDescription: string,
