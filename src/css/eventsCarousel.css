@@ -8,7 +8,7 @@
 }
 
 .custom-carousel {
-    background: rgb(65, 65, 65);
+    background: rgb(131, 134, 137);
     color: black;
     border-radius: 40px;
 }
@@ -31,7 +31,7 @@
     align-items: center;
 
     border-radius: 40px;
-    box-shadow: 10px 10px 5px rgb(31, 31, 31);
+    box-shadow: 10px 10px 5px rgb(65, 65, 65);
 
     width: 80%;
     background-color: white;
