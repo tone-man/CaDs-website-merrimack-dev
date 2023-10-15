@@ -1,8 +1,8 @@
-import { Carousel, Col, Row } from 'react-bootstrap';
+import { Carousel, Col } from 'react-bootstrap';
 
 import '../css/eventsCarousel.css'
 
-import Events, {myEventProps} from './Events';
+import Events, { myEventProps } from './Events';
 
 const eventsArray: myEventProps[] = [];
 
@@ -36,11 +36,18 @@ makeCarousel(eventsArray, eventValues);
 function EventsCarousel() {
     return (
         <div>
-            <Row>
+                <Col md={12} xs={12}>
+                    <div className='header-banner' >
+                       
+                        <div className= "overlay">
+                        <div className='line'/>
+                        </div>
+                        <h1 className = "text"> Upcoming Events!</h1>
+                    </div>
+                </Col>
                 <div className='carousel-container'>
-                    <Col md={8} xs={12}>
+                    <Col md={7} xs={11}>
                         <div className='custom-carousel'>
-                            <h1 className='headerText'> Upcoming events</h1>
                             <Carousel>
                                 {
                                     eventsArray.map(events =>
@@ -55,7 +62,6 @@ function EventsCarousel() {
                         </div>
                     </Col>
                 </div>
-            </Row>
         </div>
     )
 }

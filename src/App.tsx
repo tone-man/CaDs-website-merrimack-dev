@@ -9,7 +9,6 @@ function App() {
 
   return (
     <>
-      let events = [{ }]
       <div>
         <NavBar />
       </div>
