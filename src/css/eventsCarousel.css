@@ -1,14 +1,5 @@
-.headerText {
-    margin: auto;
-    margin-top: 10px;
-    padding-top: 10px;
-    text-align: center;
-    color: white;
-    font-size: 3rem;
-}
-
 .custom-carousel {
-    background: rgb(131, 134, 137);
+    background: rgb(20, 54, 100);
     color: black;
     border-radius: 40px;
 }
@@ -21,60 +12,11 @@
 
 .nested-container {
     margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-
+    padding: 40px 40px 40px 40px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
 
     border-radius: 40px;
-    box-shadow: 10px 10px 5px rgb(65, 65, 65);
-
-    width: 80%;
-    background-color: white;
 }
-
-.header-banner {
-    position: relative;
-    height: 30vh;
-    width: 100%;
-    background-image: url('../imgs/OBCenter.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-position-y: 95%;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.header-banner  .overlay {
-    position: relative;
-    height: 30vh;
-    width: 100%;
-    background-color: rgb(20, 54, 100);
-    opacity: .8;
-}
-
-.header-banner .text {
-    position: absolute;
-    font-size: 3rem;
-    color: white;
-    margin: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.header-banner .overlay .line {
-    opacity: 1 !important;
-    position: absolute;
-    border-bottom: 5px  rgb(249, 222, 74) solid;
-    width: 50vw;
-    top: 50%;
-    transform: translate(-50%, 0%);
-}
-

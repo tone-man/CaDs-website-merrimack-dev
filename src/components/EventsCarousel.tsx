@@ -1,8 +1,10 @@
 import { Carousel, Col } from 'react-bootstrap';
 
+import Events, { myEventProps } from './Events';
+import Header from './Header';
+
 import '../css/eventsCarousel.css'
 
-import Events, { myEventProps } from './Events';
 
 const eventsArray: myEventProps[] = [];
 
@@ -36,32 +38,29 @@ makeCarousel(eventsArray, eventValues);
 function EventsCarousel() {
     return (
         <div>
-                <Col md={12} xs={12}>
-                    <div className='header-banner' >
-                       
-                        <div className= "overlay">
-                        <div className='line'/>
-                        </div>
-                        <h1 className = "text"> Upcoming Events!</h1>
+            <Header img= {'/src/imgs/OBCenter.jpg'}/>
+            <div className='carousel-container'>
+                <Col md={8} xs={12}>
+                    <div className='custom-carousel'>
+                        <Carousel>
+                            {
+                                eventsArray.map(events =>
+                                    <Carousel.Item  >
+                                        <div className='nested-container'>
+                                            <Events
+                                                imgSource={events.imgSource}
+                                                link={events.link}
+                                                longerDescription={events.longerDescription}
+                                                briefDescription={events.briefDescription}
+                                                caption={events.caption} />
+                                        </div>
+                                    </Carousel.Item>
+                                )
+                            }
+                        </Carousel>
                     </div>
                 </Col>
-                <div className='carousel-container'>
-                    <Col md={7} xs={11}>
-                        <div className='custom-carousel'>
-                            <Carousel>
-                                {
-                                    eventsArray.map(events =>
-                                        <Carousel.Item  >
-                                            <div className='nested-container'>
-                                                <Events imgSource={events.imgSource} link={events.link} longerDescription={events.longerDescription} briefDescription={events.briefDescription} caption={events.caption} />
-                                            </div>
-                                        </Carousel.Item>
-                                    )
-                                }
-                            </Carousel>
-                        </div>
-                    </Col>
-                </div>
+            </div>
         </div>
     )
 }

@@ -3,9 +3,15 @@
     src: url(../fonts/Gotham\ Regular.otf);
 }
 
-.text {
+.card {
+    font-family: Gotham-Regular;
+    box-shadow: 5px 5px 5px black;
+}
+
+.card .eventText {
     font-family: Gotham-Regular;
     font-size: 1.25rem;
+    color: black;
 }
 
 .card-header{
@@ -14,13 +20,8 @@
     font-size: 2rem;
 }
 
-.custom-accordion {
-    background-color: rgb(20, 54, 100);
-}
-
 .card-button {
     text-align: right;
     justify-content: right;
     display: block;
 }
-
