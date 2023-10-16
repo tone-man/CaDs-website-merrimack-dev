@@ -8,9 +8,9 @@ import '../css/eventsCarousel.css'
 
 const eventsArray: myEventProps[] = [];
 
-const eventValues = [['/src/imgs/projectpic.webp', 'Caption 1', 'Brief Description', 'Longer Description', 'LINK!'],
-['/src/imgs/projectpic.webp', 'Caption 2', 'Brief Description', 'Longer Description', 'LINK!'],
-['/src/imgs/projectpic.webp', 'Caption 3', 'Brief Description', 'Longer Description', 'LINK!']]
+const eventValues = [['../imgs/projectpic.webp', 'Caption 1', 'Brief Description', 'Longer Description', 'LINK!'],
+['../imgs/projectpic.webp', 'Caption 2', 'Brief Description', 'Longer Description', 'LINK!'],
+['../imgs/projectpic.webp', 'Caption 3', 'Brief Description', 'Longer Description', 'LINK!']]
 
 function makeEventObject(
     imgSource: string,
@@ -38,7 +38,7 @@ makeCarousel(eventsArray, eventValues);
 function EventsCarousel() {
     return (
         <div>
-            <Header img= {'/src/imgs/OBCenter.jpg'}/>
+            <Header img= {'../imgs/OBCenter.jpg'}/>
             <div className='carousel-container'>
                 <Col md={8} xs={12}>
                     <div className='custom-carousel'>
