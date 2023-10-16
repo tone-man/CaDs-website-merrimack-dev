@@ -1,6 +1,5 @@
-
 .projects-container {
-    background-color: rgb(199,201,202); 
+    background-color: rgb(199, 201, 202);
     padding-top: 100px;
     padding-bottom: 100px;
 }
@@ -24,9 +23,23 @@
     background-color: rgb(42, 42, 43);
     height: 50vh;
     border-radius: 20px;
-    box-shadow:-10px 10px 10px 1px rgb(131, 134, 137);
+    box-shadow: -10px 10px 10px 1px rgb(131, 134, 137);
 }
 
 .carousel-indicators {
     display: none;
+}
+
+.profile-text {
+    font-size: 1rem;
+    color: rgb(249, 222, 74);
+    margin-top: 5px;
+    text-align: center;
+}
+
+.title-text {
+    font-size: 1.75rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin: auto;
 }
