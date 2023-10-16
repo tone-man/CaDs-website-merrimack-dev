@@ -2,9 +2,7 @@ import { useState } from 'react'
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import Events from './components/Events';
 
-import pic from './imgs/projectpic.webp'
 import EventsCarousel from './components/EventsCarousel';
 
 function App() {
