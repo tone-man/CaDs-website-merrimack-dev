@@ -20,25 +20,25 @@ export interface myProjectProps {
     number: number
 }
 
-function ProjectCardL(myProps: myProjectProps) {
+function ProjectCard(myProps: myProjectProps) {
     const number = myProps.number + 1;
     const parity = number % 2;
     return (
         <div>
             {(parity === 1) ?
                 <Row className='project-row '>
-                    <Col md={6} xs={11}>
+                    <Col md={10} xs={12}>
                         <Card className='project-card-left'>
                             <Row style={{ marginBottom: '20px' }}>
-                                <Col md={{ span: 6, offset: 4 }} xs={{ span: 6, offset: 0 }} style={{ margin: 'auto' }}>
+                                <Col md={{ span: 6, offset: 0 }} xs={{ span: 8, offset: 0 }} style={{ margin: 'auto' }}>
                                     <h1 className='title-text'> {myProps.title} </h1>
                                 </Col>
-                                <Col>
+                                <Col md={{ span: 3, offset: 3 }} xs={{ span: 4, offset: 0 }}>
                                     <Carousel variant='link'>
                                         <Carousel.Item>
-                                            <div className='mx-auto' style={{ width: '75px', height: '75px' }}>
+                                            <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
                                                 <Image
-                                                    className="rounded-circle overflow-hidden"
+                                                    className="rounded-circle overflow-hidden profileImage"
                                                     src={merrimackLogo}
                                                     alt="Profile Picture"
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -47,7 +47,7 @@ function ProjectCardL(myProps: myProjectProps) {
                                             <h1 className='profile-text'> Faculty Name</h1>
                                         </Carousel.Item>
                                         <Carousel.Item>
-                                            <div className='mx-auto' style={{ width: '75px', height: '75px' }}>
+                                            <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
                                                 <Image
                                                     className="rounded-circle overflow-hidden"
                                                     src={merrimackLogo}
@@ -61,28 +61,30 @@ function ProjectCardL(myProps: myProjectProps) {
                                 </Col>
                             </Row>
                             <Row >
-                                <Col md={{ span: 5, offset: 1 }} xs={{ span: 6, offset: 1 }}>
+                                <Col md={{ span: 3, offset: 1 }} xs={{ span: 12, offset: 0 }} >
                                     <Figure >
                                         <Figure.Image
                                             alt={myProps.imageAlt}
                                             src={pic}
                                             className='rounded overflow-hidden project-images'
                                         />
-                                        <Figure.Caption >
+                                        <Figure.Caption style={{ textAlign: 'center' }}>
                                             <i> {myProps.imageDescription}</i>
                                         </Figure.Caption>
                                     </Figure>
                                 </Col>
-                                <Col md={{ span: 6, offset: 0 }} xs={{ span: 5, offset: 0 }}>
-                                    <section>
-                                        <div style={{ overflow: 'auto', maxHeight: '30vh' }} className='example'>
+                                <Col md={{ span: 8, offset: 0 }} xs={{ span: 12, offset: 0 }}>
+                                    <section >
+                                        <div className='example description-div'>
                                             <h2 className='description-text'>
                                                 {myProps.description}
                                             </h2>
+
                                         </div>
                                         <a href={myProps.projectLink}>
                                             <h1 className='profile-text'> Read More</h1>
                                         </a>
+
                                     </section>
                                 </Col>
                             </Row>
@@ -90,15 +92,19 @@ function ProjectCardL(myProps: myProjectProps) {
                     </Col>
                 </Row>
                 :
+
                 <Row className='project-row'>
                     <div>
-                        <Col md={{ span: 6, offset: 6 }} xs={{ span: 11, offset: 1 }}>
+                        <Col md={{ span: 10, offset: 2 }} xs={12}>
                             <Card className='project-card-right'>
-                                <Row>
-                                    <Col md={{ span: 5, offset: 0 }} xs={{ span: 4, offset: 0 }}>
-                                        <div className='mx-auto' style={{ width: '75px', height: '75px' }}>
+                                <Row style={{ marginBottom: '20px' }}>
+                                    <Col md={{ span: 6, offset: 0 }} xs={{ span: 8, offset: 0 }} style={{ margin: 'auto' }}>
+                                        <h1 className='title-text'> {myProps.title} </h1>
+                                    </Col>
+                                    <Col md={{ span: 3, offset: 3 }} xs={{ span: 4, offset: 0 }}>
+                                        <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
                                             <Image
-                                                className="rounded-circle overflow-hidden"
+                                                className="rounded-circle overflow-hidden profileImage"
                                                 src={merrimackLogo}
                                                 alt="Profile Picture"
                                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -106,34 +112,33 @@ function ProjectCardL(myProps: myProjectProps) {
                                         </div>
                                         <h1 className='profile-text'> Faculty Name</h1>
                                     </Col>
-                                    <Col md={{ span: 6, offset: 0 }} xs={{ span: 6, offset: 1 }} style={{ margin: 'auto' }}>
-                                        <h1 className='title-text'> {myProps.title}</h1>
-                                    </Col>
                                 </Row>
                                 <Row >
-                                    <Col md={{ span: 5, offset: 0 }} xs={{ span: 6, offset: 1 }}>
-                                        <section>
-                                            <div style={{ overflow: 'auto', maxHeight: '30vh' }} className='example'>
+                                    <Col md={{ span: 3, offset: 1 }} xs={{ span: 12, offset: 0 }} >
+                                        <Figure >
+                                            <Figure.Image
+                                                alt={myProps.imageAlt}
+                                                src={pic}
+                                                className='rounded overflow-hidden project-images'
+                                            />
+                                            <Figure.Caption style={{ textAlign: 'center' }}>
+                                                <i> {myProps.imageDescription}</i>
+                                            </Figure.Caption>
+                                        </Figure>
+                                    </Col>
+                                    <Col md={{ span: 8, offset: 0 }} xs={{ span: 12, offset: 0 }}>
+                                        <section >
+                                            <div className='example description-div'>
                                                 <h2 className='description-text'>
                                                     {myProps.description}
                                                 </h2>
+
                                             </div>
                                             <a href={myProps.projectLink}>
                                                 <h1 className='profile-text'> Read More</h1>
                                             </a>
+
                                         </section>
-                                    </Col>
-                                    <Col md={{ span: 6, offset: 0 }} xs={{ span: 5, offset: 0 }}>
-                                        <Figure >
-                                            <Figure.Image
-                                                alt={myProps.imageAlt}
-                                                src={merrimackLogo}
-                                                className='rounded overflow-hidden project-images'
-                                            />
-                                            <Figure.Caption >
-                                                <i> {myProps.imageDescription}</i>
-                                            </Figure.Caption>
-                                        </Figure>
                                     </Col>
                                 </Row>
                             </Card>
@@ -146,4 +151,4 @@ function ProjectCardL(myProps: myProjectProps) {
     )
 }
 
-export default ProjectCardL
+export default ProjectCard

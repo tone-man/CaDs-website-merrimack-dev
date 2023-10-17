@@ -5,14 +5,14 @@ import { Container } from 'react-bootstrap';
 
 import '../css/FeaturedProject.css'
 
-import ProjectCardL, { myProjectProps } from './ProjectCardL';
+import ProjectCard, { myProjectProps } from './ProjectCard';
 
 const projectsArray: myProjectProps[] = [];
 
-const projectValues = [['CaDS Website Project 1', 'Description', 'Image Description', '#', 'imageAlt'],
-['CaDS Website Project 2', 'Description', 'Image Description', '#', 'imageAlt'],
-['CaDS Website Project 3', 'Description', 'Image Description', '#', 'imageAlt'],
-['CaDS Website Project 4', 'Description', 'Image Description', '#', 'imageAlt']];
+const projectValues = [['Rove - Photography Exploration App for iOS', 'ROVE is a photo location sharing and tagging app for iOS devices that allows users to upload geotagged photos, tag them with keywords and search for prime photography spots.', 'Image Description', '#', 'imageAlt'],
+['Automated Lyric Analysis', 'Did musical lyrics get less sophisticated over time? This project used computational tools to analyze the lyrical sophistication of the Billboard top 100 from 1959 – 2016.', 'Image Description', '#', 'imageAlt'],
+['D&D Roleplaying Group/Campaign Manager', 'Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.' , 'Image Description', '#', 'imageAlt'],
+['Square Swords 3D Fighting Game', 'This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.', 'Image Description', '#', 'imageAlt']];
 
 function makeEventObject(
     title: string,
@@ -45,7 +45,7 @@ function FeaturedProject() {
             <Container fluid className='projects-container'>
                 {
                     projectsArray.map(projects =>
-                        <ProjectCardL
+                        <ProjectCard
                             imageDescription={projects.imageDescription}
                             projectLink={projects.projectLink}
                             description={projects.description}
