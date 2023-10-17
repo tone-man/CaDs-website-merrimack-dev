@@ -39,7 +39,7 @@ function makeProjects(projectsArray: myProjectProps[], projectValues: string[][]
 
 makeProjects(projectsArray, projectValues);
 
-function FeaturedProject() {
+function ProjectList() {
     return (
         <>
             <Container fluid className='projects-container'>
@@ -59,4 +59,4 @@ function FeaturedProject() {
     )
 }
 
-export default FeaturedProject
+export default ProjectList

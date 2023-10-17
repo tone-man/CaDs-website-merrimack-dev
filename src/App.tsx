@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import FeaturedProject from './components/FeaturedProject';
+import ProjectList from './components/ProjectList';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,7 +11,7 @@ function App() {
     <>
       <NavBar />
       <div>
-        <FeaturedProject />
+        <ProjectList />
       </div>
       <div style={{ height: '200vh', background: 'lightblue' }}> </div>
       <h1>Vite + React</h1>
