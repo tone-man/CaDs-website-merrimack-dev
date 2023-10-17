@@ -10,6 +10,10 @@ import '../css/FeaturedProject.css'
 import merrimackLogo from '../imgs/logo.webp';
 import pic from '../imgs/footer-stadium.webp';
 
+export interface facultyMems {
+    facultyName: string,
+    facultyImg: string
+}
 
 export interface myProjectProps {
     title: string,
@@ -17,12 +21,17 @@ export interface myProjectProps {
     projectLink: string,
     imageDescription: string,
     imageAlt: string,
-    number: number
+    number: number,
+    faculty: facultyMems[]
 }
 
 function ProjectCard(myProps: myProjectProps) {
     const number = myProps.number + 1;
     const parity = number % 2;
+    
+    const facultyMembersNum = myProps.faculty.length;
+    const facultyMembers = myProps.faculty;
+
     return (
         <div>
             {(parity === 1) ?
@@ -34,8 +43,26 @@ function ProjectCard(myProps: myProjectProps) {
                                     <h1 className='title-text'> {myProps.title} </h1>
                                 </Col>
                                 <Col md={{ span: 3, offset: 3 }} xs={{ span: 4, offset: 0 }}>
-                                    <Carousel variant='link'>
-                                        <Carousel.Item>
+                                    {facultyMembersNum > 1 ? (
+                                        <Carousel variant='link'>
+                                            {
+                                                facultyMembers.map(members =>
+                                                    <Carousel.Item>
+                                                        <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
+                                                            <Image
+                                                                className="rounded-circle overflow-hidden profileImage"
+                                                                src={merrimackLogo}
+                                                                alt="Profile Picture"
+                                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                            />
+                                                        </div>
+                                                        <h1 className='profile-text'> {members.facultyName}</h1>
+                                                    </Carousel.Item>
+                                                )
+                                            }
+                                        </Carousel>
+                                    ) : (
+                                        <>
                                             <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
                                                 <Image
                                                     className="rounded-circle overflow-hidden profileImage"
@@ -44,20 +71,10 @@ function ProjectCard(myProps: myProjectProps) {
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                 />
                                             </div>
-                                            <h1 className='profile-text'> Faculty Name</h1>
-                                        </Carousel.Item>
-                                        <Carousel.Item>
-                                            <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
-                                                <Image
-                                                    className="rounded-circle overflow-hidden"
-                                                    src={merrimackLogo}
-                                                    alt="Profile Picture"
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                />
-                                            </div>
-                                            <h1 className='profile-text'> Faculty Name</h1>
-                                        </Carousel.Item>
-                                    </Carousel>
+                                            <h1 className='profile-text'> {facultyMembers[0].facultyName}</h1>
+                                        </>
+                                    )}
+
                                 </Col>
                             </Row>
                             <Row >
@@ -102,15 +119,37 @@ function ProjectCard(myProps: myProjectProps) {
                                         <h1 className='title-text'> {myProps.title} </h1>
                                     </Col>
                                     <Col md={{ span: 3, offset: 3 }} xs={{ span: 4, offset: 0 }}>
-                                        <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
-                                            <Image
-                                                className="rounded-circle overflow-hidden profileImage"
-                                                src={merrimackLogo}
-                                                alt="Profile Picture"
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <h1 className='profile-text'> Faculty Name</h1>
+                                        {facultyMembersNum > 1 ? (
+                                            <Carousel variant='link'>
+                                                {
+                                                    facultyMembers.map(members =>
+                                                        <Carousel.Item>
+                                                            <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
+                                                                <Image
+                                                                    className="rounded-circle overflow-hidden profileImage"
+                                                                    src={merrimackLogo}
+                                                                    alt="Profile Picture"
+                                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                                />
+                                                            </div>
+                                                            <h1 className='profile-text'> {members.facultyName}</h1>
+                                                        </Carousel.Item>
+                                                    )
+                                                }
+                                            </Carousel>
+                                        ) : (
+                                            <>
+                                            <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
+                                                <Image
+                                                    className="rounded-circle overflow-hidden profileImage"
+                                                    src={merrimackLogo}
+                                                    alt="Profile Picture"
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                />
+                                            </div>
+                                            <h1 className='profile-text'> {facultyMembers[0].facultyName}</h1>
+                                        </>
+                                        )}
                                     </Col>
                                 </Row>
                                 <Row >
