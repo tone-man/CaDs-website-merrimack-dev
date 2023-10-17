@@ -34,6 +34,8 @@ function makeCarousel(eventsArray: myEventProps[], eventValues: string[][]) {
 
 makeCarousel(eventsArray, eventValues);
 
+console.log("TEST 1")
+
 function EventsCarousel() {
     return (
         <div>
