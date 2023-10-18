@@ -3,7 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { Container } from 'react-bootstrap';
 
-import '../css/FeaturedProject.css'
+import '../css/ProjectList.css'
 
 import ProjectCard, { myProjectProps, facultyMems} from './ProjectCard';
 
