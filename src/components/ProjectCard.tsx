@@ -3,12 +3,14 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import { Card, Carousel, Col, Figure, Row, Image } from 'react-bootstrap';
+import { Accordion, Card, Carousel, Col, Figure, Row, Image } from 'react-bootstrap';
 
 import '../css/FeaturedProject.css'
 
 import merrimackLogo from '../imgs/logo.webp';
 import pic from '../imgs/footer-stadium.webp';
+
+import ProjectContributer from './ProjectContributer';
 
 export interface facultyMems {
     facultyName: string,
@@ -28,7 +30,7 @@ export interface myProjectProps {
 function ProjectCard(myProps: myProjectProps) {
     const number = myProps.number + 1;
     const parity = number % 2;
-    
+
     const facultyMembersNum = myProps.faculty.length;
     const facultyMembers = myProps.faculty;
 
@@ -101,13 +103,31 @@ function ProjectCard(myProps: myProjectProps) {
                                         <a href={myProps.projectLink}>
                                             <h1 className='profile-text'> Read More</h1>
                                         </a>
-
                                     </section>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={{ span: 12, offset: 0 }} xs={{ span: 12, offset: 0 }} style={{ color: 'white' }}>
+                                    <Accordion className="custom-accordion" flush defaultActiveKey="0" style={{ background: 'rgb(20, 54, 100)' }}>
+                                        <Accordion.Item eventKey="0" style={{ background: 'rgb(20, 54, 100)', textAlign: 'center', margin: 'auto', justifyContent: 'center' }}>
+                                            <Accordion.Header className="text-center text-white" style={{ color: 'white', cursor: 'pointer' }}>
+
+                                                <h1>Header Text</h1>
+                                            </Accordion.Header>
+                                            <Accordion.Body className="text-white" style={{ color: 'white', borderRadius: '40px' }}>
+                                                <h1 style={{ paddingBottom: '40px' }}>Contributers</h1>
+
+                                                <ProjectContributer />
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
                                 </Col>
                             </Row>
                         </Card>
                     </Col>
                 </Row>
+
+
                 :
 
                 <Row className='project-row'>
@@ -139,16 +159,16 @@ function ProjectCard(myProps: myProjectProps) {
                                             </Carousel>
                                         ) : (
                                             <>
-                                            <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
-                                                <Image
-                                                    className="rounded-circle overflow-hidden profileImage"
-                                                    src={merrimackLogo}
-                                                    alt="Profile Picture"
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                />
-                                            </div>
-                                            <h1 className='profile-text'> {facultyMembers[0].facultyName}</h1>
-                                        </>
+                                                <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
+                                                    <Image
+                                                        className="rounded-circle overflow-hidden profileImage"
+                                                        src={merrimackLogo}
+                                                        alt="Profile Picture"
+                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                    />
+                                                </div>
+                                                <h1 className='profile-text'> {facultyMembers[0].facultyName}</h1>
+                                            </>
                                         )}
                                     </Col>
                                 </Row>
