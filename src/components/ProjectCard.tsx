@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/ProjectList.css'
 
-import { Accordion, ButtonToolbar, Card, Carousel, Col, Figure, Row, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Accordion, Card, Carousel, Col, Figure, Row, Image } from 'react-bootstrap';
 
 import merrimackLogo from '../imgs/logo.webp';
 import pic from '../imgs/footer-stadium.webp';
@@ -28,6 +28,8 @@ export interface myProjectProps {
 }
 
 function ProjectCard(myProps: myProjectProps) {
+
+
 
     const number = myProps.number + 1;
     const parity = number % 2;
@@ -108,7 +110,7 @@ function ProjectCard(myProps: myProjectProps) {
                             <Row>
                                 <Col md={{ span: 12, offset: 0 }} xs={{ span: 12, offset: 0 }} style={{ color: 'white' }}>
                                     <Accordion className="custom-accordion" flush defaultActiveKey="0" style={{ background: 'rgb(20, 54, 100)' }}>
-                                        <Accordion.Item eventKey="0" style={{ background: 'rgb(20, 54, 100)', textAlign: 'center', margin: 'auto', justifyContent: 'center' }}>
+                                        <Accordion.Item eventKey="1" style={{ background: 'rgb(20, 54, 100)', textAlign: 'center', margin: 'auto', justifyContent: 'center' }}>
                                             <Accordion.Header className="text-center text-white" style={{ color: 'white', cursor: 'pointer' }}>
                                             </Accordion.Header>
                                             <Accordion.Body className="text-white" style={{ color: 'white', borderRadius: '40px' }}>
@@ -117,29 +119,26 @@ function ProjectCard(myProps: myProjectProps) {
                                                         <h1 style={{ paddingBottom: '40px' }}>Contributers</h1>
                                                     </Col>
                                                     <Col style={{ display: 'flex', justifyContent: 'flex-end' }} >
-                                                        <ButtonToolbar>
-                                                            <OverlayTrigger placement="left" overlay={
-                                                                <>
-                                                                    <Tooltip id="tooltip">
-                                                                        Request to be featured on this project as a collaborator!
-                                                                    </Tooltip>
-                                                                </>}>
-                                                                <FormModal />
-                                                            </OverlayTrigger>
-                                                        </ButtonToolbar>
+                                                        <FormModal />
                                                     </Col>
                                                 </Row>
+                                                <ProjectContributer />
+                                                <ProjectContributer />
                                                 <ProjectContributer />
                                             </Accordion.Body>
                                         </Accordion.Item>
                                     </Accordion>
                                 </Col>
+                                
                             </Row>
                         </Card>
                     </Col>
                 </Row>
 
                 :
+
+
+
 
                 <Row className='project-row'>
                     <div>
@@ -211,6 +210,30 @@ function ProjectCard(myProps: myProjectProps) {
                                         </section>
                                     </Col>
                                 </Row>
+                                <Row>
+                                <Col md={{ span: 12, offset: 0 }} xs={{ span: 12, offset: 0 }} style={{ color: 'white' }}>
+                                    <Accordion className="custom-accordion" flush defaultActiveKey="0" style={{ background: 'rgb(42, 42, 43)' }}>
+                                        <Accordion.Item eventKey="1" style={{ background: 'rgb(42, 42, 43)', textAlign: 'center', margin: 'auto', justifyContent: 'center' }}>
+                                            <Accordion.Header className="text-center text-white" style={{ color: 'white', cursor: 'pointer' }}>
+                                            </Accordion.Header>
+                                            <Accordion.Body className="text-white" style={{ color: 'white', borderRadius: '40px' }}>
+                                                <Row>
+                                                    <Col style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                                        <h1 style={{ paddingBottom: '40px' }}>Contributers</h1>
+                                                    </Col>
+                                                    <Col style={{ display: 'flex', justifyContent: 'flex-end' }} >
+                                                        <FormModal />
+                                                    </Col>
+                                                </Row>
+                                                <ProjectContributer />
+                                                <ProjectContributer />
+                                                <ProjectContributer />
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
+                                </Col>
+                                
+                            </Row>
                             </Card>
                         </Col>
                     </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Form, Modal } from 'react-bootstrap'
+import { Button, ButtonToolbar, Form, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import '../css/formModal.css'
 
@@ -20,7 +20,16 @@ function FormModal() {
   });
   const [formErrors, setFormErrors] = useState<{ name?: string; email?: string; request?: string }>({});
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    //Reset form data
+    setFormData({
+      name: '',
+      email: '',
+      request: ''
+    });
+    setShow(false)
+  };
+
   const handleShow = () => setShow(true);
 
   const isEmailValid = (email: string): boolean => {
@@ -59,10 +68,23 @@ function FormModal() {
     }
   };
 
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <h2 style={{fontSize: '1rem'}}>Interested in being featured on this project? Make a request here! </h2>
+    </Tooltip>
+  );
 
   return (
+
     <>
-      <Button variant='light' style={{ height: '60px' }} onClick={handleShow}><i className="bi bi-people-fill" style={{ color: 'black', fontSize: '2rem' }}></i> </Button>
+      <ButtonToolbar>
+        <OverlayTrigger placement="left" overlay={tooltip}>
+          <Button variant='light' style={{ height: '60px' }} onClick={handleShow}>
+            <i className="bi bi-people-fill" style={{ color: 'black', fontSize: '2rem' }}></i> 
+            </Button>
+        </OverlayTrigger>
+      </ButtonToolbar>
+
 
       <Modal show={show} onHide={handleClose} className='customized-modal'>
         <Modal.Header closeButton>

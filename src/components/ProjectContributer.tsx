@@ -7,7 +7,7 @@ function ProjectContributer() {
         <div>
             <Container fluid>
                 <Row>
-                    <Col md={12} xs={12} style={{ background: 'white', borderRadius: '20px', padding: '20px' }}>
+                    <Col md={12} xs={12} style={{ background: 'white', borderRadius: '20px', padding: '20px', marginTop: '20px' }}>
                         <Row>
                         <Col md={2} xs={12}>
                             <div className='mx-auto' style={{ width: '60px', height: '60px' }}>
