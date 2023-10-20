@@ -8,7 +8,7 @@
 }
 
 footer {
-    border-top: 5px solid rgb(249, 222, 74);
+    border-top: 5px solid var(--yellow);
     min-height: 400px;
     background: RGB(30, 30, 30);
     width: 100%;
@@ -23,7 +23,7 @@ footer .footerImage {
 /* Create polygon cut out: https://bennettfeely.com/clippy/ */
 footer .banner {
     position: relative;
-    background-color: rgb(255, 224, 2);
+    background-color: var(--yellow);
     color: black;
     height: 260px;
     clip-path: polygon(100% 100%, 50% 90%, 0 100%, 0 0, 100% 0);

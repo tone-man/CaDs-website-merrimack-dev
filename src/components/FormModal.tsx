@@ -1,9 +1,6 @@
 import { useState } from 'react'
-
 import { Button, ButtonToolbar, Form, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-
 import '../css/formModal.css'
-
 
 interface FormData {
   name: string;
@@ -63,14 +60,13 @@ function FormModal() {
         email: '',
         request: ''
       });
-      // Close the modal
       handleClose();
     }
   };
 
   const tooltip = (
     <Tooltip id="tooltip">
-      <h2 style={{fontSize: '1rem'}}>Interested in being featured on this project? Make a request here! </h2>
+      <h2 style={{ fontSize: '1rem' }}>Interested in being featured on this project? Make a request here! </h2>
     </Tooltip>
   );
 
@@ -80,17 +76,17 @@ function FormModal() {
       <ButtonToolbar>
         <OverlayTrigger placement="left" overlay={tooltip}>
           <Button variant='light' style={{ height: '60px' }} onClick={handleShow}>
-            <i className="bi bi-people-fill" style={{ color: 'black', fontSize: '2rem' }}></i> 
-            </Button>
+            <i className="bi bi-people-fill" style={{ color: 'black', fontSize: '2rem' }}></i>
+          </Button>
         </OverlayTrigger>
       </ButtonToolbar>
-
 
       <Modal show={show} onHide={handleClose} className='customized-modal'>
         <Modal.Header closeButton>
           <Modal.Title>Request to be Featured</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
           <Form>
             <Form.Group controlId="formName">
               <Form.Label>Name</Form.Label>
@@ -126,6 +122,7 @@ function FormModal() {
               {formErrors.request && <Form.Text className="text-danger">{formErrors.request}</Form.Text>}
             </Form.Group>
           </Form>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

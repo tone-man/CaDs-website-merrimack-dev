@@ -1,14 +1,10 @@
-import React from 'react'
-
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import logo from '../imgs/stackedLogo.png'
 import footerImage from '../imgs/footer-stadium.webp'
-
 import '../css/footer.css';
 
 function Footer() {
     return (
-        <div>
             <footer>
                 <Container>
                     <Row>
@@ -46,7 +42,6 @@ function Footer() {
                     </Row>
                 </Container>
             </footer>
-        </div>
     )
 }
 

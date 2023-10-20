@@ -1,12 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
-import { Button, FormControl, Navbar, Nav, Image, InputGroup } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
-
+import { Button, Container, FormControl, InputGroup , Nav, Navbar} from 'react-bootstrap';
 import '../css/navBar.css';
+import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
-
 
 const NavBar = () => {
     const [isFocused, setIsFocused] = useState(false);
@@ -62,9 +60,9 @@ const NavBar = () => {
 
     return (
 
-        <div>
+        <nav>
             <Navbar expand="lg" className="navbar-custom">
-                <div className="container">
+                <Container>
                     <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
@@ -74,14 +72,7 @@ const NavBar = () => {
                         <Nav className="ms-auto">
                             {isLoggedIn ? (
                                 <Nav.Link href="#">
-                                    <div className='mr-auto' style={{ width: '50px', height: '50px' }}>
-                                        <Image
-                                            className="rounded-circle overflow-hidden"
-                                            src={merrimackLogo}
-                                            alt="Profile Picture"
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                        />
-                                    </div>
+                                 <ProfileImage size='50px'/>
                                 </Nav.Link>
                             ) : (
                                 <div className='mr-auto'>
@@ -92,7 +83,7 @@ const NavBar = () => {
                             )}
                         </Nav>
                     </Navbar.Collapse>
-                </div>
+               </Container>
             </Navbar>
 
             <Navbar expand="sm" className="second-navbar" id="secondNavBar" style={{ display: 'block' }}>
@@ -112,7 +103,7 @@ const NavBar = () => {
                             <FormControl id="searchBar"
                                 placeholder="Search.."
                                 aria-label="Search"
-                                ref={searchBarRef} // Set the ref here
+                                ref={searchBarRef} 
                             />
                             <Button className="searchIcon">
                                 <i className={"bi bi-search"} style={{ fontSize: '25px' }} onClick={search}></i>
@@ -121,7 +112,7 @@ const NavBar = () => {
                     </div>
                 </div>
             </Navbar>
-        </div>
+        </nav>
     );
 }
 

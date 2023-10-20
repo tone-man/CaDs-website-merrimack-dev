@@ -1,0 +1,12 @@
+.contributor-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.contributor-info {
+    color: black;
+    font-size: 1rem;
+    padding: 20px;
+}

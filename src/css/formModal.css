@@ -1,5 +1,5 @@
 .customized-modal .modal-content {
-    background-color:  rgb(20, 54, 100);
+    background-color: var(--blue);
     color: white;
     padding: 20px;
   }
