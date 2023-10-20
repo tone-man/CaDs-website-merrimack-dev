@@ -4,7 +4,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
 import { facultyMems } from './FacultyCarousel';
 import '../css/universal.css'
-import '../css/projectList.css'
+import '../css/ProjectList.css'
 const projectsArray: myProjectProps[] = [];
 
 

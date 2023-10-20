@@ -8,7 +8,6 @@ interface myImageProps {
     size: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ProfileImage(myProps: myImageProps) {
     return (
             <div className='mx-auto' style={{ width: myProps.size, height: myProps.size }}>
