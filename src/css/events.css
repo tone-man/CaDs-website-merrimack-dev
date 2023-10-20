@@ -5,44 +5,44 @@
 
 .card {
     margin: auto;
+    width: 80%;
     color: white;
     font-family: Gotham-Regular;
     background-color: rgb(20, 54, 100);
     display: flex;
     justify-content: center;
-    width: 80%;
     border: none !important;
 }
 
 .card .image-container {
     margin: auto;
-    width: 500px; /* Set a specific width for the image on larger screens */
-    max-width: 100%; /* Ensure the image container does not exceed its parent width */
+    width: 500px; 
+    max-width: 100%; 
   }
 
 .card .image-container .card-image {
-    width: 100%; /* Set the width to 100% to fill the container */
-    height: auto; /* Automatically calculate the height based on the aspect ratio */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    width: 100%; 
+    height: auto;
+    object-fit: cover; 
     border-radius: 20px;
     margin-top: 40px;
     margin-bottom: 40px
 }
 
-.card .eventText {
+.card .event-text {
     margin: auto;
     text-align: center;
     font-family: Gotham-Regular;
     font-size: 1.25rem;
 }
 
-.card-header{
+.card .card-header{
     display: block;
     text-align: center;
     font-size: 2rem;
 }
 
-.card-button {
+.card .card-button {
     text-align: right;
     justify-content: right;
     display: block;

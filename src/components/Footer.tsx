@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Container, Row, Col } from 'react-bootstrap';
 import logo from '../imgs/stackedLogo.png'
 import footerImage from '../imgs/footer-stadium.webp'
@@ -25,11 +23,10 @@ function Footer() {
                                 </div>
                             </div>
                         </Col>
-
-                        <Col className="ml-9" xs = {8} md = {3}>
+                        <Col className="ml-9" xs={8} md={3}>
                             <img className='footerImage' src={footerImage} />
                         </Col>
-                        <Col xs = {6} md = {3} style={{ textAlign: 'center'}}>
+                        <Col xs={6} md={3} style={{ textAlign: 'center' }}>
                             <Row>
                                 <h1 style={{ color: 'white', fontSize: '2rem', marginTop: '50px' }}>Merrimack College</h1>
                             </Row>

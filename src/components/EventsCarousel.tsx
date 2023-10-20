@@ -7,10 +7,13 @@ import '../css/eventsCarousel.css'
 
 const eventsArray: myEventProps[] = [];
 
-const eventValues = [['src/imgs/projectpic.webp', 'imageAlt', 'Caption 1', 'The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.)' +
-'that are hiring for both internships and full-time positionsFree', 'LINK!', 'Careers for the Common Good Internship & Career Fair', 'date', 'location'],
-['/src/imgs/projectpic.webp',  'imageAlt', 'Caption 2', 'Brief Description',  'LINK!', 'Title', 'date', 'location'],
-['/src/imgs/projectpic.webp', 'imageAlt', 'Caption 3', 'Brief Description', 'LINK!', 'Title', 'Saturday, October 21 (All Day)', 'Rogers Center for the Arts (check in) Walsh Way, North Andover, MA, United States']]
+const eventValues = [
+    ['src/imgs/projectpic.webp', 'imageAlt', 'Caption 1', 'The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.)' +
+        'that are hiring for both internships and full-time positionsFree', 'LINK!', 'Careers for the Common Good Internship & Career Fair', 'Thursday, October 26', 'Arcidi A 315 Turnpike Street, North Andover, United States'],
+    ['/src/imgs/projectpic.webp', 'imageAlt', 'Caption 2', 'The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.)' +
+        'that are hiring for both internships and full-time positionsFree', 'LINK!', 'Careers for the Common Good Internship & Career Fair', 'Thursday, October 26', 'Arcidi A 315 Turnpike Street, North Andover, United States'],
+    ['/src/imgs/projectpic.webp', 'imageAlt', 'Caption 3', 'The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.)' +
+        'that are hiring for both internships and full-time positionsFree', 'LINK!', 'Careers for the Common Good Internship & Career Fair', 'Thursday, October 26', 'Arcidi A 315 Turnpike Street, North Andover, United States']];
 
 function makeEventObject(
     imgSource: string,
@@ -18,9 +21,9 @@ function makeEventObject(
     caption: string,
     description: string,
     link: string,
-    title:string,
-    date:string,
-    location:string): myEventProps {
+    title: string,
+    date: string,
+    location: string): myEventProps {
     return {
         imgSource: imgSource,
         imageAlt: imageAlt,
@@ -29,7 +32,7 @@ function makeEventObject(
         link: link,
         title: title,
         date: date,
-        location:location
+        location: location
     };
 }
 
@@ -41,12 +44,10 @@ function makeCarousel(eventsArray: myEventProps[], eventValues: string[][]) {
 
 makeCarousel(eventsArray, eventValues);
 
-console.log("TEST 1")
-
 function EventsCarousel() {
     return (
         <div>
-            <Header img= {'src/imgs/OBCenter.jpg'}/>
+            <Header img={'src/imgs/OBCenter.jpg'} />
             <div className='carousel-container'>
                 <Col md={9} xs={12}>
                     <div className='custom-carousel'>
@@ -61,9 +62,9 @@ function EventsCarousel() {
                                                 link={events.link}
                                                 description={events.description}
                                                 caption={events.caption}
-                                                title={events.title} 
+                                                title={events.title}
                                                 date={events.date}
-                                                location={events.location}/>
+                                                location={events.location} />
                                         </div>
                                     </Carousel.Item>
                                 )
