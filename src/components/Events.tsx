@@ -1,41 +1,51 @@
 
-import { Accordion, Button, Card } from 'react-bootstrap';
+import { Button, Card, Row, Col } from 'react-bootstrap';
 import '../css/events.css';
 
 export interface myEventProps {
     imgSource: string,
+    imageAlt: string,
     caption: string,
-    briefDescription: string,
-    longerDescription: string,
-    link: string
+    description: string,
+    link: string,
+    title: string,
+    date?: string,
+    location?:string
 }
 
 function Events(props: myEventProps) {
     return (
         <div>
-            <Card className='card'>
-                <Card.Img variant="top" src={props.imgSource} />
-                <Card.Body>
-                    <Card.Title className='card-header'>{props.caption}</Card.Title>
-                    <Accordion defaultActiveKey="0" >
-                        <Accordion.Item eventKey="1" >
-                            <Accordion.Header>
-                                <Card.Text className='eventText'>{props.briefDescription}</Card.Text>
-                            </Accordion.Header>
-                            <Accordion.Body>
-                                <Card.Text className='eventText'>{props.longerDescription}</Card.Text>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
-                </Card.Body>
-                <Card.Footer className='card-button'>
-                    <Button variant='link' >
-                        <Card.Link href={props.link}>
-                            <i style={{ fontSize: '2rem', color: 'black' }} className="bi bi-link-45deg"></i>
-                        </Card.Link>
-                    </Button>
-                </Card.Footer>
-            </Card>
+                    <Card className='card'>
+                        <Card.Body>
+                            <Row>
+                                <Col md={12} xs={12}>
+                                    <Card.Title className='card-header'>
+                                        <h1 className="font-weight-bold">{props.title}</h1>
+                                    </Card.Title>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs={{ span: 12, offset: 0 }} className='image-container'>
+                                    <Card.Img src={props.imgSource} className="card-image" alt={props.imageAlt} />
+                                </Col>
+                                <Col  md={{ span: 6, offset: 0 }} sm={12} className='eventText'>
+                                    <Card.Text>
+                                        {props.description}
+                                    </Card.Text>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                        <Card.Footer className='card-button'>
+                        <h5 style={{display: 'block', textAlign: 'center'}}> <i> {props.date} | {props.location}</i></h5>
+
+                            <Button variant='link' >
+                                <Card.Link href={props.link}>
+                                    <i style={{ fontSize: '2rem', color: 'white' }} className="bi bi-link-45deg"></i>
+                                </Card.Link>
+                            </Button>
+                        </Card.Footer>
+                    </Card>
         </div>
     )
 }

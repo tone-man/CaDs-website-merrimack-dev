@@ -7,28 +7,35 @@ import '../css/eventsCarousel.css'
 
 const eventsArray: myEventProps[] = [];
 
-const eventValues = [['src/imgs/projectpic.webp', 'Caption 1', 'Brief Description', 'Longer Description', 'LINK!'],
-['/src/imgs/projectpic.webp', 'Caption 2', 'Brief Description', 'Longer Description', 'LINK!'],
-['../imgs/projectpic.webp', 'Caption 3', 'Brief Description', 'Longer Description', 'LINK!']]
+const eventValues = [['src/imgs/projectpic.webp', 'imageAlt', 'Caption 1', 'The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.)' +
+'that are hiring for both internships and full-time positionsFree', 'LINK!', 'Careers for the Common Good Internship & Career Fair', 'date', 'location'],
+['/src/imgs/projectpic.webp',  'imageAlt', 'Caption 2', 'Brief Description',  'LINK!', 'Title', 'date', 'location'],
+['/src/imgs/projectpic.webp', 'imageAlt', 'Caption 3', 'Brief Description', 'LINK!', 'Title', 'Saturday, October 21 (All Day)', 'Rogers Center for the Arts (check in) Walsh Way, North Andover, MA, United States']]
 
 function makeEventObject(
     imgSource: string,
+    imageAlt: string,
     caption: string,
-    briefDescription: string,
-    longerDescription: string,
-    link: string): myEventProps {
+    description: string,
+    link: string,
+    title:string,
+    date:string,
+    location:string): myEventProps {
     return {
         imgSource: imgSource,
+        imageAlt: imageAlt,
         caption: caption,
-        briefDescription: briefDescription,
-        longerDescription: longerDescription,
-        link: link
+        description: description,
+        link: link,
+        title: title,
+        date: date,
+        location:location
     };
 }
 
 function makeCarousel(eventsArray: myEventProps[], eventValues: string[][]) {
     for (let i = 0; i < eventValues.length; i++) {
-        eventsArray.push(makeEventObject(eventValues[i][0], eventValues[i][1], eventValues[i][2], eventValues[i][3], eventValues[i][4]));
+        eventsArray.push(makeEventObject(eventValues[i][0], eventValues[i][1], eventValues[i][2], eventValues[i][3], eventValues[i][4], eventValues[i][5], eventValues[i][6], eventValues[i][7]));
     }
 }
 
@@ -39,21 +46,24 @@ console.log("TEST 1")
 function EventsCarousel() {
     return (
         <div>
-            <Header img= {'../imgs/OBCenter.jpg'}/>
+            <Header img= {'src/imgs/OBCenter.jpg'}/>
             <div className='carousel-container'>
-                <Col md={8} xs={12}>
+                <Col md={9} xs={12}>
                     <div className='custom-carousel'>
                         <Carousel>
                             {
                                 eventsArray.map(events =>
-                                    <Carousel.Item  >
+                                    <Carousel.Item interval={20000} >
                                         <div className='nested-container'>
                                             <Events
                                                 imgSource={events.imgSource}
+                                                imageAlt={events.imageAlt}
                                                 link={events.link}
-                                                longerDescription={events.longerDescription}
-                                                briefDescription={events.briefDescription}
-                                                caption={events.caption} />
+                                                description={events.description}
+                                                caption={events.caption}
+                                                title={events.title} 
+                                                date={events.date}
+                                                location={events.location}/>
                                         </div>
                                     </Carousel.Item>
                                 )
