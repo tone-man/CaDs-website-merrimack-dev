@@ -25,10 +25,11 @@ function ProjectCard(myProps: myProjectProps) {
     return (
         <div>
             {(parity === 1) ?
+                //Project Card for Left Side
                 <Row className='project-row '>
                     <Col md={10} xs={12}>
                         <Card className='project-card project-card-left'>
-                            <Row style={{ marginBottom: '20px' }}>
+                            <Row style={{ marginBottom: '20px' }} className="d-flex justify-content-center align-items-center">
                                 <Col className='flex-start'>
                                     <h1 className='title-text'> {myProps.title} </h1>
                                 </Col>
@@ -70,7 +71,7 @@ function ProjectCard(myProps: myProjectProps) {
                 </Row>
 
                 :
-
+                //Project Card for Right Side
                 <Row className='project-row'>
                     <div>
                         <Col md={{ span: 10, offset: 2 }} xs={12}>
@@ -102,7 +103,6 @@ function ProjectCard(myProps: myProjectProps) {
                                                 <h2 className='description-text'>
                                                     {myProps.description}
                                                 </h2>
-
                                             </div>
                                             <a href={myProps.projectLink}>
                                                 <h1 className='profile-text'> Read More</h1>

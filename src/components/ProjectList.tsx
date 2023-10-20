@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Container} from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
 import { facultyMems } from './FacultyCarousel';
 import '../css/universal.css'
@@ -50,7 +50,15 @@ makeProjects(projectsArray, projectValues, facultyArray);
 function ProjectList() {
     return (
         <>
-            <Container fluid className='projects-container'>
+            <Container fluid style={{ background: 'rgb(199, 201, 202)' }}>
+                <Container className='projects-container'>
+                <Row>
+                    <Col md = {{span: 12}} style={{padding: '20px'}}>
+                        <h1> Faculty Led Projects</h1>
+                        <h5> Learn about some of the amazing projects that faculty members from the Computer Science and Data Science department
+                             have worked on in recent years. </h5>
+                    </Col>
+                </Row>
                     {
                         projectsArray.map(projects =>
                             <ProjectCard
@@ -64,7 +72,8 @@ function ProjectList() {
                             />
                         )
                     }
-            </Container >
+                </Container >
+            </Container>
         </>
     )
 }
