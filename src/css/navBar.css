@@ -8,7 +8,7 @@
 }
 
 .logInButton{
-    color: rgb(20, 54, 100);
+    color:var(--blue);
     background-color: white;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .navbar-custom {
-    background-color: rgb(20, 54, 100);
+    background-color:var(--blue);
 }
 
 .navbar-custom .navbar-nav .nav-link {
@@ -46,15 +46,15 @@
 
 .searchBarToggle:hover {
     text-decoration: underline rgb(255, 0, 0);
-    border-color: rgb(20, 54, 100);
-    background-color: rgb(20, 54, 100);
-    color: rgb(249, 222, 74);
+    border-color: var(--blue);
+    background-color: var(--blue);
+    color: var(--yellow);
     border:none !important; 
 }
 
 .searchBar {
     padding: 20px 10px 20px 10px;
-    background: rgb(20, 54, 100);
+    background: var(--blue);
     justify-content: center;
     align-items: center;
     width: 100vw;

@@ -1,0 +1,9 @@
+.projects-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Spacing between project cards */
+.projects-container .project-row {
+    padding: 25px 0px 25px 0px;
+}
