@@ -3,6 +3,8 @@ import { useState } from 'react'
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import ProjectList from './components/ProjectList';
+import Header from './components/Header';
+import pic from './imgs/OBCenter.jpg'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +13,7 @@ function App() {
     <>
       <NavBar />
       <div>
+        <Header img = {pic}/>
         <ProjectList />
       </div>
       <div style={{ height: '200vh', background: 'lightblue' }}> </div>
