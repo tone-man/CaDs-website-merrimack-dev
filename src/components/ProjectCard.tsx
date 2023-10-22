@@ -3,7 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/projectCard.css'
 import { Card, Col, Figure, Row } from 'react-bootstrap';
 import AccordionContributer from './AccordionContributer';
-import FacultyCarousel, { facultyMems } from './FacultyCarousel';
+import FacultyCarousel, { facultyMembers } from './FacultyCarousel';
 import pic from '../imgs/footer-stadium.webp';
 
 
@@ -14,7 +14,7 @@ export interface myProjectProps {
     imageDescription: string,
     imageAlt: string,
     number: number,
-    faculty: facultyMems[]
+    faculty: facultyMembers[]
 }
 
 function ProjectCard(myProps: myProjectProps) {
@@ -58,7 +58,7 @@ function ProjectCard(myProps: myProjectProps) {
                                             </h2>
                                         </div>
                                         <a href={myProps.projectLink}>
-                                            <h1 className='profile-text'> Read More</h1>
+                                            <h1 className='featured-text'> Read More</h1>
                                         </a>
                                     </section>
                                 </Col>
@@ -105,7 +105,7 @@ function ProjectCard(myProps: myProjectProps) {
                                                 </h2>
                                             </div>
                                             <a href={myProps.projectLink}>
-                                                <h1 className='profile-text'> Read More</h1>
+                                                <h1 className='featured-text'> Read More</h1>
                                             </a>
                                         </section>
                                     </Col>
