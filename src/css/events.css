@@ -1,0 +1,51 @@
+/* Styling for the event card component */
+
+@font-face {
+    font-family: Gotham-Regular;
+    src: url(../fonts/Gotham\ Regular.otf);
+}
+
+.event-card {
+    margin: auto;
+    width: 80%;
+    color: white;
+    font-family: Gotham-Regular;
+    background-color: rgb(20, 54, 100);
+    display: flex;
+    justify-content: center;
+    border: none !important;
+}
+
+.event-card .image-container {
+    margin: auto;
+    width: 500px; 
+    max-width: 100%; 
+  }
+
+.event-card .image-container .card-image {
+    width: 100%; 
+    height: auto;
+    object-fit: cover; 
+    border-radius: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px
+}
+
+.event-card .event-text {
+    margin: auto;
+    text-align: center;
+    font-family: Gotham-Regular;
+    font-size: 1.25rem;
+}
+
+.event-card .card-header{
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.event-card .card-button {
+    text-align: right;
+    justify-content: right;
+    display: block;
+}
