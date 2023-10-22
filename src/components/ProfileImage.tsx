@@ -3,14 +3,19 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Image } from 'react-bootstrap';
 import merrimackLogo from '../imgs/logo.webp';
 
+// Interface for the profile image props
+//TODO : Actually load in image correctly after we can fetch images successfully from the database
 interface myImageProps {
     image?: string,
     size: string
 }
 
+// Creates a profile image component
 function ProfileImage(myProps: myImageProps) {
     return (
+            // Determines positioning and size of profile picture image
             <div className='mx-auto' style={{ width: myProps.size, height: myProps.size }}>
+            {/* Creates a rounded image */}
             <Image
                 className="rounded-circle overflow-hidden"
                 src={merrimackLogo}

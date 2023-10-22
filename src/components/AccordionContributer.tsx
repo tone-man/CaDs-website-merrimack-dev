@@ -3,6 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Accordion, Col, Row } from 'react-bootstrap';
 import FormModal from './FormModal';
 import ProjectContributer from './ProjectContributer';
+import '../css/contributer.css';
 
 interface accordionProps{
     number: number

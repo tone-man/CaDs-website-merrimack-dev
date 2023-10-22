@@ -11,7 +11,7 @@ function ProjectContributer() {
                         <Row>
                             <Col md={2} xs={12}>
                                 <ProfileImage size='70px' />
-                                <h1 className='profile-text' style={{ color: 'black' }}> Faculty Name</h1>
+                                <h1 className='featured-text' style={{ color: 'black' }}> Faculty Name</h1>
                             </Col>
                             <Col md={10} xs={12}>
                                 <h1 className='contributor-info'>

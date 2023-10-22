@@ -18,6 +18,7 @@
     z-index: 1;
     top: 0;
     width: 100%;
+    padding: 0 !important;
 }
 
 .logo {
@@ -45,19 +46,17 @@
 }
 
 .searchBarToggle:hover {
-    text-decoration: underline rgb(255, 0, 0);
-    border-color: var(--blue);
     background-color: var(--blue);
     color: var(--yellow);
     border:none !important; 
 }
 
 .searchBar {
-    padding: 20px 10px 20px 10px;
+    padding: 20px 10px;
     background: var(--blue);
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    width: 100%;
 }
 
 .searchIcon {
