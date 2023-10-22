@@ -1,3 +1,5 @@
+/* CSS Styling for footer */
+
 @font-face {
     font-family: Gotham-Regular;
     src: url(../fonts/Gotham\ Regular.otf);
@@ -7,56 +9,88 @@
     font-family: Gotham-Regular;
 }
 
+/* Styling for the footer itself */
 footer {
     border-top: 5px solid var(--yellow);
-    min-height: 400px;
+    min-height: 50vh;
     background: RGB(30, 30, 30);
     width: 100%;
 }
 
-footer .footerImage {
-    margin-top: 20px;
-    height: auto;
-    width: 280px;
+/* Styling for each row in the footer */
+footer .footer-row {
+    margin: auto;
+    width: 95%;
 }
 
+/* Styling for yellow banner containing social icons and logo */
 /* Create polygon cut out: https://bennettfeely.com/clippy/ */
-footer .banner {
-    position: relative;
+footer .footer-row .banner {
     background-color: var(--yellow);
     color: black;
-    height: 260px;
+    min-height: 300px;
     clip-path: polygon(100% 100%, 50% 90%, 0 100%, 0 0, 100% 0);
 }
 
+/* Styling for logo nested in banner */
 footer .banner .logo {
     display: block;
     margin: auto;
+    padding:5px;
     padding-top: 20px;
     width: 160px;
     height: auto;
+    object-fit: contain;
 }
 
+/* Styling for social media icons nested in banner */
 footer .banner .socials {
     display: grid;
     margin: auto;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    padding: 40px 10px 40px 10px;
     grid-template-columns: repeat(6, 1fr);
     gap: 5px;
-    width: 150px;
+    width: 200px;
 }
 
+/* Customization for social media icons */
 footer .banner .socials .icon {
     color: black;
     opacity: .5;
 }
 
+/* Customization for hovering upon social media icons */
 footer .banner .socials .icon:hover {
     opacity: .7;
 }
 
-.footerText {
+/* Customization for image container and actual image nested in container*/
+footer .footer-row  .image-container {
+    overflow: hidden;
+    height:fit-content;
+    object-fit: contain;
+}
+
+footer .footer-row  .image-container .footer-image {
+    margin: auto;
+    display: block;
+    height:auto;
+    size: 2rem;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+/* Customization for text container and actual text nested in container*/
+footer .footer-row  .text-container{
+    display: block;
+    margin: auto;
+    padding-top: 20px;
+    padding: 20px;
+    height: auto;
+    text-align: center;
+}
+
+footer .text-container .footer-text {
     color: white;
     font-size: 1rem;
     margin-top: 5px;
