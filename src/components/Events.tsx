@@ -1,7 +1,7 @@
 
 import { Button, Card, Row, Col } from 'react-bootstrap';
 import '../css/events.css';
-import pic from '../imgs/projectpic.webp';
+import pic from '../imgs/footer-stadium.webp';
 
 export interface myEventProps {
     imgSource: string,
@@ -28,10 +28,10 @@ function Events(props: myEventProps) {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ span: 4, offset: 0 }} className='image-container'>
+                        <Col md = {4} xs={12} className='image-container'>
                             <Card.Img src={pic} className="card-image" alt={props.imageAlt} />
                         </Col>
-                        <Col md={{ span: 5, offset: 0 }} sm ={12} xs={12} className='event-text'>
+                        <Col md={6} sm ={12} xs={12} className='event-text'>
                             <Card.Text>
                                 {props.description}
                             </Card.Text>

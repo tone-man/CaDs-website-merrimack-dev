@@ -1,0 +1,15 @@
+/* Styling for the events carousel */
+
+.carousel-container {
+    display: flex;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-container  .custom-carousel {
+    background: rgb(20, 54, 100);
+    color: black;
+    border-radius: 40px;
+}

@@ -3,6 +3,7 @@ import { Col } from 'react-bootstrap';
 
 interface headerProps {
   img: string;
+  title: string;
 }
 
 // The header component refers to the banner at the top of each section
@@ -16,7 +17,7 @@ function Header(myProps: headerProps) {
             {/*Add yellow line */}
             <div className='line' />
           </div>
-          <h1 className="text"> Upcoming Events!</h1>
+          <h1 className="text"> {myProps.title}</h1>
         </div>
       </Col>
     </div>
