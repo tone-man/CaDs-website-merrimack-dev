@@ -1,3 +1,4 @@
+/* Stores commonly used colors in css variables */
 :root {
     --blue: rgb(20, 54, 100);
     --darkGrey: rgb(42, 42, 43);

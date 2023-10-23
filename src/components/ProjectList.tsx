@@ -68,8 +68,8 @@ function ProjectList() {
                 </Row>
                     {
                         // Maps each of the project elements in the projects array to a project card
-                        projectsArray.map(projects =>
-                            <ProjectCard
+                        projectsArray.map((projects, index) => (
+                            <ProjectCard key={index}
                                 imageDescription={projects.imageDescription}
                                 projectLink={projects.projectLink}
                                 description={projects.description}
@@ -78,7 +78,7 @@ function ProjectList() {
                                 number={projects.number}
                                 faculty={projects.faculty}
                             />
-                        )
+                        ))
                     }
                 </Container >
             </Container>

@@ -58,8 +58,8 @@ function EventsCarousel() {
                         <Carousel>
                             {
                                 // Maps each of the events in the events array to a carousel item
-                                eventsArray.map(events =>
-                                    <Carousel.Item interval={20000} >
+                                eventsArray.map((events, index) => (
+                                    <Carousel.Item key={index} interval={20000} >
                                         <div className='nested-container'>
                                             <Events
                                                 imgSource={events.imgSource}
@@ -72,7 +72,7 @@ function EventsCarousel() {
                                                 location={events.location} />
                                         </div>
                                     </Carousel.Item>
-                                )
+                                ))
                             }
                         </Carousel>
                     </div>

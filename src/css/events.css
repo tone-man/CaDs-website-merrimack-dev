@@ -5,6 +5,7 @@
     src: url(../fonts/Gotham\ Regular.otf);
 }
 
+/* Styles card that contains event info */
 .event-card {
     margin: auto;
     width: 80%;
@@ -16,9 +17,10 @@
     border: none !important;
 }
 
+/* Styles the image container  */
 .event-card .image-container {
     margin: auto;
-    width: 400px; 
+    width: 300px; 
     max-width: 100%; 
   }
 
@@ -44,8 +46,9 @@
     font-size: 2rem;
 }
 
-.event-card .card-button {
-    text-align: right;
-    justify-content: right;
-    display: block;
-}
+/* Resizes the event image container on screen resizing */
+@media screen and (max-width: 1600px) {
+   .image-container{
+      min-width: 400px;
+    }
+  }

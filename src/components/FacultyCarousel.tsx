@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Carousel } from 'react-bootstrap';
 import ProfileImage from './ProfileImage';
+import '../css/facultyCarousel.css'
 
 
 // Interface for the faculty members. Each facultty member should have a name and image
@@ -26,16 +27,16 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
         <div>
             {/* If there is more than one faculty member on a project, create a carousel; Otherwise, don't */}
             {facultyMembersNum > 1 ? (
-                <Carousel variant='link'>
+                <Carousel variant='light' id='custom-carousel' className='custom-carousel' style={{ zIndex: 0 }}>
                     {
-                        // For each faculty member in the array, map each element to a carousel item
-                        facultyMembers.map(members =>
-                            <Carousel.Item>
+                        // Maps each faculty member in the array to a carousel item
+                        facultyMembers.map((members, index) => (
+                            <Carousel.Item key={index}>
                                 {/* Each carousel item should be composed of a profile image component and the faculty members page */}
                                 <ProfileImage size='70px'/>
                                 <h1 className='featured-text'> {members.facultyName}</h1>
                             </Carousel.Item>
-                        )
+                        ))
                     }
                 </Carousel>
             ) : (

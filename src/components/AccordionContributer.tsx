@@ -9,6 +9,7 @@ interface accordionProps{
     number: number
 }
 
+// Creates an accordion component who, in the future, will have contributer components
 function AccordionContributer(myProps: accordionProps) {
     const accordion_color = myProps.number === 1 ? 'rgb(20, 54, 100)' : 'rgb(42, 42, 43)';
     return (

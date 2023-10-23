@@ -1,5 +1,6 @@
 /* Styling for the events carousel */
 
+/* Styles container the carousel lives in */
 .carousel-container {
     display: flex;
     padding-top: 50px;
@@ -8,6 +9,7 @@
     align-items: center;
 }
 
+/* Styles the actual carousel */
 .carousel-container  .custom-carousel {
     background: rgb(20, 54, 100);
     color: black;

@@ -74,7 +74,7 @@ function FormModal() {
                 <Form.Control
                   required
                   type="email"
-                  placeholder="yourEmail@gmail.com"
+                  placeholder="name@gmail.com"
                   alt='Email Text Input'
                 />
                 <Form.Control.Feedback type="invalid">
