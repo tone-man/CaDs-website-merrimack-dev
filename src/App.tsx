@@ -3,6 +3,8 @@ import { useState } from 'react'
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import ProjectList from './components/ProjectList';
+import Header from './components/Header';
+import EventsCarousel from './components/EventsCarousel';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,10 +12,11 @@ function App() {
   return (
     <>
       <NavBar />
-      <div>
-        <ProjectList />
-      </div>
-      <div style={{ height: '200vh', background: 'lightblue' }}> </div>
+      <Header img={'src/imgs/OBCenter.jpg'} title='CaDS Faculty Led Projects!' />
+      <ProjectList />
+      <EventsCarousel />
+
+      <Footer />
       <h1>Vite + React</h1>
 
       <div className="card">

@@ -1,5 +1,7 @@
+/* Styles the modal */
+
 .customized-modal .modal-content {
-    background-color: var(--blue);
-    color: white;
-    padding: 20px;
-  }
+  background-color: var(--blue);
+  color: white;
+  padding: 20px;
+}

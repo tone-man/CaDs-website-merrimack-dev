@@ -1,0 +1,49 @@
+/* Header styling */
+
+/* This styles the banner specifically and adds the parallax effect to the image */
+.header-banner {
+    position: relative;
+    height: 30vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+
+    /* Parallax effect */
+    /* https://www.w3schools.com/howto/howto_css_parallax.asp */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* This customzies an overlay which will be present on the banner */
+.header-banner  .overlay {
+    position: relative;
+    height: 30vh;
+    width: 100%;
+    background-color: rgb(20, 54, 100);
+    opacity: .8;
+}
+
+/* Customizes the text on the banner */
+.header-banner .text {
+    position: absolute;
+    font-size: 3rem;
+    color: white;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Customizes the line on the banner */
+.header-banner .overlay .line {
+    opacity: 1 !important;
+    position: absolute;
+    border-bottom: 5px  rgb(249, 222, 74) solid;
+    width: 50vw;
+    top: 50%;
+    transform: translate(-50%, 0%);
+}
