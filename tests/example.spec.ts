@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test('Has Vite in Title', async ({ page }) => {
+test('Has Website in Title', async ({ page }) => {
   await page.goto('/');
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Vite/);
+  await expect(page).toHaveTitle(/Website/);
 });
 
 test('Button Increments on Press', async({ page }) => {

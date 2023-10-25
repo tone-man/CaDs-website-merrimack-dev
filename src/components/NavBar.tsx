@@ -75,8 +75,8 @@ function NavBar() {
                     <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
-                            <Nav.Link href="#" >Home</Nav.Link>
-                            <Nav.Link href="#">Faculty</Nav.Link>
+                            <Nav.Link href="/" >Home</Nav.Link>
+                            <Nav.Link href="/faculty">Faculty</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">
                         {/* If a user is logged in, they will see their profile image */}
@@ -99,7 +99,7 @@ function NavBar() {
             {/* The second nav bar styling */}
             <Navbar expand="sm" className="second-navbar" id="secondNavBar" style={{ display: 'block' }}>
                <Container>
-                    <Navbar.Brand href="#">
+                    <Navbar.Brand target='_blank'  href="https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/faculty-staff/">
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />
                     </Navbar.Brand>
                     <div>
