@@ -1,48 +1,56 @@
 /* Styling for page section of the dashboard page */
 
-/* Styling for dashboard section */
+/* Styling for dashboard page section */
 .dashboard-page-section {
     padding-top: 50px;
     padding-bottom: 50px;
     margin: auto;
 }
 
+/* Positioning title*/
 .dashboard-page-section .title {
     text-align: left;
     margin: auto;
 }
 
+/* Positioning button*/
 .dashboard-page-section .create-new-button {
     text-align: right;
 }
 
+/* Styling the button of the page section */
 .dashboard-page-section .create-new-button Button {
     font-size: 1.25rem;
     background-color: var(--blue);
     border-radius: 40px;
 }
 
+/* Add borders to page-container*/
 .dashboard-page-section .page-container {
     border-left: 1px solid black;
     border-right: 1px solid black;
 }
 
+/* Style the rows of the page-container */
 .dashboard-page-section .page-container .rows {
     padding: 20px;
     width: 98%;
     margin: auto;
 }
 
+/* Style the actual page name in the row */
 .dashboard-page-section .page-container .rows .page-name {
     text-align: left;
 }
 
+/* Style the actual redirecting button */
 .dashboard-page-section .page-container .rows .link-button {
     background-color: var(--blue);
     border-radius: 50px;
     font-size: 1.25rem;
 }
 
+/* Style the empty text that will appear when there are no pages */
 .dashboard-page-section .page-container .empty {
     color: red;
     text-align: center;
