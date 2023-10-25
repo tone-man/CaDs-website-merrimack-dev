@@ -1,0 +1,50 @@
+/* Styling for page section of the dashboard page */
+
+/* Styling for dashboard section */
+.dashboard-page-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: auto;
+}
+
+.dashboard-page-section .title {
+    text-align: left;
+    margin: auto;
+}
+
+.dashboard-page-section .create-new-button {
+    text-align: right;
+}
+
+.dashboard-page-section .create-new-button Button {
+    font-size: 1.25rem;
+    background-color: var(--blue);
+    border-radius: 40px;
+}
+
+.dashboard-page-section .page-container {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.dashboard-page-section .page-container .rows {
+    padding: 20px;
+    width: 98%;
+    margin: auto;
+}
+
+.dashboard-page-section .page-container .rows .page-name {
+    text-align: left;
+}
+
+.dashboard-page-section .page-container .rows .link-button {
+    background-color: var(--blue);
+    border-radius: 50px;
+    font-size: 1.25rem;
+}
+
+.dashboard-page-section .page-container .empty {
+    color: red;
+    text-align: center;
+    padding: 10px;
+ }

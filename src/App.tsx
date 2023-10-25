@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route }
     from 'react-router-dom';
 import Home from './pages/index';
 import FacultyDirectory from './pages/facultyDirectory';
+import Dashboard from './pages/dashboard';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import './App.css'
 
 // Add routing
 // https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/#
@@ -17,6 +19,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/faculty' element={<FacultyDirectory />} />
+                    <Route path='/dashboard' element={<Dashboard />} />
                 </Routes>
                 <Footer />
                 <div className="card">

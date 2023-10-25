@@ -14,7 +14,7 @@ footer {
     border-top: 5px solid var(--yellow);
     min-height: 50vh;
     background: RGB(30, 30, 30);
-    width: 100%;
+    
 }
 
 /* Styling for each row in the footer */

@@ -48,7 +48,7 @@
 
 /* Resizes the event image container on screen resizing */
 @media screen and (max-width: 1600px) {
-   .image-container{
-      min-width: 400px;
+    .event-card .image-container{
+      min-width: 350px;
     }
   }

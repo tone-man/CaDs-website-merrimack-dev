@@ -77,12 +77,13 @@ function NavBar() {
                         <Nav className="mr-auto">
                             <Nav.Link href="/" >Home</Nav.Link>
                             <Nav.Link href="/faculty">Faculty</Nav.Link>
+                            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">
                         {/* If a user is logged in, they will see their profile image */}
                             {isLoggedIn ? (
                                 <Nav.Link href="#">
-                                 <ProfileImage size='50px'/>
+                                 <ProfileImage size='50px' position='mx-auto'/>
                                 </Nav.Link>
                             ) : (
                                //  If a user is not logged in, they will see the log in button 

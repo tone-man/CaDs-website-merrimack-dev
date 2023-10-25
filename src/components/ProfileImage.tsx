@@ -7,14 +7,15 @@ import merrimackLogo from '../imgs/logo.webp';
 //TODO : Actually load in image correctly after we can fetch images successfully from the database
 interface myImageProps {
     image?: string,
-    size: string
+    size: string,
+    position: string
 }
 
 // Creates a profile image component
 function ProfileImage(myProps: myImageProps) {
     return (
-            // Determines positioning and size of profile picture image
-            <div className='mx-auto' style={{ width: myProps.size, height: myProps.size }}>
+        // Determines positioning and size of profile picture image
+        <div className= {myProps.position} style={{ width: myProps.size, height: myProps.size }}>
             {/* Creates a rounded image */}
             <Image
                 className="rounded-circle overflow-hidden"

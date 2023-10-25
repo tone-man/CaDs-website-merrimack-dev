@@ -2,7 +2,7 @@ import '../css/header.css'
 import { Col } from 'react-bootstrap';
 
 interface headerProps {
-  img: string;
+  img?: string;
   title: string;
 }
 
@@ -13,7 +13,7 @@ function Header(myProps: headerProps) {
       <Col md={12} xs={12}>
         <div className='header-banner' style={{ backgroundImage: `url(${myProps.img})` }}>
           {/* Add blue overlay */}
-          <div className="overlay">
+          <div className="overlay" style={ myProps.img ? {} : { opacity:'1'} }  >
             {/*Add yellow line */}
             <div className='line' />
           </div>
