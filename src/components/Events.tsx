@@ -18,7 +18,7 @@ export interface myEventProps {
 function Events(props: myEventProps) {
     return (
         <div>
-            <Card className='event-card'>
+            <Card className='event-card' style={{background: 'rgb(20, 54, 100)', color : 'white'}}>
                 <Card.Body>
                     <Row>
                         {/* Event Title */}

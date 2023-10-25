@@ -5,6 +5,7 @@ import ProjectCard, { myProjectProps } from './ProjectCard';
 import { facultyMembers } from './FacultyCarousel';
 import '../css/universal.css'
 import '../css/ProjectList.css'
+import Header from './Header';
 
 // Create an empty array of project component.
 const projectsArray: myProjectProps[] = [];
@@ -56,6 +57,7 @@ makeProjects(projectsArray, projectValues, facultyArray);
 function ProjectList() {
     return (
         <>
+         <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects!' />
             <Container fluid style={{ background: 'rgb(199, 201, 202)' }}>
                 <Container className='projects-container'>
                 <Row>
