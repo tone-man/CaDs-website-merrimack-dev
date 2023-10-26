@@ -17,7 +17,7 @@ interface myRequestProps {
     requests: requestProps[],
 }
 
-function PageSection(myProps: myRequestProps) {
+function RequestSection(myProps: myRequestProps) {
     return (
         <div style={{background: 'lightgrey'}}>
             <Container>
@@ -31,19 +31,18 @@ function PageSection(myProps: myRequestProps) {
 
                         <div className='request-container scroll'  style={myProps.requests.length ===0 ? { height:'auto'} : {height : '450px'}}  >
                             {myProps.requests.length !== 0 ? (
-                                myProps.requests.map((requests) => (
-                                    <div style={{borderTop: '1px black solid'}}>
+                                myProps.requests.map((requests, index) => (
+                                    <div style={index !==0 ? {borderTop: '1px black solid'} : {}}>
                                         <Row className='rows ml-auto'>
-                                            <Col md={1} sm={3} xs={3} className='profile-image'>
-                                                <ProfileImage size='75px' position='ml-auto' />
+                                            <Col md={2} sm={2} xs={4} className='profile-image' >
+                                                <ProfileImage size='60px' position='ml-auto' />
                                             </Col>
-                                            <Col md={10} sm={6} xs={6} className='title'>
+                                            <Col md={9} sm={10} xs={8} className='title'>
                                                 <h3>
                                                     {requests.requestName}
                                                 </h3>
                                             </Col>
-
-                                            <Col md={1} sm={3} xs={3} className='new-page-button'>
+                                            <Col md={1} sm={4} xs={4} className='new-page-button'>
                                                 <a href={requests.requestLink}>
                                                     <Button className='link-button'><i className="bi bi-arrow-right"></i></Button>
                                                 </a>
@@ -68,4 +67,4 @@ function PageSection(myProps: myRequestProps) {
     )
 }
 
-export default PageSection;
+export default RequestSection;

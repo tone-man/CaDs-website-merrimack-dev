@@ -40,6 +40,7 @@
     padding: 20px;
     width: 100%;
     margin: auto;
+    width: 95%;
 }
 
 /* Style the actual page name in the row */
@@ -76,8 +77,7 @@
 
 /* Changes alignment of columns on resizing */
 @media screen and (max-width: 800px) {
-    .dashboard-page-section .title,
-    .dashboard-page-section .create-new-button {
+    .dashboard-page-section .title{
         text-align: center;
     }
 }

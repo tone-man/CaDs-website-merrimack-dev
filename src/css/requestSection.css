@@ -40,7 +40,13 @@
 /* Style the rows of the request-container */
 .dashboard-request-section .request-container .rows {
     padding: 20px;
-    width: 98%;
+    margin: auto;
+    width: 95%;
+}
+
+/* Style the rows of the request-container */
+.dashboard-request-section .request-container .profile-image {
+    margin: 20px;
     margin: auto;
 }
 
@@ -49,12 +55,24 @@
     text-align: left;
 }
 
+/* Style the container for the redirecting button */
+.request-container .rows .new-page-button {
+    margin: auto;
+}
+
 /* Style the actual redirecting button */
-.dashboard-request-section .request-container .rows .link-button {
+.request-container .rows .new-page-button .link-button {
     background-color: var(--blue);
     border-radius: 50px;
     font-size: 1.25rem;
 }
+
+/* Style for hovering over button */
+.request-container .new-page-button .link-button:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
 
 /* Style the empty text that will appear when there are no requests */
 .dashboard-request-section .request-container .empty {
@@ -62,3 +80,11 @@
     text-align: center;
     padding: 10px;
  }
+
+ /* Changes alignment of columns on resizing */
+@media screen and (max-width: 800px) {
+    .dashboard-request-section .request-container .rows .page-name,
+    .dashboard-request-section .request-container .rows    {
+        text-align: center;
+    }
+}
