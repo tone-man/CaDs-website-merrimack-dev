@@ -3,9 +3,9 @@
 /*  /* Styling for individual members in the whitelist container */
 .individual-whitelist {
     width: 100%;
-    border: 1px black solid;
     padding: 20px;
     margin: auto;
+    border-bottom: 1px black solid;
 }
 
 /* Styling to make things have margin: auto */
@@ -23,8 +23,8 @@
 .individual-whitelist .delete-button{
     background-color: white;
     color: black;
-    border: 1px black solid;
     border-radius: 20px;
+    border: 1px black solid
  }
 
  

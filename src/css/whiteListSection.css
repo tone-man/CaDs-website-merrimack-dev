@@ -25,13 +25,14 @@
 
 /* Container for actual individuals on the whitelis */
 .whitelist-container {
+    margin: auto;
     height: 400px;
-    width: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     text-align:justify;
-    border: 1px black solid;
     grid-gap: 0px;
+    border: 1px black solid;
+    background-color: white;
 }
 
 /* Make scrollbar not appear */
@@ -54,16 +55,18 @@
 
 /* Search bar */
 .search-bar{
+    margin: auto;
     padding: 20px 0px;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 
 /* Search bar styling */
 .search-bar-style{
     border: 1px black solid;
     border-radius: 20px;
+    
+    background-color: white;
 }
 
 
