@@ -5,28 +5,46 @@
     width: 100%;
     padding: 20px;
     margin: auto;
-    border-bottom: 1px black solid;
 }
 
 /* Styling to make things have margin: auto */
-.individual-whitelist .margin-auto{
-   margin: auto;
+.individual-whitelist .margin-auto {
+    margin: auto;
 }
 
 /* Styling for edit button */
-.individual-whitelist .edit-button{
+.individual-whitelist .name {
+    text-align: left;
+    margin: auto;
+}
+
+/* Styling for edit button */
+.individual-whitelist .edit-button {
     background-color: var(--blue);
     border-radius: 20px;
- }
+}
 
- /* Styling for delete button */
-.individual-whitelist .delete-button{
+/* Styling for edit button */
+.individual-whitelist .edit-button:hover {
+    background-color: lightblue;
+}
+
+/* Styling for delete button */
+.individual-whitelist .delete-button {
     background-color: white;
     color: black;
     border-radius: 20px;
     border: 1px black solid
- }
+}
 
- 
- 
+/* Styling for delete button */
+.individual-whitelist .delete-button:hover {
+    background-color: lightslategrey;
+}
 
+
+@media screen and (max-width: 800px) {
+    .individual-whitelist .name {
+        text-align: center;
+    }
+}
