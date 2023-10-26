@@ -32,6 +32,7 @@ const dashboard = () => {
     return (
         <div>
             <Header title="User {UserName}'s Dashboard Page "/>
+            
             <PageSection pages={pageArray} />
             <RequestSection requests={requestArray}/>
             <WhiteListSection/>

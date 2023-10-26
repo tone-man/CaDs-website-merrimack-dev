@@ -5,6 +5,7 @@
     padding-top: 50px;
     padding-bottom: 50px;
     margin: auto;
+    width: 80%;
 }
 
 /* Positioning title*/
@@ -16,38 +17,54 @@
 /* Positioning button*/
 .dashboard-page-section .create-new-button {
     text-align: right;
+    margin: auto;
 }
 
 /* Styling the button of the page section */
 .dashboard-page-section .create-new-button Button {
     font-size: 1.25rem;
     background-color: var(--blue);
-    border-radius: 40px;
+    border-radius: 20px;
 }
 
 /* Add borders to page-container*/
 .dashboard-page-section .page-container {
     border-left: 1px solid black;
     border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    background-color: white;
 }
 
 /* Style the rows of the page-container */
 .dashboard-page-section .page-container .rows {
     padding: 20px;
-    width: 98%;
+    width: 100%;
     margin: auto;
 }
 
 /* Style the actual page name in the row */
-.dashboard-page-section .page-container .rows .page-name {
+.page-container .rows .page-name {
     text-align: left;
+    margin: auto;
+}
+
+/* Style the container for the redirecting button */
+.page-container .rows .new-page-button {
+    padding: 10px;
+    margin: auto;
 }
 
 /* Style the actual redirecting button */
-.dashboard-page-section .page-container .rows .link-button {
+.new-page-button .link-button {
     background-color: var(--blue);
     border-radius: 50px;
     font-size: 1.25rem;
+}
+
+/* Style for hovering over button */
+.new-page-button .link-button:hover {
+    background-color: var(--white);
+    color: var(--black);
 }
 
 /* Style the empty text that will appear when there are no pages */
@@ -55,4 +72,12 @@
     color: red;
     text-align: center;
     padding: 10px;
- }
+}
+
+/* Changes alignment of columns on resizing */
+@media screen and (max-width: 800px) {
+    .dashboard-page-section .title,
+    .dashboard-page-section .create-new-button {
+        text-align: center;
+    }
+}

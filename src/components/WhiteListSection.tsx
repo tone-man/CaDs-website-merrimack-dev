@@ -63,11 +63,11 @@ function WhiteListSection() {
     }
 
     return (
-        <div style={{ paddingBottom: '50px' }}>
+        <div style={{ paddingBottom: '50px', background: 'lightgrey'}}>
             {/* White List Title and Add User section */}
             <Container>
                 <div className='dashboard-whitelist-title'>
-                    <Row style={{ paddingBottom: '20px' }}>
+                    <Row style={{ paddingBottom: '20px', width: '90%', margin: 'auto' }}>
                         <Col className='title' >
                             <h1> WHITELIST</h1>
                         </Col >
@@ -111,7 +111,7 @@ function WhiteListSection() {
                             ))
                         ) :
                             (
-                                <h3 className='empty'> <i>Sorry! No users were found matching that search key</i></h3>
+                                <h3 className='empty'> <i>No users were found</i></h3>
                             )
                         }
                     </div>

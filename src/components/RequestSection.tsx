@@ -19,7 +19,7 @@ interface myRequestProps {
 
 function PageSection(myProps: myRequestProps) {
     return (
-        <div>
+        <div style={{background: 'lightgrey'}}>
             <Container>
                 <div className='dashboard-request-section'>
                     <Row style={{ paddingBottom: '20px' }}>
@@ -29,10 +29,10 @@ function PageSection(myProps: myRequestProps) {
 
                     </Row>
 
-                        <div className='request-container scroll'  style={ myProps.requests.length ===0 ? { height:'auto'} : {height : '450px'} }  >
+                        <div className='request-container scroll'  style={myProps.requests.length ===0 ? { height:'auto'} : {height : '450px'}}  >
                             {myProps.requests.length !== 0 ? (
                                 myProps.requests.map((requests) => (
-                                    <div style={{border: '1px black solid' }}>
+                                    <div style={{borderTop: '1px black solid'}}>
                                         <Row className='rows ml-auto'>
                                             <Col md={1} sm={3} xs={3} className='profile-image'>
                                                 <ProfileImage size='75px' position='ml-auto' />
