@@ -2,6 +2,7 @@
 import Header from "../components/Header";
 import PageSection, {pageProps} from '../components/PageSection';
 import RequestSection, {requestProps} from '../components/RequestSection';
+import WhiteListSection from "../components/WhiteListSection";
 
 
 
@@ -26,15 +27,14 @@ const requestArray: requestProps[] = [
 ];
 
 
+
 const dashboard = () => {
     return (
         <div>
             <Header title="User {UserName}'s Dashboard Page "/>
             <PageSection pages={pageArray} />
-
             <RequestSection requests={requestArray}/>
-
-           <h1> This is the dashboard page</h1>
+            <WhiteListSection/>
         </div>
     );
 };

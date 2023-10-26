@@ -35,7 +35,7 @@ function PageSection(myProps: myRequestProps) {
                                     <div style={{border: '1px black solid' }}>
                                         <Row className='rows ml-auto'>
                                             <Col md={1} sm={3} xs={3} className='profile-image'>
-                                                <ProfileImage size='50px' position='ml-auto' />
+                                                <ProfileImage size='75px' position='ml-auto' />
                                             </Col>
                                             <Col md={10} sm={6} xs={6} className='title'>
                                                 <h3>

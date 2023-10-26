@@ -17,6 +17,11 @@
     border: 1px black solid;
 }
 
+/* Make scrollbar not appear */
+.dashboard-request-section .scroll::-webkit-scrollbar {
+    display: none;
+}
+
 /* Positioning title*/
 .dashboard-request-section .title {
     text-align: left;

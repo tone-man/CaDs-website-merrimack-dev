@@ -33,7 +33,7 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
                         facultyMembers.map((members, index) => (
                             <Carousel.Item key={index}>
                                 {/* Each carousel item should be composed of a profile image component and the faculty members page */}
-                                <ProfileImage size='70px'/>
+                                <ProfileImage size='70px' position='mx-auto'/>
                                 <h1 className='featured-text'> {members.facultyName}</h1>
                             </Carousel.Item>
                         ))
@@ -42,7 +42,7 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
             ) : (
                 // Otherwise, just create one profile image/faculty name
                 <>
-                    <ProfileImage size='70px'/>
+                    <ProfileImage size='70px' position='mx-auto'/>
                     <h1 className='featured-text'> {facultyMembers[0].facultyName}</h1>
                 </>
             )}

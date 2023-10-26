@@ -1,0 +1,32 @@
+/* Styling for individual members in the whitelist container */
+
+/*  /* Styling for individual members in the whitelist container */
+.individual-whitelist {
+    width: 100%;
+    border: 1px black solid;
+    padding: 20px;
+    margin: auto;
+}
+
+/* Styling to make things have margin: auto */
+.individual-whitelist .margin-auto{
+   margin: auto;
+}
+
+/* Styling for edit button */
+.individual-whitelist .edit-button{
+    background-color: var(--blue);
+    border-radius: 20px;
+ }
+
+ /* Styling for delete button */
+.individual-whitelist .delete-button{
+    background-color: white;
+    color: black;
+    border: 1px black solid;
+    border-radius: 20px;
+ }
+
+ 
+ 
+

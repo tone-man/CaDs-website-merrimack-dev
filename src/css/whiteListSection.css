@@ -1,0 +1,69 @@
+/* Styling for whitelist section of the dashboard page */
+
+/* Styling for dashboard page section */
+.dashboard-whitelist-title {
+    padding-top: 50px;
+    margin: auto;
+}
+
+/* Positioning title*/
+.dashboard-whitelist-title .title {
+    text-align: left;
+    margin: auto;
+}
+
+/* Positioning button*/
+.dashboard-whitelist-title .button {
+    text-align: right;
+}
+
+/* Change color and cursor upon hovering over icon*/
+.dashboard-whitelist-title .button .icon:hover {
+    color: red;
+    cursor: pointer;
+}
+
+/* Container for actual individuals on the whitelis */
+.whitelist-container {
+    height: 400px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align:justify;
+    border: 1px black solid;
+    grid-gap: 0px;
+}
+
+/* Make scrollbar not appear */
+.whitelist-container::-webkit-scrollbar {
+    display: none;
+}
+
+ /* Style the empty text that will appear when there are no requests */
+ .whitelist-container .empty {
+    color: red;
+    text-align: center;
+    padding: 10px;
+ }
+
+ /* Individual user for whitelist */
+.whitelist-container .cell{
+    width: 100%;
+    height: fit-content;
+}
+
+/* Search bar */
+.search-bar{
+    padding: 20px 0px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Search bar styling */
+.search-bar-style{
+    border: 1px black solid;
+    border-radius: 20px;
+}
+
+

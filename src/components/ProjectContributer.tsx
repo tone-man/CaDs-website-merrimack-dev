@@ -10,7 +10,7 @@ function ProjectContributer() {
                     <Col md={12} xs={12} className='contributor-container'>
                         <Row>
                             <Col md={4} xs={12}>
-                                <ProfileImage size='70px' />
+                                <ProfileImage size='70px' position='mx-auto' />
                                 <h1 className='featured-text' style={{ color: 'black' }}> Faculty Name</h1>
                             </Col>
                             <Col md={8} xs={12}>
