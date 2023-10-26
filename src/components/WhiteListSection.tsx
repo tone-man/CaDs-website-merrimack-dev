@@ -5,7 +5,6 @@ import { useRef, useState } from 'react';
 import WhiteListIndividual, { userProps } from './WhiteListIndividual';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
-import { off } from 'process';
 
 
 //Create an array of user objects for the whitelist
@@ -25,7 +24,7 @@ const userArray: userProps[] = [
 ];
 
 
-// This component creates the basic container for those on the whitelis
+// This component creates the basic container for those on the whitelist
 function WhiteListSection() {
 
     const searchBarRef = useRef<HTMLInputElement | null>(null);
@@ -56,7 +55,7 @@ function WhiteListSection() {
         setVisibleUsers(keptUsers);
     }
 
-    // Add user
+    // Adds user. Doesn't let user customize new user info atm
     function addUser(name: string, image: string) {
         const newUser: userProps = { userImage: image, userName: name, id: 10 }
         setOfficialUsers([...officialUsers, newUser]);
