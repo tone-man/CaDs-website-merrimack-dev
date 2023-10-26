@@ -63,58 +63,64 @@ function WhiteListSection() {
     }
 
     return (
-        <div style={{ paddingBottom: '50px', background: 'lightgrey'}}>
+        <div style={{ paddingBottom: '50px', background: 'lightgrey' }}>
             {/* White List Title and Add User section */}
+
             <Container>
-                <div className='dashboard-whitelist-title'>
-                    <Row style={{ paddingBottom: '20px', width: '90%', margin: 'auto' }}>
-                        <Col className='title' >
-                            <h1> WHITELIST</h1>
-                        </Col >
-                        <Col className='button' md={3} sm={5} xs={5}>
-                            <i className="bi bi-plus icon"  onClick={() => addUser('name', 'image')} aria-label='Add User Icon' style={{ fontSize: '3rem' }}></i>
+                <div className='dashboard-whitelist-section'>
+                    <Container>
+
+                        <div className='dashboard-whitelist-title'>
+                            <Row style={{ paddingBottom: '10px' }}>
+                                <Col className='title' >
+                                    <h1> WHITELIST</h1>
+                                </Col >
+                            </Row>
+                        </div>
+                    </Container >
+
+
+                    {/* Search Bar */}
+                    <div className="input-group search-bar">
+                        <InputGroup className='container search-bar-style'>
+                            <FormControl id="searchBar"
+                                placeholder="Search.."
+                                aria-label="Search Bar"
+                                ref={searchBarRef}
+                            />
+                            {/* Searches for term */}
+                            <Button className="searchIcon">
+                                <i className={"bi bi-search"} style={{ fontSize: '2rem' }} onClick={search} aria-label='Search Bar Icon'></i>
+                            </Button>
+                            {/* Resets Search bar */}
+                            <Button className="searchIcon">
+                                <i className={"bi bi-x"} style={{ fontSize: '2rem' }} onClick={clearSearch} aria-label='Clear Search Bar Icon'></i>
+                            </Button>
+                        </InputGroup>
+                    </div>
+
+                    {/* Actual Container for the white list */}
+                    <div className='whitelist-container'>
+                        <div className='scroll'>
+                            {/* Display empty text if there are no whitelist users, otherwise display users */}
+                            {visibleUsers.length > 0 ? (
+                                // Maps each user  in the array to a whitelist 
+                                visibleUsers.map((user, index) => (
+                                    <div className='cell' style={index !== 0 ? { borderTop: '1px black solid' } : {}}>
+                                        <WhiteListIndividual key={user.id} onDelete={() => deleteUser(user.id)} myProps={{ id: user.id, userName: user.userName, userImage: user.userImage }} />
+                                    </div>
+                                ))
+                            ) :
+                                (<h3 className='empty'> <i>No users were found</i></h3>)
+                            }
+                        </div>
+                    </div>
+                    {/* New Project Button */}
+                    <Row style={{ paddingTop: '20px' }}>
+                        <Col  className='add-user-button'>
+                            <Button onClick={() => addUser('name', 'image')} aria-label='Add User Icon'> Add New User</Button>
                         </Col>
                     </Row>
-                </div>
-            </Container >
-
-            <Container>
-                {/* Search Bar */}
-                <div className="input-group search-bar">
-                    <InputGroup className='container search-bar-style'>
-                        <FormControl id="searchBar"
-                            placeholder="Search.."
-                            aria-label="Search Bar"
-                            ref={searchBarRef}
-                        />
-                        {/* Searches for term */}
-                        <Button className="searchIcon">
-                            <i className={"bi bi-search"} style={{ fontSize: '2rem' }} onClick={search} aria-label='Search Bar Icon'></i>
-                        </Button>
-                        {/* Resets Search bar */}
-                        <Button className="searchIcon">
-                            <i className={"bi bi-x"} style={{ fontSize: '2rem' }} onClick={clearSearch} aria-label='Clear Search Bar Icon'></i>
-                        </Button>
-                    </InputGroup>
-                </div>
-
-                {/* Actual Container for the white list */}
-                <div className='whitelist-container'>
-                    <div className='scroll'>
-                        {/* Display empty text if there are no whitelist users, otherwise display users */}
-                        {visibleUsers.length > 0 ? (
-                            // Maps each user  in the array to a whitelist 
-                            visibleUsers.map((user) => (
-                                <div className='cell'>
-                                    <WhiteListIndividual key={user.id} onDelete={() => deleteUser(user.id)} myProps={{ id: user.id, userName: user.userName, userImage: user.userImage }} />
-                                </div>
-                            ))
-                        ) :
-                            (
-                                <h3 className='empty'> <i>No users were found</i></h3>
-                            )
-                        }
-                    </div>
                 </div>
             </Container >
 

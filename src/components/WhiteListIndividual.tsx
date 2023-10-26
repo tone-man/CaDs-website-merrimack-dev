@@ -28,11 +28,11 @@ function WhiteListIndividual({myProps, onDelete}: WhiteListIndividualProps) {
             <Container fluid className='individual-whitelist'>
                 <Row style={{ margin: 'auto' }} className=' ms-auto'>
                     {/* Profile Image */}
-                    <Col md={2} sm={12} xs={12} className='margin-auto' >
-                        <ProfileImage size='75px' position='mx-auto' />
+                    <Col md={2} sm={2} xs={4}  className='margin-auto' >
+                        <ProfileImage size='60px' position='mx-auto' />
                     </Col>
                     {/* User Name */}
-                    <Col md={8} sm={12} xs={12} style={{ margin: 'auto', textAlign: 'center' }}>
+                    <Col md={8} sm={12} xs={12} className='name'>
                         <h3>{myProps.userName}</h3>
                     </Col>
                     {/* Edit and Delete Buttons */}

@@ -1,7 +1,29 @@
 /* Styling for whitelist section of the dashboard page */
 
 /* Styling for dashboard page section */
-.dashboard-whitelist-title {
+.dashboard-whitelist-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: auto;
+    width: 80%;
+}
+
+/* Positioning button*/
+.dashboard-whitelist-section .add-user-button {
+    text-align: right;
+    margin: auto;
+}
+
+/* Styling the button of the page section */
+.dashboard-whitelist-section .add-user-button Button {
+    font-size: 1.25rem;
+    background-color: var(--blue);
+    border-radius: 20px;
+}
+
+
+/* Styling for dashboard page section */
+.dashboard-whitelist-section .dashboard-whitelist-title {
     padding-top: 50px;
     margin: auto;
 }
@@ -65,8 +87,12 @@
 .search-bar-style{
     border: 1px black solid;
     border-radius: 20px;
-    
     background-color: white;
 }
 
-
+/* Styling add user button upon screen resizing */
+@media screen and (max-width: 800px) {
+    .dashboard-whitelist-section .add-user-button  {
+        text-align: center;
+    }
+}
