@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import WhiteListIndividual, { userProps } from './WhiteListIndividual';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
+import { off } from 'process';
 
 
 //Create an array of user objects for the whitelist
@@ -52,7 +53,14 @@ function WhiteListSection() {
     function deleteUser(id: number) {
         const keptUsers = officialUsers.filter(user => user.id !== id);
         setOfficialUsers(keptUsers);
-        clearSearch();
+        setVisibleUsers(keptUsers);
+    }
+
+    // Add user
+    function addUser(name: string, image: string) {
+        const newUser: userProps = { userImage: image, userName: name, id: 10 }
+        setOfficialUsers([...officialUsers, newUser]);
+        setVisibleUsers([...officialUsers, newUser]);
     }
 
     return (
@@ -65,7 +73,7 @@ function WhiteListSection() {
                             <h1> WHITELIST</h1>
                         </Col >
                         <Col className='button' md={3} sm={5} xs={5}>
-                            <i className="bi bi-plus icon" aria-label='Add User Icon' style={{ fontSize: '3rem' }}></i>
+                            <i className="bi bi-plus icon"  onClick={() => addUser('name', 'image')} aria-label='Add User Icon' style={{ fontSize: '3rem' }}></i>
                         </Col>
                     </Row>
                 </div>
