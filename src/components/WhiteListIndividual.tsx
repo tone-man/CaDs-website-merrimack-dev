@@ -7,11 +7,22 @@ import '../css/whiteListIndividual.css'
 // Interface for the user props
 export interface userProps {
     userName: string,
-    userImage: string
+    userImage: string,
+    id: number
 }
 
+interface WhiteListIndividualProps {
+    myProps: {
+        userName: string;
+        userImage: string;
+        id: number;
+    };
+    onDelete: () => void; // onDelete prop with a function signature
+}
+
+
 // Creates individual persons content for the whitelist container
-function WhiteListIndividual(myProps: userProps) {
+function WhiteListIndividual({myProps, onDelete}: WhiteListIndividualProps) {
     return (
         <div>
             <Container fluid className='individual-whitelist'>
@@ -30,7 +41,7 @@ function WhiteListIndividual(myProps: userProps) {
                             <Button className='edit-button'>Edit</Button>
                         </Row>
                         <Row style={{ padding: '10px' }}>
-                            <Button className='delete-button'>Delete</Button>
+                            <Button className='delete-button' onClick={onDelete}>Delete</Button>
                         </Row>
                     </Col>
                 </Row>
