@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Col, Row, Button } from 'react-bootstrap'
-import '../css/pageSections.css'
+import '../css/pageSection.css'
 
 export interface pageProps {
     pageName: string,

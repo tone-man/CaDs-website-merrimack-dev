@@ -1,7 +1,7 @@
 
 import Header from "../components/Header";
 import PageSection, {pageProps} from '../components/PageSection';
-// import RequestSection, {requestProps} from '../components/RequestSection';
+import RequestSection, {requestProps} from '../components/RequestSection';
 
 
 
@@ -13,17 +13,17 @@ const pageArray: pageProps[] = [
 ];
 
 
-// const requestArray: requestProps[] = [
-//     { requestName: 'New Project $ProjectName', requestLink: '/' },
-//     { requestName: 'New User Application', requestLink: '/' },
-//     { requestName: 'Request to be Featured', requestLink: '/' },
-//     { requestName: 'New Project $ProjectName', requestLink: '/' },
-//     { requestName: 'New User Application', requestLink: '/' },
-//     { requestName: 'Request to be Featured', requestLink: '/' },
-//     { requestName: 'New Project $ProjectName', requestLink: '/' },
-//     { requestName: 'New User Application', requestLink: '/' },
-//     { requestName: 'Request to be Featured', requestLink: '/' }
-// ];
+const requestArray: requestProps[] = [
+    { requestName: 'New Project $ProjectName', requestLink: '/' },
+    { requestName: 'New User Application', requestLink: '/' },
+    { requestName: 'Request to be Featured', requestLink: '/' },
+    { requestName: 'New Project $ProjectName', requestLink: '/' },
+    { requestName: 'New User Application', requestLink: '/' },
+    { requestName: 'Request to be Featured', requestLink: '/' },
+    { requestName: 'New Project $ProjectName', requestLink: '/' },
+    { requestName: 'New User Application', requestLink: '/' },
+    { requestName: 'Request to be Featured', requestLink: '/' }
+];
 
 
 const dashboard = () => {
@@ -32,7 +32,7 @@ const dashboard = () => {
             <Header title="User {UserName}'s Dashboard Page "/>
             <PageSection pages={pageArray} />
 
-            {/* <RequestSection requests={requestArray}/> */}
+            <RequestSection requests={requestArray}/>
 
            <h1> This is the dashboard page</h1>
         </div>

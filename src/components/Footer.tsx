@@ -7,7 +7,7 @@ import '../css/footer.css';
 // This creates the footer component
 function Footer() {
     return (
-        <footer style={{border: '5px red solid'}}>
+        <footer>
             <Container>
                 <Row className='footer-row'>
                     <Col md={{ span: 4, offset: 0 }} sm={12} xs={12} >

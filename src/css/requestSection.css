@@ -1,0 +1,55 @@
+/* Styling for page section of the dashboard page */
+
+/* Styling for dashboard page section */
+.dashboard-request-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: auto;
+}
+
+/* Allows user to scroll through the requests */
+/* https://stackoverflow.com/questions/8631799/make-scrollbars-only-visible-when-a-div-is-hovered-over */
+.dashboard-request-section .scroll {
+    height: 450px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align:justify;
+    border: 1px black solid;
+}
+
+/* Positioning title*/
+.dashboard-request-section .title {
+    text-align: left;
+    margin: auto;
+}
+
+/* Add borders to request-container*/
+.dashboard-request-section .request-container {
+    border: 1px black solid;
+}
+
+/* Style the rows of the request-container */
+.dashboard-request-section .request-container .rows {
+    padding: 20px;
+    width: 98%;
+    margin: auto;
+}
+
+/* Style the actual request title in the row */
+.dashboard-request-section .request-container .rows .page-name {
+    text-align: left;
+}
+
+/* Style the actual redirecting button */
+.dashboard-request-section .request-container .rows .link-button {
+    background-color: var(--blue);
+    border-radius: 50px;
+    font-size: 1.25rem;
+}
+
+/* Style the empty text that will appear when there are no requests */
+.dashboard-request-section .request-container .empty {
+    color: red;
+    text-align: center;
+    padding: 10px;
+ }
