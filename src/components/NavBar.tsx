@@ -1,16 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Container, FormControl, InputGroup , Nav, Navbar} from 'react-bootstrap';
 import '../css/navBar.css';
+import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
+import { getAuth, signInWithRedirect, GoogleAuthProvider} from 'firebase/auth';
+import { AuthContext } from '../App';
 
 // Component to create the nav bar
 function NavBar() {
     // Declare useState variables and useRef variables
     const [isFocused, setIsFocused] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const user = useContext(AuthContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
 
     // This useEffect displays/hides the search bar when isFocused changes
@@ -81,14 +84,18 @@ function NavBar() {
                         </Nav>
                         <Nav className="ms-auto">
                         {/* If a user is logged in, they will see their profile image */}
-                            {isLoggedIn ? (
+                            {(user != null) ? (
                                 <Nav.Link href="#">
-                                 <ProfileImage size='50px' position='mx-auto'/>
+                                 <ProfileImage size='50px' position='mx-auto' image={user.photoURL}/>
                                 </Nav.Link>
                             ) : (
                                //  If a user is not logged in, they will see the log in button 
                                 <div className='mr-auto'>
-                                    <Button className="logInButton" onClick={() => setIsLoggedIn(true)}>
+                                    <Button className="logInButton" onClick={() => {
+                                        const auth = getAuth(FireBaseApp);
+                                        const provider = new GoogleAuthProvider();
+                                        signInWithRedirect(auth, provider);
+                                    }}>
                                         Log In
                                     </Button>
                                 </div>
