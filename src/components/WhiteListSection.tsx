@@ -15,12 +15,12 @@ const userArray: userProps[] = [
     { userName: 'Antonio Craveiro', userImage: 'img', id: 4 },
     { userName: 'Stuetzle', userImage: 'img', id: 5 },
     { userName: 'Kissel', userImage: 'img', id: 6 },
-    { userName: 'John Smith', userImage: 'img', id: 7 },
-    { userName: 'Melissa St. Hilaire', userImage: 'img', id: 8 },
-    { userName: 'Bree Van Hecke', userImage: 'img', id: 9 },
-    { userName: 'Antonio Craveiro', userImage: 'img', id: 10 },
-    { userName: 'Stuetzle', userImage: 'img', id: 11 },
-    { userName: 'Kissel', userImage: 'img', id: 12 }
+    { userName: 'Jane', userImage: 'img', id: 7 },
+    { userName: 'Joe', userImage: 'img', id: 8 },
+    { userName: 'Doe', userImage: 'img', id: 9 },
+    { userName: 'Beverly', userImage: 'img', id: 10 },
+    { userName: 'Charlie', userImage: 'img', id: 11 },
+    { userName: 'No one', userImage: 'img', id: 12 }
 ];
 
 
@@ -44,14 +44,13 @@ function WhiteListSection() {
     function clearSearch() {
         if (searchBarRef.current) {
             searchBarRef.current.value = '';
-            setVisibleUsers(userArray);
+            setVisibleUsers(officialUsers);
         }
     }
 
     // Delete user if they are selected
     function deleteUser(id: number) {
         const keptUsers = officialUsers.filter(user => user.id !== id);
-        console.log(keptUsers)
         setOfficialUsers(keptUsers);
         clearSearch();
     }
