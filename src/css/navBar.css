@@ -59,12 +59,12 @@
     width: 100%;
 }
 
-.searchIcon {
+.navbar-custom.searchIcon {
     background-color: transparent !important;
     color: darkslategrey;
     border:none !important; 
 }
 
-.searchIcon:hover {
+.navbar-custom  .searchIcon:hover {
     color: white;
 }

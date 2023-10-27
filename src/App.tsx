@@ -23,7 +23,7 @@ function App() {
     const [user, setUser] = useState(null)
 
     onAuthStateChanged(auth, function(result) {
-        console.log(result);
+        // console.log(result);
         if (result) {
           setUser(result);  
         } else {
