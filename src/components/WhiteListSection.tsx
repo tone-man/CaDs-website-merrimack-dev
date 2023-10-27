@@ -1,27 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Button, Container, Col, FormControl, InputGroup, Row } from 'react-bootstrap'
-import { useRef, useState } from 'react';
+import { Container, Col, FormControl, InputGroup, Row } from 'react-bootstrap'
+import { useRef, useState, useEffect } from 'react';
 import WhiteListIndividual, { userProps } from './WhiteListIndividual';
+import AddUserModal from './AddUserModal';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
-import AddUserModal from './AddUserModal';
 
 
 //Create an array of user objects for the whitelist
 const userArray: userProps[] = [
-    { userName: 'John Smith', userImage: 'img', id: 1 },
-    { userName: 'Melissa St. Hilaire', userImage: 'img', id: 2 },
-    { userName: 'Bree Van Hecke', userImage: 'img', id: 3 },
-    { userName: 'Antonio Craveiro', userImage: 'img', id: 4 },
-    { userName: 'Stuetzle', userImage: 'img', id: 5 },
-    { userName: 'Kissel', userImage: 'img', id: 6 },
-    { userName: 'Jane', userImage: 'img', id: 7 },
-    { userName: 'Joe', userImage: 'img', id: 8 },
-    { userName: 'Doe', userImage: 'img', id: 9 },
-    { userName: 'Beverly', userImage: 'img', id: 10 },
-    { userName: 'Charlie', userImage: 'img', id: 11 },
-    { userName: 'No one', userImage: 'img', id: 12 }
+    { userName: 'John Smith', userEmail: 'johnsmith@gmail.com', userImage: 'img', id: 1 },
+    { userName: 'Melissa St. Hilaire', userEmail: 'hilaire@edu.com', userImage: 'img', id: 2 },
+    { userName: 'Bree Van Hecke', userEmail: 'vanheckeb@merrimack.edu', userImage: 'img', id: 3 },
+    { userName: 'Antonio Craveiro', userEmail: 'craveiroa@merrimack.edu', userImage: 'img', id: 4 },
+    { userName: 'Stuetzle', userEmail: 'stuetzle@gmail.com', userImage: 'img', id: 5 },
+    { userName: 'Kissel', userEmail: 'kissel@gmail.com', userImage: 'img', id: 6 },
+    { userName: 'Jane', userEmail: 'jane@gmail.com', userImage: 'img', id: 7 },
+    { userName: 'Joe', userEmail: 'joe@gmail.com', userImage: 'img', id: 8 },
+    { userName: 'Doe', userEmail: 'doe@gmail.com', userImage: 'img', id: 9 },
+    { userName: 'Beverly', userEmail: 'bev@gmail.com', userImage: 'img', id: 10 },
+    { userName: 'Charlie', userEmail: 'charlie@gmail.com', userImage: 'img', id: 11 },
+    { userName: 'No one', userEmail: 'noone@gmail.com', userImage: 'img', id: 12 }
 ];
 
 
@@ -32,7 +32,11 @@ function WhiteListSection() {
     const [visibleUsers, setVisibleUsers] = useState(userArray);
     const [officialUsers, setOfficialUsers] = useState(userArray);
 
-    // Search function
+    useEffect(() => {
+        setVisibleUsers(officialUsers);
+    }, [officialUsers]);
+
+    // Search function for whitelist
     function search() {
         if (searchBarRef.current) {
             const searchElement = searchBarRef.current.value.trim().toLowerCase();
@@ -41,33 +45,35 @@ function WhiteListSection() {
         }
     }
 
-    // Clears search and resets the visible users
-    function clearSearch() {
-        if (searchBarRef.current) {
-            searchBarRef.current.value = '';
-            setVisibleUsers(officialUsers);
-        }
-    }
-
-    // Delete user if they are selected
+    // Deletes user from whitelist
+    // TODO: Pass deleted user info back to database
     function deleteUser(id: number) {
         const keptUsers = officialUsers.filter(user => user.id !== id);
         setOfficialUsers(keptUsers);
-        setVisibleUsers(keptUsers);
     }
 
-    // Adds user. Doesn't let user customize new user info atm
-    function addUser(name: string, image: string) {
-        console.log('ADD USER FUNCTION')
-        const newUser: userProps = { userImage: image, userName: name, id: 10 }
-        setOfficialUsers([...officialUsers, newUser]);
-        setVisibleUsers([...officialUsers, newUser]);
+    // Adds user to the whitelist. 
+    //TODO: Actually pass this information back to database
+    function addUser(name: string, email: string, image: string) {
+        // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects
+        const newID = officialUsers.length > 0 ? (Math.max(...officialUsers.map(user => user.id)) + 1) : 0;
+        const newUser: userProps = { userImage: image, userEmail: email, userName: name, id: newID };
+        setOfficialUsers([newUser, ...officialUsers]);
+    }
+
+    // Edits user information in the whitelist
+    // TODO: Pass edited user information back to database
+    function editUser(id: number, name: string, email: string, image: string) {
+        setOfficialUsers(prevUsers => {
+            const updatedUsers = prevUsers.map(user => (user.id === id ? { ...user, userName: name, userEmail: email, userImage: image } : user));
+            return updatedUsers;
+        });
     }
 
     return (
         <div style={{ paddingBottom: '50px', background: 'lightgrey' }}>
-            {/* White List Title and Add User section */}
 
+            {/* White List Title*/}
             <Container>
                 <div className='dashboard-whitelist-section'>
                     <Container>
@@ -88,15 +94,9 @@ function WhiteListSection() {
                                 placeholder="Search.."
                                 aria-label="Search Bar"
                                 ref={searchBarRef}
+                                onChange={search}
+                                style={{ height: '50px', border: '1px black solid' }}
                             />
-                            {/* Searches for term */}
-                            <Button className="searchIcon">
-                                <i className={"bi bi-search"} style={{ fontSize: '2rem' }} onClick={search} aria-label='Search Bar Icon'></i>
-                            </Button>
-                            {/* Resets Search bar */}
-                            <Button className="searchIcon">
-                                <i className={"bi bi-x"} style={{ fontSize: '2rem' }} onClick={clearSearch} aria-label='Clear Search Bar Icon'></i>
-                            </Button>
                         </InputGroup>
                     </div>
 
@@ -107,8 +107,8 @@ function WhiteListSection() {
                             {visibleUsers.length > 0 ? (
                                 // Maps each user  in the array to a whitelist 
                                 visibleUsers.map((user, index) => (
-                                    <div className='cell' style={index !== 0 ? { borderTop: '1px black solid' } : {}}>
-                                        <WhiteListIndividual onDelete={() => deleteUser(user.id)} myProps={{ id: user.id, userName: user.userName, userImage: user.userImage }} />
+                                    <div style={index !== visibleUsers.length - 1 || visibleUsers.length < 3 ? { borderBottom: '1px black solid' } : {}}>
+                                        <WhiteListIndividual onDelete={() => deleteUser(user.id)} onEdit={editUser} myProps={{ id: user.id, userName: user.userName, userEmail: user.userEmail, userImage: user.userImage }} />
                                     </div>
                                 ))
                             ) :
@@ -116,13 +116,14 @@ function WhiteListSection() {
                             }
                         </div>
                     </div>
-                    {/* New Project Button */}
+
+                    {/* Add user button */}
                     <div className='positioning'>
                         <AddUserModal addUser={addUser} />
                     </div>
+
                 </div>
             </Container >
-
         </div >
     )
 }
