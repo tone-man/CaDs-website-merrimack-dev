@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import WhiteListIndividual, { userProps } from './WhiteListIndividual';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
+import AddUserModal from './AddUserModal';
 
 
 //Create an array of user objects for the whitelist
@@ -57,6 +58,7 @@ function WhiteListSection() {
 
     // Adds user. Doesn't let user customize new user info atm
     function addUser(name: string, image: string) {
+        console.log('ADD USER FUNCTION')
         const newUser: userProps = { userImage: image, userName: name, id: 10 }
         setOfficialUsers([...officialUsers, newUser]);
         setVisibleUsers([...officialUsers, newUser]);
@@ -69,7 +71,6 @@ function WhiteListSection() {
             <Container>
                 <div className='dashboard-whitelist-section'>
                     <Container>
-
                         <div className='dashboard-whitelist-title'>
                             <Row style={{ paddingBottom: '10px' }}>
                                 <Col className='title' >
@@ -107,7 +108,7 @@ function WhiteListSection() {
                                 // Maps each user  in the array to a whitelist 
                                 visibleUsers.map((user, index) => (
                                     <div className='cell' style={index !== 0 ? { borderTop: '1px black solid' } : {}}>
-                                        <WhiteListIndividual key={user.id} onDelete={() => deleteUser(user.id)} myProps={{ id: user.id, userName: user.userName, userImage: user.userImage }} />
+                                        <WhiteListIndividual onDelete={() => deleteUser(user.id)} myProps={{ id: user.id, userName: user.userName, userImage: user.userImage }} />
                                     </div>
                                 ))
                             ) :
@@ -116,11 +117,9 @@ function WhiteListSection() {
                         </div>
                     </div>
                     {/* New Project Button */}
-                    <Row style={{ paddingTop: '20px' }}>
-                        <Col  className='add-user-button'>
-                            <Button onClick={() => addUser('name', 'image')} aria-label='Add User Icon'> Add New User</Button>
-                        </Col>
-                    </Row>
+                    <div className='positioning'>
+                        <AddUserModal addUser={addUser} />
+                    </div>
                 </div>
             </Container >
 

@@ -9,16 +9,21 @@
 }
 
 /* Positioning button*/
-.dashboard-whitelist-section .add-user-button {
+.dashboard-whitelist-section  .positioning  {
     text-align: right;
     margin: auto;
 }
 
 /* Styling the button of the page section */
-.dashboard-whitelist-section .add-user-button Button {
+ .add-user-button Button {
     font-size: 1.25rem;
     background-color: var(--blue);
     border-radius: 20px;
+}
+
+/* Styling the button of the page section */
+.add-user-button Button:hover {
+    background-color: rgb(70, 104, 150);
 }
 
 
@@ -83,6 +88,7 @@
     align-items: center;
 }
 
+
 /* Search bar styling */
 .search-bar-style{
     border: 1px black solid;
@@ -95,4 +101,15 @@
     .dashboard-whitelist-section .add-user-button  {
         text-align: center;
     }
+}
+.dashboard-whitelist-section .searchIcon {
+    background-color: transparent !important;
+    background-color: white;
+    color: darkslategrey;
+    border: none !important;
+}
+
+.dashboard-whitelist-section  .searchIcon:hover {
+    color: var(--yellow);
+    background-color: var(--blue)  !important;
 }

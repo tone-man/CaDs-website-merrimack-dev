@@ -24,9 +24,9 @@
     border-radius: 20px;
 }
 
-/* Styling for edit button */
+/* Styling for edit button on hover */
 .individual-whitelist .edit-button:hover {
-    background-color: lightblue;
+    background-color: rgb(70, 104, 150);
 }
 
 /* Styling for delete button */
@@ -37,12 +37,12 @@
     border: 1px black solid
 }
 
-/* Styling for delete button */
+/* Styling for delete button on hover */
 .individual-whitelist .delete-button:hover {
-    background-color: lightslategrey;
+    background-color: var(--lightest-grey);
 }
 
-
+/* Styling the alignment of the name on screen resizing */
 @media screen and (max-width: 800px) {
     .individual-whitelist .name {
         text-align: center;
