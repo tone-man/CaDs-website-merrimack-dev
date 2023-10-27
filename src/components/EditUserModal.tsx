@@ -3,15 +3,18 @@ import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../css/formModal.css'
 import '../css/whiteListSection.css'
 
-interface addUserProps {
-    addUser: (name: string, email: string, image: string) => void;
+interface editUserProps {
+    editUser: (id: number, name: string, email: string, image: string) => void;
+    id: number,
+    name: string,
+    email: string
 }
 
-// This modal pops up to provide the user with a format to enter new user information
+// This modal pops up to allow users to edit white list user information
 // TODO: Add more information potentially
-function AddUserModal({ addUser }: addUserProps) {
+function EditUserModal({ editUser, id, name, email }: editUserProps) {
 
-
+    // UseRef and UseState variable declarations
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
     const [validated, setValidated] = useState(false);
@@ -22,80 +25,76 @@ function AddUserModal({ addUser }: addUserProps) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+        
         event.preventDefault(); // Stops typical form behavior like reloading the page
         event.stopPropagation(); // Stops other event handlers from receiving this event
-
         const form = event.currentTarget;
+
         // Checks form validity
         if (form.checkValidity()) {
-            // Gets form information and calls addUser()
+            // Gets form information and calls editUser()
             if (fullNameRef.current && emailRef.current && selectedImage) {
                 const fullName = fullNameRef.current.value;
                 const email = emailRef.current.value;
-                addUser(fullName, email, URL.createObjectURL(selectedImage));
+                editUser(id, fullName, email, URL.createObjectURL(selectedImage));
             }
+            setValidated(true);
             handleClose();
         }
-        setValidated(true);
     };
 
 
     return (
         <>
 
-            {/* Customizes the add user button */}
-            <Row style={{ paddingTop: '20px' }}>
-                <Col className='add-user-button'>
-                    <Button onClick={handleShow} aria-label='Add User Icon'> Add New User</Button>
-                </Col>
+            {/* Customizes the button */}
+            <Row style={{ padding: '10px' }}>
+                <Button className='edit-button' onClick={handleShow} >Edit</Button>
             </Row>
 
             {/* Modal with nested form components */}
             <Modal show={show} onHide={handleClose} className='customized-modal'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Request to be Featured</Modal.Title>
+                    <Modal.Title>Edit User</Modal.Title>
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
                     <Modal.Body >
-
-                        {/* Full Name Text Input */}
                         <Row className="mb-3">
+                            {/* Full Name Text Input */}
                             <Form.Group controlId="validationCustom01">
                                 <Form.Label>Full Name</Form.Label>
                                 <Form.Control
-                                    required
                                     type="text"
-                                    placeholder="John Doe"
+                                    defaultValue={name}
                                     alt='Full Name Text Input'
+                                    required
                                     ref={fullNameRef}
-
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     <h6 style={{ color: 'white' }}>Please enter full name </h6>
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>
-
-                        {/*Email Text Input*/}
                         <Row className="mb-3">
+                            {/*Email Text Input */}
                             <Form.Group controlId="validationCustom02">
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control
-                                    required
                                     type="email"
-                                    placeholder="name@example.com"
+                                    defaultValue={email}
                                     alt='Email Text Input'
                                     ref={emailRef}
+                                    required
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     <h6 style={{ color: 'white' }}>Please enter a valid email</h6>
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>
-
-                        {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
+                         {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
                         {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}
                         {/* https://surajsharma.net/blog/react-file-upload-accept-only-images */}
                         {/* Image Selector for new user*/}
@@ -114,18 +113,15 @@ function AddUserModal({ addUser }: addUserProps) {
                                             setSelectedImage(file);
                                         }
                                     }}
-                                    required
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     <h6 style={{ color: 'white' }}>Please choose an image</h6>
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>
-
                     </Modal.Body>
-
-                    {/* Submit and Cancel Buttons */}
                     <Modal.Footer >
+                        {/* Submit and Cancel Buttons */}
                         <Row className='ml-auto'>
                             <Col>
                                 <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button'>
@@ -145,4 +141,4 @@ function AddUserModal({ addUser }: addUserProps) {
     );
 }
 
-export default AddUserModal;
+export default EditUserModal;

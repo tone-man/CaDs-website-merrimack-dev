@@ -26,7 +26,6 @@
     background-color: rgb(70, 104, 150);
 }
 
-
 /* Styling for dashboard page section */
 .dashboard-whitelist-section .dashboard-whitelist-title {
     padding-top: 50px;
@@ -71,45 +70,17 @@
  .whitelist-container .empty {
     color: red;
     text-align: center;
-    padding: 10px;
+    padding: 30px;
  }
 
- /* Individual user for whitelist */
-.whitelist-container .cell{
-    width: 100%;
-    height: fit-content;
-}
-
-/* Search bar */
+/* Search bar styling*/
 .search-bar{
-    margin: auto;
-    padding: 20px 0px;
-    justify-content: center;
-    align-items: center;
+    padding-bottom: 20px ;
 }
 
-
-/* Search bar styling */
-.search-bar-style{
-    border: 1px black solid;
-    border-radius: 20px;
-    background-color: white;
-}
-
-/* Styling add user button upon screen resizing */
+/* Styling add user button alignment upon screen resizing */
 @media screen and (max-width: 800px) {
     .dashboard-whitelist-section .add-user-button  {
         text-align: center;
     }
-}
-.dashboard-whitelist-section .searchIcon {
-    background-color: transparent !important;
-    background-color: white;
-    color: darkslategrey;
-    border: none !important;
-}
-
-.dashboard-whitelist-section  .searchIcon:hover {
-    color: var(--yellow);
-    background-color: var(--blue)  !important;
 }

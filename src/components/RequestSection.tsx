@@ -12,15 +12,18 @@ export interface requestProps {
 
 }
 
-// Interface for the faculty carousel component. An array of faculty member objects should be passed in
+// Interface for the request section component. An array of requests will be passed in
 interface myRequestProps {
     requests: requestProps[],
 }
 
+// This request section component is a container for all requests that have been made
 function RequestSection(myProps: myRequestProps) {
     return (
+
         <div style={{background: 'lightgrey'}}>
             <Container>
+                
                 {/* Title */}
                 <div className='dashboard-request-section'>
                     <Row style={{ paddingBottom: '20px' }}>
