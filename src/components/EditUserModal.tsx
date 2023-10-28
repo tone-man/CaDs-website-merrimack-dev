@@ -41,6 +41,7 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                 const fullName = fullNameRef.current.value;
                 const email = emailRef.current.value;
                 editUser(id, fullName, email, URL.createObjectURL(selectedImage));
+                setSelectedImage(null);
             }
             setValidated(true);
             handleClose();
