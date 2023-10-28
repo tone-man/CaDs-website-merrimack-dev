@@ -38,7 +38,7 @@ function WhiteListIndividual({ myProps, onDelete, onEdit }: WhiteListIndividualP
     };
 
     // Opens the confirmation modal
-    function handleOpen() {
+    function handleOpenConfirmationModal() {
         setShowDeletionModal(true);
     }
 
@@ -69,7 +69,7 @@ function WhiteListIndividual({ myProps, onDelete, onEdit }: WhiteListIndividualP
                     <Col md={2} sm={12} xs={12} className='margin-auto'>
                         <EditUserModal editUser={onEdit} id={myProps.id} name={myProps.userName} email={myProps.userEmail} />
                         <Row style={{ padding: '10px' }}>
-                            <Button className='delete-button' onClick={handleOpen}>Delete</Button>
+                            <Button className='delete-button' onClick={handleOpenConfirmationModal}>Delete</Button>
                         </Row>
                     </Col>
 

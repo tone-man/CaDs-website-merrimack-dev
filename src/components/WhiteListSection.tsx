@@ -86,7 +86,6 @@ function WhiteListSection() {
                         </div>
                     </Container >
 
-
                     {/* Search Bar */}
                     <div className="input-group search-bar">
                         <InputGroup className='container search-bar-style'>
