@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../css/formModal.css'
 import '../css/whiteListSection.css'
+import TextInputFormGroup from './TextInputFormGroup';
 
 interface editUserProps {
     editUser: (id: number, name: string, email: string, image: string) => void;
@@ -28,14 +29,14 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-        
+
         event.preventDefault(); // Stops typical form behavior like reloading the page
         event.stopPropagation(); // Stops other event handlers from receiving this event
         const form = event.currentTarget;
 
         // Checks form validity
         if (form.checkValidity()) {
-            // Gets form information and calls editUser()
+            // Gets form information and calls editUser() with the respective info
             if (fullNameRef.current && emailRef.current && selectedImage) {
                 const fullName = fullNameRef.current.value;
                 const email = emailRef.current.value;
@@ -62,39 +63,35 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
                     <Modal.Body >
+                        
+                      {/* Full Name Text Input */}
                         <Row className="mb-3">
-                            {/* Full Name Text Input */}
-                            <Form.Group controlId="validationCustom01">
-                                <Form.Label>Full Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    defaultValue={name}
-                                    alt='Full Name Text Input'
-                                    required
-                                    ref={fullNameRef}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    <h6 style={{ color: 'white' }}>Please enter full name </h6>
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                            <TextInputFormGroup
+                                controlId='validationCustom01'
+                                label='Full Name'
+                                required={true}
+                                placeholder='John Doe'
+                                alt='Full Name Text Input'
+                                inputRef={fullNameRef}
+                                type='text'
+                                default={name}
+                                feedbackMessage='Please enter full name' />
                         </Row>
+                        
+                        {/*Email Text Input */}
                         <Row className="mb-3">
-                            {/*Email Text Input */}
-                            <Form.Group controlId="validationCustom02">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    defaultValue={email}
-                                    alt='Email Text Input'
-                                    ref={emailRef}
-                                    required
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    <h6 style={{ color: 'white' }}>Please enter a valid email</h6>
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                            <TextInputFormGroup
+                                controlId='validationCustom02'
+                                label='Email'
+                                type='email'
+                                required={true}
+                                placeholder='name@example.com'
+                                alt='Email Text Input'
+                                inputRef={emailRef}
+                                feedbackMessage='Please enter a valid email'
+                                default={email} />
                         </Row>
-                         {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
+                        {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
                         {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}
                         {/* https://surajsharma.net/blog/react-file-upload-accept-only-images */}
                         {/* Image Selector for new user*/}
@@ -102,7 +99,7 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                             <Form.Group controlId="validationCustom03">
                                 <Form.Label className="form-label" id="customFile" aria-required>Image</Form.Label>
                                 <input
-                                    type="file" //allow file selector
+                                    type="file" //file selector
                                     accept="image/png, image/jpeg" //only accept images
                                     className="form-control"
                                     id="customFile"

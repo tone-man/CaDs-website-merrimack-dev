@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../css/formModal.css'
 import '../css/whiteListSection.css'
+import TextInputFormGroup from './TextInputFormGroup';
 
 interface addUserProps {
     addUser: (name: string, email: string, image: string) => void;
@@ -11,12 +12,11 @@ interface addUserProps {
 // TODO: Add more information potentially
 function AddUserModal({ addUser }: addUserProps) {
 
-
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<File | null>(null); // Use File type for selectedImage state
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
@@ -24,17 +24,15 @@ function AddUserModal({ addUser }: addUserProps) {
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-        event.preventDefault(); // Stops typical form behavior like reloading the page
-        event.stopPropagation(); // Stops other event handlers from receiving this event
+        event.preventDefault(); 
+        event.stopPropagation(); 
 
         const form = event.currentTarget;
         // Checks form validity
         if (form.checkValidity()) {
-            // Gets form information and calls addUser()
+            // Gets form information and calls addUser() with respective info
             if (fullNameRef.current && emailRef.current && selectedImage) {
-                const fullName = fullNameRef.current.value;
-                const email = emailRef.current.value;
-                addUser(fullName, email, URL.createObjectURL(selectedImage));
+                addUser(fullNameRef.current.value, emailRef.current.value, URL.createObjectURL(selectedImage));
             }
             handleClose();
         }
@@ -44,7 +42,6 @@ function AddUserModal({ addUser }: addUserProps) {
 
     return (
         <>
-
             {/* Customizes the add user button */}
             <Row style={{ paddingTop: '20px' }}>
                 <Col className='add-user-button'>
@@ -61,40 +58,28 @@ function AddUserModal({ addUser }: addUserProps) {
                     <Modal.Body >
 
                         {/* Full Name Text Input */}
-                        <Row className="mb-3">
-                            <Form.Group controlId="validationCustom01">
-                                <Form.Label>Full Name</Form.Label>
-                                <Form.Control
-                                    required
-                                    type="text"
-                                    placeholder="John Doe"
-                                    alt='Full Name Text Input'
-                                    ref={fullNameRef}
-
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    <h6 style={{ color: 'white' }}>Please enter full name </h6>
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Row>
-
+                        <TextInputFormGroup
+                            controlId='validationCustom01'
+                            label='Full Name'
+                            required={true}
+                            placeholder='John Doe'
+                            alt='Full Name Text Input'
+                            inputRef={fullNameRef}
+                            type='text'
+                            feedbackMessage='Please enter full name' />
                         {/*Email Text Input*/}
                         <Row className="mb-3">
-                            <Form.Group controlId="validationCustom02">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control
-                                    required
-                                    type="email"
-                                    placeholder="name@example.com"
-                                    alt='Email Text Input'
-                                    ref={emailRef}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    <h6 style={{ color: 'white' }}>Please enter a valid email</h6>
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                            <TextInputFormGroup
+                                controlId='validationCustom02'
+                                label='Email'
+                                type='email'
+                                required={true}
+                                placeholder='name@example.co'
+                                alt='Email Text Input'
+                                inputRef={emailRef}
+                                feedbackMessage='Please enter a valid email' />
                         </Row>
-
+                        
                         {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
                         {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}
                         {/* https://surajsharma.net/blog/react-file-upload-accept-only-images */}
