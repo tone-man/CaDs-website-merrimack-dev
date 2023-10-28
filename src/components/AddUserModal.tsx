@@ -33,6 +33,7 @@ function AddUserModal({ addUser }: addUserProps) {
             // Gets form information and calls addUser() with respective info
             if (fullNameRef.current && emailRef.current && selectedImage) {
                 addUser(fullNameRef.current.value, emailRef.current.value, URL.createObjectURL(selectedImage));
+                setSelectedImage(null);
             }
             handleClose();
         }
