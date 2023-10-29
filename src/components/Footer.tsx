@@ -33,16 +33,16 @@ function Footer() {
                     <Col md={4} xs={12} className='text-container' >
                         {/* Adds information text */}
                         <div className='footer-text '>
-                            <Row>
+                            <Row className='metropolisBold'>
                                 <h2>Merrimack College</h2>
                             </Row>
-                            <Row>
+                            <Row className='metropolisRegular'>
                                 <h5>315 Turnpike Street</h5>
                             </Row>
-                            <Row>
+                            <Row className='metropolisRegular'>
                                 <h5>North Andover, MA 01845</h5>
                             </Row>
-                            <Row>
+                            <Row className='metropolisRegular'>
                                 <h5>(978) 837-5000</h5>
                             </Row>
                         </div>

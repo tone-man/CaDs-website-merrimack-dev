@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Container, FormControl, InputGroup , Nav, Navbar} from 'react-bootstrap';
+import { Button, Container, FormControl, InputGroup, Nav, Navbar } from 'react-bootstrap';
 import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
-import { getAuth, signInWithRedirect, GoogleAuthProvider} from 'firebase/auth';
+import { getAuth, signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../App';
 
 // Component to create the nav bar
@@ -38,11 +38,11 @@ function NavBar() {
         if (searchBarRef.current) {
             const searchText = searchBarRef.current.value;
             if (searchText) {
-              console.log("Search text:", searchText);
-              searchBarRef.current.value = "";
-              console.log("new" + searchBarRef.current.value)
+                console.log("Search text:", searchText);
+                searchBarRef.current.value = "";
+                console.log("new" + searchBarRef.current.value)
             }
-          }
+        }
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
@@ -51,9 +51,9 @@ function NavBar() {
         function handleScroll() {
             // Get the second navbar element by its ID
             const secondNavbar = document.getElementById('secondNavBar');
-           
+
             if (secondNavbar) {
-                 //Get the distance between the search bar and the top of the page
+                //Get the distance between the search bar and the top of the page
                 const stickyPoint = secondNavbar?.getBoundingClientRect().top;
                 //If the current page's height is greater than the stickyPoint, make the secondary nav bar "sticky"
                 if (stickyPoint < window.scrollY) {
@@ -83,13 +83,13 @@ function NavBar() {
                             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">
-                        {/* If a user is logged in, they will see their profile image */}
+                            {/* If a user is logged in, they will see their profile image */}
                             {(user != null) ? (
                                 <Nav.Link href="#">
-                                 <ProfileImage size='50px' position='mx-auto' image={user.photoURL}/>
+                                    <ProfileImage size='50px' position='mx-auto' image={user.photoURL} />
                                 </Nav.Link>
                             ) : (
-                               //  If a user is not logged in, they will see the log in button 
+                                //  If a user is not logged in, they will see the log in button 
                                 <div className='mr-auto'>
                                     <Button className="logInButton" onClick={() => {
                                         const auth = getAuth(FireBaseApp);
@@ -102,12 +102,12 @@ function NavBar() {
                             )}
                         </Nav>
                     </Navbar.Collapse>
-               </Container>
+                </Container>
             </Navbar>
             {/* The second nav bar styling */}
             <Navbar expand="sm" className="second-navbar" id="secondNavBar" style={{ display: 'block' }}>
-               <Container>
-                    <Navbar.Brand target='_blank'  href="https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/faculty-staff/">
+                <Container>
+                    <Navbar.Brand target='_blank' href="https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/faculty-staff/">
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />
                     </Navbar.Brand>
                     <div>
@@ -116,14 +116,15 @@ function NavBar() {
                         </Button>
                     </div>
                 </Container>
-                 {/* Won't display the search bar until the search icon is clicked */}
+                {/* Won't display the search bar until the search icon is clicked */}
                 <div id="searchBar" style={{ display: 'none' }}>
                     <div className="input-group searchBar">
                         <InputGroup className='container'>
                             <FormControl id="searchBar"
-                                placeholder="Search.."
+                                className='search-text'
+                                placeholder="What would you like to search for?"
                                 aria-label="Search Bar"
-                                ref={searchBarRef} 
+                                ref={searchBarRef}
                             />
                             <Button className="searchIcon">
                                 <i className={"bi bi-search"} style={{ fontSize: '25px' }} onClick={search} aria-label='Search Icon'></i>

@@ -29,6 +29,8 @@
 
 /* Customizes the text on the banner */
 .header-banner .text {
+    font-family: var(--metropolisBold);
+    text-transform: uppercase;
     position: absolute;
     font-size: 3rem;
     color: white;
@@ -46,4 +48,14 @@
     width: 50vw;
     top: 50%;
     transform: translate(-50%, 0%);
+}
+
+ /* Changes font size and header upon resizing */
+ @media screen and (max-width: 800px) {
+    .header-banner .text{
+        font-size: 2rem;
+    }
+    .header-banner .overlay .line  {
+        width: 30vw;
+    }
 }
