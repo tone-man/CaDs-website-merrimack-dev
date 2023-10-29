@@ -1,7 +1,7 @@
 import { useState, createContext } from 'react'
 import { BrowserRouter as Router, Routes, Route }
     from 'react-router-dom';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+// import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import FireBaseApp from './firebase';
 import Home from './pages/index';
 import FacultyDirectory from './pages/facultyDirectory';
@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import './App.css'
 
 // Authentication context
-const auth = getAuth(FireBaseApp);
+// const auth = getAuth(FireBaseApp);
 
 
 export const AuthContext = createContext(null);
@@ -19,20 +19,21 @@ export const AuthContext = createContext(null);
 // Add routing
 // https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/#
 function App() {
+    console.log(FireBaseApp);
     const [count, setCount] = useState(0)
-    const [user, setUser] = useState(null)
+    // const [user, setUser] = useState(null)
 
-    onAuthStateChanged(auth, function(result) {
-        // console.log(result);
-        if (result) {
-          setUser(result);  
-        } else {
-          setUser(null);
-        }
-    })
+    // onAuthStateChanged(auth, function(result) {
+    //     // console.log(result);
+    //     if (result) {
+    //       setUser(result);  
+    //     } else {
+    //       setUser(null);
+    //     }
+    // })
 
     return (
-        <AuthContext.Provider value={user}> 
+        // <AuthContext.Provider value={user}> 
             <Router>
                 <NavBar />
                 <Routes>
@@ -42,7 +43,7 @@ function App() {
                 </Routes>
                 <Footer />
             </Router>
-        </AuthContext.Provider>
+        // </AuthContext.Provider>
     )
 }
 
