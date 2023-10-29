@@ -1,9 +1,11 @@
-name: Playwright Tests
+name: Playwright and Firbase Preview
+
 on: [push, pull_request]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: CaDs-dev-enviroment
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
