@@ -1,8 +1,88 @@
 /* Stores commonly used colors in css variables */
+
+@font-face {
+    font-family: Metropolis-Regular;
+    src: url(../fonts/MetropolisRegular.otf);
+}
+@font-face {
+    font-family: Metropolis-Bold;
+    src: url(../fonts/MetropolisBold.otf);
+}
+
+@font-face {
+    font-family: Metropolis-Thin;
+    src: url(../fonts/MetropolisThin.otf);
+}
+
+
+@font-face {
+    font-family: caslon-bold;
+    src: url(../fonts/librecaslontext-bold.otf);
+}
+
+@font-face {
+    font-family: caslon-regular;
+    src: url(../fonts/librecaslontext-regular.otf);
+}
+
+@font-face {
+    font-family: caslon-italic;
+    src: url(../fonts/librecaslontext-italic.otf);
+}
+
+
+
 :root {
     --blue: rgb(20, 54, 100);
     --darkGrey: rgb(42, 42, 43);
     --yellow: rgb(249, 222, 74);
     --grey: rgb(131, 134, 137);
     --lightest-grey: rgb(199, 201, 202);
+    --metropolisRegular: 'Metropolis-Regular';
+    --metropolisBold: 'Metropolis-Bold';
+    --metropolisThin: 'Metropolis-Thin';
+    --caslonRegular: 'caslon-regular';
+    --caslonBold: 'caslon-bold';
+    --caslonItalic: 'caslon-italic';
+    --extraSmallFont: 1rem;
+    --smallFont: 1.5rem;
+    --mediumFont: 2rem;
+    --largeFont: 3rem;
 }
+
+.metropolisBold {
+    font-family: var(--metropolisBold);
+}
+
+.metropolisRegular {
+    font-family: var(--metropolisRegular);
+}
+
+.metropolisThin {
+    font-family: var(--metropolisThin);
+}
+
+.black-color {
+    color: black;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.extraSmallFont {
+    font-size: var(--extraSmallFont);
+}
+
+.smallFont {
+    font-size: var(--smallFont);
+}
+
+.mediumFont {
+    font-size: var(--mediumFont);
+}
+
+.largeFont {
+    font-size: var(--largeFont);
+}
+
