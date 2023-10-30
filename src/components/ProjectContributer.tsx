@@ -9,11 +9,11 @@ function ProjectContributer() {
                 <Row>
                     <Col md={12} xs={12} className='contributor-container'>
                         <Row>
-                            <Col md={4} xs={12}>
+                            <Col md={2} xs={12}>
                                 <ProfileImage size='70px' position='mx-auto' />
                                 <h1 className='featured-text' style={{ color: 'black' }}> Faculty Name</h1>
                             </Col>
-                            <Col md={8} xs={12}>
+                            <Col md={10} xs={12}>
                                 <h1 className='contributor-info'>
                                     For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on
                                     combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance.

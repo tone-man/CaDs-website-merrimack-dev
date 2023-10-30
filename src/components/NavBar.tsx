@@ -126,7 +126,7 @@ function NavBar() {
                                 aria-label="Search Bar"
                                 ref={searchBarRef}
                             />
-                            <Button className="searchIcon">
+                            <Button className="searchButton">
                                 <i className={"bi bi-search"} style={{ fontSize: '25px' }} onClick={search} aria-label='Search Icon'></i>
                             </Button>
                         </InputGroup>

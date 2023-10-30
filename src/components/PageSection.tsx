@@ -16,7 +16,7 @@ interface myPageProps {
 // Returns the page section of the dashboard
 function PageSection(myProps: myPageProps) {
     return (
-        <div style={{ background: 'lightgrey' }}>
+        <div>
             <Container >
                 {/* Title */}
                 <div className='dashboard-page-section'>
@@ -34,13 +34,15 @@ function PageSection(myProps: myPageProps) {
                                 <div style={{ borderTop: '1px black solid' }}>
                                     <Row className='rows'>
                                         <Col md={11} xs={9} className='page-name'>
-                                            <h3>
+                                            <h3 className='smallFont'>
                                                 {page.pageName}
                                             </h3>
                                         </Col>
                                         <Col md={1} xs={3} className='new-page-button'>
                                             <a href={page.pageLink}>
-                                                <Button className='link-button'><i className="bi bi-arrow-right"></i></Button>
+                                                <Button className='link-button'>
+                                                    <i className="bi bi-arrow-right"></i>
+                                                </Button>
                                             </a>
                                         </Col>
                                     </Row>
@@ -55,7 +57,7 @@ function PageSection(myProps: myPageProps) {
                             )}
                     </div>
 
-                    {/* New Project Button */}  
+                    {/* New Project Button */}
                     <Row style={{ paddingTop: '20px' }}>
                         <Col className='create-new-button mx-auto'>
                             <Button> Create New Project</Button>

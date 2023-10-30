@@ -30,6 +30,9 @@
 .dashboard-whitelist-section .dashboard-whitelist-title {
     padding-top: 50px;
     margin: auto;
+    font-family: var(--metropolisBold);
+    text-transform: uppercase;
+    color: black;
 }
 
 /* Positioning title*/

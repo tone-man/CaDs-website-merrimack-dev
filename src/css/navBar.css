@@ -31,7 +31,7 @@
     color: rgb(249, 222, 74);
 }
 
-.searchBarToggle {
+.second-navbar .searchBarToggle {
     width: 80px;
     background-color: white;
     color: black;
@@ -45,32 +45,39 @@
     border:none !important; 
 }
 
-.searchBar {
+.second-navbar .searchBar {
     padding: 20px 10px;
     background: var(--blue);
     justify-content: center;
     align-items: center;
     width: 100%;
+    border-bottom: 1px  black solid;
 }
 
-.searchBar .search-text {
+.second-navbar .searchBar .search-text {
  font-size: var(--smallFont);
  font-family: var(--metropolisRegular);;
 }
 
-.navbar-custom.searchIcon {
-    background-color: transparent !important;
-    color: darkslategrey;
+.second-navbar .searchBar .searchButton {
     border:none !important; 
+    background-color: transparent !important;
 }
 
-.navbar-custom  .searchIcon:hover {
-    color: white;
+.second-navbar .searchBar  .searchButton:hover {
+    color: var(--yellow);
 }
 
 /* Resizes the font size */
 @media screen and (max-width: 1600px) {
     .searchBar .search-text {
         font-size: .9rem;
+       }
+   }
+
+   /* Resizes the logo size */
+@media screen and (max-width: 1000px) {
+    .logo {
+        width: 14rem;
        }
    }

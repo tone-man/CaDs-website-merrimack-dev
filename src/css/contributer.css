@@ -6,6 +6,7 @@
 }
 
 .contributor-info {
+    font-family: var(--caslonRegular);
     color: black;
     font-size: 1rem;
     padding: 20px;

@@ -27,6 +27,9 @@
 .dashboard-request-section .title {
     text-align: left;
     margin: auto;
+    font-family: var(--metropolisBold);
+    text-transform: uppercase;
+    color: black;
 }
 
 /* Add borders to request-container*/
@@ -51,24 +54,33 @@
 }
 
 /* Style the actual request title in the row */
-.dashboard-request-section .request-container .rows .page-name {
+.dashboard-request-section .request-container .rows .request-name {
     text-align: left;
+    font-family: var(--caslonRegular);
+    margin: auto;
 }
 
 /* Style the container for the redirecting button */
-.request-container .rows .new-page-button {
+.request-container .rows .request-page-button {
     margin: auto;
 }
 
 /* Style the actual redirecting button */
-.request-container .rows .new-page-button .link-button {
+.request-container .rows .request-page-button .request-button {
+    background-color: var(--blue);
+    border-radius: 50px;
+    font-size: 1.25rem;
+}
+
+/* Style the actual redirecting button */
+.request-container .rows .link-button {
     background-color: var(--blue);
     border-radius: 50px;
     font-size: 1.25rem;
 }
 
 /* Style for hovering over button */
-.request-container .new-page-button .link-button:hover {
+.request-container .request-page-button .link-button:hover {
     background-color: var(--white);
     color: var(--black);
 }

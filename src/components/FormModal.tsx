@@ -29,7 +29,7 @@ function FormModal() {
   // Customized tooltip that appears upon hovering on the buttom
   const tooltip = (
     <Tooltip id="tooltip">
-      <h2 style={{ fontSize: '1rem' }}>Interested in being featured on this project? Make a request here! </h2>
+      <h2 className='extraSmallFont caslonRegular'>Interested in being featured on this project? Make a request here! </h2>
     </Tooltip>
   );
 
@@ -48,7 +48,7 @@ function FormModal() {
       {/* Modal with nested form components */}
       <Modal show={show} onHide={handleClose} className='customized-modal'>
         <Modal.Header closeButton >
-          <Modal.Title>Request to be Featured</Modal.Title>
+          <Modal.Title><h1 className='mediumFont metropolisBold'>Request to be Featured</h1></Modal.Title>
         </Modal.Header>
         <Form noValidate validated={validated} onSubmit={handleSubmit}  >
           <Modal.Body >
@@ -80,8 +80,9 @@ function FormModal() {
             {/*Request Text Input */}
             <Row>
               <Form.Group controlId="validationCustomUsername">
-                <Form.Label>Request</Form.Label>
+                <Form.Label><h2 className='smallFont metropolisRegular'>Request</h2></Form.Label>
                 <Form.Control
+                  className='extraSmallFont metropolisRegular'
                   as="textarea"
                   rows={3}
                   type='text'
@@ -101,12 +102,12 @@ function FormModal() {
             {/* Submit and Cancel Buttons */}
             <Row className='ml-auto'>
               <Col>
-                <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button'>
+                <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button' className='extraSmallFont metropolisRegular' >
                   Cancel
                 </Button>
               </Col>
               <Col>
-                <Button type='submit' variant="light" aria-label='Submit Button'>
+                <Button type='submit' variant="light" aria-label='Submit Button' className='extraSmallFont metropolisRegular'>
                   Submit
                 </Button>
               </Col>

@@ -60,7 +60,7 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
             {/* Modal with nested form components */}
             <Modal show={show} onHide={handleClose} className='customized-modal'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit User</Modal.Title>
+                    <Modal.Title><h1 className='mediumFont metropolisBold'>Edit User {name}</h1></Modal.Title>
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
                     <Modal.Body >
@@ -98,7 +98,7 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                         {/* Image Selector for new user*/}
                         <Row className="mb-3">
                             <Form.Group controlId="validationCustom03">
-                                <Form.Label className="form-label" id="customFile" aria-required>Image</Form.Label>
+                                <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Image</h2></Form.Label>
                                 <input
                                     type="file" //file selector
                                     accept="image/png, image/jpeg" //only accept images
@@ -122,12 +122,12 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                         {/* Submit and Cancel Buttons */}
                         <Row className='ml-auto'>
                             <Col>
-                                <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button'>
+                                <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button' className='extraSmallFont metropolisRegular'>
                                     Cancel
                                 </Button>
                             </Col>
                             <Col>
-                                <Button type='submit' variant="light" aria-label='Submit Button'>
+                                <Button type='submit' variant="light" aria-label='Submit Button' className='extraSmallFont metropolisRegular'>
                                     Submit
                                 </Button>
                             </Col>

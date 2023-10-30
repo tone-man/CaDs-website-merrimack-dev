@@ -53,12 +53,12 @@ function AddUserModal({ addUser }: addUserProps) {
             {/* Modal with nested form components */}
             <Modal show={show} onHide={handleClose} className='customized-modal'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Request to be Featured</Modal.Title>
+                    <Modal.Title><h1 className='mediumFont metropolisBold'>Add New User</h1></Modal.Title>
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
                     <Modal.Body >
-
                         {/* Full Name Text Input */}
+                        <Row className="mb-3">
                         <TextInputFormGroup
                             controlId='validationCustom01'
                             label='Full Name'
@@ -68,6 +68,7 @@ function AddUserModal({ addUser }: addUserProps) {
                             inputRef={fullNameRef}
                             type='text'
                             feedbackMessage='Please enter full name' />
+                            </Row>
                         {/*Email Text Input*/}
                         <Row className="mb-3">
                             <TextInputFormGroup
@@ -87,7 +88,7 @@ function AddUserModal({ addUser }: addUserProps) {
                         {/* Image Selector for new user*/}
                         <Row className="mb-3">
                             <Form.Group controlId="validationCustom03">
-                                <Form.Label className="form-label" id="customFile" aria-required>Image</Form.Label>
+                                <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Image</h2></Form.Label>
                                 <input
                                     type="file" //allow file selector
                                     accept="image/png, image/jpeg" //only accept images
@@ -114,12 +115,12 @@ function AddUserModal({ addUser }: addUserProps) {
                     <Modal.Footer >
                         <Row className='ml-auto'>
                             <Col>
-                                <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button'>
+                                <Button variant="secondary" onClick={handleClose} aria-label='Cancel Button' className='extraSmallFont metropolisRegular'>
                                     Cancel
                                 </Button>
                             </Col>
                             <Col>
-                                <Button type='submit' variant="light" aria-label='Submit Button'>
+                                <Button type='submit' variant="light" aria-label='Submit Button' className='extraSmallFont metropolisRegular'>
                                     Submit
                                 </Button>
                             </Col>

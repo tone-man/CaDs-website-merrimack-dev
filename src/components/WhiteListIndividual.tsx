@@ -62,7 +62,7 @@ function WhiteListIndividual({ myProps, onDelete, onEdit }: WhiteListIndividualP
 
                     {/* User Name */}
                     <Col md={8} sm={12} xs={12} className='name'>
-                        <h3>{myProps.userName}</h3>
+                        <h3 className='smallFont'>{myProps.userName}</h3>
                     </Col>
 
                     {/* Edit and Delete Buttons */}

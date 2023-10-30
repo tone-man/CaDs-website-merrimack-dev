@@ -16,21 +16,21 @@ function DeleteConfirmationModal({ show, onHide, onConfirm, userName }: DeleteCo
     <Modal show={show} onHide={onHide} centered className='customized-modal'>
       <Modal.Header closeButton>
         <Modal.Title>
-          <h1>Confirm Deletion</h1>
+          <h1 className='mediumFont metropolisBold'>Confirm Deletion</h1>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h5>Are you sure you want to delete user {userName}? </h5>
+        <h5 className='smallFont metropolisRegular'>Are you sure you want to delete user {userName}? </h5>
       </Modal.Body>
       <Modal.Footer>
         <Row className='ml-auto'>
           <Col>
-            <Button variant="secondary" onClick={onHide} aria-label='Cancel Button'>
+            <Button variant="secondary" onClick={onHide} aria-label='Cancel Button' className='extraSmallFont metropolisRegular'>
               Cancel
             </Button>
           </Col>
           <Col>
-            <Button type='submit' variant="light" aria-label='Submit Button' onClick={onConfirm}>
+            <Button type='submit' variant="light" aria-label='Submit Button' onClick={onConfirm} className='extraSmallFont metropolisRegular'>
               Delete
             </Button>
           </Col>

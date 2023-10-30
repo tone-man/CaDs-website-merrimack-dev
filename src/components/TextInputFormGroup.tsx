@@ -18,8 +18,9 @@ interface formInputProps {
 const TextInputFormGroup = (myProps: formInputProps) => {
     return (
         <Form.Group controlId={myProps.controlId}>
-            <Form.Label>{myProps.label}</Form.Label>
+            <Form.Label><h2 className='smallFont metropolisRegular'>{myProps.label}</h2></Form.Label>
             <Form.Control
+                className='extraSmallFont metropolisRegular'
                 required={myProps.required}
                 type={myProps.type}
                 placeholder={myProps.placeholder}
