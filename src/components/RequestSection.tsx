@@ -21,7 +21,7 @@ interface myRequestProps {
 function RequestSection(myProps: myRequestProps) {
     return (
 
-        <div style={{background: 'lightgrey'}}>
+        <div>
             <Container>
                 
                 {/* Title */}
@@ -42,16 +42,18 @@ function RequestSection(myProps: myRequestProps) {
                                             <Col md={2} sm={2} xs={4} className='profile-image' >
                                                 <ProfileImage size='60px' position='ml-auto' />
                                             </Col>
-                                            <Col md={9} sm={10} xs={8} className='title'>
-                                                <h3>
+                                            <Col md={9} sm={10} xs={8} className='request-name'>
+                                                <h3 className='smallFont'>
                                                     {requests.requestName}
                                                 </h3>
                                             </Col>
-                                            <Col md={1} sm={4} xs={4} className='new-page-button'>
-                                                <a href={requests.requestLink}>
-                                                    <Button className='link-button'><i className="bi bi-arrow-right"></i></Button>
-                                                </a>
-                                            </Col>
+                                            <Col md={1} sm={4} xs={4} className='request-page-button'>
+                                            <a href={requests.requestLink}>
+                                                <Button className='link-button'>
+                                                    <i className="bi bi-arrow-right"></i>
+                                                </Button>
+                                            </a>
+                                        </Col>
                                         </Row>
                                     </div>
 

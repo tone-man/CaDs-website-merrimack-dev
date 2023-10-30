@@ -62,6 +62,18 @@
     font-family: var(--metropolisThin);
 }
 
+.caslonBold {
+    font-family: var(--caslonBold);
+}
+
+.caslonRegular {
+    font-family: var(--caslonRegular);
+}
+.caslonItalic {
+    font-family: var(--caslonItalic);
+}
+
+
 .black-color {
     color: black;
 }

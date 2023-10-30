@@ -71,7 +71,7 @@ function WhiteListSection() {
     }
 
     return (
-        <div style={{ paddingBottom: '50px', background: 'lightgrey' }}>
+        <div style={{ paddingBottom: '50px'}}>
 
             {/* White List Title*/}
             <Container>
