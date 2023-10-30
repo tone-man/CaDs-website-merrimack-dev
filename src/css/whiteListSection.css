@@ -1,9 +1,38 @@
 /* Styling for whitelist section of the dashboard page */
 
 /* Styling for dashboard page section */
-.dashboard-whitelist-title {
+.dashboard-whitelist-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: auto;
+    width: 80%;
+}
+
+/* Positioning button*/
+.dashboard-whitelist-section  .positioning  {
+    text-align: right;
+    margin: auto;
+}
+
+/* Styling the button of the page section */
+ .add-user-button Button {
+    font-size: 1.25rem;
+    background-color: var(--blue);
+    border-radius: 20px;
+}
+
+/* Styling the button of the page section */
+.add-user-button Button:hover {
+    background-color: rgb(70, 104, 150);
+}
+
+/* Styling for dashboard page section */
+.dashboard-whitelist-section .dashboard-whitelist-title {
     padding-top: 50px;
     margin: auto;
+    font-family: var(--metropolisBold);
+    text-transform: uppercase;
+    color: black;
 }
 
 /* Positioning title*/
@@ -25,13 +54,14 @@
 
 /* Container for actual individuals on the whitelis */
 .whitelist-container {
+    margin: auto;
     height: 400px;
-    width: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     text-align:justify;
-    border: 1px black solid;
     grid-gap: 0px;
+    border: 1px black solid;
+    background-color: white;
 }
 
 /* Make scrollbar not appear */
@@ -43,27 +73,17 @@
  .whitelist-container .empty {
     color: red;
     text-align: center;
-    padding: 10px;
+    padding: 30px;
  }
 
- /* Individual user for whitelist */
-.whitelist-container .cell{
-    width: 100%;
-    height: fit-content;
-}
-
-/* Search bar */
+/* Search bar styling*/
 .search-bar{
-    padding: 20px 0px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    padding-bottom: 20px ;
 }
 
-/* Search bar styling */
-.search-bar-style{
-    border: 1px black solid;
-    border-radius: 20px;
+/* Styling add user button alignment upon screen resizing */
+@media screen and (max-width: 800px) {
+    .dashboard-whitelist-section .add-user-button  {
+        text-align: center;
+    }
 }
-
-

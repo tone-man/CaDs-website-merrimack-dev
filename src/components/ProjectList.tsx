@@ -57,14 +57,15 @@ makeProjects(projectsArray, projectValues, facultyArray);
 function ProjectList() {
     return (
         <>
-         <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects!' />
-            <Container fluid style={{ background: 'rgb(199, 201, 202)' }}>
+         <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
+            <Container fluid style={{ background: 'rgb(224, 224, 224)' }}>
                 <Container className='projects-container'>
                 <Row>
                     {/* Header text */}
-                    <Col md = {{span: 12}} style={{padding: '20px'}}>
-                        <h1> Faculty Led Projects</h1>
-                        <h5> Learn about some of the amazing projects that faculty members from the Computer Science and Data Science department
+                    <Col md = {{span: 12}} style={{padding: '20px'}} className='black-color'>
+                        <h1 className='metropolisBold uppercase'> Explore Our Faculty Led Projects</h1>
+                        <h5 className='metropolisThin smallFont'> Learn about some of the amazing projects that faculty members 
+                             from the Computer Science and Data Science department
                              have worked on in recent years. </h5>
                     </Col>
                 </Row>
