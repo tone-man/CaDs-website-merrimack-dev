@@ -1,0 +1,102 @@
+/* Styles individual faculty member components for faculty directory */
+
+/* Stylees row and cols */
+.faculty-directory .row {
+    border-top: 1px black solid;
+    padding: 10px 0px;
+}
+.faculty-directory .row .col {
+    margin: auto;
+}
+
+
+/* Style the button that links to the faculty page*/
+.faculty-directory .link-button {
+    background-color: var(--blue);
+    border-radius: 50px;
+    font-size: 1.25rem;
+}
+
+/* Style for hovering over the button */
+.faculty-directory .link-button:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+/* Styles container holding all profile information for faculty member */
+.faculty-directory .row .profile-container {
+    padding: 10px;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    border-right: 1px darkslategray solid;
+}
+
+/* Styles text */
+.faculty-directory .row .profile-container .text {
+    text-align: center;
+    width: 100%;
+}
+
+.faculty-directory .row .profile-container .name {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: var(--caslonBold);
+    font-size: var(--smallFont);
+}
+
+.faculty-directory .row .profile-container .title {
+    padding-bottom: 10px;
+    font-family: var(--caslonRegular);
+    color: rgb(56, 57, 58);
+    font-size: 1.2rem;
+}
+
+.faculty-directory .row .profile-container .pronouns {
+    padding-bottom: 10px;
+    font-family: var(--caslonRegular);
+    color: rgb(78, 80, 81);
+    font-size: var(--extraSmallFont);
+}
+
+/* Styles container holding faculty member information */
+.faculty-directory .row .information-container {
+    text-align: left;
+    height: 300px;
+    width: 100%;
+    margin: auto;
+}
+
+/* Styles text */
+.faculty-directory .row .information-container .position {
+    padding: 20px 0px;
+}
+
+.faculty-directory .row .information-container .title {
+    font-family: var(--caslonBold);
+    color: var(--blue);
+    font-size: 1.25rem;
+}
+
+.faculty-directory .row .information-container .title {
+    font-family: var(--caslonBold);
+    color: var(--blue);
+    font-size: 1.25rem;
+}
+
+.faculty-directory .row .information-container .context {
+    font-family: var(--caslonRegular);
+    color: rgb(56, 57, 58);
+    font-size: var(--extraSmallFont);
+}
+
+/* Restyles profile container and the information container based on screen size */
+@media screen and (max-width: 800px) {
+    .faculty-directory .row .profile-container {
+        border-right: none !important;
+        padding-bottom: 10px;
+    }
+    .faculty-directory .row .information-container .position {
+        padding: 20px 0px;
+    }
+}

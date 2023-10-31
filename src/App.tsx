@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route }
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import FireBaseApp from './firebase';
 import Home from './pages/index';
-import FacultyDirectory from './pages/facultyDirectory';
+import FacultyDirectory from './pages/facultyDirectoryPage';
 import Dashboard from './pages/dashboard';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
