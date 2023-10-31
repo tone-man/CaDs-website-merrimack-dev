@@ -13,7 +13,7 @@ jobs:
         VITE_API_KEY: ${{secrets.VITE_API_KEY}}
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment: CaDs-dev-enviroment
+    environment: development
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
