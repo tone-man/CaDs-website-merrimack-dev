@@ -13,7 +13,7 @@ interface myImageProps {
 // Creates a profile image component
 function ProfileImage(myProps: myImageProps) {
 
-    console.log(myProps.image)
+    // console.log(myProps.image)
     return (
         // Determines positioning and size of profile picture image
         <div className= {myProps.position} style={{ width: myProps.size, height: myProps.size }}>

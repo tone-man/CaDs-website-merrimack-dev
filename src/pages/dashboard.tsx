@@ -32,9 +32,11 @@ const dashboard = () => {
     return (
         <div>
             <Header title="User {UserName}'s Dashboard Page "/>
+            <div style={{background:'rgb(224, 224, 224)'}}>
             <PageSection pages={pageArray} />
             <RequestSection requests={requestArray}/>
             <WhiteListSection/>
+            </div>
         </div>
     );
 };

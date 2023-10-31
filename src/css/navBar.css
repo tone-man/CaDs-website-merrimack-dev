@@ -1,15 +1,8 @@
-@font-face {
-    font-family: Gotham-Regular;
-    src: url(../fonts/Gotham\ Regular.otf);
-}
-
-* {
-    font-family: Gotham-Regular;
-}
 
 .logInButton{
     color:var(--blue);
     background-color: white;
+    font-family: var(--metropolisRegular);
 }
 
 /* https://medium.com/wdstack/bootstrap-4-custom-navbar-1f6a2da5ed3c#:~:text=Change%20the%20Navbar%20Color%20or%20Transparency&text=You%20can%20specify%20the%20background,darker%20text%20color%20(black). */
@@ -31,13 +24,14 @@
 
 .navbar-custom .navbar-nav .nav-link {
     color: #ffffff;
+    font-family: var(--metropolisRegular);
 }
 
 .navbar-custom .navbar-nav .nav-link:hover{
     color: rgb(249, 222, 74);
 }
 
-.searchBarToggle {
+.second-navbar .searchBarToggle {
     width: 80px;
     background-color: white;
     color: black;
@@ -51,20 +45,39 @@
     border:none !important; 
 }
 
-.searchBar {
+.second-navbar .searchBar {
     padding: 20px 10px;
     background: var(--blue);
     justify-content: center;
     align-items: center;
     width: 100%;
+    border-bottom: 1px  black solid;
 }
 
-.searchIcon {
-    background-color: transparent !important;
-    color: darkslategrey;
+.second-navbar .searchBar .search-text {
+ font-size: var(--smallFont);
+ font-family: var(--metropolisRegular);;
+}
+
+.second-navbar .searchBar .searchButton {
     border:none !important; 
+    background-color: transparent !important;
 }
 
-.searchIcon:hover {
-    color: white;
+.second-navbar .searchBar  .searchButton:hover {
+    color: var(--yellow);
 }
+
+/* Resizes the font size */
+@media screen and (max-width: 1600px) {
+    .second-navbar .searchBar .search-text {
+        font-size: var(--extraSmallFont);
+       }
+   }
+
+   /* Resizes the logo size */
+@media screen and (max-width: 1000px) {
+    .logo {
+        width: 14rem;
+       }
+   }

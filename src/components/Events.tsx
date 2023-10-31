@@ -24,7 +24,7 @@ function Events(props: myEventProps) {
                         {/* Event Title */}
                         <Col md={12} xs={12}>
                             <Card.Title className='card-header'>
-                                <h1 className="font-weight-bold">{props.title}</h1>
+                                <h1>{props.title}</h1>
                             </Card.Title>
                         </Col>
                     </Row>
@@ -42,7 +42,7 @@ function Events(props: myEventProps) {
                 </Card.Body>
                 <Card.Footer>
                     {/* Event Date and location*/}
-                    <h5 style={{ textAlign: 'center', paddingBottom: '20px' }}> <i> {props.date} | {props.location}</i></h5>
+                    <h5 className='event-information' style={{ textAlign: 'center', paddingBottom: '20px' }}> <i> {props.date} | {props.location}</i></h5>
                 </Card.Footer>
             </Card>
         </div>

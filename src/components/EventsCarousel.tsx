@@ -51,7 +51,7 @@ makeCarousel(eventsArray, eventValues);
 function EventsCarousel() {
     return (
         <div>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Upcoming Events!' />
+            <Header img={'src/imgs/OBCenter.jpg'} title='Upcoming Events' />
             <div className='carousel-container'>
                 <Col md={9} xs={12}>
                     <div className='custom-carousel'>

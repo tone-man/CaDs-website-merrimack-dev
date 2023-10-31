@@ -1,16 +1,10 @@
 /* Styling for the event card component */
 
-@font-face {
-    font-family: Gotham-Regular;
-    src: url(../fonts/Gotham\ Regular.otf);
-}
-
 /* Styles card that contains event info */
 .event-card {
     margin: auto;
     width: 80%;
     color: white;
-    font-family: Gotham-Regular;
     background-color: rgb(20, 54, 100);
     display: flex;
     justify-content: center;
@@ -36,19 +30,25 @@
 .event-card .event-text {
     margin: auto;
     text-align: center;
-    font-family: Gotham-Regular;
+    font-family: var(--caslonRegular);
     font-size: 1.25rem;
 }
 
 .event-card .card-header{
     display: block;
     text-align: center;
-    font-size: 2rem;
+    font-size: var(--mediumFont);
+    font-family: var(--caslonBold);
+}
+
+.event-card .event-information{
+  font-family: var(--caslonItalic);
+  font-size: var(--extraSmallFont);
 }
 
 /* Resizes the event image container on screen resizing */
 @media screen and (max-width: 1600px) {
     .event-card .image-container{
-      min-width: 350px;
+      min-width: 300px;
     }
   }
