@@ -3,6 +3,14 @@ name: Playwright and Firbase Preview
 on: [push, pull_request]
 jobs:
   test:
+    env:
+        VITE_AUTH_DOMAIN: ${{secrets.VITE_AUTH_DOMAIN}}
+        VITE_PROJECT_ID: ${{secrets.VITE_PROJECT_ID}}
+        VITE_STORAGE_BUCKET: ${{secrets.VITE_STORAGE_BUCKET}}
+        VITE_MESSAGE_SENDER_ID: ${{secrets.VITE_MESSAGE_SENDER_ID}}
+        VITE_APP_ID: ${{secrets.VITE_APP_ID}}
+        VITE_MEASUREMENT_ID: ${{secrets.VITE_MEASUREMENT_ID}}
+        VITE_API_KEY: ${{secrets.VITE_API_KEY}}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     environment: CaDs-dev-enviroment
@@ -11,17 +19,12 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18
+    - if: ${{ env.VITE_API_KEY != '' }}
+      run: echo 'This step will only run if the secret has a value set.'
+    - if: ${{ env.VITE_API_KEY == '' }}
+      run: echo 'This step will only run if the secret does not have a value set.'
     - name: Install dependencies
       run: npm ci
-      env:
-        VITE_API_KEY: ${{secrets.VITE_API_KEY}}
-        VITE_AUTH_DOMAIN: ${{secrets.VITE_AUTH_DOMAIN}}
-        VITE_PROJECT_ID: ${{secrets.VITE_PROJECT_ID}}
-        VITE_STORAGE_BUCKET: ${{secrets.VITE_STORAGE_BUCKET}}
-        VITE_MESSAGE_SENDER_ID: ${{secrets.VITE_MESSAGE_SENDER_ID}}
-        VITE_APP_ID: ${{secrets.VITE_APP_ID}}
-        VITE_MEASUREMENT_ID: ${{secrets.VITE_MEASUREMENT_ID}}
-
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
@@ -47,13 +50,6 @@ jobs:
         expires: 30d
       env:
         FIREBASE_CLI_EXPERIMENTS: webframeworks
-        VITE_API_KEY: ${{secrets.VITE_API_KEY}}
-        VITE_AUTH_DOMAIN: ${{secrets.VITE_AUTH_DOMAIN}}
-        VITE_PROJECT_ID: ${{secrets.VITE_PROJECT_ID}}
-        VITE_STORAGE_BUCKET: ${{secrets.VITE_STORAGE_BUCKET}}
-        VITE_MESSAGE_SENDER_ID: ${{secrets.VITE_MESSAGE_SENDER_ID}}
-        VITE_APP_ID: ${{secrets.VITE_APP_ID}}
-        VITE_MEASUREMENT_ID: ${{secrets.VITE_MEASUREMENT_ID}}
     - uses: actions/upload-artifact@v3
       if: always()
       with:
