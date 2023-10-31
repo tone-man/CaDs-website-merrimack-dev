@@ -23,6 +23,11 @@ jobs:
       run: echo 'This step will only run if the secret has a value set.'
     - if: ${{ env.VITE_API_KEY == '' }}
       run: echo 'This step will only run if the secret does not have a value set.'
+    - if: ${{ env.VITE_PROJECT_ID != '' }}
+      run: echo 'This step will only run if the secret has a value set.'
+    - if: ${{ env.VITE_PROJECT_ID == '' }}
+      run: echo 'This step will only run if the secret does not have a value set.'
+      
     - name: Install dependencies
       run: npm ci
     - name: Install Playwright Browsers
