@@ -73,7 +73,7 @@ function NavBar() {
     return (
         <nav>
             {/* The first nav bar styling */}
-            <Navbar className="navbar-custom">
+            <Navbar className="navbar-custom" id = "first-navbar">
                 <Container>
                     <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
                     <Navbar.Collapse id="navBarContent">
@@ -111,7 +111,7 @@ function NavBar() {
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />
                     </Navbar.Brand>
                     <div>
-                        <Button className="searchBarToggle" onClick={toggleSearch}>
+                        <Button className="searchBarToggle" onClick={toggleSearch} id = "searchBarToggle">
                             <i className={isFocused ? "bi bi-x" : "bi bi-search"} aria-label='Search Icon'></i>
                         </Button>
                     </div>
