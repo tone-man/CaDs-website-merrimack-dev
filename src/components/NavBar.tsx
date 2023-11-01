@@ -50,7 +50,7 @@ function NavBar() {
     useEffect(() => {
         function handleScroll() {
             // Get the second navbar element by its ID
-            const secondNavbar = document.getElementById('secondNavBar');
+            const secondNavbar = document.getElementById('second-navbar');
 
             if (secondNavbar) {
                 //Get the distance between the search bar and the top of the page
@@ -85,13 +85,13 @@ function NavBar() {
                         <Nav className="ms-auto">
                             {/* If a user is logged in, they will see their profile image */}
                             {(user != null) ? (
-                                <Nav.Link href="#">
+                                <Nav.Link href="#" id ='user-image'>
                                     <ProfileImage size='50px' position='mx-auto' image={user.photoURL} />
                                 </Nav.Link>
                             ) : (
                                 //  If a user is not logged in, they will see the log in button 
                                 <div className='mr-auto'>
-                                    <Button className="logInButton" onClick={() => {
+                                    <Button className="logInButton" id ='login-button' onClick={() => {
                                         const auth = getAuth(FireBaseApp);
                                         const provider = new GoogleAuthProvider();
                                         signInWithRedirect(auth, provider);
@@ -105,7 +105,7 @@ function NavBar() {
                 </Container>
             </Navbar>
             {/* The second nav bar styling */}
-            <Navbar expand="sm" className="second-navbar" id="secondNavBar" style={{ display: 'block' }}>
+            <Navbar expand="sm" className="second-navbar" id="second-navbar" style={{ display: 'block' }}>
                 <Container>
                     <Navbar.Brand target='_blank' href="https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/faculty-staff/">
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />

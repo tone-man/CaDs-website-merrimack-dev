@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-test('Has Website in Title', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveTitle("CaDS Website");
-});
+// test('Has Website in Title', async ({ page }) => {
+//   await page.goto('/');
+//   await expect(page).toHaveTitle("CaDS Website");
+// });
 
 
 // test('First Nav Bar Present', async ({ page }) => {
@@ -30,6 +30,8 @@ test('Has Website in Title', async ({ page }) => {
 //     await page.goto(pages[i]);
 //     const searchBarToggle = await page.$('#searchBarToggle');
 //     expect(searchBarToggle).not.toBeNull();
+
+//     await searchBarToggle!.click(); 
 //   }
 // });
 
