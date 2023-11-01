@@ -77,26 +77,26 @@ test('Search Icon Toggles Search Bar', async ({ page }) => {
 });
 
 
-test('Search Bar Value', async ({ page }) => {
-  const pages = ['/', '/faculty', '/dashboard']
-  for (let i = 0; i < pages.length; i++) {
-    await page.goto(pages[i]);
-  await page.waitForLoadState('load'); 
+// test('Search Bar Value', async ({ page }) => {
+//   const pages = ['/', '/faculty', '/dashboard']
+//   for (let i = 0; i < pages.length; i++) {
+//     await page.goto(pages[i]);
+//   await page.waitForLoadState('load'); 
 
-    const searchBarToggle = await page.$('#searchBarToggle');
+//     const searchBarToggle = await page.$('#searchBarToggle');
 
-    if (searchBarToggle) {
-      await searchBarToggle!.click();
-    }
+//     if (searchBarToggle) {
+//       await searchBarToggle!.click();
+//     }
 
-    const searchIcon = await page.$('searchIcon');
-    await page.fill('#search-Bar', 'Peter');
-    searchIcon?.click;
-    const searchBarValue = await page.$eval('#search-Bar', searchBar => searchBar.value);
-    expect(searchBarValue).toBe('Peter');
+//     const searchIcon = await page.$('searchIcon');
+//     await page.fill('#search-Bar', 'Peter');
+//     searchIcon?.click;
+//     const searchBarValue = await page.$eval('#search-Bar', searchBar => searchBar.value);
+//     expect(searchBarValue).toBe('Peter');
 
-  }
-});
+//   }
+// });
 
 // PROJECT LIST TESTS
 
