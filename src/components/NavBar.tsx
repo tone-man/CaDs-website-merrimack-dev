@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Container, FormControl, InputGroup, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, DropdownButton, Dropdown, FormControl, InputGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
@@ -44,6 +44,9 @@ function NavBar() {
             }
         }
     }
+    function logOut(){
+        console.log("log out hre")
+    }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
     //Function that makes the secondary nav bar "sticky" and stick to the top of the page after scrolling
@@ -73,25 +76,36 @@ function NavBar() {
     return (
         <nav>
             {/* The first nav bar styling */}
-            <Navbar className="navbar-custom" id = "first-navbar">
+            <Navbar className="navbar-custom" id="first-navbar">
                 <Container>
                     <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
-                            <Nav.Link id ='home' href="/" >Home</Nav.Link>
-                            <Nav.Link id ='faculty' href="/faculty">Faculty</Nav.Link>
-                            <Nav.Link id ='dashboard' href="/dashboard">Dashboard</Nav.Link>
+                            <Nav.Link id='home' href="/" >Home</Nav.Link>
+                            <Nav.Link id='faculty' href="/faculty">Faculty</Nav.Link>
+                            <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">
                             {/* If a user is logged in, they will see their profile image */}
                             {(user != null) ? (
-                                <Nav.Link href="#" id ='user-image'>
-                                    <ProfileImage size='50px' position='mx-auto' image={user.photoURL} />
-                                </Nav.Link>
+                                <>
+                                    <NavDropdown
+                                        title={
+                                            <div className="pull-right">
+                                                <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
+                                            </div>
+                                        }
+                                        id="basic-nav-dropdown"
+                                        className='no-indicator-dropdown '>
+                                        <NavDropdown.Item  color='red' className='drop-down-item'>
+                                           <h3 className='text' id = 'logOutButton' onClick={logOut}>Log Out</h3>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                </>
                             ) : (
                                 //  If a user is not logged in, they will see the log in button 
                                 <div className='mr-auto'>
-                                    <Button className="logInButton" id ='login-button' onClick={() => {
+                                    <Button className="logInButton" id='login-button' onClick={() => {
                                         const auth = getAuth(FireBaseApp);
                                         const provider = new GoogleAuthProvider();
                                         signInWithRedirect(auth, provider);
@@ -111,7 +125,7 @@ function NavBar() {
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />
                     </Navbar.Brand>
                     <div>
-                        <Button className="searchBarToggle" onClick={toggleSearch} id = "searchBarToggle">
+                        <Button className="searchBarToggle" onClick={toggleSearch} id="searchBarToggle">
                             <i className={isFocused ? "bi bi-x" : "bi bi-search"} aria-label='Search Icon'></i>
                         </Button>
                     </div>
@@ -127,13 +141,13 @@ function NavBar() {
                                 ref={searchBarRef}
                             />
                             <Button className="searchButton">
-                                <i className={"bi bi-search"} id = 'searchIcon' style={{ fontSize: '25px' }} onClick={search} aria-label='Search Icon'></i>
+                                <i className={"bi bi-search"} id='searchIcon' style={{ fontSize: '25px' }} onClick={search} aria-label='Search Icon'></i>
                             </Button>
                         </InputGroup>
                     </div>
                 </div>
             </Navbar>
-        </nav>
+        </nav >
     );
 }
 
