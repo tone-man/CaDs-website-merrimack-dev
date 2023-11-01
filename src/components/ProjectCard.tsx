@@ -53,8 +53,8 @@ function projectCardContent(
                                 {description}
                             </h2>
                         </div>
-                        <a href={link}>
-                            <h1 className='featured-text'> Read More</h1>
+                        <a href={link} id ="project-link">
+                            <h1 className='featured-text' id="read-more"> Read More</h1>
                         </a>
                     </section>
                 </Col>

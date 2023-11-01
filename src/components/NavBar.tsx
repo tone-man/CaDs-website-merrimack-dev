@@ -18,7 +18,7 @@ function NavBar() {
 
     // This useEffect displays/hides the search bar when isFocused changes
     useEffect(() => {
-        const searchBar = document.getElementById('searchBar');
+        const searchBar = document.getElementById('searchBar-container');
         if (searchBar && searchBar.style.display === 'none') {
             searchBar.style.display = 'block';
         }
@@ -78,9 +78,9 @@ function NavBar() {
                     <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
-                            <Nav.Link href="/" >Home</Nav.Link>
-                            <Nav.Link href="/faculty">Faculty</Nav.Link>
-                            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+                            <Nav.Link id ='home' href="/" >Home</Nav.Link>
+                            <Nav.Link id ='faculty' href="/faculty">Faculty</Nav.Link>
+                            <Nav.Link id ='dashboard' href="/dashboard">Dashboard</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">
                             {/* If a user is logged in, they will see their profile image */}
@@ -117,17 +117,17 @@ function NavBar() {
                     </div>
                 </Container>
                 {/* Won't display the search bar until the search icon is clicked */}
-                <div id="searchBar" style={{ display: 'none' }}>
+                <div id="searchBar-container" style={{ display: 'none' }}>
                     <div className="input-group searchBar">
                         <InputGroup className='container'>
-                            <FormControl id="searchBar"
+                            <FormControl id="search-Bar"
                                 className='search-text'
                                 placeholder="What would you like to search for?"
                                 aria-label="Search Bar"
                                 ref={searchBarRef}
                             />
                             <Button className="searchButton">
-                                <i className={"bi bi-search"} style={{ fontSize: '25px' }} onClick={search} aria-label='Search Icon'></i>
+                                <i className={"bi bi-search"} id = 'searchIcon' style={{ fontSize: '25px' }} onClick={search} aria-label='Search Icon'></i>
                             </Button>
                         </InputGroup>
                     </div>
