@@ -3,9 +3,23 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
 import { facultyMembers } from './FacultyCarousel';
+import { getDatabase, ref, child, get} from 'firebase/database';
 import '../css/universal.css'
 import '../css/ProjectList.css'
 import Header from './Header';
+
+// Referecnce the Database
+const dbRef = ref(getDatabase());
+
+get(child(dbRef, `users/`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
 
 // Create an empty array of project component.
 const projectsArray: myProjectProps[] = [];
