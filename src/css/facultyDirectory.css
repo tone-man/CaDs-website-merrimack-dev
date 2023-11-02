@@ -1,0 +1,33 @@
+/* Styling for faculty directory page */
+
+/* Styles search bar */
+.faculty-page .search-bar {
+    padding-top: 50px;
+    padding-bottom: 25px;
+    width: 90%;
+    margin: auto;
+    z-index: 0;
+}
+
+/* Styles text of search bar */
+.faculty-page .search-bar .entered-text {
+    font-family: var(--metropolisThin);
+    font-size: var(--smallFont);
+}
+
+/* Result button & text positioning */
+.faculty-page .resultsInfo {
+    margin: auto;
+    font-family: var(--metropolisBold);
+    color: black;
+    text-align: right;
+}
+
+/* Results Button customization*/
+.faculty-page  .resultsInfo  Button{
+    background-color: rgb(30, 30, 30);
+    width: 55px;
+    height: 55px;
+    border-radius: 55px;
+    font-size: var(--smallFont);
+}

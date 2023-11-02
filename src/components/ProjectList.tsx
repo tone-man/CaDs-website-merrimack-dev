@@ -8,7 +8,7 @@ import '../css/ProjectList.css'
 import Header from './Header';
 
 // Create an empty array of project component.
-const projectsArray: myProjectProps[] = [];
+export const projectsArray: myProjectProps[] = [];
 
 //Create an array of faculty member objects
 const facultyArray: facultyMembers[] = [
@@ -18,10 +18,10 @@ const facultyArray: facultyMembers[] = [
 
 //Create dummy data that will populate the content of the project components
 //TODO: Actually load this information in from the database
-const projectValues = [['Rove - Photography Exploration App for iOS', 'ROVE is a photo location sharing and tagging app for iOS devices that allows users to upload geotagged photos, tag them with keywords and search for prime photography spots.', 'Image Description', '#', 'imageAlt'],
-['Automated Lyric Analysis', 'Did musical lyrics get less sophisticated over time? This project used computational tools to analyze the lyrical sophistication of the Billboard top 100 from 1959 – 2016.', 'Image Description', '#', 'imageAlt,'],
-['D&D Roleplaying Group/Campaign Manager', 'Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons', 'Image Description', '#', 'imageAlt'],
-['Square Swords 3D Fighting Game', 'This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.', 'Image Description', '#', 'imageAlt']];
+const projectValues = [['Rove - Photography Exploration App for iOS', 'ROVE is a photo location sharing and tagging app for iOS devices that allows users to upload geotagged photos, tag them with keywords and search for prime photography spots.', 'Image Description', '/example', 'imageAlt'],
+['Automated Lyric Analysis', 'Did musical lyrics get less sophisticated over time? This project used computational tools to analyze the lyrical sophistication of the Billboard top 100 from 1959 – 2016.', 'Image Description', '/example', 'imageAlt,'],
+['D&D Roleplaying Group/Campaign Manager', 'Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons', 'Image Description', '/example', 'imageAlt'],
+['Square Swords 3D Fighting Game', 'This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.', 'Image Description', '/example', 'imageAlt']];
 
 //Function that creates and returns a project object
 function makeProjectObject(
