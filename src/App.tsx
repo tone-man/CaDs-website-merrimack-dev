@@ -19,7 +19,6 @@ export const AuthContext = createContext(null);
 // Add routing
 // https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/#
 function App() {
-    const [count, setCount] = useState(0)
     const [user, setUser] = useState(null)
 
     onAuthStateChanged(auth, function(result) {
