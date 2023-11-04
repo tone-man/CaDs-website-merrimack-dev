@@ -17,6 +17,7 @@
     text-align: left;
     margin: auto;
     font-family: var(--caslonRegular);
+    overflow-wrap: break-word;
 }
 
 /* Styling for edit button */

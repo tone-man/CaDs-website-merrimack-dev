@@ -21,9 +21,10 @@
 
 /* Formats title text on the project card component */
 .project-card .title-text {
+    padding-left: 50px;
     font-size: var(--mediumFont);
     color: white;
-    text-align: center;
+    text-align: left;
     padding-top: 20px;
     font-family: var(--caslonBold);
 }
@@ -91,5 +92,10 @@
 @media screen and (max-width: 1600px) {
     .project-images{
        min-width: 150px;
+     }
+     .project-card .title-text{
+        text-align: center;
+        padding-left: 0px;
+        padding-bottom: 10px;
      }
    }

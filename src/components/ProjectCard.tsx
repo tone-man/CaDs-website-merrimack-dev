@@ -25,10 +25,10 @@ function projectCardContent(
         <>
             {/*This positions & styles the Title & Faculty Member Carousel  */}
             <Row style={{ marginBottom: '20px' }} className="d-flex justify-content-center align-items-center">
-                <Col>
+                <Col md={{ span: 6, offset: 0 }}>
                     <h1 className='title-text'> {title} </h1>
                 </Col>
-                <Col md={{ span: 3, offset: 3 }} xs={{ span: 4, offset: 0 }}>
+                <Col md={{ span: 3, offset: 3 }} xs={{ span: 12, offset: 0 }}>
                     <FacultyCarousel faculty={facultyMembers} />
                 </Col>
             </Row>

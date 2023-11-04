@@ -198,7 +198,28 @@
       "email": "cads.website.merrimack@gmail.com",
       "name": "Administrator",
       "profileImg": "https://lh3.googleusercontent.com/a/ACg8ocJ9Q17xKVZ5jisFVx_On9_gqdQDCAqV3rFFnM58F1Oz=s96-c",
-      "user_level": "Administrator"
+      "user_level": "Administrator",
+      "requests" : {
+        "requestName": {
+          "requestName": "New Project $ProjectName",
+          "requestLink": "/"
+        },
+        "requestName2": {
+          "requestName": "Request to be Featured",
+          "requestLink": "/"
+        },
+        "requestName3": {
+          "requestName": "New User Application",
+          "requestLink": "/"
+        },
+        "requestName4": {
+          "requestName": "Edit Project $ProjectName",
+          "requestLink": "/"
+        },"requestName5": {
+          "requestName": "Request to be Featured",
+          "requestLink": "/"
+        }
+      }
     }
   }
 }

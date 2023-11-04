@@ -30,8 +30,8 @@ function PageSection(myProps: myPageProps) {
                     <div className='page-container'>
                         {/* If there are pages in the page array, then iterate through and map each element to a new page section */}
                         {myProps.pages.length !== 0 ? (
-                            myProps.pages.map((page) => (
-                                <div style={{ borderTop: '1px black solid' }}>
+                            myProps.pages.map((page, index) => (
+                                <div style={{ borderTop: '1px black solid' }} key={index}>
                                     <Row className='rows'>
                                         <Col md={11} xs={9} className='page-name'>
                                             <h3 className='smallFont'>
