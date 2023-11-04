@@ -4,7 +4,7 @@ import '../css/contributer.css'
 
 export interface contributerProps {
     name: string,
-    description: string,
+    description: string
 }
 
 function ProjectContributer(myProps: contributerProps) {

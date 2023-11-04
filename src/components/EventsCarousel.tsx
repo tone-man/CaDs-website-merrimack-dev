@@ -9,13 +9,10 @@ import { useEffect, useState } from 'react';
 
 // This component creates an events carousel component and populates it with events
 function EventsCarousel() {
-
-
     // Declares an array of event objects
     const [eventsArray, setEventsArray] = useState<myEventProps[]>([]);
-    const [events, setEvents] = useState<myEventProps[]>([]);
+    const [snapshotTemp, setSnapshot] = useState<myEventProps | object>({});
 
-    // Creates dummy data for each of the events objects in the carousel
 
     //Function that creates and returns an event object
     function makeEventObject(
@@ -39,26 +36,31 @@ function EventsCarousel() {
         };
     }
 
-    function getEvents() {
-        const db = getDatabase();
-        const projects = ref(db, 'pages/homepage/components');
-        onValue(projects, (snapshot) => {
-            setEvents(snapshot.val()[1].eventsCarousel)
-        });
-    }
-
+    // Gets the events information from the database
     useEffect(() => {
-        getEvents();
+        const db = getDatabase();
+        const projects = ref(db, 'pages/homepage/components/1/eventsCarousel');
+        // Stores a listener for the database in a useState variable
+        onValue(projects, (snapshot) => {
+            setSnapshot(snapshot.val());
+        });
     }, []);
 
+    // Actually parses database information so it can be passed to other components
     useEffect(() => {
-        const evs = [];
-        for (let i = 0; i < events.length; i++) {
-            const newObj = makeEventObject(events[i].imgSource, events[i].imageAlt, events[i].caption, events[i].description, events[i].link, events[i].title, events[i].date, events[i].location);
-            evs.push(newObj);
+        const arr: myEventProps[] = [];
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+        // Iterates through event objects
+        for (const [, value] of Object.entries(snapshotTemp)) {
+            const event = value;
+
+            // Creates a new project object and adds it to an array
+            const newObj = makeEventObject(event.imgSource, event.imageAlt, event.caption, event.description, event.link, event.title, event.date, event.location);
+            arr.push(newObj);
         }
-        setEventsArray(evs);
-    }, [events]);
+        // Sets the project array information to the array of project objects whose information we parsed
+        setEventsArray(arr);
+    }, [snapshotTemp]);
 
 
     return (

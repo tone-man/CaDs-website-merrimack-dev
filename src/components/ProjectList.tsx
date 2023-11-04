@@ -15,103 +15,7 @@ import { useEffect, useState } from 'react';
 // This component actually creates the project list component and populates it with projects
 function ProjectList() {
     const [projectsArray, setProjectsArray] = useState<myProjectProps[]>([])
-    const [snapshotTemp, setSnapshot] = useState([])
-
-
-    useEffect(() => {
-        const db = getDatabase();
-        const projects = ref(db, 'pages/homepage/components/0/projectList');
-        const arr: myProjectProps[] = [];
-        onValue(projects, (snapshot) => {
-            setSnapshot(snapshot.val());
-
-
-
-            let number = 0;
-            console.log('string', snapshot.val())
-            //     for (const [key, value] of Object.entries(snapshot.val())) {
-
-
-            //         const project = value;
-            //         const facultyArray = [];
-            //         const contributersArr=[];
-
-            //         // Accessing contributors object and converting it into an array
-            //         for (const facultyKey in project.facultyMembers) {
-            //             // console.log(facultyKey)
-            //             const facultyMember = project.facultyMembers[facultyKey];
-            //             facultyArray.push({
-            //                 facultyName: facultyMember.facultyName,
-            //                 facultyImg: facultyMember.facultyImg,
-            //             });
-            //         }
-
-            //          // Accessing contributors object and converting it into an array
-            //          for (const contributerKey in project.contributers) {
-            //             // console.log(contributerKey)
-            //             const contributer = project.contributers[contributerKey];
-            //             contributersArr.push({
-            //                 name: contributer.name,
-            //                 description: contributer.description,
-            //             });
-            //         }
-
-
-            //         const newObj = makeProjectObject(project.title, project.description, project.imageDescription, project.projectLink, number, project.imageAlt, facultyArray, contributersArr);
-
-
-            //         console.log('Projects Array:', newObj);
-            //         arr.push(newObj);
-            //         number++;
-            //     }
-            //     console.log('LENGTH',arr.length);
-            //     setProjectsArray(arr);
-        });
-    }, []);
-
-    useEffect(() => {
-        console.log('temp', snapshotTemp);
-        let number = 0;
-        const arr: myProjectProps[] = [];
-        for (const [key, value] of Object.entries(snapshotTemp)) {
-
-
-            const project = value;
-            const facultyArray = [];
-            const contributersArr = [];
-            console.log('value', project)
-
-            // Accessing contributors object and converting it into an array
-            for (const facultyKey in project.facultyMembers) {
-                // console.log(facultyKey)
-                const facultyMember = project.facultyMembers[facultyKey];
-                facultyArray.push({
-                    facultyName: facultyMember.facultyName,
-                    facultyImg: facultyMember.facultyImg,
-                });
-            }
-
-            // Accessing contributors object and converting it into an array
-            for (const contributerKey in project.contributers) {
-                // console.log(contributerKey)
-                const contributer = project.contributers[contributerKey];
-                contributersArr.push({
-                    name: contributer.name,
-                    description: contributer.description,
-                });
-            }
-
-            const newObj = makeProjectObject(value.title, value.description, value.imageDescription, value.projectLink, number, value.imageAlt, facultyArray, contributersArr);
-            arr.push(newObj);
-
-            number++;
-            
-        }
-        setProjectsArray(arr);
-    }, [snapshotTemp]);
-
-
-
+    const [snapshotTemp, setSnapshot] = useState<myProjectProps | object>({});
 
     //Function that creates and returns a project object
     function makeProjectObject(
@@ -135,6 +39,56 @@ function ProjectList() {
             contributers: contributers
         };
     }
+
+
+    // Gets the project information from the database
+    useEffect(() => {
+        const db = getDatabase();
+        const projects = ref(db, 'pages/homepage/components/0/projectList');
+        // Stores a listener for the database in a useState variable
+        onValue(projects, (snapshot) => {
+            setSnapshot(snapshot.val());
+        });
+    }, []);
+
+    // Actually parses database information so it can be passed to other components
+    useEffect(() => {
+        let number = 0;
+        const arr: myProjectProps[] = [];
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+        // Iterates through project objects
+        for (const [, value] of Object.entries(snapshotTemp)) {
+            const project = value;
+            const facultyArray = [];
+            const contributersArr = [];
+
+            // Acesses the facultyMember object and converts it into an array
+            for (const facultyKey in project.facultyMembers) {
+                const facultyMember = project.facultyMembers[facultyKey];
+                facultyArray.push({
+                    facultyName: facultyMember.facultyName,
+                    facultyImg: facultyMember.facultyImg,
+                });
+            }
+
+             // Acesses the contributors object and converts it into an array
+            for (const contributerKey in project.contributers) {
+                const contributer = project.contributers[contributerKey];
+                contributersArr.push({
+                    name: contributer.name,
+                    description: contributer.description,
+                });
+            }
+
+            // Creates a new project object and adds it to an array
+            const newObj = makeProjectObject(value.title, value.description, value.imageDescription, value.projectLink, number, value.imageAlt, facultyArray, contributersArr);
+            arr.push(newObj);
+            number++;
+
+        }
+        // Sets the project array information to the array of project objects whose information we parsed
+        setProjectsArray(arr);
+    }, [snapshotTemp]);
 
     return (
         <>
