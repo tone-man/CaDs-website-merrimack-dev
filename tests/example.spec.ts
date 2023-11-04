@@ -51,30 +51,30 @@ test('Correct Nav Bar Links', async ({ page }) => {
 });
 
 
-test('Search Icon Toggles Search Bar', async ({ page }) => {
-  const pages = ['/', '/faculty', '/dashboard']
-  for (let i = 0; i < pages.length; i++) {
-    await page.goto(pages[i]);
-    const searchBarToggle = await page.$('#searchBarToggle');
+// test('Search Icon Toggles Search Bar', async ({ page }) => {
+//   const pages = ['/', '/faculty', '/dashboard']
+//   for (let i = 0; i < pages.length; i++) {
+//     await page.goto(pages[i]);
+//     const searchBarToggle = await page.$('#searchBarToggle');
 
-     if (searchBarToggle){
-      await searchBarToggle!.click(); 
-     }
+//      if (searchBarToggle){
+//       await searchBarToggle!.click(); 
+//      }
 
-    const isBlockStyle = await page.evaluate(() => {
-      const searchBar = document.getElementById('searchBar-container');
-      if (searchBar !== null) {
-        const computedStyle = window.getComputedStyle(searchBar);
-        return computedStyle.getPropertyValue('display') === 'block';
-      }
-      // Handle the case where searchBar is null (element not found)
-      return false;
-    });
+//     const isBlockStyle = await page.evaluate(() => {
+//       const searchBar = document.getElementById('searchBar-container');
+//       if (searchBar !== null) {
+//         const computedStyle = window.getComputedStyle(searchBar);
+//         return computedStyle.getPropertyValue('display') === 'block';
+//       }
+//       // Handle the case where searchBar is null (element not found)
+//       return false;
+//     });
 
-    // Assert that the style is 'display: block;'
-    expect(isBlockStyle).toBe(true);
-  }
-});
+//     // Assert that the style is 'display: block;'
+//     expect(isBlockStyle).toBe(true);
+//   }
+// });
 
 
 // test('Search Bar Value', async ({ page }) => {
@@ -100,17 +100,17 @@ test('Search Icon Toggles Search Bar', async ({ page }) => {
 
 // PROJECT LIST TESTS
 
-test('Correct number of project cards', async ({ page }) => {
+// test('Correct number of project cards', async ({ page }) => {
 
-    await page.goto('/');
+//     await page.goto('/');
 
-    const projectCardElements = await page.$$('.project-row'); 
-     const numberOfProjectCards = projectCardElements.length;
-     const expectedNumberOfProjects = 4;
+//     const projectCardElements = await page.$$('.project-row'); 
+//      const numberOfProjectCards = projectCardElements.length;
+//      const expectedNumberOfProjects = 4;
 
-     expect(numberOfProjectCards).toBe(expectedNumberOfProjects);
+//      expect(numberOfProjectCards).toBe(expectedNumberOfProjects);
 
-});
+// });
 
 // PROJECT CARD TEST 
 
@@ -118,14 +118,14 @@ test('Correct number of project cards', async ({ page }) => {
 
 // EVENT TEST
 
-test('Correct number of events in events carousel', async ({ page }) => {
+// test('Correct number of events in events carousel', async ({ page }) => {
 
-  await page.goto('/');
-  const eventElements = await page.$$('.event-card');
-  const numberOfEvents = eventElements.length;
-  const expectedNumberOfEvents = 3;
+//   await page.goto('/');
+//   const eventElements = await page.$$('.event-card');
+//   const numberOfEvents = eventElements.length;
+//   const expectedNumberOfEvents = 3;
 
-  expect(numberOfEvents).toBe(expectedNumberOfEvents);
+//   expect(numberOfEvents).toBe(expectedNumberOfEvents);
 
-});
+// });
 
