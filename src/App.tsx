@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import FireBaseApp from './firebase';
 import Home from './pages/index';
 import FacultyDirectory from './pages/facultyDirectoryPage';
+import EditPage from './pages/EditPage';
 import Dashboard from './pages/dashboard';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -38,6 +39,7 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/faculty' element={<FacultyDirectory />} />
                     <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/edit' element={<EditPage />} />
                 </Routes>
                 <Footer />
             </Router>

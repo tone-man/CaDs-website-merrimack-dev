@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
 import { facultyMembers } from './FacultyCarousel';
 import { contributerProps } from './ProjectContributer';
@@ -8,7 +8,8 @@ import '../css/universal.css'
 import '../css/ProjectList.css'
 import { getDatabase, ref, onValue } from "firebase/database";
 import Header from './Header';
-import { useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -16,6 +17,7 @@ import { useEffect, useState } from 'react';
 function ProjectList() {
     const [projectsArray, setProjectsArray] = useState<myProjectProps[]>([])
     const [snapshotTemp, setSnapshot] = useState<myProjectProps | object>({});
+    const navigate = useNavigate();
 
     //Function that creates and returns a project object
     function makeProjectObject(
@@ -90,11 +92,20 @@ function ProjectList() {
         setProjectsArray(arr);
     }, [snapshotTemp]);
 
+    const handleEditButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+        navigate('/edit', { state: { pathName: 'pages/homepage/components' } });
+      };
+
     return (
         <>
             <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
             <Container fluid style={{ background: 'rgb(224, 224, 224)' }}>
                 <Container className='projects-container'>
+                <Row>
+                    <Col md={12} style={{textAlign: 'right'}} className='edit-button'>
+                      <a href='/edit'><Button onClick={handleEditButtonClick}>Edit Page</Button></a>  
+                    </Col>
+                </Row>
                     <Row>
                         {/* Header text */}
                         <Col md={{ span: 12 }} style={{ padding: '20px' }} className='black-color'>
