@@ -43,7 +43,7 @@ function ProjectList() {
     }
 
 
-    // Gets the project information from the database
+    // Gets all of the components that compose a home page from the database
     useEffect(() => {
         const db = getDatabase();
         const projects = ref(db, 'pages/homepage/components');
@@ -54,15 +54,16 @@ function ProjectList() {
         });
     }, []);
 
-    // Actually parses database information so it can be passed to other components
+    // Actually parses database information so it can be converted into project list components
     useEffect(() => {
         let number = 0;
         const arr: myProjectProps[] = [];
         // // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-        // // Iterates through project objects
+        // // Iterates through component objects
         for (const [, value] of Object.entries(snapshotTemp)) {
 
             const project = value;
+            // If it is type project
             if (project.type === 'project') {
 
                 const facultyArray = [];
@@ -97,6 +98,9 @@ function ProjectList() {
         setProjectsArray(arr);
     }, [snapshotTemp]);
 
+    
+    // https://stackoverflow.com/questions/64566405/react-router-dom-v6-usenavigate-passing-value-to-another-component
+    // Routes user to the edit page from the home page & passes optional param to  page as well
     const handleEditButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
         navigate('/edit', { state: { pathName: 'pages/homepage/components' } });
     };
@@ -107,8 +111,9 @@ function ProjectList() {
             <Container fluid style={{ background: 'rgb(224, 224, 224)' }}>
                 <Container className='projects-container'>
                     <Row>
+                        {/* Edit button. TODO: Render conditionally based on ownership */}
                         <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
-                            {/* <a href='/edit'><Button onClick={handleEditButtonClick}>Edit Page</Button></a>   */}
+                           <Button onClick={handleEditButtonClick}>Edit Page</Button>
                         </Col>
                     </Row>
                     <Row>
