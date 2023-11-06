@@ -1,0 +1,5 @@
+.save-button Button{
+    font-size: var(--smallFont);
+    font-family: var(--metropolisBold);
+    background-color: var(--blue);
+}

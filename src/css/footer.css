@@ -2,6 +2,7 @@
 
 /* Styling for the footer itself */
 footer {
+    margin-top: 50px;
     border-top: 5px solid var(--yellow);
     min-height: 50vh;
     background: RGB(30, 30, 30);

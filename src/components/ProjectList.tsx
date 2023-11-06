@@ -46,7 +46,8 @@ function ProjectList() {
     // Gets the project information from the database
     useEffect(() => {
         const db = getDatabase();
-        const projects = ref(db, 'pages/homepage/components/0/projectList');
+        const projects = ref(db, 'pages/homepage/components');
+
         // Stores a listener for the database in a useState variable
         onValue(projects, (snapshot) => {
             setSnapshot(snapshot.val());
@@ -57,35 +58,39 @@ function ProjectList() {
     useEffect(() => {
         let number = 0;
         const arr: myProjectProps[] = [];
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-        // Iterates through project objects
+        // // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+        // // Iterates through project objects
         for (const [, value] of Object.entries(snapshotTemp)) {
+
             const project = value;
-            const facultyArray = [];
-            const contributersArr = [];
+            if (project.type === 'project') {
 
-            // Acesses the facultyMember object and converts it into an array
-            for (const facultyKey in project.facultyMembers) {
-                const facultyMember = project.facultyMembers[facultyKey];
-                facultyArray.push({
-                    facultyName: facultyMember.facultyName,
-                    facultyImg: facultyMember.facultyImg,
-                });
+                const facultyArray = [];
+                const contributersArr = [];
+
+                // // Acesses the facultyMember object and converts it into an array
+                for (const facultyKey in project.facultyMembers) {
+                    const facultyMember = project.facultyMembers[facultyKey];
+                    facultyArray.push({
+                        facultyName: facultyMember.facultyName,
+                        facultyImg: facultyMember.facultyImg,
+                    });
+                }
+
+                //  // Acesses the contributors object and converts it into an array
+                for (const contributerKey in project.contributers) {
+                    const contributer = project.contributers[contributerKey];
+                    contributersArr.push({
+                        name: contributer.name,
+                        description: contributer.description,
+                    });
+                }
+
+                // // Creates a new project object and adds it to an array
+                const newObj = makeProjectObject(value.title, value.description, value.imageDescription, value.projectLink, number, value.imageAlt, facultyArray, contributersArr);
+                arr.push(newObj);
+                number++;
             }
-
-             // Acesses the contributors object and converts it into an array
-            for (const contributerKey in project.contributers) {
-                const contributer = project.contributers[contributerKey];
-                contributersArr.push({
-                    name: contributer.name,
-                    description: contributer.description,
-                });
-            }
-
-            // Creates a new project object and adds it to an array
-            const newObj = makeProjectObject(value.title, value.description, value.imageDescription, value.projectLink, number, value.imageAlt, facultyArray, contributersArr);
-            arr.push(newObj);
-            number++;
 
         }
         // Sets the project array information to the array of project objects whose information we parsed
@@ -94,18 +99,18 @@ function ProjectList() {
 
     const handleEditButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
         navigate('/edit', { state: { pathName: 'pages/homepage/components' } });
-      };
+    };
 
     return (
         <>
             <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
             <Container fluid style={{ background: 'rgb(224, 224, 224)' }}>
                 <Container className='projects-container'>
-                <Row>
-                    <Col md={12} style={{textAlign: 'right'}} className='edit-button'>
-                      <a href='/edit'><Button onClick={handleEditButtonClick}>Edit Page</Button></a>  
-                    </Col>
-                </Row>
+                    <Row>
+                        <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
+                            {/* <a href='/edit'><Button onClick={handleEditButtonClick}>Edit Page</Button></a>   */}
+                        </Col>
+                    </Row>
                     <Row>
                         {/* Header text */}
                         <Col md={{ span: 12 }} style={{ padding: '20px' }} className='black-color'>
