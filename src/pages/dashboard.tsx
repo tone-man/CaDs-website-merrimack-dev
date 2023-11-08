@@ -25,7 +25,7 @@ const Dashboard = () => {
         // Stores a listener for the database in a useState variable
         onValue(projects, (snapshot) => {
             setSnapshot(snapshot.val());
-            console.log('here', snapshot.val());
+            // console.log('here', snapshot.val());
         });
     }, []);
 
