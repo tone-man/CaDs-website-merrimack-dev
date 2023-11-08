@@ -116,7 +116,7 @@ function WhiteListSection() {
                             {visibleUsers.length > 0 ? (
                                 // Maps each user  in the array to a whitelist 
                                 visibleUsers.map((user, index) => (
-                                    <div style={index !== visibleUsers.length - 1 || visibleUsers.length < 3 ? { borderBottom: '1px black solid' } : {}}>
+                                    <div key={index} style={index !== visibleUsers.length - 1 || visibleUsers.length < 3 ? { borderBottom: '1px black solid' } : {}}>
                                         <WhiteListIndividual onDelete={() => deleteUser(user.id)} onEdit={editUser} myProps={{ id: user.id, userName: user.userName, userEmail: user.userEmail, userImage: user.userImage }} />
                                     </div>
                                 ))

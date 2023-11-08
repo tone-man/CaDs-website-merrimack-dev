@@ -7,8 +7,8 @@ import ProfileImage from './ProfileImage';
 export interface requestProps {
     requestName: string,
     requestLink: string,
-    requesterName?: string,
-    requestImg?: string,
+    // requesterName?: string,
+    // requestImg?: string,
 
 }
 
@@ -19,6 +19,8 @@ interface myRequestProps {
 
 // This request section component is a container for all requests that have been made
 function RequestSection(myProps: myRequestProps) {
+
+    console.log('IN', myProps.requests)
     return (
 
         <div>
@@ -37,7 +39,7 @@ function RequestSection(myProps: myRequestProps) {
                             {/* If there are requests, map each element to a div */}
                             {myProps.requests.length !== 0 ? (
                                 myProps.requests.map((requests, index) => (
-                                    <div style={index !==0 ? {borderTop: '1px black solid'} : {}}>
+                                    <div key={index} style={index !==0 ? {borderTop: '1px black solid'} : {}}>
                                         <Row className='rows ml-auto'>
                                             <Col md={2} sm={2} xs={4} className='profile-image' >
                                                 <ProfileImage size='60px' position='ml-auto' />

@@ -16,6 +16,7 @@
     overflow-y: scroll;
     text-align:justify;
     border-top: 1px black solid;
+    overflow-wrap: break-word;
 }
 
 /* Make scrollbar not appear */

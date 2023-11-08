@@ -5,7 +5,7 @@ import ProfileImage from './ProfileImage';
 import '../css/facultyCarousel.css'
 
 
-// Interface for the faculty members. Each facultty member should have a name and image
+// Interface for the faculty members. Each faculty member should have a name and image
 //TODO: Load image in properly 
 export interface facultyMembers {
     facultyName: string,
@@ -33,7 +33,7 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
                         facultyMembers.map((members, index) => (
                             <Carousel.Item key={index}>
                                 {/* Each carousel item should be composed of a profile image component and the faculty members page */}
-                                <ProfileImage size='70px' position='mx-auto'/>
+                                <ProfileImage size='70px' position='mx-auto' />
                                 <h1 className='featured-text'> {members.facultyName}</h1>
                             </Carousel.Item>
                         ))
