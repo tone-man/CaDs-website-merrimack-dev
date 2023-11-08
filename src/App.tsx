@@ -5,6 +5,7 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
 import FacultyDirectory from "./pages/facultyDirectoryPage";
+import EditPage from './pages/EditPage';
 import Dashboard from "./pages/dashboard";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -37,6 +38,7 @@ function App() {
           console.log(snapshot.val());
           setUser(snapshot.val());
         }
+
       });
     } else {
       setUser(null);
@@ -50,6 +52,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/faculty" element={<FacultyDirectory />} />
+          <Route path='/edit' element={<EditPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         <Footer />

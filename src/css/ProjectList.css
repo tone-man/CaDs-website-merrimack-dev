@@ -10,3 +10,10 @@
 .projects-container .project-row {
     padding: 25px 0px 25px 0px;
 }
+
+
+.projects-container .edit-button Button{
+    font-size: var(--smallFont);
+    font-family: var(--metropolisBold);
+    background-color: var(--blue);
+}

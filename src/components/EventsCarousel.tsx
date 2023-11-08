@@ -39,7 +39,7 @@ function EventsCarousel() {
     // Gets the events information from the database
     useEffect(() => {
         const db = getDatabase();
-        const projects = ref(db, 'pages/homepage/components/1/eventsCarousel');
+        const projects = ref(db, 'pages/homepage/components');
         // Stores a listener for the database in a useState variable
         onValue(projects, (snapshot) => {
             setSnapshot(snapshot.val());
@@ -52,11 +52,14 @@ function EventsCarousel() {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
         // Iterates through event objects
         for (const [, value] of Object.entries(snapshotTemp)) {
-            const event = value;
+            if (value.type ==='event'){
+                const event = value;
 
-            // Creates a new project object and adds it to an array
-            const newObj = makeEventObject(event.imgSource, event.imageAlt, event.caption, event.description, event.link, event.title, event.date, event.location);
-            arr.push(newObj);
+                // Creates a new project object and adds it to an array
+                const newObj = makeEventObject(event.imgSource, event.imageAlt, event.caption, event.description, event.link, event.title, event.date, event.location);
+                arr.push(newObj);
+            }
+          
         }
         // Sets the project array information to the array of project objects whose information we parsed
         setEventsArray(arr);
