@@ -5,7 +5,9 @@
   "pages": {
     "homepage": {
       "components": {
-        "0": {
+        "X": {
+          "pageOrder": 1,
+          "nestedOrder": 2,
           "type": "project",
           "contributers": {
             "antonio": {
@@ -41,7 +43,9 @@
           "projectLink": "#",
           "title": "D&D Roleplaying Group/Campaign Manager"
         },
-        "1": {
+        "B": {
+          "pageOrder": 1,
+          "nestedOrder": 1,
           "type": "project",
           "contributers": {
             "antonio": {
@@ -77,7 +81,9 @@
           "projectLink": "#",
           "title": "Automated Lyric Analysis"
         },
-        "2": {
+        "C": {
+          "pageOrder": 1,
+          "nestedOrder": 0,
           "type": "project",
           "contributers": {
             "antonio": {
@@ -113,43 +119,47 @@
           "projectLink": "#",
           "title": "Rove - Photography Exploration App for iOS"
         },
-      "3": {
-        "type": "project",
-        "contributers": {
-          "antonio": {
-            "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-            "name": "Antonio M Craveiro"
+        "H": {
+          "pageOrder": 1,
+          "nestedOrder": 3,
+          "type": "project",
+          "contributers": {
+            "antonio": {
+              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
+              "name": "Antonio M Craveiro"
+            },
+            "bree": {
+              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
+              "name": "Dr. Melissa St. Hilaire"
+            },
+            "melissa": {
+              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
+              "name": "Dr. Melissa St. Hilaire"
+            }
           },
-          "bree": {
-            "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-            "name": "Dr. Melissa St. Hilaire"
+          "description": "This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.",
+          "facultyMembers": {
+            "Antonio": {
+              "facultyImg": "image",
+              "facultyName": "Antonio M Craveiro"
+            },
+            "Brianna": {
+              "facultyImg": "image",
+              "facultyName": "Dr. Melissa St. Hilaire"
+            },
+            "Melissa": {
+              "facultyImg": "image",
+              "facultyName": "Dr. Melissa St. Hilaire"
+            }
           },
-          "melissa": {
-            "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-            "name": "Dr. Melissa St. Hilaire"
-          }
+          "imageAlt": "imageAlt",
+          "imageDescription": "Image Description",
+          "projectLink": "#",
+          "title": "Square Swords 3D Fighting Game"
         },
-        "description": "This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.",
-        "facultyMembers": {
-          "Antonio": {
-            "facultyImg": "image",
-            "facultyName": "Antonio M Craveiro"
-          },
-          "Brianna": {
-            "facultyImg": "image",
-            "facultyName": "Dr. Melissa St. Hilaire"
-          },
-          "Melissa": {
-            "facultyImg": "image",
-            "facultyName": "Dr. Melissa St. Hilaire"
-          }
-        },
-        "imageAlt": "imageAlt",
-        "imageDescription": "Image Description",
-        "projectLink": "#",
-        "title": "Square Swords 3D Fighting Game"
-      },
-        "4": {
+        "A": {
+          "pageOrder": 0,
+          "nestedOrder": 0,
           "type": "event",
           "caption": "Caption 1",
           "date": "Date",
@@ -160,7 +170,9 @@
           "location": "Location",
           "title": "Careers for the Common Good Internship & Career Fair"
         },
-        "5": {
+        "J": {
+          "pageOrder": 2,
+          "nestedOrder": 0,
           "type": "event",
           "caption": "Caption 1",
           "date": "Date",
@@ -171,7 +183,9 @@
           "location": "Location",
           "title": "Careers for the Common Good Internship & Career Fair"
         },
-        "6": {
+        "L": {
+          "pageOrder": 2,
+          "nestedOrder": 1,
           "type": "event",
           "caption": "Caption 1",
           "date": "Date",
