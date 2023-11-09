@@ -6,15 +6,33 @@ import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
+import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../App';
+
+const db = getDatabase(); //Global DB Connection
 
 // Component to create the nav bar
 function NavBar() {
     // Declare useState variables and useRef variables
     const [isFocused, setIsFocused] = useState(false);
+    const [user, setUser] = useState<object | null>(null);
     const uid = useContext(AuthContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
+
+    // Gets the user object from the database.
+    useEffect(() => {
+    
+        if (!uid)
+            return;
+
+        const userRef = ref(db, `/users/${uid}`);
+        // Stores a listener for the database in a useState variable
+        onValue(userRef, (snapshot) => {
+            setUser(snapshot.val());
+            console.log('user:', snapshot.val());
+        });
+    }, [uid]);
 
     // This useEffect displays/hides the search bar when isFocused changes
     useEffect(() => {
@@ -49,6 +67,7 @@ function NavBar() {
         const auth = getAuth(FireBaseApp);
         
         signOut(auth).then(() => {
+            setUser(null);
             // Sign-out successful. Generate a toast
           }).catch((error) => {
             // An error happened. Cenerate a toast
@@ -94,12 +113,12 @@ function NavBar() {
                         </Nav>
                         <Nav className="ms-auto">
                             {/* If a user is logged in, they will see their profile image */}
-                            {(uid != null) ? (
+                            {(user) ? (
                                 <>
                                     <NavDropdown
                                         title={
                                             <div className="pull-right">
-                                                <ProfileImage size='60px' position='mx-auto' image={uid.photoURL} />
+                                                <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
                                             </div>
                                         }
                                         id="basic-nav-dropdown"

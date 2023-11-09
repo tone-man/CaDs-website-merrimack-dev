@@ -81,9 +81,7 @@ const Dashboard = () => {
 
     // Get the list of requests from the database
 
-    // Get the lest of projects from the database
-    useEffect
-
+    // Get the list of projects from the database
 
 
     return (
