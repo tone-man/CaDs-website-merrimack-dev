@@ -6,11 +6,11 @@ interface DeleteConfirmationModal {
   show: boolean;
   onHide: () => void;
   onConfirm: () => void;
-  userName: string;
+  name: string;
 }
 
 // Modal that asks the user to confirm if they want to delete a user or not
-function DeleteConfirmationModal({ show, onHide, onConfirm, userName }: DeleteConfirmationModal) {
+function DeleteConfirmationModal({ show, onHide, onConfirm, name }: DeleteConfirmationModal) {
   return (
     
     <Modal show={show} onHide={onHide} centered className='customized-modal'>
@@ -20,7 +20,7 @@ function DeleteConfirmationModal({ show, onHide, onConfirm, userName }: DeleteCo
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h5 className='smallFont metropolisRegular'>Are you sure you want to delete user {userName}? </h5>
+        <h5 className='smallFont metropolisRegular'>Are you sure you want to delete {name}? </h5>
       </Modal.Body>
       <Modal.Footer>
         <Row className='ml-auto'>

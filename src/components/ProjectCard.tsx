@@ -20,6 +20,8 @@ function projectCardContent(
     contributers: contributerProps[],
     parity: number) {
 
+        
+
     return (
         
         <>
@@ -82,12 +84,12 @@ export interface myProjectProps {
     imageAlt: string,
     number: number,
     facultyMembers: facultyMembers[],
-    contributers: contributerProps[]
+    contributers: contributerProps[],
+    databaseKey: string
 }
 
 // This component actually creates the alternating project components seen on the home page
 function ProjectCard(myProps: myProjectProps) {
-
     const number = myProps.number + 1;
     const parity = number % 2;
 

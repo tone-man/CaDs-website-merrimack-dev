@@ -45,7 +45,7 @@ function WhiteListIndividual({ myProps, onDelete, onEdit }: WhiteListIndividualP
     return (
         <div>
 
-            <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={handleDelete} userName={myProps.userName} />
+            <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={handleDelete} name={myProps.userName} />
 
             <Container fluid className='individual-whitelist'>
                 <Row style={{ margin: 'auto' }} className=' ms-auto'>

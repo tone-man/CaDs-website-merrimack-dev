@@ -1,12 +1,191 @@
+import { getDatabase, ref, onValue, set} from 'firebase/database';
+import { useState, useEffect, MouseEventHandler } from 'react';
 import EventsCarousel from '../components/EventsCarousel';
+import { facultyMembers } from '../components/FacultyCarousel';
+import { myProjectProps } from '../components/ProjectCard';
+import { contributerProps } from '../components/ProjectContributer';
 import ProjectList from '../components/ProjectList';
+import { myEventProps } from '../components/Events';
+import { Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
+
+// The home page shows users the projectlist and events carousel 
 const Home = () => {
+    const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>([]);
+    const [snapshotTemp, setSnapshot] = useState<myProjectProps | object>({});
+    // https://reactnavigation.org/docs/use-navigation/#:~:text=useNavigation%20is%20a%20hook%20which,of%20a%20deeply%20nested%20child.
+    const navigate = useNavigate();
+
+    //Function that creates and returns a project object
+    function makeProjectObject(
+        title: string,
+        description: string,
+        imageDescription: string,
+        projectLink: string,
+        number: number,
+        imageAlt: string,
+        faculty: facultyMembers[],
+        contributers: contributerProps[],
+        databaseKey: string
+    ): myProjectProps {
+        return {
+            title: title,
+            description: description,
+            imageDescription: imageDescription,
+            projectLink: projectLink,
+            number: number,
+            imageAlt: imageAlt,
+            facultyMembers: faculty,
+            contributers: contributers,
+            databaseKey: databaseKey
+        };
+    }
+
+    //Function that creates and returns an event object
+    function makeEventObject(
+        imgSource: string,
+        imageAlt: string,
+        caption: string,
+        description: string,
+        link: string,
+        title: string,
+        date: string,
+        location: string,
+        databaseKey: string): myEventProps {
+        return {
+            imgSource: imgSource,
+            imageAlt: imageAlt,
+            caption: caption,
+            description: description,
+            link: link,
+            title: title,
+            date: date,
+            location: location,
+            databaseKey: databaseKey
+        };
+    }
+
+    // Gets all of the components in the homepage
+    // https://firebase.google.com/docs/database/web/read-and-write
+    useEffect(() => {
+        const db = getDatabase();
+        const projects = ref(db, 'pages/homepage/components');
+
+        // Stores a listener for the database in a useState variable
+        onValue(projects, (snapshot) => {
+            setSnapshot(snapshot.val());
+        });
+      
+    }, []);
+
+
+    // Actually parses database information so it can be converted into project list and event carousel components
+    useEffect(() => {
+
+        const containerArr: unknown[] = [];
+
+        // // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+        // // Iterates through component objects
+        for (const [key, value] of Object.entries(snapshotTemp)) {
+
+
+            // If there is not an array at a specific index in the containerArr, we need to make one in order
+            // to place items in a specific order
+            const type = value.type;
+            if (containerArr[value.pageOrder] === undefined) {
+                containerArr[value.pageOrder] = [];
+            }
+
+            // If it is type project, create a project object
+            if (type.includes('project')) {
+                const project = value;
+                const facultyArray = [];
+                const contributersArr = [];
+
+                // Accesses the facultyMember object and converts it into an array
+                for (const facultyKey in project.facultyMembers) {
+                    const facultyMember = project.facultyMembers[facultyKey];
+                    facultyArray.push({
+                        facultyName: facultyMember.facultyName,
+                        facultyImg: facultyMember.facultyImg,
+                    });
+                }
+
+                // Accesses the contributors object and converts it into an array
+                for (const contributerKey in project.contributers) {
+                    const contributer = project.contributers[contributerKey];
+                    contributersArr.push({
+                        name: contributer.name,
+                        description: contributer.description,
+                    });
+                }
+
+                // // Creates a new project object and adds it to an array
+                const newObj = makeProjectObject(value.title, value.description, value.imageDescription, value.projectLink, 0, value.imageAlt, facultyArray, contributersArr, key);
+                containerArr[value.pageOrder][project.nestedOrder] = newObj;
+
+            }
+            else if (type.includes('event')) {
+                const event = value;
+
+                // Creates a new project object and adds it to an array
+                const newObj = makeEventObject(event.imgSource, event.imageAlt, event.caption, event.description, event.link, event.title, event.date, event.location, key);
+                containerArr[value.pageOrder][event.nestedOrder] = newObj;
+            }
+        }
+        createRenderArray(containerArr);
+    }, [snapshotTemp]);
+
+    // Creates actual components for home page and pushes those objects onto a new array
+    function createRenderArray(containerArr) {
+        const tempArr = [];
+        for (let i = 0; i < containerArr.length; i++) {
+            if (containerArr[i][0].caption) {
+                tempArr.push(<EventsCarousel eventsArray={containerArr[i]} />);
+            }
+            else if (containerArr[i][0].projectLink) {
+                tempArr.push(<ProjectList projectArray={containerArr[i]}></ProjectList>);
+            }
+        }
+        setRenderedComponents(tempArr);
+    }
+
+
+    // https://stackoverflow.com/questions/64566405/react-router-dom-v6-usenavigate-passing-value-to-another-component
+    //Creates a new draft of the page, and routes user to the edit page for the draft
+    const handleEditButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+        const db = getDatabase();
+        for (const [key, value] of Object.entries(snapshotTemp)) {
+            const myRef = ref(db, `drafts/homepage/components/` + key);
+
+            // Set the data at the specified key in the database
+            set(myRef, value)
+                .then(() => {
+                    // Data has been successfully added to the database
+                    console.log('Data added successfully!');
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    console.error('Error adding data: ', error);
+                });
+        }
+
+        // Route to /edit page and pass in respective information
+        navigate('/edit', { state: { pathName: `drafts/homepage/components` } });
+    };
+
 
     return (
         <div>
-            <ProjectList ></ProjectList>
-            <EventsCarousel />
+            
+            {renderedComponents}
+            <Row>
+                {/* Edit button. TODO: Render conditionally based on ownership of a page */}
+                <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
+                    <Button onClick={handleEditButtonClick}>Edit Page</Button>
+                </Col>
+            </Row>
         </div>
     );
 };
