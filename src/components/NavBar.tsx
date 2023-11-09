@@ -6,7 +6,7 @@ import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
-import { getAuth, signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../App';
 
 // Component to create the nav bar
@@ -45,7 +45,14 @@ function NavBar() {
         }
     }
     function logOut(){
-        console.log("log out hre")
+
+        const auth = getAuth(FireBaseApp);
+        
+        signOut(auth).then(() => {
+            // Sign-out successful. Generate a toast
+          }).catch((error) => {
+            // An error happened. Cenerate a toast
+          });
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
