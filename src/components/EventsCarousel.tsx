@@ -31,7 +31,8 @@ function EventsCarousel(myProps: myEventListProps) {
                                                 caption={events.caption}
                                                 title={events.title}
                                                 date={events.date}
-                                                location={events.location} />
+                                                location={events.location}
+                                                databaseKey={events.databaseKey} />
                                         </div>
                                     </Carousel.Item>
                                 ))
