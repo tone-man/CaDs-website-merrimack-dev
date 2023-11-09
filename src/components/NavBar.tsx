@@ -13,7 +13,7 @@ import { AuthContext } from '../App';
 function NavBar() {
     // Declare useState variables and useRef variables
     const [isFocused, setIsFocused] = useState(false);
-    const user = useContext(AuthContext);
+    const uid = useContext(AuthContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
 
     // This useEffect displays/hides the search bar when isFocused changes
@@ -94,12 +94,12 @@ function NavBar() {
                         </Nav>
                         <Nav className="ms-auto">
                             {/* If a user is logged in, they will see their profile image */}
-                            {(user != null) ? (
+                            {(uid != null) ? (
                                 <>
                                     <NavDropdown
                                         title={
                                             <div className="pull-right">
-                                                <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
+                                                <ProfileImage size='60px' position='mx-auto' image={uid.photoURL} />
                                             </div>
                                         }
                                         id="basic-nav-dropdown"

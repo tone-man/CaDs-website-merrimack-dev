@@ -1,6 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, ref, onValue } from "firebase/database";
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
@@ -22,31 +22,35 @@ export const AuthContext = createContext(null);
 // Add routing
 // https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/#
 function App() {
-  const [user, setUser] = useState(null);
+  const [uid, setUid] = useState(null);
 
   onAuthStateChanged(auth, function (result) {
     if (result) {
 
-      if (user) //Debounce if user already is set.
+      if (uid) //Debounce if uid already is exists.
         return;
       // Check that user is within the whitelist
       const userRef = ref(db, `users/${result.uid}`);
 
-      // Update user when snapshot is retrieved
+      // Update uid if snapshot is retrieved from DB (user is on whitelist)
       onValue(userRef, (snapshot) => {
         if (snapshot) {
-          console.log(snapshot.val());
-          setUser(snapshot.val());
+          setUid(result.uid);
         }
 
       });
     } else {
-      setUser(null);
+      setUid(null);
+      signOut(auth).then(() => {
+        // console.log(`Sign-out successful. Generate a toast`);
+      }).catch((error) => {
+        // console.error('An error happened. Cenerate a toast');
+      });
     }
   });
 
   return (
-    <AuthContext.Provider value={user}>
+    <AuthContext.Provider value={uid}>
       <Router>
         <NavBar />
         <Routes>
