@@ -1,5 +1,5 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { child, get, getDatabase, ref, set, update } from 'firebase/database';
 
@@ -13,19 +13,26 @@ interface editableComponentProps {
 // This component shows the json for a component in a draft and allows edit, deletion, and addition privileges to users
 function EditableComponent(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+  const [shownData, setShownData] = useState('');
   const db = getDatabase();
-  const value = JSON.stringify(myProps.data, null, 2)
+
+
+  // Set the JSON value that will be displayed to the myProps.json whenever it 
+  useEffect(() => {
+    setShownData(JSON.stringify(myProps.data, undefined, 2));
+}, [myProps]);
+
 
   // Opens the confirmation modal
   function handleOpenConfirmationModal() {
     setShowDeletionModal(true);
   }
 
-
   // https://stackoverflow.com/questions/64649055/type-changeeventhtmlinputelement-is-not-assignable-to-type-changeeventhtml
   // Whenever changing the text input, call this function and send the edits up to the database
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newData = event.target.value;
+    setShownData(newData);
     const draftsPath = myProps.pathName + "/" + myProps.componentKey;
     const myRef = ref(db, draftsPath);
 
@@ -39,7 +46,6 @@ function EditableComponent(myProps: editableComponentProps) {
         // Handle errors here
         console.error('Error adding data: ', error);
       });
-
   }
 
 
@@ -50,8 +56,6 @@ function EditableComponent(myProps: editableComponentProps) {
     const deletePath = myProps.pathName + "/" + key;
     const valueRef = ref(db, deletePath);
     set(valueRef, null);
-
-    let temp;
 
     // Reorder nested components
     const dbRef = ref(getDatabase());
@@ -100,7 +104,7 @@ function EditableComponent(myProps: editableComponentProps) {
           <Col md={12} >
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control defaultValue={value} onChange={handleTextAreaChange} as="textarea" rows={10} style={{ resize: 'none', border: '1px black solid' }} />
+                <Form.Control value={shownData} onChange={handleTextAreaChange} as="textarea" rows={10} style={{ resize: 'none', border: '1px black solid' }} />
               </Form.Group>
             </Form>
           </Col>
