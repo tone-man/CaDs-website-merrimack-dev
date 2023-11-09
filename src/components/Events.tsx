@@ -11,7 +11,8 @@ export interface myEventProps {
     link: string,
     title: string,
     date: string,
-    location: string
+    location: string,
+    databaseKey: string
 }
 
 // This creates the event component that will be in the events carousel
