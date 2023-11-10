@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Container, DropdownButton, Dropdown, FormControl, InputGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Button, Container, FormControl, InputGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';

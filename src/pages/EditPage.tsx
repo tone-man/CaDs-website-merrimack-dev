@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { useLocation } from 'react-router-dom';
+import { getDatabase, ref, onValue, set } from 'firebase/database';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EditableComponent from '../components/EditableComponent';
 import Header from '../components/Header';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import '../css/editPage.css'
+import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
 // The edit page is what enables users to edit the components of a page they have owndership of
 const EditPage = () => {
@@ -13,34 +14,50 @@ const EditPage = () => {
     // Reads in param that was passed in (Tells users the path to look at for the database)
     const location = useLocation();
     const { pathName } = location.state as { pathName: string };
+
     const [updatedComponents, setUpdatedComponents] = useState();
+    const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
     const [snapshotTemp, setSnapshot] = useState({});
 
-    // Gets the project information from the database
+    const navigate = useNavigate();
+    const db = getDatabase();
+
+    // FOR TESTING PURPOSES ONLY
     useEffect(() => {
-        const db = getDatabase();
+        console.log("draft snap shot has changed", snapshotTemp)
+    }, [snapshotTemp]);
+
+    /**
+    * Effect hook to fetch project information from the database and update state.
+    * Runs upon initial rendering of page
+    */
+    useEffect(() => {
+        // Create a reference to the database using the provided pathName
         const projects = ref(db, pathName);
 
-        // Sets usetate variable to a listener to the database
+        // Set up a listener to the database using onValue
+        // The listener will update the state variable 'snapshot' with the retrieved data
         onValue(projects, (snapshot) => {
+            // Update the state variable 'snapshot' with the data from the database
             setSnapshot(snapshot.val());
         });
     }, []);
 
-    useEffect(() => {
-       console.log("got changed ", snapshotTemp)
-    }, [snapshotTemp]);
 
-    // Parses database information and creates editable components with respective information
+    /**
+    * Effect hook to process database information and create editable components.
+    * Runs whenever 'snapshotTemp' or values in pages change.
+    */
     useEffect(() => {
+        // Initialize an array to store components
         const arr = [];
-        let temp = []
+        let temp = [];
 
-        // https://flexiple.com/javascript/loop-through-object-javascript
-        // Loop through the database information and stringify the objects so they can be displayed
+        // Check if 'snapshotTemp' has data
         if (snapshotTemp) {
-            // For every value in the database
+            // Loop through each value in the database
             for (const [key, value] of Object.entries(snapshotTemp)) {
+                // Push an EditableComponent with specific props for each value
                 arr.push(
                     <EditableComponent
                         key={key}
@@ -49,12 +66,18 @@ const EditPage = () => {
                         componentKey={key}
                         data={value}
                         pathName={pathName}
-                    />);
+                    />
+                );
             }
-            // Sort the array automatically by pageOrder and then by nestedOrder
+
+            // Sort the array based on 'pageOrder' and 'nestedOrder'
             temp = arr.sort(function (a, b) {
-                return a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder;
-            })
+                return (
+                    a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
+                );
+            });
+
+            // Update state variable 'updatedComponents' with the sorted array
             setUpdatedComponents(temp);
         }
     }, [snapshotTemp]);
@@ -65,15 +88,37 @@ const EditPage = () => {
         console.log("save functionality here")
     };
 
+    /**
+    * Handles the cancellation of the editing process.
+    * Deletes the draft in the database and navigates the user back to the home page.
+    */
+    const handleCancel = () => {
+        const deletePath = pathName;
+
+        // Create a reference to the database using the provided deletePath
+        const valueRef = ref(db, deletePath);
+
+        // Set the data at the specified key in the database to null (deletion)
+        set(valueRef, null);
+
+        // Navigate the user back to the home page
+        navigate('/');
+    };
+
     return (
         <div>
+            <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={handleCancel} name={'this draft'} />
             <Header title={"Edit Page"} />
-            <Container style={{paddingTop: '40px'}}>
+            <Container style={{ paddingTop: '40px' }}>
                 {updatedComponents}
                 <Row>
-                    <Col md={12} style={{ textAlign: 'right' }} className='save-button'>
+                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'right' }} className='save-button'>
                         {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                        <Button onClick={() => handleSave()}>Save</Button>
+                        <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
+                    </Col>
+                    <Col md={3} sm={3} xs={3} style={{ textAlign: 'left' }} className='save-button'>
+                        {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
+                        <Button onClick={() => handleSave()}>Request Changes</Button>
                     </Col>
                 </Row>
             </Container>
