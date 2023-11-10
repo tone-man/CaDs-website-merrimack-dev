@@ -1,6 +1,6 @@
 {
   "drafts": {
-    "placeholder":{
+    "placeholder": {
       "placeholder": "cant be deleted"
     }
   },
@@ -219,5 +219,9 @@
       "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocJ9Q17xKVZ5jisFVx_On9_gqdQDCAqV3rFFnM58F1Oz=s96-c",
       "user_level": "Administrator"
     }
+  },
+  "allowedUsers": {
+    "cads.website.merrimack@gmail.com": "XkHG9D5s11avzPxTSoGTEMzZIDu1",
+    "craveroa@merrimack.edu": null
   }
 }
