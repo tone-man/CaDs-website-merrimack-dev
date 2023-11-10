@@ -17,17 +17,17 @@ const auth = getAuth(FireBaseApp);
 // Realtime Database context
 const db = getDatabase(FireBaseApp);
 
-export const AuthContext = createContext(null);
+export const UserContext = createContext(null);
 
 // Add routing
 // https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/#
 function App() {
-  const [uid, setUid] = useState(null);
+  const [user, setUser] = useState<object | null>(null);
 
   onAuthStateChanged(auth, function (result) {
     if (result) {
 
-      if (uid) //Debounce if uid already is exists.
+      if (user) //Debounce if user already is exists.
         return;
       // Check that user is within the whitelist
       const userRef = ref(db, `users/${result.uid}`);
@@ -35,12 +35,12 @@ function App() {
       // Update uid if snapshot is retrieved from DB (user is on whitelist)
       onValue(userRef, (snapshot) => {
         if (snapshot) {
-          setUid(result.uid);
+          setUser({"uid": result.uid, "data": snapshot.val()});
         }
 
       });
     } else {
-      setUid(null);
+      setUser(null);
       signOut(auth).then(() => {
         // console.log(`Sign-out successful. Generate a toast`);
       }).catch((error) => {
@@ -50,7 +50,7 @@ function App() {
   });
 
   return (
-    <AuthContext.Provider value={uid}>
+    <UserContext.Provider value={user}>
       <Router>
         <NavBar />
         <Routes>
@@ -61,7 +61,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 }
 

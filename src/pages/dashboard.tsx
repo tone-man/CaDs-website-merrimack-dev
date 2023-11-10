@@ -5,7 +5,7 @@ import PageSection, {pageProps} from '../components/PageSection';
 import RequestSection, {requestProps} from '../components/RequestSection';
 import WhiteListSection from "../components/WhiteListSection";
 import { getDatabase, ref, onValue } from "firebase/database";
-import { AuthContext } from "../App";
+import { UserContext } from "../App";
 
 const db = getDatabase(); //Global DB Connection
 
@@ -19,25 +19,10 @@ const pageArray: pageProps[] = [
 
 const Dashboard = () => {
     const [snapshotTemp, setSnapshot] = useState<requestProps | object>({});
-    const [user, setUser] = useState<object | null>(null);
     const [requests, setRequests] =  useState<requestProps[]>([]);
-    const uid = useContext(AuthContext);
+    const user = useContext(UserContext);
 
     const whiteList = {}; // This stores the whitelist of users
-
-    // Gets the user object from the database.
-    useEffect(() => {
-        
-        if (!uid)
-            return;
-
-        const userRef = ref(db, `/users/${uid}`);
-        // Stores a listener for the database in a useState variable
-        onValue(userRef, (snapshot) => {
-            setUser(snapshot.val());
-            console.log('user:', snapshot.val());
-        });
-    }, [uid]);
 
      // Gets the user requests from the database
      useEffect(() => {
@@ -45,7 +30,7 @@ const Dashboard = () => {
         if (!user)
             return;
 
-        const requestRef = ref(db, `/requests/${uid}`);
+        const requestRef = ref(db, `/requests/${user.uid}`);
         
         onValue (requestRef, (snapshot) => {
             const requestList : requestProps[] = [];
@@ -61,7 +46,7 @@ const Dashboard = () => {
     // gets the list of users from the database (ADMIN ONLY FEATURE)
     useEffect(() => {
 
-        if (!user || user.user_level != "Administrator") //TODO: Ensure that user is admin
+        if (!user || user.data.user_level != "Administrator") //TODO: Ensure that user is admin
             return;
 
         // Get the references to users and pending users
@@ -87,7 +72,7 @@ const Dashboard = () => {
     return (
         <div>
             <Header title={(user) ?
-                `${user.name}'s Dashboard Page` : `Loading...`
+                `${user.data.name}'s Dashboard Page` : `Loading...`
                 }/>
             <div style={{background:'rgb(224, 224, 224)'}}>
             <PageSection pages={pageArray} />

@@ -8,7 +8,7 @@ import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
-import { AuthContext } from '../App';
+import { UserContext } from '../App';
 
 const db = getDatabase(); //Global DB Connection
 
@@ -16,24 +16,11 @@ const db = getDatabase(); //Global DB Connection
 function NavBar() {
     // Declare useState variables and useRef variables
     const [isFocused, setIsFocused] = useState(false);
-    const [user, setUser] = useState<object | null>(null);
-    const uid = useContext(AuthContext);
+    const user = useContext(UserContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
 
-    // Gets the user object from the database.
-    useEffect(() => {
-    
-        if (!uid)
-            return;
 
-        const userRef = ref(db, `/users/${uid}`);
-        // Stores a listener for the database in a useState variable
-        onValue(userRef, (snapshot) => {
-            setUser(snapshot.val());
-            console.log('user:', snapshot.val());
-        });
-    }, [uid]);
-
+    console.log(user);
     // This useEffect displays/hides the search bar when isFocused changes
     useEffect(() => {
         const searchBar = document.getElementById('searchBar-container');
@@ -118,7 +105,7 @@ function NavBar() {
                                     <NavDropdown
                                         title={
                                             <div className="pull-right">
-                                                <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
+                                                <ProfileImage size='60px' position='mx-auto' image={user.data.photoURL} />
                                             </div>
                                         }
                                         id="basic-nav-dropdown"
