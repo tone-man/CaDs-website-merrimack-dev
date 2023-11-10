@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, set } from 'firebase/database';
+import { getDatabase, ref, onValue, set, push, child, update } from 'firebase/database';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EditableComponent from '../components/EditableComponent';
 import Header from '../components/Header';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
 import '../css/editPage.css'
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
+import projectTemplate from '../utils/project.json';
+import eventTemplate from '../utils/events.json';
+
 
 // The edit page is what enables users to edit the components of a page they have owndership of
 const EditPage = () => {
@@ -105,11 +108,60 @@ const EditPage = () => {
         navigate('/');
     };
 
+    // https://firebase.google.com/docs/database/web/read-and-write#basic_write
+    function addComponent(componentType: string) {
+        let newObj = undefined;
+        if (componentType === 'project') {
+            newObj = projectTemplate;
+        }
+        else if (componentType==='event'){
+            newObj = eventTemplate;
+        }
+        let maxNesting = 0;
+        if (newObj) {
+
+            for (const [, value] of Object.entries(snapshotTemp)) {
+                if (value) {
+                    if (value.type === componentType) {
+                        if (maxNesting < value.nestedOrder) {
+                            maxNesting = value.nestedOrder;
+                        }
+                        newObj.pageOrder = value.pageOrder;
+                    }
+                }
+            }
+            newObj.nestedOrder = maxNesting + 1;
+
+            const newPostKey = push(child(ref(db), pathName)).key;
+
+            const updates = {};
+            updates[pathName + '/' + newPostKey] = newObj;
+
+            return update(ref(db), updates);
+
+        }
+
+    }
+
     return (
         <div>
             <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={handleCancel} name={'this draft'} />
             <Header title={"Edit Page"} />
             <Container style={{ paddingTop: '40px' }}>
+                <Row>
+                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                Add a Component
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => addComponent('event')}>Event</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Col>
+                </Row>
                 {updatedComponents}
                 <Row>
                     <Col md={9} sm={9} xs={9} style={{ textAlign: 'right' }} className='save-button'>
