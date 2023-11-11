@@ -1,7 +1,7 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { ChangeEvent, useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
-import { child, get, getDatabase, push, ref, set, update } from 'firebase/database';
+import { child, get, getDatabase, off, onValue, push, ref, set, update } from 'firebase/database';
 
 interface editableComponentProps {
   pageOrder: number
@@ -17,6 +17,7 @@ interface editableComponentProps {
  */
 function EditableComponent(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+  const [maxNestedOrder, setMaxNestedOrder] = useState(0);
   const [shownData, setShownData] = useState('');
   const db = getDatabase();
 
@@ -25,6 +26,27 @@ function EditableComponent(myProps: editableComponentProps) {
   useEffect(() => {
     setShownData(JSON.stringify(myProps.data, undefined, 2));
   }, [myProps]);
+
+  useEffect(() => {
+    // Create a reference to the database using the provided pathName
+    const projects = ref(db, myProps.pathName);
+
+    // Set up a listener to the database using onValue
+    // The listener will update the state variable 'snapshot' with the retrieved data
+    onValue(projects, (snapshot) => {
+      let max = 0;
+      // Iterate through the retrieved data to find the maximum nested order
+      for (const [, value] of Object.entries(snapshot.val())) {
+        if (value.pageOrder === myProps.pageOrder) {
+          if (value.nestedOrder > max) {
+            max = value.nestedOrder
+          }
+        }
+      }
+      // Update the state variable with the maximum nested order
+      setMaxNestedOrder(max);
+    });
+  }, []);
 
 
   // Opens the deletion confirmation modal
@@ -161,7 +183,7 @@ function EditableComponent(myProps: editableComponentProps) {
             <Button disabled={myProps.nestedOrder === 0} onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-            <Button style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
+            <Button disabled={myProps.nestedOrder !== maxNestedOrder} style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={1} style={{ textAlign: 'right' }}>
             <Button style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
