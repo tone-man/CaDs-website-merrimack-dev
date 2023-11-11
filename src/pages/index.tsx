@@ -4,7 +4,7 @@ import { useState, useEffect, MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventsCarousel from '../components/EventsCarousel';
 import ProjectList from '../components/ProjectList';
-import EditDraft from '../components/EditDraft';
+import ConfirmDraftModal from '../components/ConfirmDraftModal';
 import { facultyMembers } from '../components/FacultyCarousel';
 import { myProjectProps } from '../components/ProjectCard';
 import { contributerProps } from '../components/ProjectContributer';
@@ -228,7 +228,7 @@ const Home = () => {
         <div>
             {/* If the user has already decided to edit and the user isnt null */}
             {showDraftModal && user !== null &&
-                <EditDraft show={showDraftModal}
+                <ConfirmDraftModal show={showDraftModal}
                     onHide={() => setShowDraftModal(false)}
                     onCreateDraft={(value) => createNewDraft(value)}
                     name={user.name} />

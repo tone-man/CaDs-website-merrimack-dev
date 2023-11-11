@@ -31,6 +31,7 @@ function EditableComponent(myProps: editableComponentProps) {
   useEffect(() => {
     // Create a reference to the database using the provided pathName
     const projects = ref(db, myProps.pathName);
+    console.log("at all in here?", myProps.data.title)
 
     // Set up a listener to the database using onValue
     // The listener will update the state variable 'snapshot' with the retrieved data
@@ -51,12 +52,15 @@ function EditableComponent(myProps: editableComponentProps) {
         if (count === 1){
             setIsNotDeletable(true)
         }
+        else {
+          setIsNotDeletable(false)
+        }
       }
       // Update the state variable with the maximum nested order
       setMaxNestedOrder(max);
       
     });
-  }, []);
+  }, [myProps]);
 
 
   // Opens the deletion confirmation modal
@@ -85,10 +89,6 @@ function EditableComponent(myProps: editableComponentProps) {
 
     // Set the updated data at the specified key in the database
     set(myRef, JSON.parse(newData))
-      .then(() => {
-        // Data has been successfully added to the database
-        console.log('Data added successfully!');
-      })
       .catch((error) => {
         // Handle errors here
         console.error('Error adding data: ', error);
@@ -100,7 +100,7 @@ function EditableComponent(myProps: editableComponentProps) {
   * Deletes a component from the database and reorders nested components.
   * @param key - The key of the component to be deleted.
   */
-  function deleteFromDatabase(key: string) {
+  function deleteComponent(key: string) {
     // Delete the component from the draft
     // Reference: https://stackoverflow.com/questions/64419526/how-to-delete-a-node-in-firebase-realtime-database-in-javascript
     const deletePath = myProps.pathName + "/" + key;
@@ -123,8 +123,6 @@ function EditableComponent(myProps: editableComponentProps) {
             }
           }
         }
-      } else {
-        console.log("No data available");
       }
     }).catch((error) => {
       console.error(error);
@@ -160,9 +158,6 @@ function EditableComponent(myProps: editableComponentProps) {
 
         // Update the specific keys in the databases
         update(dbRef, updates)
-          .then(() => {
-            console.log("Successfully updated nested orders");
-          })
           .catch((error) => {
             console.error("Error updating nested orders:", error);
           });
@@ -177,7 +172,7 @@ function EditableComponent(myProps: editableComponentProps) {
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
-    deleteFromDatabase(myProps.componentKey)
+    deleteComponent(myProps.componentKey)
     setShowDeletionModal(false);
   }
 

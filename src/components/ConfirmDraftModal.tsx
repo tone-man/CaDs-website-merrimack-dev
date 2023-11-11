@@ -2,7 +2,7 @@ import { Modal, Button, Row, Col } from 'react-bootstrap';
 import '../css/formModal.css'
 
 // Interface for modal
-interface editDraftModalProps {
+interface ConfirmDraftModalProps {
     show: boolean;
     onHide: () => void;
     onCreateDraft: (value: boolean) => void;
@@ -10,7 +10,7 @@ interface editDraftModalProps {
 }
 
 // Modal that asks the user to confirm if they want to edit an old draft or make a new one
-function EditDraft({ show, onHide, onCreateDraft, name }: editDraftModalProps) {
+function ConfirmDraftModal({ show, onHide, onCreateDraft, name }: ConfirmDraftModalProps) {
     const handleCreateNewDraft = () => onCreateDraft(true);
     const handleContinueEditingOldDraft = () => onCreateDraft(false);
 
@@ -51,4 +51,4 @@ function EditDraft({ show, onHide, onCreateDraft, name }: editDraftModalProps) {
     );
 }
 
-export default EditDraft;
+export default ConfirmDraftModal;
