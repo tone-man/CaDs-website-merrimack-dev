@@ -165,7 +165,7 @@ const Home = () => {
         // Set the state variable 'renderedComponents' with the array of rendered components
         setRenderedComponents(tempArr);
     }
-    
+
     // https://stackoverflow.com/questions/64566405/react-router-dom-v6-usenavigate-passing-value-to-another-component
     //Draft logic for either creating a new draft or showing a modal
     const handleEditButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
@@ -195,9 +195,15 @@ const Home = () => {
 
         // If a new draft should be created
         if (makeNewDraft) {
+
+            // Delete the old draft 
+            const valueRef = ref(db, `drafts/${user.name}/homepage/components/`);
+            set(valueRef, null);
+
             // Iterate through the components in the specific page you want to edit and 
             //create a draft with all that component information under a specific user's EMAIL
             for (const [key, value] of Object.entries(snapShot)) {
+
                 // TODO: Have drafts underneath the user.UID. not their name
                 const myRef = ref(db, `drafts/${user.name}/homepage/components/` + key);
 
