@@ -39,12 +39,13 @@ function EditableComponent(myProps: editableComponentProps) {
       for (const [, value] of Object.entries(snapshot.val())) {
         if (value.pageOrder === myProps.pageOrder) {
           if (value.nestedOrder > max) {
-            max = value.nestedOrder
+            max = value.nestedOrder;
           }
         }
       }
       // Update the state variable with the maximum nested order
       setMaxNestedOrder(max);
+      
     });
   }, []);
 
@@ -183,7 +184,7 @@ function EditableComponent(myProps: editableComponentProps) {
             <Button disabled={myProps.nestedOrder === 0} onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-            <Button disabled={myProps.nestedOrder !== maxNestedOrder} style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
+            <Button disabled={myProps.nestedOrder === maxNestedOrder} style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={1} style={{ textAlign: 'right' }}>
             <Button style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
