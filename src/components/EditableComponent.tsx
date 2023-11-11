@@ -17,6 +17,7 @@ interface editableComponentProps {
  */
 function EditableComponent(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+  const [isNotDeletable, setIsNotDeletable] = useState(false);
   const [maxNestedOrder, setMaxNestedOrder] = useState(0);
   const [shownData, setShownData] = useState('');
   const db = getDatabase();
@@ -35,12 +36,20 @@ function EditableComponent(myProps: editableComponentProps) {
     // The listener will update the state variable 'snapshot' with the retrieved data
     onValue(projects, (snapshot) => {
       let max = 0;
+      let count=0;
       // Iterate through the retrieved data to find the maximum nested order
       for (const [, value] of Object.entries(snapshot.val())) {
         if (value.pageOrder === myProps.pageOrder) {
           if (value.nestedOrder > max) {
             max = value.nestedOrder;
           }
+          count++;
+        }
+      }
+      // Dont allow user to delete component if it is the last event or project
+      if (myProps.data.type ==='event' || myProps.data.type==='project'){
+        if (count === 1){
+            setIsNotDeletable(true)
         }
       }
       // Update the state variable with the maximum nested order
@@ -187,7 +196,7 @@ function EditableComponent(myProps: editableComponentProps) {
             <Button disabled={myProps.nestedOrder === maxNestedOrder} style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={1} style={{ textAlign: 'right' }}>
-            <Button style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
+            <Button disabled={isNotDeletable} style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
           </Col>
         </Row>
         <Row>
