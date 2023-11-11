@@ -1,42 +1,57 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { ChangeEvent, useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
-import { child, get, getDatabase, ref, set, update } from 'firebase/database';
+import { child, get, getDatabase, push, ref, set, update } from 'firebase/database';
 
 interface editableComponentProps {
   pageOrder: number
   nestedOrder: number
   data: unknown,
   componentKey: string,
-  pathName: string
+  pathName: string,
 }
-// This component shows the json for a component in a draft and allows edit, deletion, and addition privileges to users
+
+/**
+ * Component for displaying and editing data for a component in a draft.
+ * Allows edit, deletion, and addition privileges to users.
+ */
 function EditableComponent(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
   const [shownData, setShownData] = useState('');
   const db = getDatabase();
 
 
-  // Set the JSON value that will be displayed to the myProps.json whenever it 
+  // Set the JSON value that will be displayed to the text area whenever myProps change
   useEffect(() => {
     setShownData(JSON.stringify(myProps.data, undefined, 2));
-}, [myProps]);
+  }, [myProps]);
 
 
-  // Opens the confirmation modal
+  // Opens the deletion confirmation modal
   function handleOpenConfirmationModal() {
     setShowDeletionModal(true);
   }
 
-  // https://stackoverflow.com/questions/64649055/type-changeeventhtmlinputelement-is-not-assignable-to-type-changeeventhtml
-  // Whenever changing the text input, call this function and send the edits up to the database
+
+  /**
+ * Handles changes in the text input for a component's data.
+ * Note: This function is designed for text area inputs.
+ * @param event - The changeevent for the text area.
+ * Whenever changing the text input, call this function to send the edits up to the database.
+ * Reference: // https://stackoverflow.com/questions/64649055/type-changeeventhtmlinputelement-is-not-assignable-to-type-changeeventhtml
+ */
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    // Extract the new data from the event
     const newData = event.target.value;
+
+    // Update the local state with the new data
     setShownData(newData);
+
+    // Construct the database path for the current component
     const draftsPath = myProps.pathName + "/" + myProps.componentKey;
     const myRef = ref(db, draftsPath);
 
-    // Set the data at the specified key in the database
+    // Set the updated data at the specified key in the database
     set(myRef, JSON.parse(newData))
       .then(() => {
         // Data has been successfully added to the database
@@ -46,13 +61,16 @@ function EditableComponent(myProps: editableComponentProps) {
         // Handle errors here
         console.error('Error adding data: ', error);
       });
-  }
+  };
 
 
+  /**
+  * Deletes a component from the database and reorders nested components.
+  * @param key - The key of the component to be deleted.
+  */
   function deleteFromDatabase(key: string) {
-
     // Delete the component from the draft
-    // https://stackoverflow.com/questions/64419526/how-to-delete-a-node-in-firebase-realtime-database-in-javascript
+    // Reference: https://stackoverflow.com/questions/64419526/how-to-delete-a-node-in-firebase-realtime-database-in-javascript
     const deletePath = myProps.pathName + "/" + key;
     const valueRef = ref(db, deletePath);
     set(valueRef, null);
@@ -61,13 +79,14 @@ function EditableComponent(myProps: editableComponentProps) {
     const dbRef = ref(getDatabase());
     get(child(dbRef, myProps.pathName)).then((snapshot) => {
       if (snapshot.exists()) {
-        for (const [key, value] of Object.entries(snapshot.val())) {
-          // If they were in the same groupinig
-          if (value.pageOrder === myProps.pageOrder) {
-            // If the value was 
-            if (value.nestedOrder > myProps.nestedOrder) {
+        for (const [nestedKey, nestedValue] of Object.entries(snapshot.val())) {
+          // If they are in the same grouping
+          if (nestedValue.pageOrder === myProps.pageOrder) {
+            if (nestedValue.nestedOrder > myProps.nestedOrder) {
+              // If the nested component's order is greater than the deleted component's order,
+              // update its nestedOrder to maintain the correct order.
               const updates = {};
-              updates[myProps.pathName + '/' + key + '/nestedOrder'] = value.nestedOrder - 1;
+              updates[myProps.pathName + '/' + nestedKey + '/nestedOrder'] = nestedValue.nestedOrder - 1;
               update(dbRef, updates);
             }
           }
@@ -78,8 +97,51 @@ function EditableComponent(myProps: editableComponentProps) {
     }).catch((error) => {
       console.error(error);
     });
-
   }
+
+  /**
+  * Reorders nested components in the database based on the specified action.
+  * @param isMoveUp - A boolean indicating whether to move the component up.
+  */
+  function reorderNestedComponents(isMoveUp: boolean) {
+    const dbRef = ref(getDatabase());
+
+    // Fetch the existing data to perform reordering
+    get(child(dbRef, myProps.pathName)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const updates = {};
+        const direction = isMoveUp ? -1 : 1; // Set the direction based on the action
+
+        // Iterate through the existing components to determine the updates
+        for (const [key, value] of Object.entries(snapshot.val())) {
+          // If they were in the same grouping
+          if (value.pageOrder === myProps.pageOrder && key !== myProps.componentKey) {
+            if (myProps.nestedOrder + direction === value.nestedOrder) {
+              // If the nested component's order matches the target order,
+              // update its nestedOrder to maintain the correct order.
+              updates[`${myProps.pathName}/${key}/nestedOrder`] = value.nestedOrder - direction;
+            }
+          }
+        }
+        // Update the target component's nestedOrder
+        updates[`${myProps.pathName}/${myProps.componentKey}/nestedOrder`] = myProps.nestedOrder + direction;
+
+        // Update the specific keys in the databases
+        update(dbRef, updates)
+          .then(() => {
+            console.log("Successfully updated nested orders");
+          })
+          .catch((error) => {
+            console.error("Error updating nested orders:", error);
+          });
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
@@ -91,13 +153,18 @@ function EditableComponent(myProps: editableComponentProps) {
     <div>
       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.data.type} />
       <Container>
-
-        <Row style={{ marginBottom: '10px', marginTop: '25px', }}>
-          <Col md={10} sm={10} xs={10} style={{ textAlign: 'left' }}>
+        <Row style={{ marginBottom: '10px', marginTop: '25px' }}>
+          <Col md={9} sm={9} xs={6} style={{ textAlign: 'left' }}>
             <h1>{myProps.data.title}</h1>
           </Col>
-          <Col md={2} sm={2} xs={2} style={{ textAlign: 'right' }}>
-            <Button style={{ background: 'red' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
+          <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
+            <Button disabled={myProps.nestedOrder === 0} onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
+          </Col>
+          <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
+            <Button style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
+          </Col>
+          <Col md={1} sm={1} xs={1} style={{ textAlign: 'right' }}>
+            <Button style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
           </Col>
         </Row>
         <Row>

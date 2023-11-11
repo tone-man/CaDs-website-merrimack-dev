@@ -9,8 +9,10 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import projectTemplate from '../utils/project.json';
 import eventTemplate from '../utils/events.json';
 
-
-// The edit page is what enables users to edit the components of a page they have owndership of
+/**
+ * The EditPage component enables users to edit the components of a page they have ownership of.
+ * This page provides the interface for users to modify and manage components within a specific page.
+ */
 const EditPage = () => {
 
     // https://www.educative.io/answers/how-to-use-the-uselocation-hook-in-react
@@ -60,17 +62,20 @@ const EditPage = () => {
         if (snapshotTemp) {
             // Loop through each value in the database
             for (const [key, value] of Object.entries(snapshotTemp)) {
-                // Push an EditableComponent with specific props for each value
-                arr.push(
-                    <EditableComponent
-                        key={key}
-                        pageOrder={value.pageOrder}
-                        nestedOrder={value.nestedOrder}
-                        componentKey={key}
-                        data={value}
-                        pathName={pathName}
-                    />
-                );
+                if (key !== 'submitted') {
+                    // Push an EditableComponent with specific props for each value
+                    arr.push(
+                        <EditableComponent
+                            key={key}
+                            pageOrder={value.pageOrder}
+                            nestedOrder={value.nestedOrder}
+                            componentKey={key}
+                            data={value}
+                            pathName={pathName}
+                        />
+                    );
+                }
+
             }
 
             // Sort the array based on 'pageOrder' and 'nestedOrder'
@@ -86,9 +91,24 @@ const EditPage = () => {
     }, [snapshotTemp]);
 
 
-    // // Goes through each of the editable components and writes them to their specific spot in the database.
+    /**
+     * Writes the changes made to each editable component to their specific spot in the database.
+     * Marks the draft as submitted by updating the 'submitted' flag.
+     */
     const handleSave = () => {
-        console.log("save functionality here")
+        const dbRef = ref(getDatabase());
+
+        // Create an object to store updates for each editable component
+        const updates = {};
+
+        // Mark the draft as submitted by updating the 'submitted' flag
+        updates[`${pathName}/submitted/`] = true;
+
+        // Perform the update in the database
+        update(dbRef, updates)
+
+        // Navigate away to the home page
+        navigate('/');
     };
 
     /**
@@ -108,40 +128,53 @@ const EditPage = () => {
         navigate('/');
     };
 
-    // https://firebase.google.com/docs/database/web/read-and-write#basic_write
-    function addComponent(componentType: string) {
-        let newObj = undefined;
-        if (componentType === 'project') {
-            newObj = projectTemplate;
-        }
-        else if (componentType==='event'){
-            newObj = eventTemplate;
-        }
-        let maxNesting = 0;
-        if (newObj) {
-
-            for (const [, value] of Object.entries(snapshotTemp)) {
-                if (value) {
-                    if (value.type === componentType) {
-                        if (maxNesting < value.nestedOrder) {
-                            maxNesting = value.nestedOrder;
-                        }
-                        newObj.pageOrder = value.pageOrder;
-                    }
-                }
-            }
-            newObj.nestedOrder = maxNesting + 1;
-
-            const newPostKey = push(child(ref(db), pathName)).key;
-
-            const updates = {};
-            updates[pathName + '/' + newPostKey] = newObj;
-
-            return update(ref(db), updates);
-
-        }
-
+/**
+ * Adds a new component to the database based on the specified component type.
+ * @param componentType - The type of component to be added (e.g., 'project' or 'event' (WILL BE MORE IN FUTURE !)).
+ * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
+ */
+function addComponent(componentType: string) {
+    let newObj = undefined;
+  
+    // Determine the template based on the component type
+    if (componentType === 'project') {
+      newObj = projectTemplate;
+    } else if (componentType === 'event') {
+      newObj = eventTemplate;
     }
+  
+    let maxNesting = 0;
+  
+    if (newObj) {
+      // Iterate through existing components to find the maximum nesting order for the same type
+      for (const [, value] of Object.entries(snapshotTemp)) {
+        if (value) {
+          if (value.type === componentType) {
+            // Update the maxNesting if a component of the same type with higher nesting order is found
+            if (maxNesting < value.nestedOrder) {
+              maxNesting = value.nestedOrder;
+            }
+  
+            // Assign the page order from an existing component of the same type
+            newObj.pageOrder = value.pageOrder;
+          }
+        }
+      }
+  
+      // Set the new component's nestedOrder to be one greater than the maximum found
+      newObj.nestedOrder = maxNesting + 1;
+  
+      // Generate a new key for the new component
+      const newPostKey = push(child(ref(db), pathName)).key;
+  
+      // Prepare updates for the database
+      const updates = {};
+      updates[pathName + '/' + newPostKey] = newObj;
+  
+      // Perform the update in the database
+      return update(ref(db), updates);
+    }
+  }
 
     return (
         <div>

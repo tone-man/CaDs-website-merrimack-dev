@@ -1,4 +1,4 @@
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Container } from 'react-bootstrap';
 import { getDatabase, ref, onValue, set, get } from 'firebase/database';
 import { useState, useEffect, MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -206,7 +206,7 @@ const Home = () => {
 
                 // TODO: Have drafts underneath the user.UID. not their name
                 const myRef = ref(db, `drafts/${user.name}/homepage/components/` + key);
-
+                
                 // Set the component information at the specified key in the database
                 set(myRef, value)
                     .then(() => {
@@ -236,12 +236,14 @@ const Home = () => {
             {renderedComponents}
             {/* Render edit button conditionally */}
             {user !== null &&
-                <Row>
-                    {/* Edit button. TODO: Render conditionally based on ownership of a page */}
-                    <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
-                        <Button onClick={handleEditButtonClick}>Edit Page</Button>
-                    </Col>
-                </Row>
+                <Container>
+                    <Row>
+                        {/* Edit button. TODO: Render conditionally based on ownership of a page */}
+                        <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
+                            <Button onClick={handleEditButtonClick}>Edit Page</Button>
+                        </Col>
+                    </Row>
+                </Container>
             }
         </div>
     );
