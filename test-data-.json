@@ -1,4 +1,8 @@
 {
+  "allowedUsers": {
+    "cads%2Ewebsite%2Emerrimack@gmail%2Ecom": "XkHG9D5s11avzPxTSoGTEMzZIDu1",
+    "craveroa@merrimack%2Eedu": ""
+  },
   "drafts": {
     "placeholder":{
       "placeholder": "cant be deleted"
@@ -7,48 +11,7 @@
   "pages": {
     "homepage": {
       "components": {
-        "X": {
-          "pageOrder": 0,
-          "nestedOrder": 2,
-          "type": "project",
-          "contributers": {
-            "antonio": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro"
-            },
-            "bree": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
-            },
-            "melissa": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
-            }
-          },
-          "description": "Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons",
-          "facultyMembers": {
-            "Antonio": {
-              "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro"
-            },
-            "Brianna": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
-            },
-            "Melissa": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
-            }
-          },
-          "imageAlt": "imageAlt",
-          "imageDescription": "Image Description",
-          "projectLink": "#",
-          "title": "D&D Roleplaying Group/Campaign Manager"
-        },
         "B": {
-          "pageOrder": 0,
-          "nestedOrder": 1,
-          "type": "project",
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
@@ -80,13 +43,13 @@
           },
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
+          "nestedOrder": 1,
+          "pageOrder": 0,
           "projectLink": "#",
-          "title": "Automated Lyric Analysis"
+          "title": "Automated Lyric Analysis",
+          "type": "project"
         },
         "C": {
-          "pageOrder": 0,
-          "nestedOrder": 0,
-          "type": "project",
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
@@ -118,13 +81,13 @@
           },
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
+          "nestedOrder": 0,
+          "pageOrder": 0,
           "projectLink": "#",
-          "title": "Rove - Photography Exploration App for iOS"
+          "title": "Rove - Photography Exploration App for iOS",
+          "type": "project"
         },
         "H": {
-          "pageOrder": 0,
-          "nestedOrder": 3,
-          "type": "project",
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
@@ -156,13 +119,13 @@
           },
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
+          "nestedOrder": 3,
+          "pageOrder": 0,
           "projectLink": "#",
-          "title": "Square Swords 3D Fighting Game"
+          "title": "Square Swords 3D Fighting Game",
+          "type": "project"
         },
         "J": {
-          "pageOrder": 1,
-          "nestedOrder": 0,
-          "type": "event",
           "caption": "Caption 1",
           "date": "Date",
           "description": "The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.) that are hiring for both internships and full-time positionsFree'",
@@ -170,12 +133,12 @@
           "imgSource": "src/imgs/projectpic.webp",
           "link": "#",
           "location": "Location",
-          "title": "Careers for the Common Good Internship & Career Fair"
+          "nestedOrder": 0,
+          "pageOrder": 1,
+          "title": "Careers for the Common Good Internship & Career Fair",
+          "type": "event"
         },
         "L": {
-          "pageOrder": 1,
-          "nestedOrder": 1,
-          "type": "event",
           "caption": "Caption 1",
           "date": "Date",
           "description": "The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.) that are hiring for both internships and full-time positionsFree",
@@ -183,7 +146,48 @@
           "imgSource": "src/imgs/projectpic.webp",
           "link": "#",
           "location": "Location",
-          "title": "Careers for the Common Good Internship & Career Fair"
+          "nestedOrder": 1,
+          "pageOrder": 1,
+          "title": "Careers for the Common Good Internship & Career Fair",
+          "type": "event"
+        },
+        "X": {
+          "contributers": {
+            "antonio": {
+              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
+              "name": "Antonio M Craveiro"
+            },
+            "bree": {
+              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
+              "name": "Dr. Melissa St. Hilaire"
+            },
+            "melissa": {
+              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
+              "name": "Dr. Melissa St. Hilaire"
+            }
+          },
+          "description": "Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons",
+          "facultyMembers": {
+            "Antonio": {
+              "facultyImg": "image",
+              "facultyName": "Antonio M Craveiro"
+            },
+            "Brianna": {
+              "facultyImg": "image",
+              "facultyName": "Dr. Melissa St. Hilaire"
+            },
+            "Melissa": {
+              "facultyImg": "image",
+              "facultyName": "Dr. Melissa St. Hilaire"
+            }
+          },
+          "imageAlt": "imageAlt",
+          "imageDescription": "Image Description",
+          "nestedOrder": 2,
+          "pageOrder": 0,
+          "projectLink": "#",
+          "title": "D&D Roleplaying Group/Campaign Manager",
+          "type": "project"
         }
       }
     }
@@ -216,7 +220,7 @@
     "XkHG9D5s11avzPxTSoGTEMzZIDu1": {
       "email": "cads.website.merrimack@gmail.com",
       "name": "Administrator",
-      "profileImg": "https://lh3.googleusercontent.com/a/ACg8ocJ9Q17xKVZ5jisFVx_On9_gqdQDCAqV3rFFnM58F1Oz=s96-c",
+      "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocJ9Q17xKVZ5jisFVx_On9_gqdQDCAqV3rFFnM58F1Oz=s96-c",
       "user_level": "Administrator"
     }
   }

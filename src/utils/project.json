@@ -1,0 +1,22 @@
+{
+    "contributers": {
+        "antonio": {
+            "description": "Antonio Description",
+            "name": "Antonio M Craveiro"
+        }
+    },
+    "description": "Description Value",
+    "facultyMembers": {
+        "Antonio": {
+            "facultyImg": "Antonio Image",
+            "facultyName": "Antonio M Craveiro"
+        }
+    },
+    "imageAlt": "Image Alt Value",
+    "imageDescription": "Image Description Value",
+    "nestedOrder": 0,
+    "pageOrder": 0,
+    "projectLink": "Link Value",
+    "title": "Title",
+    "type": "project"
+}
