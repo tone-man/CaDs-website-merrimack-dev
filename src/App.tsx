@@ -26,10 +26,10 @@ function App() {
 
   onAuthStateChanged(auth, function (result) {
     if (result) {
-
+      console.log(result);
       if (user) //Debounce if user already is exists.
         return;
-      // Check that user is within the whitelist
+      // Check that user is within the allowed
       const userRef = ref(db, `users/${result.uid}`);
 
       // Update uid if snapshot is retrieved from DB (user is on whitelist)
