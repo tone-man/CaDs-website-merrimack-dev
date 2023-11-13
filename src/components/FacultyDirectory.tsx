@@ -8,15 +8,15 @@ import FacultyMemberDirectory, {facultyMember}from "./FacultyMemberDirectory";
 //Create an array of faculty member objects
 const facultyArray: facultyMember[] = [
     { name: 'John Doe', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
+    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
     { name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
+    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
     { name: 'Dr. Christopher Stuetzle', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
+    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
     { name: 'Dr. Zachary Kissel', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
+    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
     { name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'}
+    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'}
 ];
 
 // Faculty Directory components
