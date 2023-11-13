@@ -190,6 +190,62 @@
           "type": "project"
         }
       }
+    },
+    "faculty": {
+      "components": {
+        "header": {
+          "facultyTitle": "President of School",
+          "facultyName": "Melissa St. Hilaire",
+          "departmentName": "CADS",
+          "imgSource": "src/imgs/projectpic.webp",
+          "imageAlt": "imageAlt",
+          "nestedOrder": 0,
+          "pageOrder": 0,
+          "type": "header"
+        },
+        "L": {
+          "label": "Label",
+          "content": "content",
+          "nestedOrder": 0,
+          "pageOrder": 3,
+          "type": "text"
+        },
+        "J": {
+          "label": "Label",
+          "content": "content",
+          "nestedOrder": 0,
+          "pageOrder": 2,
+          "type": "text"
+        },
+        "K": {
+          "label": "Label",
+          "content": "content",
+          "nestedOrder": 0,
+          "pageOrder": 5,
+          "type": "text"
+        },
+        "R": {
+          "label": "Label",
+          "content": "content",
+          "nestedOrder": 0,
+          "pageOrder": 4,
+          "type": "accordion"
+        },
+        "P": {
+          "label": "Label",
+          "content": "content",
+          "nestedOrder": 1,
+          "pageOrder": 4,
+          "type": "accordion"
+        },
+        "X": {
+          "label": "New accordion",
+          "content": "content",
+          "nestedOrder": 0,
+          "pageOrder": 1,
+          "type": "accordion"
+        }
+      }
     }
   },
   "requests": {
