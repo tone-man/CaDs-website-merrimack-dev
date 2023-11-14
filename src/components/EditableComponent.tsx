@@ -1,7 +1,7 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { ChangeEvent, useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
-import { child, get, getDatabase, off, onValue, push, ref, set, update } from 'firebase/database';
+import { child, get, getDatabase, onValue, ref, set, update } from 'firebase/database';
 
 interface editableComponentProps {
   pageOrder: number
@@ -31,13 +31,12 @@ function EditableComponent(myProps: editableComponentProps) {
   useEffect(() => {
     // Create a reference to the database using the provided pathName
     const projects = ref(db, myProps.pathName);
-    console.log("at all in here?", myProps.data.title)
 
     // Set up a listener to the database using onValue
     // The listener will update the state variable 'snapshot' with the retrieved data
     onValue(projects, (snapshot) => {
       let max = 0;
-      let count=0;
+      let count = 0;
       // Iterate through the retrieved data to find the maximum nested order
       for (const [, value] of Object.entries(snapshot.val())) {
         if (value.pageOrder === myProps.pageOrder) {
@@ -48,9 +47,9 @@ function EditableComponent(myProps: editableComponentProps) {
         }
       }
       // Dont allow user to delete component if it is the last event or project
-      if (myProps.data.type ==='event' || myProps.data.type==='project'){
-        if (count === 1){
-            setIsNotDeletable(true)
+      if (myProps.data.type === 'event' || myProps.data.type === 'project') {
+        if (count === 1) {
+          setIsNotDeletable(true)
         }
         else {
           setIsNotDeletable(false)
@@ -58,7 +57,7 @@ function EditableComponent(myProps: editableComponentProps) {
       }
       // Update the state variable with the maximum nested order
       setMaxNestedOrder(max);
-      
+
     });
   }, [myProps]);
 
@@ -169,6 +168,51 @@ function EditableComponent(myProps: editableComponentProps) {
     });
   }
 
+  /**
+ * Reorders components based on page order in the database based on the specified action.
+ * @param isMoveUp - A boolean indicating whether to move the component up.
+ */
+  function reorderPageComponents(isMoveUp: boolean) {
+    const dbRef = ref(getDatabase());
+
+    // Fetch the existing data to perform reordering
+    get(child(dbRef, myProps.pathName)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const updates = {};
+        const direction = isMoveUp ? -1 : 1; // Set the direction based on the action
+
+        // Iterate through the existing components to determine the updates
+        for (const [key, value] of Object.entries(snapshot.val())) {
+          // If they were in the same grouping
+          if (key != myProps.componentKey) {
+            if (value.pageOrder === myProps.pageOrder) {
+              updates[`${myProps.pathName}/${key}/pageOrder`] = value.pageOrder + direction;
+            }
+            else if (myProps.pageOrder - 1 === value.pageOrder && isMoveUp) {
+              updates[`${myProps.pathName}/${key}/pageOrder`] = value.pageOrder - direction;
+            }
+            else if (myProps.pageOrder + 1 === value.pageOrder && !isMoveUp) {
+              updates[`${myProps.pathName}/${key}/pageOrder`] = value.pageOrder - direction;
+            }
+          }
+        }
+        // Update the target component's nestedOrder
+        updates[`${myProps.pathName}/${myProps.componentKey}/pageOrder`] = myProps.pageOrder + direction;
+
+        // Update the specific keys in the databases
+        update(dbRef, updates)
+          .catch((error) => {
+            console.error("Error updating nested orders:", error);
+          });
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
+
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
@@ -180,18 +224,24 @@ function EditableComponent(myProps: editableComponentProps) {
     <div>
       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.data.type} />
       <Container>
+        <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
+          <Button onClick={() => reorderPageComponents(true)} style={{ color: 'red', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
+        </Col>
+        <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
+          <Button onClick={() => reorderPageComponents(false)} style={{ color: 'red', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-down-short"></i></Button>
+        </Col>
         <Row style={{ marginBottom: '10px', marginTop: '25px' }}>
           <Col md={9} sm={9} xs={6} style={{ textAlign: 'left' }}>
             <h1>{myProps.data.title}</h1>
           </Col>
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-            <Button disabled={myProps.nestedOrder === 0} onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
+            <Button onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-            <Button disabled={myProps.nestedOrder === maxNestedOrder} style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
+            <Button style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={1} style={{ textAlign: 'right' }}>
-            <Button disabled={isNotDeletable} style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
+            <Button style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
           </Col>
         </Row>
         <Row>

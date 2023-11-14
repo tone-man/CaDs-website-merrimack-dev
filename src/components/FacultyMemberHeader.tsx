@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import ProfileImage from './ProfileImage'
 import '../css/facultyMemberPage.css'
@@ -12,7 +11,6 @@ interface headerProps {
 }
 
 function FacultyMemberHeader(myProps: headerProps) {
-    console.log("in the header")
   return (
     <div>
       <Container fluid className="faculty-header-container">

@@ -4,7 +4,6 @@ import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
 import '../css/universal.css'
 import '../css/ProjectList.css'
-import Header from './Header';
 
 
 interface projectProps {
@@ -15,7 +14,6 @@ interface projectProps {
 function ProjectList(myProps: projectProps) {
     return (
         <>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
             <Container fluid style={{ background: 'rgb(224, 224, 224)' }}>
                 <Container className='projects-container'>
               

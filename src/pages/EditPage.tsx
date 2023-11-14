@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, set, push, child, update } from 'firebase/database';
+import { getDatabase, ref, onValue, set, push, child, update, get } from 'firebase/database';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EditableComponent from '../components/EditableComponent';
 import Header from '../components/Header';
@@ -8,6 +8,9 @@ import '../css/editPage.css'
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import projectTemplate from '../utils/project.json';
 import eventTemplate from '../utils/events.json';
+import textAreaTemplate from '../utils/textarea.json'
+import accordionTemplate from '../utils/accordion.json'
+import { createNewDraft } from '../utils/createNewDraft';
 
 /**
  * The EditPage component enables users to edit the components of a page they have ownership of.
@@ -19,6 +22,7 @@ const EditPage = () => {
     // Reads in param that was passed in (Tells users the path to look at for the database)
     const location = useLocation();
     const { pathName } = location.state as { pathName: string };
+    console.log(pathName, 'PATHNAME')
 
     const [updatedComponents, setUpdatedComponents] = useState();
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
@@ -62,6 +66,7 @@ const EditPage = () => {
         if (snapshotTemp) {
             // Loop through each value in the database
             for (const [key, value] of Object.entries(snapshotTemp)) {
+                console.log(value, 'VALUEEEE')
                 if (key !== 'submitted') {
                     // Push an EditableComponent with specific props for each value
                     arr.push(
@@ -96,19 +101,72 @@ const EditPage = () => {
      * Marks the draft as submitted by updating the 'submitted' flag.
      */
     const handleSave = () => {
-        const dbRef = ref(getDatabase());
 
-        // Create an object to store updates for each editable component
-        const updates = {};
+        const draft = ref(db, `drafts/Administrator/homepage/components`);
 
-        // Mark the draft as submitted by updating the 'submitted' flag
-        updates[`${pathName}/submitted/`] = true;
+        // Retrieve data from the database
+        get(draft)
+            .then((snapshot) => {
+                console.log(snapshot.val(), 'SNAPSHOT HERE')
+                //   // If no draft exists at the specified path, create a new draft
+                if (snapshot.val() !== null) {
+                    const valueRef = ref(db, `pages/homepage/components`);
+                    console.log(valueRef, 'value red')
+                    // Set the entire path to null to clear any existing data
+                    // set(valueRef, null);
 
-        // Perform the update in the database
-        update(dbRef, updates)
+                    // For every single component in the snapshot
+                    for (const [key, value] of Object.entries(snapshot.val())) {
+                        console.log(`pages/homepage/components/` + key)
+                        const myRef = ref(db, `pages/homepage/components/` + key);
+                        // console.log(`pages/homepage/components/` + key, 'MY REFFF')
 
-        // Navigate away to the home page
-        navigate('/');
+                        // Add it to the drafts with the same exact key
+                        set(myRef, value)
+                            .then(() => {
+                                console.log('Data added successfully!');
+                            })
+                            .catch((error) => {
+                                console.error('Error adding data: ', error);
+                            });
+                    }
+                }
+                //     // Else display a modal to ask the user what to do
+                //     setShowDraftModal(true);
+                // }
+            })
+            .catch((error) => {
+                console.error('Error reading data: ', error);
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // const dbRef = ref(getDatabase());
+
+        // // Create an object to store updates for each editable component
+        // const updates = {};
+
+        // // Mark the draft as submitted by updating the 'submitted' flag
+        // updates[`${pathName}/submitted/`] = true;
+
+        // // Perform the update in the database
+        // update(dbRef, updates)
+
+        // // Navigate away to the home page
+        // navigate('/');
     };
 
     /**
@@ -128,53 +186,69 @@ const EditPage = () => {
         navigate('/');
     };
 
-/**
- * Adds a new component to the database based on the specified component type.
- * @param componentType - The type of component to be added (e.g., 'project' or 'event' (WILL BE MORE IN FUTURE !)).
- * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
- */
-function addComponent(componentType: string) {
-    let newObj = undefined;
-  
-    // Determine the template based on the component type
-    if (componentType === 'project') {
-      newObj = projectTemplate;
-    } else if (componentType === 'event') {
-      newObj = eventTemplate;
-    }
-  
-    let maxNesting = 0;
-  
-    if (newObj) {
-      // Iterate through existing components to find the maximum nesting order for the same type
-      for (const [, value] of Object.entries(snapshotTemp)) {
-        if (value) {
-          if (value.type === componentType) {
-            // Update the maxNesting if a component of the same type with higher nesting order is found
-            if (maxNesting < value.nestedOrder) {
-              maxNesting = value.nestedOrder;
-            }
-  
-            // Assign the page order from an existing component of the same type
-            newObj.pageOrder = value.pageOrder;
-          }
+    /**
+     * Adds a new component to the database based on the specified component type.
+     * @param componentType - The type of component to be added (e.g., 'project' or 'event' (WILL BE MORE IN FUTURE !)).
+     * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
+     */
+    function addComponent(componentType: string) {
+        let newObj = undefined;
+
+        // Determine the template based on the component type
+        if (componentType === 'eventcarousel') {
+            newObj = eventTemplate;
         }
-      }
-  
-      // Set the new component's nestedOrder to be one greater than the maximum found
-      newObj.nestedOrder = maxNesting + 1;
-  
-      // Generate a new key for the new component
-      const newPostKey = push(child(ref(db), pathName)).key;
-  
-      // Prepare updates for the database
-      const updates = {};
-      updates[pathName + '/' + newPostKey] = newObj;
-  
-      // Perform the update in the database
-      return update(ref(db), updates);
+        else if (componentType === 'textarea') {
+            newObj = textAreaTemplate;
+        }
+        else if (componentType === 'accordion') {
+            newObj = accordionTemplate;
+        }
+
+        let maxNesting = 0;
+
+        if (newObj) {
+            // Iterate through existing components to find the maximum nesting order for the same type
+            newObj.nestedOrder = 0;
+            for (const [, value] of Object.entries(snapshotTemp)) {
+
+                if (value) {
+                    if (maxNesting <= value.pageOrder) {
+                        console.log(maxNesting, 'max nesting', value.pageOrder, 'page order of current element looking at')
+                        maxNesting = value.pageOrder + 1;
+                    }
+                }
+            }
+            newObj.pageOrder = maxNesting;
+        }
+        else {
+            newObj = projectTemplate;
+            // Iterate through existing components to find the maximum nesting order for the same type
+            for (const [, value] of Object.entries(snapshotTemp)) {
+                if (value) {
+                    newObj.pageOrder = 0;
+                    if (value.pageOrder === 0) {
+                        if (maxNesting < value.nestedOrder) {
+                            maxNesting = value.nestedOrder + 1;
+                            newObj.nestedOrder = maxNesting;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        // Generate a new key for the new component
+        const newPostKey = push(child(ref(db), pathName)).key;
+
+        // Prepare updates for the database
+        const updates = {};
+        updates[pathName + '/' + newPostKey] = newObj;
+
+        // Perform the update in the database
+        return update(ref(db), updates);
+
     }
-  }
 
     return (
         <div>
@@ -189,8 +263,13 @@ function addComponent(componentType: string) {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => addComponent('event')}>Event</Dropdown.Item>
-                                <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('eventcarousel')}>Event Carousel</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('textarea')}>Text Boxes with Label and Content:</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('accordion')}>Accordion Text Boxes</Dropdown.Item>
+                                {pathName.includes('homepage') &&
+                                    <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
+                                }
+
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>

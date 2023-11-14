@@ -66,14 +66,14 @@ export function makeEventObject(
  */
 export function parseDataToComponents(snapShot: unknown, setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[]>>) {
     const containerArr: unknown[][] = [];
-    const facultyArray: facultyMembers[] = [];
-    const contributersArr: contributerProps[] = [];
 
     // Check if snapshot data is present
     if (snapShot) {
 
         // Iterate through the entries in the snapshot
         for (const [key, component] of Object.entries(snapShot)) {
+            const facultyArray: facultyMembers[] = [];
+            const contributersArr: contributerProps[] = [];
 
             // Check if component exists
             if (component) {
