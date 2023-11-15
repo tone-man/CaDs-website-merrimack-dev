@@ -1,7 +1,8 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { child, get, getDatabase, onValue, ref, set, update } from 'firebase/database';
+import { handleTextAreaChange } from '../utils/editingComponents';
 
 interface editableComponentProps {
   pageOrder: number
@@ -23,6 +24,7 @@ function EditableTextArea(myProps: editableComponentProps) {
   const [labelData, setLabelData] = useState('');
   
   const db = getDatabase();
+  const myRef = ref(db)
 
 
   // Set the JSON value that will be displayed to the text area whenever myProps change
@@ -69,40 +71,6 @@ function EditableTextArea(myProps: editableComponentProps) {
   function handleOpenConfirmationModal() {
     setShowDeletionModal(true);
   }
-
-
-  /**
- * Handles changes in the text input for a component's data.
- * Note: This function is designed for text area inputs.
- * @param event - The changeevent for the text area.
- * Whenever changing the text input, call this function to send the edits up to the database.
- * Reference: // https://stackoverflow.com/questions/64649055/type-changeeventhtmlinputelement-is-not-assignable-to-type-changeeventhtml
- */
-  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>, path: string) => {
-    // Extract the new data from the event
-    const newData = event.target.value;
-
-    console.log(newData, 'NEW DATA')
-    console.log(typeof newData, 'NEW DATA')
-
-    // Update the local state with the new data
-    setContentData(newData);
-
-
-    const updates = {};
-    const myRef = ref(db);
-
-    console.log(myProps.pathName + "/" + myProps.componentKey + path, '      LOOKY HERE')
-
-    // // // Update the target component's nestedOrder
-    updates[myProps.pathName + "/" + myProps.componentKey + path] = newData;
-
-    // // Update the specific keys in the databases
-    update(myRef, updates)
-      .catch((error) => {
-        console.error("Error updating nested orders:", error);
-      });
-  };
 
 
   /**
@@ -269,12 +237,12 @@ function EditableTextArea(myProps: editableComponentProps) {
           <Col md={12} >
               <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control value={labelData} onChange={(e) => handleTextAreaChange(e, '/label')} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                <Form.Control value={labelData} onChange={(e) => handleTextAreaChange(e, '/label', setLabelData, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
               </Form.Group>
             </Form>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control value={contentData} onChange={(e) => handleTextAreaChange(e, '/content')} as="textarea" rows={5} style={{ resize: 'none', border: '1px black solid' }} />
+                <Form.Control value={contentData} onChange={(e) => handleTextAreaChange(e, '/content', setContentData, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={5} style={{ resize: 'none', border: '1px black solid' }} />
               </Form.Group>
             </Form>
           </Col>

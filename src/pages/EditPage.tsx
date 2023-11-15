@@ -10,9 +10,8 @@ import projectTemplate from '../utils/project.json';
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json'
 import accordionTemplate from '../utils/accordion.json'
-import { createNewDraft } from '../utils/createNewDraft';
 import EditableTextArea from '../components/EditableTextArea';
-import EditableCarousel, {editableComponentProps} from '../components/EditableCarousel';
+import EditableCarousel, { editableComponentProps } from '../components/EditableCarousel';
 
 /**
  * The EditPage component enables users to edit the components of a page they have ownership of.
@@ -53,7 +52,7 @@ const EditPage = () => {
             setSnapshot(snapshot.val());
         });
     }, []);
-    
+
 
 
     /**
@@ -67,17 +66,14 @@ const EditPage = () => {
 
         // Check if 'snapshotTemp' has data
         if (snapshotTemp) {
-            console.log( 'VALUEEEE')
-            let count =0;
             // Loop through each value in the database
-            const events =[];
+            const events = [];
             const sampleData: editableComponentProps[][] = [];
             for (const [key, value] of Object.entries(snapshotTemp)) {
-                console.log(value, 'VALUEEEE')
                 if (key !== 'submitted') {
                     // Push an EditableComponent with specific props for each value
-                   
-                    if (value.type==='text') {
+
+                    if (value.type === 'text') {
                         arr.push(
                             <EditableTextArea
                                 key={key}
@@ -88,34 +84,22 @@ const EditPage = () => {
                                 pathName={pathName}
                             />
                         );
-                    } 
-                    else if (value.type ==='event'){
+                    }
+                    else if (value.type === 'event') {
                         // console.log(value, 'VALUE HERE')
-                        if (sampleData[value.group]===undefined){
-                            sampleData[value.group]=[]
+                        if (sampleData[value.group] === undefined) {
+                            sampleData[value.group] = []
                         }
                         // console.log("now has something", sampleData)
                         sampleData[value.group].push(
                             {
-                              pageOrder: value.pageOrder,
-                              nestedOrder: value.nestedOrder,
-                              data: value,
-                              componentKey: key,
-                              pathName: pathName,
-                              group: value.group
+                                pageOrder: value.pageOrder,
+                                nestedOrder: value.nestedOrder,
+                                data: value,
+                                componentKey: key,
+                                pathName: pathName,
+                                group: value.group
                             })
-                        //   console.log(sampleData, ' lets see now')
-                       
-                        // arr.push(
-                        //     <EditableComponent
-                        //         key={key}
-                        //         pageOrder={value.pageOrder}
-                        //         nestedOrder={value.nestedOrder}
-                        //         componentKey={key}
-                        //         data={value}
-                        //         pathName={pathName}
-                        //     />
-                        // );
                     }
                     else {
                         arr.push(
@@ -129,26 +113,20 @@ const EditPage = () => {
                             />
                         );
                     }
-                    
                 }
-
             }
             {
                 // Maps each of the events in the events array to a carousel item
                 sampleData.map((array, index) => (
-                   <>
-                   {
-                      arr.push(<EditableCarousel array={sampleData[index]}/>)
-                     
-                   }
-                   {  console.log(sampleData[index], 'this is what i am passing in')}
-                  
+                    <>
+                        {
+                            arr.push(<EditableCarousel array={sampleData[index]} />)
 
-                   </>
+                        }
+                    </>
                 ))
             }
 
-         
             // Sort the array based on 'pageOrder' and 'nestedOrder'
             temp = arr.sort(function (a, b) {
                 return (

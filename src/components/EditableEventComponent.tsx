@@ -1,8 +1,10 @@
-import { child, get, getDatabase, onValue, ref, remove, set, update } from "firebase/database"
+import { DatabaseReference, child, get, getDatabase, onValue, ref, remove, set, update } from "firebase/database"
 import { Container, Col, Row, Form, Button } from "react-bootstrap"
 import DeleteConfirmationModal from "./DeleteConfirmationModal"
 import { useState, useEffect, ChangeEvent } from "react"
 import '../css/editableEvent.css'
+import { handleTextAreaChange } from '../utils/editingComponents'; // Import the update function from your database library
+
 
 export interface editableComponentProps {
     pageOrder: number
@@ -84,32 +86,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
     }
 
 
-    /**
-   * Handles changes in the text input for a component's data.
-   * Note: This function is designed for text area inputs.
-   * @param event - The changeevent for the text area.
-   * Whenever changing the text input, call this function to send the edits up to the database.
-   * Reference: // https://stackoverflow.com/questions/64649055/type-changeeventhtmlinputelement-is-not-assignable-to-type-changeeventhtml
-   */
-    const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>, path: string, setData) => {
-        // Extract the new data from the event
-        const newData = event.target.value;
-
-        setData(newData);
-
-        const updates = {};
-
-        console.log(myProps.pathName + "/" + myProps.componentKey + path, '      LOOKY HERE')
-
-        // // // Update the target component's nestedOrder
-        updates[myProps.pathName + "/" + myProps.componentKey + path] = newData;
-
-        // // Update the specific keys in the databases
-        update(myRef, updates)
-            .catch((error) => {
-                console.error("Error updating nested orders:", error);
-            });
-    };
+  
 
     /**
 * Deletes a component from the database and reorders nested components.
@@ -171,14 +148,14 @@ function EditableEventComponent(myProps: editableComponentProps) {
                         <Form>
                             <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Event Title</h2></Form.Label>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Control value={title} onChange={(e) => handleTextAreaChange(e, '/title', setTitle)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                <Form.Control value={title} onChange={(e) => handleTextAreaChange(e, '/title', setTitle, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                             </Form.Group>
                         </Form>
 
                         <Form>
                             <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Event Description</h2></Form.Label>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Control value={description} onChange={(e) => handleTextAreaChange(e, '/description', setDescription)} as="textarea" rows={5} style={{ resize: 'none', border: '1px black solid' }} />
+                                <Form.Control value={description} onChange={(e) => handleTextAreaChange(e, '/description', setDescription, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={5} style={{ resize: 'none', border: '1px black solid' }} />
                             </Form.Group>
                         </Form>
 
@@ -189,7 +166,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
 
                                     <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Location</h2></Form.Label>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control value={location} onChange={(e) => handleTextAreaChange(e, '/location', setLocation)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                        <Form.Control value={location} onChange={(e) => handleTextAreaChange(e, '/location', setLocation, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                                     </Form.Group>
                                 </Form>
                             </Col>
@@ -197,7 +174,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 <Form>
                                     <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Date</h2></Form.Label>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control value={date} onChange={(e) => handleTextAreaChange(e, '/date', setDate)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                        <Form.Control value={date} onChange={(e) => handleTextAreaChange(e, '/date', setDate, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                                     </Form.Group>
                                 </Form>
                             </Col>
@@ -207,7 +184,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 <Form>
                                     <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Image Source</h2></Form.Label>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control value={imageSource} onChange={(e) => handleTextAreaChange(e, '/imgSource', setImageSource)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                        <Form.Control value={imageSource} onChange={(e) => handleTextAreaChange(e, '/imgSource', setImageSource, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                                     </Form.Group>
                                 </Form>
                             </Col>
@@ -215,7 +192,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 <Form>
                                     <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Image Alt</h2></Form.Label>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control value={imageAlt} onChange={(e) => handleTextAreaChange(e, '/imageAlt', setImageAlt)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                        <Form.Control value={imageAlt} onChange={(e) => handleTextAreaChange(e, '/imageAlt', setImageAlt, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                                     </Form.Group>
                                 </Form>
                             </Col>
@@ -224,13 +201,13 @@ function EditableEventComponent(myProps: editableComponentProps) {
                         <Form>
                             <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Image Caption</h2></Form.Label>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Control value={imageCaption} onChange={(e) => handleTextAreaChange(e, '/caption', setImageCaption)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                <Form.Control value={imageCaption} onChange={(e) => handleTextAreaChange(e, '/caption', setImageCaption, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                             </Form.Group>
                         </Form>
                         <Form>
                             <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Link</h2></Form.Label>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Control value={link} onChange={(e) => handleTextAreaChange(e, '/link', setLink)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+                                <Form.Control value={link} onChange={(e) => handleTextAreaChange(e, '/link', setLink, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                             </Form.Group>
                         </Form>
                     </Row>
