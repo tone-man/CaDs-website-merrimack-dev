@@ -136,7 +136,8 @@
           "nestedOrder": 0,
           "pageOrder": 1,
           "title": "Careers for the Common Good Internship & Career Fair",
-          "type": "event"
+          "type": "event",
+          "group": 0
         },
         "L": {
           "caption": "Caption 1",
@@ -149,7 +150,23 @@
           "nestedOrder": 1,
           "pageOrder": 1,
           "title": "Careers for the Common Good Internship & Career Fair",
-          "type": "event"
+          "type": "event",
+          "group": 0
+        },
+        
+        "R": {
+          "caption": "Caption 1",
+          "date": "Date",
+          "description": "The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.) that are hiring for both internships and full-time positionsFree",
+          "imageAlt": "imageAlt",
+          "imgSource": "src/imgs/projectpic.webp",
+          "link": "#",
+          "location": "Location",
+          "nestedOrder": 0,
+          "pageOrder": 2,
+          "title": "Careers for the Common Good Internship & Career Fair",
+          "type": "event",
+          "group": 1
         },
         "X": {
           "contributers": {

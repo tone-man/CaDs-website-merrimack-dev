@@ -15,17 +15,20 @@ interface editableComponentProps {
  * Component for displaying and editing data for a component in a draft.
  * Allows edit, deletion, and addition privileges to users.
  */
-function EditableComponent(myProps: editableComponentProps) {
+function EditableTextArea(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
   const [isNotDeletable, setIsNotDeletable] = useState(false);
   const [maxNestedOrder, setMaxNestedOrder] = useState(0);
-  const [shownData, setShownData] = useState('');
+  const [contentData, setContentData] = useState('');
+  const [labelData, setLabelData] = useState('');
+  
   const db = getDatabase();
 
 
   // Set the JSON value that will be displayed to the text area whenever myProps change
   useEffect(() => {
-    setShownData(JSON.stringify(myProps.data, undefined, 2));
+    setContentData(myProps.data.content);
+    setLabelData(myProps.data.label);
   }, [myProps]);
 
   useEffect(() => {
@@ -75,22 +78,29 @@ function EditableComponent(myProps: editableComponentProps) {
  * Whenever changing the text input, call this function to send the edits up to the database.
  * Reference: // https://stackoverflow.com/questions/64649055/type-changeeventhtmlinputelement-is-not-assignable-to-type-changeeventhtml
  */
-  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>, path: string) => {
     // Extract the new data from the event
     const newData = event.target.value;
 
+    console.log(newData, 'NEW DATA')
+    console.log(typeof newData, 'NEW DATA')
+
     // Update the local state with the new data
-    setShownData(newData);
+    setContentData(newData);
 
-    // Construct the database path for the current component
-    const draftsPath = myProps.pathName + "/" + myProps.componentKey;
-    const myRef = ref(db, draftsPath);
 
-    // Set the updated data at the specified key in the database
-    set(myRef, JSON.parse(newData))
+    const updates = {};
+    const myRef = ref(db);
+
+    console.log(myProps.pathName + "/" + myProps.componentKey + path, '      LOOKY HERE')
+
+    // // // Update the target component's nestedOrder
+    updates[myProps.pathName + "/" + myProps.componentKey + path] = newData;
+
+    // // Update the specific keys in the databases
+    update(myRef, updates)
       .catch((error) => {
-        // Handle errors here
-        console.error('Error adding data: ', error);
+        console.error("Error updating nested orders:", error);
       });
   };
 
@@ -241,10 +251,10 @@ function EditableComponent(myProps: editableComponentProps) {
 
         }
         <Row style={{ marginBottom: '10px', marginTop: '25px' }}>
-          <Col md={9} sm={9} xs={6} style={{ textAlign: 'left' }}>
-            <h1>{myProps.data.title}</h1>
+        
+        <Col md={9} sm={9} xs={6} style={{ textAlign: 'left' }}>
+            <h1>{myProps.data.type}</h1>
           </Col>
-
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
             <Button onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
           </Col>
@@ -257,9 +267,14 @@ function EditableComponent(myProps: editableComponentProps) {
         </Row>
         <Row>
           <Col md={12} >
+              <Form>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Control value={labelData} onChange={(e) => handleTextAreaChange(e, '/label')} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
+              </Form.Group>
+            </Form>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control value={shownData} onChange={handleTextAreaChange} as="textarea" rows={10} style={{ resize: 'none', border: '1px black solid' }} />
+                <Form.Control value={contentData} onChange={(e) => handleTextAreaChange(e, '/content')} as="textarea" rows={5} style={{ resize: 'none', border: '1px black solid' }} />
               </Form.Group>
             </Form>
           </Col>
@@ -268,4 +283,4 @@ function EditableComponent(myProps: editableComponentProps) {
     </div >
   )
 }
-export default EditableComponent
+export default EditableTextArea

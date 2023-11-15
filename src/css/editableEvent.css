@@ -1,0 +1,47 @@
+.event-carousel-container {
+    background-color: var(--blue);
+    font-size: var(--mediumFont);
+    border-radius: 20px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    color: white;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+.individual-event{
+    width: 80%;
+}
+
+
+.individual-event .styling {
+    margin-bottom: 100px;
+    margin-top: 20px;
+    background-color: var(--lightest-grey);
+    border-radius: 20px;
+    color: black;
+}
+
+.delete-component button {
+    background-color: red;
+    font-size: 25px;
+    color: white;
+    border: none;
+}
+
+.delete-component button:hover{
+    background-color: rgb(216, 30, 30);
+}
+
+.add-component button {
+    background-color: var(--blue);
+    font-size: 25px;
+    color: white;
+    border: none;
+}
+
+.add-component button:hover{
+    background-color: var(--darkGrey);
+}
+

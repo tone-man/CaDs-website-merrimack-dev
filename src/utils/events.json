@@ -9,5 +9,6 @@
     "nestedOrder": 0,
     "pageOrder": 0,
     "title": "Title",
-    "type": "event"
+    "type": "event",
+    "group": 0
   }
