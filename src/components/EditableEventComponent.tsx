@@ -94,7 +94,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteNestedComponent(myProps, db)
+        deleteNestedComponent(myProps, db, myRef)
         setShowDeletionModal(false);
     }
 

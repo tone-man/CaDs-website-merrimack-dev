@@ -2,7 +2,7 @@ import EditableEventComponent from "./EditableEventComponent"
 import '../css/editableEvent.css'
 import { Button, Col, Row } from "react-bootstrap"
 import {  getDatabase, ref } from "firebase/database"
-import { addNestedComponent, reorderPageComponents, deleteMultiplePageComponents } from '../utils/editingComponents'
+import { addNestedComponent, reorderPageComponents, deletePageComponents } from '../utils/editingComponents'
 
 
 export interface editableComponentProps {
@@ -55,7 +55,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
           <Button onClick={() => addNestedComponent(myProps.array[myProps.array.length - 1], db)}> <i className="bi bi-plus-lg"></i></Button>
         </Col>
         <Col md={1} style={{ textAlign: 'right' }} className="delete-component">
-          <Button onClick={() => deleteMultiplePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)}> <i className="bi bi-trash"></i></Button>
+          <Button onClick={() => deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)}> <i className="bi bi-trash"></i></Button>
         </Col>
       </Row>
       <div className="event-carousel-container">
