@@ -1,8 +1,8 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
-import { child, get, getDatabase, onValue, ref, set, update } from 'firebase/database';
-import { handleTextAreaChange } from '../utils/editingComponents';
+import { DatabaseReference, child, get, getDatabase, onValue, ref, set, update } from 'firebase/database';
+import { handleTextAreaChange, reorderPageComponents, deleteMultiplePageComponents} from '../utils/editingComponents';
 
 interface editableComponentProps {
   pageOrder: number
@@ -74,47 +74,13 @@ function EditableTextArea(myProps: editableComponentProps) {
 
 
   /**
-  * Deletes a component from the database and reorders nested components.
-  * @param key - The key of the component to be deleted.
-  */
-  function deleteComponent(key: string) {
-    // Delete the component from the draft
-    // Reference: https://stackoverflow.com/questions/64419526/how-to-delete-a-node-in-firebase-realtime-database-in-javascript
-    const deletePath = myProps.pathName + "/" + key;
-    const valueRef = ref(db, deletePath);
-    set(valueRef, null);
-
-    // Reorder nested components
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, myProps.pathName)).then((snapshot) => {
-      if (snapshot.exists()) {
-        for (const [nestedKey, nestedValue] of Object.entries(snapshot.val())) {
-          // If they are in the same grouping
-          if (nestedValue.pageOrder === myProps.pageOrder) {
-            if (nestedValue.nestedOrder > myProps.nestedOrder) {
-              // If the nested component's order is greater than the deleted component's order,
-              // update its nestedOrder to maintain the correct order.
-              const updates = {};
-              updates[myProps.pathName + '/' + nestedKey + '/nestedOrder'] = nestedValue.nestedOrder - 1;
-              update(dbRef, updates);
-            }
-          }
-        }
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
-  /**
   * Reorders nested components in the database based on the specified action.
   * @param isMoveUp - A boolean indicating whether to move the component up.
   */
-  function reorderNestedComponents(isMoveUp: boolean) {
-    const dbRef = ref(getDatabase());
+  function reorderNestedComponents(isMoveUp: boolean, dbRef: DatabaseReference, component: editableComponentProps) {
 
     // Fetch the existing data to perform reordering
-    get(child(dbRef, myProps.pathName)).then((snapshot) => {
+    get(child(dbRef, component.pathName)).then((snapshot) => {
       if (snapshot.exists()) {
         const updates = {};
         const direction = isMoveUp ? -1 : 1; // Set the direction based on the action
@@ -122,16 +88,16 @@ function EditableTextArea(myProps: editableComponentProps) {
         // Iterate through the existing components to determine the updates
         for (const [key, value] of Object.entries(snapshot.val())) {
           // If they were in the same grouping
-          if (value.pageOrder === myProps.pageOrder && key !== myProps.componentKey) {
-            if (myProps.nestedOrder + direction === value.nestedOrder) {
+          if (value.pageOrder === component.pageOrder && key !== component.componentKey) {
+            if (component.nestedOrder + direction === value.nestedOrder) {
               // If the nested component's order matches the target order,
               // update its nestedOrder to maintain the correct order.
-              updates[`${myProps.pathName}/${key}/nestedOrder`] = value.nestedOrder - direction;
+              updates[`${component.pathName}/${key}/nestedOrder`] = value.nestedOrder - direction;
             }
           }
         }
         // Update the target component's nestedOrder
-        updates[`${myProps.pathName}/${myProps.componentKey}/nestedOrder`] = myProps.nestedOrder + direction;
+        updates[`${component.pathName}/${component.componentKey}/nestedOrder`] = component.nestedOrder + direction;
 
         // Update the specific keys in the databases
         update(dbRef, updates)
@@ -146,55 +112,12 @@ function EditableTextArea(myProps: editableComponentProps) {
     });
   }
 
-  /**
- * Reorders components based on page order in the database based on the specified action.
- * @param isMoveUp - A boolean indicating whether to move the component up.
- */
-  function reorderPageComponents(isMoveUp: boolean) {
-    const dbRef = ref(getDatabase());
-
-    // Fetch the existing data to perform reordering
-    get(child(dbRef, myProps.pathName)).then((snapshot) => {
-      if (snapshot.exists()) {
-        const updates = {};
-        const direction = isMoveUp ? -1 : 1; // Set the direction based on the action
-
-        // Iterate through the existing components to determine the updates
-        for (const [key, value] of Object.entries(snapshot.val())) {
-          // If they were in the same grouping
-          if (key != myProps.componentKey) {
-            if (value.pageOrder === myProps.pageOrder) {
-              updates[`${myProps.pathName}/${key}/pageOrder`] = value.pageOrder + direction;
-            }
-            else if (myProps.pageOrder - 1 === value.pageOrder && isMoveUp) {
-              updates[`${myProps.pathName}/${key}/pageOrder`] = value.pageOrder - direction;
-            }
-            else if (myProps.pageOrder + 1 === value.pageOrder && !isMoveUp) {
-              updates[`${myProps.pathName}/${key}/pageOrder`] = value.pageOrder - direction;
-            }
-          }
-        }
-        // Update the target component's nestedOrder
-        updates[`${myProps.pathName}/${myProps.componentKey}/pageOrder`] = myProps.pageOrder + direction;
-
-        // Update the specific keys in the databases
-        update(dbRef, updates)
-          .catch((error) => {
-            console.error("Error updating nested orders:", error);
-          });
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
+ 
 
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
-    deleteComponent(myProps.componentKey)
+    deleteMultiplePageComponents(undefined, myProps, db, myRef)
     setShowDeletionModal(false);
   }
 
@@ -206,12 +129,12 @@ function EditableTextArea(myProps: editableComponentProps) {
           <div>
             {myProps.pageOrder !== 1 && (
               <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-                <Button onClick={() => reorderPageComponents(true)} style={{ color: 'red', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
+                <Button onClick={() => reorderPageComponents(true, myRef, myProps, undefined)} style={{ color: 'red', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
               </Col>
             )}
             <div>
               <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-                <Button onClick={() => reorderPageComponents(false)} style={{ color: 'red', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-down-short"></i></Button>
+                <Button onClick={() => reorderPageComponents(false, myRef, myProps, undefined)} style={{ color: 'red', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-down-short"></i></Button>
               </Col>
             </div>
           </div>
@@ -224,10 +147,10 @@ function EditableTextArea(myProps: editableComponentProps) {
             <h1>{myProps.data.type}</h1>
           </Col>
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-            <Button onClick={() => reorderNestedComponents(true)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
+            <Button onClick={() => reorderNestedComponents(true, myRef, myProps)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
-            <Button style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false)}> <i className="bi bi-arrow-down-short"></i></Button>
+            <Button style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false, myRef, myProps)}> <i className="bi bi-arrow-down-short"></i></Button>
           </Col>
           <Col md={1} sm={1} xs={1} style={{ textAlign: 'right' }}>
             <Button style={{ background: 'red', border: 'none' }} onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>

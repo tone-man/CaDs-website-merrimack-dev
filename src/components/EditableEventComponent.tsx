@@ -3,7 +3,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap"
 import DeleteConfirmationModal from "./DeleteConfirmationModal"
 import { useState, useEffect, ChangeEvent } from "react"
 import '../css/editableEvent.css'
-import { handleTextAreaChange } from '../utils/editingComponents'; // Import the update function from your database library
+import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent} from '../utils/editingComponents'; // Import the update function from your database library
 
 
 export interface editableComponentProps {
@@ -85,47 +85,16 @@ function EditableEventComponent(myProps: editableComponentProps) {
         setShowDeletionModal(true);
     }
 
+   
 
-  
 
-    /**
-* Deletes a component from the database and reorders nested components.
-* @param key - The key of the component to be deleted.
-*/
-    function deleteComponent(key: string) {
-        // Delete the component from the draft
-        // Reference: https://stackoverflow.com/questions/64419526/how-to-delete-a-node-in-firebase-realtime-database-in-javascript
-        const deletePath = myProps.pathName + "/" + key;
-        const valueRef = ref(db, deletePath);
-        set(valueRef, null);
 
-        // Reorder nested components
-        const dbRef = ref(getDatabase());
-        get(child(dbRef, myProps.pathName)).then((snapshot) => {
-            if (snapshot.exists()) {
-                for (const [nestedKey, nestedValue] of Object.entries(snapshot.val())) {
-                    // If they are in the same grouping
-                    if (nestedValue.pageOrder === myProps.pageOrder) {
-                        if (nestedValue.nestedOrder > myProps.nestedOrder) {
-                            // If the nested component's order is greater than the deleted component's order,
-                            // update its nestedOrder to maintain the correct order.
-                            const updates = {};
-                            updates[myProps.pathName + '/' + nestedKey + '/nestedOrder'] = nestedValue.nestedOrder - 1;
-                            update(dbRef, updates);
-                        }
-                    }
-                }
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
-    }
 
 
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteComponent(myProps.componentKey)
+        deleteNestedComponent(myProps, db)
         setShowDeletionModal(false);
     }
 
@@ -141,6 +110,12 @@ function EditableEventComponent(myProps: editableComponentProps) {
                         <Button onClick={handleOpenConfirmationModal}> <i className="bi bi-trash"></i></Button>
                     </Col>
                 </Row>
+                <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
+                    <Button onClick={() => reorderNestedComponents(true, myRef, myProps)} style={{ color: 'white', background: 'grey', border: 'none' }}> <i className="bi bi-arrow-up-short"></i></Button>
+                </Col>
+                <Col md={1} sm={1} xs={2} style={{ textAlign: 'right' }}>
+                    <Button style={{ color: 'white', background: 'grey', border: 'none' }} onClick={() => reorderNestedComponents(false, myRef, myProps)}> <i className="bi bi-arrow-down-short"></i></Button>
+                </Col>
                 <Container className="styling">
 
                     <Row>
