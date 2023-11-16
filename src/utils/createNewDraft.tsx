@@ -48,6 +48,7 @@ export const createNewDraft = (makeNewDraft: boolean, db: Database, snapShot: ob
         const valueRef = ref(db, path +'/');
         // Set the entire path to null to clear any existing data
         set(valueRef, null);
+        console.log(valueRef, 'value ref??')
 
         // For every single component in the snapshot
         for (const [key, value] of Object.entries(snapShot)) {

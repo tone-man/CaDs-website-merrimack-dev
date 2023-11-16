@@ -23,7 +23,6 @@ const EditPage = () => {
     // Reads in param that was passed in (Tells users the path to look at for the database)
     const location = useLocation();
     const { pathName } = location.state as { pathName: string };
-    console.log(pathName, 'PATHNAME')
 
     const [updatedComponents, setUpdatedComponents] = useState();
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
@@ -67,13 +66,14 @@ const EditPage = () => {
         // Check if 'snapshotTemp' has data
         if (snapshotTemp) {
             // Loop through each value in the database
-            const events = [];
-            const sampleData: editableComponentProps[][] = [];
+            const events: editableComponentProps[][] = [];
             for (const [key, value] of Object.entries(snapshotTemp)) {
+                console.log(value.type, 'value.type')
                 if (key !== 'submitted') {
                     // Push an EditableComponent with specific props for each value
 
                     if (value.type === 'text') {
+                        console.log('text')
                         arr.push(
                             <EditableTextArea
                                 key={key}
@@ -86,22 +86,23 @@ const EditPage = () => {
                         );
                     }
                     else if (value.type === 'event') {
-                        // console.log(value, 'VALUE HERE')
-                        if (sampleData[value.group] === undefined) {
-                            sampleData[value.group] = []
+                        if (events[value.pageOrder] ===undefined) {
+                            events[value.pageOrder] = []
                         }
-                        // console.log("now has something", sampleData)
-                        sampleData[value.group].push(
-                            {
-                                pageOrder: value.pageOrder,
-                                nestedOrder: value.nestedOrder,
-                                data: value,
-                                componentKey: key,
-                                pathName: pathName,
-                                group: value.group
-                            })
+                          if (events[value.pageOrder]){
+                            events[value.pageOrder].push(
+                                {
+                                    pageOrder: value.pageOrder,
+                                    nestedOrder: value.nestedOrder,
+                                    data: value,
+                                    componentKey: key,
+                                    pathName: pathName
+                                })
+                          }
+                      
                     }
                     else {
+                        console.log("anything else")
                         arr.push(
                             <EditableComponent
                                 key={key}
@@ -117,15 +118,15 @@ const EditPage = () => {
             }
             {
                 // Maps each of the events in the events array to a carousel item
-                sampleData.map((array, index) => (
+                events.map((array, index) => (
                     <>
                         {
-                            arr.push(<EditableCarousel array={sampleData[index]} />)
-
+                            arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} />)
                         }
                     </>
                 ))
             }
+            
 
             // Sort the array based on 'pageOrder' and 'nestedOrder'
             temp = arr.sort(function (a, b) {
@@ -239,7 +240,7 @@ const EditPage = () => {
         let newObj = undefined;
 
         // Determine the template based on the component type
-        if (componentType === 'eventcarousel') {
+        if (componentType === 'event') {
             newObj = eventTemplate;
         }
         else if (componentType === 'textarea') {
@@ -249,38 +250,36 @@ const EditPage = () => {
             newObj = accordionTemplate;
         }
 
-        let maxNesting = 0;
+        let maxPageOrder = 0;
 
         if (newObj) {
             // Iterate through existing components to find the maximum nesting order for the same type
             newObj.nestedOrder = 0;
             for (const [, value] of Object.entries(snapshotTemp)) {
-
                 if (value) {
-                    if (maxNesting <= value.pageOrder) {
-                        console.log(maxNesting, 'max nesting', value.pageOrder, 'page order of current element looking at')
-                        maxNesting = value.pageOrder + 1;
-                    }
+                    if (maxPageOrder <= value.pageOrder) {
+                        maxPageOrder = value.pageOrder + 1;
+                    } 
                 }
             }
-            newObj.pageOrder = maxNesting;
+            newObj.pageOrder = maxPageOrder;
         }
-        else {
-            newObj = projectTemplate;
-            // Iterate through existing components to find the maximum nesting order for the same type
-            for (const [, value] of Object.entries(snapshotTemp)) {
-                if (value) {
-                    newObj.pageOrder = 0;
-                    if (value.pageOrder === 0) {
-                        if (maxNesting < value.nestedOrder) {
-                            maxNesting = value.nestedOrder + 1;
-                            newObj.nestedOrder = maxNesting;
+        // else {
+        //     newObj = projectTemplate;
+        //     // Iterate through existing components to find the maximum nesting order for the same type
+        //     for (const [, value] of Object.entries(snapshotTemp)) {
+        //         if (value) {
+        //             newObj.pageOrder = 0;
+        //             if (value.pageOrder === 0) {
+        //                 if (maxNesting < value.nestedOrder) {
+        //                     maxNesting = value.nestedOrder + 1;
+        //                     newObj.nestedOrder = maxNesting;
 
-                        }
-                    }
-                }
-            }
-        }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         // Generate a new key for the new component
         const newPostKey = push(child(ref(db), pathName)).key;
@@ -307,7 +306,7 @@ const EditPage = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => addComponent('eventcarousel')}>Event Carousel</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
                                 <Dropdown.Item onClick={() => addComponent('textarea')}>Text Boxes with Label and Content:</Dropdown.Item>
                                 <Dropdown.Item onClick={() => addComponent('accordion')}>Accordion Text Boxes</Dropdown.Item>
                                 {pathName.includes('homepage') &&

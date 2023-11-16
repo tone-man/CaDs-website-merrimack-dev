@@ -73,7 +73,7 @@ function EditableTextArea(myProps: editableComponentProps) {
  
   // Handles confirmed deletion and hiding the modal
   function remove() {
-    deletePageComponents(undefined, myProps, db, myRef)
+    deletePageComponents(undefined, myProps, db, myRef, undefined)
     setShowDeletionModal(false);
   }
 
