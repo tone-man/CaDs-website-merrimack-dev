@@ -4,6 +4,7 @@ import { Button, Col, Container, Row } from "react-bootstrap"
 import { getDatabase, onValue, ref } from "firebase/database"
 import { addNestedComponent, reorderPageComponents, deletePageComponents } from '../utils/editingComponents'
 import { useEffect, useState } from "react"
+import DeleteConfirmationModal from "./DeleteConfirmationModal"
 
 
 export interface editableComponentProps {
@@ -28,6 +29,8 @@ interface eventCarouselProps {
 function EditableCarousel(myProps: eventCarouselProps) {
   const [buttons, setButtons] = useState<JSX.Element | null>(null);
   const [lastPageOrder, setLastPageOrder] = useState<number | null>(null)
+  const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+  
 
   const db = getDatabase();
   const myRef = ref(db);
@@ -90,7 +93,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
                   <Button onClick={() => addNestedComponent(myProps.array[myProps.array.length - 1], db)}> <i className="bi bi-plus-lg"></i></Button>
                 </Col>
                 <Col md={2} sm={2} xs={4} style={{ textAlign: 'right' }} className="delete-component">
-                  <Button onClick={() => deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)}> <i className="bi bi-trash"></i></Button>
+                  <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>
                 </Col>
               </Row>
             </Col>
@@ -100,7 +103,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
             <Col md={6} sm={6} xs={6}>
               <Row>
                 <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="delete-component">
-                  <Button onClick={() => deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)}> <i className="bi bi-trash"></i></Button>
+                  <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>
                 </Col>
               </Row>
             </Col>
@@ -110,10 +113,16 @@ function EditableCarousel(myProps: eventCarouselProps) {
     )
   }, [lastPageOrder]);
 
+  function remove(){
+    deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)
+    setShowDeletionModal(false);
+  }
+
 
 
   return (
-    <div>
+   <div>
+       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + 'event carousel'} />
       {buttons}
       <div className="event-carousel-container">
         {

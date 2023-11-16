@@ -137,11 +137,9 @@ function EditableEventComponent(myProps: editableComponentProps) {
                             </Form.Group>
                         </Form>
 
-
                         <Row>
                             <Col md={6}>
                                 <Form>
-
                                     <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Location</h2></Form.Label>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Control value={location} onChange={(e) => handleTextAreaChange(e, '/location', setLocation, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
