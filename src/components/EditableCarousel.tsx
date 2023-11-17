@@ -1,8 +1,8 @@
 import EditableEventComponent from "./EditableEventComponent"
 import '../css/editableEvent.css'
 import { Button, Col, Container, Row } from "react-bootstrap"
-import { getDatabase, onValue, ref } from "firebase/database"
-import { addNestedComponent, reorderPageComponents, deletePageComponents } from '../utils/editingComponents'
+import { get, getDatabase, onValue, ref } from "firebase/database"
+import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../utils/editingComponents'
 import { useEffect, useState } from "react"
 import DeleteConfirmationModal from "./DeleteConfirmationModal"
 
@@ -44,25 +44,19 @@ function EditableCarousel(myProps: eventCarouselProps) {
 
   // Set the JSON value that will be displayed to the text area whenever myProps change
   useEffect(() => {
-    // Create a reference to the database using the provided pathName
-    const projects = ref(db, myProps.array[myProps.array.length - 1].pathName);
 
-    onValue(projects, (snapshot) => {
-      let max = 0;
-      // Iterate through the retrieved data to find the maximum page order
-      for (const [, value] of Object.entries(snapshot.val())) {
-        if (value.pageOrder > max) {
-          max = value.nestedOrder;
-        }
-      }
-      setLastPageOrder(max);
+    getMaxPageOrder(ref(db, myProps.array[myProps.array.length - 1].pathName),setLastPageOrder)
 
-    });
+
+
   }, [myProps]);
 
 
   // Set the buttons that will be displayed for an entire carousel
   useEffect(() => {
+    // console.log(lastPageOrder, 'LAST PAGE ORDER')
+    // console.log(myProps.pageOrder, 'CURRENT PAGE ORDER')
+
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
 

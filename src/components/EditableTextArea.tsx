@@ -2,7 +2,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import {  getDatabase, ref} from 'firebase/database';
-import { handleTextAreaChange, reorderPageComponents, deletePageComponents} from '../utils/editingComponents';
+import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../utils/editingComponents';
 
 interface editableComponentProps {
   pageOrder: number
@@ -20,6 +20,7 @@ function EditableTextArea(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
   const [contentData, setContentData] = useState('');
   const [labelData, setLabelData] = useState('');
+  const [lastPageOrder, setLastPageOrder] = useState(null);
   
   const db = getDatabase();
   const myRef = ref(db)
@@ -29,40 +30,9 @@ function EditableTextArea(myProps: editableComponentProps) {
   useEffect(() => {
     setContentData(myProps.data.content);
     setLabelData(myProps.data.label);
+    getMaxPageOrder(myRef,setLastPageOrder);
+
   }, [myProps]);
-
-  // useEffect(() => {
-  //   // Create a reference to the database using the provided pathName
-  //   const projects = ref(db, myProps.pathName);
-
-  //   // Set up a listener to the database using onValue
-  //   // The listener will update the state variable 'snapshot' with the retrieved data
-  //   onValue(projects, (snapshot) => {
-  //     let max = 0;
-  //     let count = 0;
-  //     // Iterate through the retrieved data to find the maximum nested order
-  //     for (const [, value] of Object.entries(snapshot.val())) {
-  //       if (value.pageOrder === myProps.pageOrder) {
-  //         if (value.nestedOrder > max) {
-  //           max = value.nestedOrder;
-  //         }
-  //         count++;
-  //       }
-  //     }
-  //     // Dont allow user to delete component if it is the last event or project
-  //     if (myProps.data.type === 'event' || myProps.data.type === 'project') {
-  //       if (count === 1) {
-  //         setIsNotDeletable(true)
-  //       }
-  //       else {
-  //         setIsNotDeletable(false)
-  //       }
-  //     }
-  //     // Update the state variable with the maximum nested order
-  //     setMaxNestedOrder(max);
-
-  //   });
-  // }, [myProps]);
 
 
   // Opens the deletion confirmation modal

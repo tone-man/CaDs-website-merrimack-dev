@@ -71,6 +71,7 @@ export function addNestedComponent(value: editableComponentProps, db: Database) 
     // Assign page order and nested order for the new component
     newObj.pageOrder = component.pageOrder;
     newObj.nestedOrder = component.nestedOrder + 1;
+    console.log(component.nestedOrder, 'NESTED ORDER FOR NEW COMPONENT')
 
     // Generate a new key for the new component
     const newPostKey = push(child(ref(db), component.pathName)).key;
@@ -136,7 +137,7 @@ export function reorderNestedComponents(isMoveUp: boolean, dbRef: DatabaseRefere
     if (snapshot.exists()) {
       const updates: UpdatesType = {};
 
-       // Iterate through the existing components to determine the updates
+      // Iterate through the existing components to determine the updates
       for (const [key, value] of Object.entries(snapshot.val())) {
         const nestedValue = value as valueType;
 
@@ -179,61 +180,47 @@ export function reorderNestedComponents(isMoveUp: boolean, dbRef: DatabaseRefere
  * @param component - The component to be reordered.
  * @param type - Optional string indicating the type of component.
  */
-export function reorderPageComponents(isMoveUp: boolean, dbRef: DatabaseReference, component, type: string | undefined) {
-  console.log("reordering page components")
+export async function reorderPageComponents(
+  isMoveUp: boolean,
+  dbRef: DatabaseReference,
+  component: any, // Update the type as per your requirement
+  type: string | undefined
+) {
 
-  if (type !== undefined) {
-    if (type === 'carousel') {
-      console.log("carousel!!")
-    }
-  }
-  // Fetch the existing data to perform reordering
-  get(child(dbRef, component.pathName)).then((snapshot) => {
+  try {
+    const snapshot = await get(child(dbRef, component.pathName));
     if (snapshot.exists()) {
       const updates: UpdatesType = {};
-      const direction = isMoveUp ? -1 : 1; // Set the direction based on the action
 
-      // Iterate through the existing components to determine the updates
       for (const [key, value] of Object.entries(snapshot.val())) {
         const newValue = value as valueType;
 
-        // If the value being checked is NOT the same as the one being reordered
-        if (key != component.componentKey) {
+        const isSamePageOrder = newValue.pageOrder === component.pageOrder;
 
-          // If the value being looked at is the same page order as the component being reordered, then update it's page order
-          const isSamePageOrder = newValue.pageOrder === component.pageOrder;
-       
-          // If it is the same page order, update its page order
-          if (isSamePageOrder) {
-            updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder + direction;
+        if (isSamePageOrder) {
+          if (isMoveUp) {
+            updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder - 1;
+          } else {
+            updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder + 1;
           }
-
-          // Otherwise, check if it is directly below the component we want to reorder, and update it's page ordering 
-          else if (isMoveUp && component.pageOrder - 1 === newValue.pageOrder) {
-            updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder - direction;
-          }
-
-          // Otherwise, check if it is directly above the component we want to reorder, and update it's page ordering and grouping if
-          //necessary
-          else if (!isMoveUp && component.pageOrder + 1 === newValue.pageOrder) {
-            updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder - direction;
+        } else {
+          if (isMoveUp) {
+            if (newValue.pageOrder + 1 === component.pageOrder) {
+              updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder + 1;
+            }
+          } else if (!isMoveUp) {
+            if (newValue.pageOrder - 1 === component.pageOrder) {
+              updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder - 1;
+            }
           }
         }
       }
-
-      // Update the target component's page order and grouping if necessary
-      updates[`${component.pathName}/${component.componentKey}/pageOrder`] = component.pageOrder + direction;
-      // Update the specific keys in the databases
-      update(dbRef, updates)
-        .catch((error) => {
-          console.error("Error updating nested orders:", error);
-        });
-    } else {
-      console.log("No data available");
+      await update(dbRef, updates);
     }
-  }).catch((error) => {
+  } catch (error) {
     console.error(error);
-  });
+    throw error; // Re-throw the error to handle it at a higher level if needed
+  }
 }
 
 
@@ -334,4 +321,26 @@ export function deletePageComponents(componentArray, pageComponent: editableComp
     set(valueRef, null);
   }
 
+}
+
+
+export function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder) {
+  // Create a reference to the database using the provided pathName
+  const fetchData = async () => {
+    try {
+      const snapshot = await get(dbRef); // Assuming "get" is the method you use to fetch data
+      let max = 0;
+      for (const [, value] of Object.entries(snapshot.val())) {
+        if (value.pageOrder > max) {
+          max = value.pageOrder;
+        }
+      }
+
+      setLastPageOrder(max);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
 }

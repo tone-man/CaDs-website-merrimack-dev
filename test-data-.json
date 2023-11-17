@@ -44,7 +44,7 @@
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
           "nestedOrder": 1,
-          "pageOrder": 1,
+          "pageOrder": 0,
           "projectLink": "#",
           "title": "Automated Lyric Analysis",
           "type": "project"
@@ -82,7 +82,7 @@
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
           "nestedOrder": 0,
-          "pageOrder": 1,
+          "pageOrder": 0,
           "projectLink": "#",
           "title": "Rove - Photography Exploration App for iOS",
           "type": "project"
@@ -120,7 +120,7 @@
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
           "nestedOrder": 3,
-          "pageOrder": 1,
+          "pageOrder": 0,
           "projectLink": "#",
           "title": "Square Swords 3D Fighting Game",
           "type": "project"
@@ -134,7 +134,7 @@
           "link": "#",
           "location": "Location",
           "nestedOrder": 0,
-          "pageOrder": 0,
+          "pageOrder": 1,
           "title": "Careers for the Common Good Internship & Career Fair",
           "type": "event"
         },
@@ -147,7 +147,7 @@
           "link": "#",
           "location": "Location",
           "nestedOrder": 1,
-          "pageOrder": 0,
+          "pageOrder": 1,
           "title": "Careers for the Common Good Internship & Career Fair",
           "type": "event"
         },
@@ -198,7 +198,7 @@
           "imageAlt": "imageAlt",
           "imageDescription": "Image Description",
           "nestedOrder": 2,
-          "pageOrder": 1,
+          "pageOrder": 0,
           "projectLink": "#",
           "title": "D&D Roleplaying Group/Campaign Manager",
           "type": "project"
