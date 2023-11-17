@@ -1,7 +1,7 @@
 import EditableEventComponent from "./EditableEventComponent"
 import '../css/editableEvent.css'
 import { Button, Col, Container, Row } from "react-bootstrap"
-import { get, getDatabase, onValue, ref } from "firebase/database"
+import { get, getDatabase, ref } from "firebase/database"
 import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../utils/editingComponents'
 import { useEffect, useState } from "react"
 import DeleteConfirmationModal from "./DeleteConfirmationModal"
@@ -12,13 +12,14 @@ export interface editableComponentProps {
   nestedOrder: number
   data: unknown,
   componentKey: string,
-  pathName: string
+  pathName: string,
 }
 
 interface eventCarouselProps {
   array: editableComponentProps[]
   pageOrder: number,
   type: string
+  lastPageOrder: number
 }
 
 
@@ -28,12 +29,12 @@ interface eventCarouselProps {
  */
 function EditableCarousel(myProps: eventCarouselProps) {
   const [buttons, setButtons] = useState<JSX.Element | null>(null);
-  const [lastPageOrder, setLastPageOrder] = useState<number | null>(null)
+  const [lastPageOrder, setLastPageOrder] = useState<number | null>(null);
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
   
-
   const db = getDatabase();
   const myRef = ref(db);
+  const componentRef = ref(db, myProps.array[myProps.array.length-1].pathName)
 
   // Sort through the event carousel based on nested order to maintain correct structure
   const sorted = myProps.array.sort(function (a, b) {
@@ -42,14 +43,14 @@ function EditableCarousel(myProps: eventCarouselProps) {
     );
   });
 
-
+  // Get the max page order right away
+  useEffect(() => {
+    getMaxPageOrder(componentRef, setLastPageOrder)
+  }, [myProps]);
 
 
   // Set the buttons that will be displayed for an entire carousel
   useEffect(() => {
-    // console.log(lastPageOrder, 'LAST PAGE ORDER')
-    // console.log(myProps.pageOrder, 'CURRENT PAGE ORDER')
-
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
 
@@ -98,14 +99,13 @@ function EditableCarousel(myProps: eventCarouselProps) {
         </Row>
       </Container>
     )
-  }, [lastPageOrder]);
+  }, [lastPageOrder, myProps]);
 
+  // Function to remove the carousel
   function remove(){
     deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)
     setShowDeletionModal(false);
   }
-
-
 
   return (
    <div>

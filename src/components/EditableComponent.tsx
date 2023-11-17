@@ -17,8 +17,6 @@ interface editableComponentProps {
  */
 function EditableComponent(myProps: editableComponentProps) {
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-  const [isNotDeletable, setIsNotDeletable] = useState(false);
-  const [maxNestedOrder, setMaxNestedOrder] = useState(0);
   const [shownData, setShownData] = useState('');
   const db = getDatabase();
 

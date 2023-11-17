@@ -34,9 +34,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
     const [imageCaption, setImageCaption] = useState('');
 
     const [lastNestedOrder, setLastNestedOrder] = useState<number | null>(null);
-    const [buttons, setButtons] = useState<JSX.Element | null>(null); 
+    const [buttons, setButtons] = useState<JSX.Element | null>(null);
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-
 
 
     // Set the JSON value that will be displayed to the text area whenever myProps change
@@ -54,9 +53,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
         // Create a reference to the database using the provided pathName
         const componentRef = ref(db, myProps.pathName);
 
-       getMaxNestedOrder(componentRef, myProps.pageOrder, setLastNestedOrder)
-
-      
+        // Get the max nested order for the specific component
+        getMaxNestedOrder(componentRef, myProps.pageOrder, setLastNestedOrder)
 
     }, [myProps]);
 
@@ -64,8 +62,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
     useEffect(() => {
         setButtons(
             <>
-                <Row style={{display: 'flex', alignItems: 'center' }}>
-                    <Col md={8} sm={8} xs={8}  className="nested-component-title">
+                <Row style={{ display: 'flex', alignItems: 'center' }}>
+                    <Col md={8} sm={8} xs={8} className="nested-component-title">
                         <h1> {myProps.data.title}</h1>
                     </Col>
                     <Col md={4} sm={4} xs={4} >
@@ -103,7 +101,6 @@ function EditableEventComponent(myProps: editableComponentProps) {
                 {buttons}
                 <Container className="event-styling">
                     <Row>
-
                         <Form>
                             <Row>
                                 <Col md={6} sm={6} xs={6}>
@@ -178,7 +175,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 <Form.Control value={link} onChange={(e) => handleTextAreaChange(e, '/link', setLink, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
                             </Form.Group>
                         </Form>
-                        
+
                     </Row>
                 </Container>
             </Container >

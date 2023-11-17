@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, SetStateAction } from 'react';
 import { Database, DatabaseReference, child, get, getDatabase, push, ref, set, update } from 'firebase/database'; // Import the appropriate type for DatabaseReference
 import EventTemplate from '../utils/events.json'
 import { editableComponentProps } from '../components/EditableCarousel';
@@ -333,25 +333,23 @@ export function deletePageComponents(componentArray, pageComponent: editableComp
 }
 
 
-export function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder) {
-  // Create a reference to the database using the provided pathName
-  const fetchData = async () => {
-    try {
-      const snapshot = await get(dbRef); // Assuming "get" is the method you use to fetch data
-      let max = 0;
-      for (const [, value] of Object.entries(snapshot.val())) {
-        if (value.pageOrder > max) {
-          max = value.pageOrder;
-        }
+export async function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder) {
+  try {
+    const snapshot = await get(dbRef); // Assuming "get" is the method you use to fetch data
+    let max = 0;
+    for (const [, value] of Object.entries(snapshot.val())) {
+      console.log(value, 'VALUE HERE in max')
+      if (value.pageOrder > max) {
+        max = value.pageOrder;
       }
-
-      setLastPageOrder(max);
-    } catch (error) {
-      console.error("Error fetching data:", error);
     }
-  };
-
-  fetchData();
+    console.log("set max page order below with value", max)
+    setLastPageOrder(max);
+    return max;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error; // Rethrow the error to handle it at a higher level if needed
+  }
 }
 
 export async function getMaxNestedOrder(dbRef: DatabaseReference, pageOrder, setLastNestedOrder) {
