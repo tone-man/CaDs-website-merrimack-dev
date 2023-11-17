@@ -42,14 +42,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
     );
   });
 
-  // Set the JSON value that will be displayed to the text area whenever myProps change
-  useEffect(() => {
 
-    getMaxPageOrder(ref(db, myProps.array[myProps.array.length - 1].pathName),setLastPageOrder)
-
-
-
-  }, [myProps]);
 
 
   // Set the buttons that will be displayed for an entire carousel
@@ -84,7 +77,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
             <Col md={6} sm={6} xs={6}>
               <Row>
                 <Col md={10} sm={10} xs={8} style={{ textAlign: 'right' }} className="add-component">
-                  <Button onClick={() => addNestedComponent(myProps.array[myProps.array.length - 1], db)}> <i className="bi bi-plus-lg"></i></Button>
+                  <Button onClick={() => addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length-1].pathName))}> <i className="bi bi-plus-lg"></i></Button>
                 </Col>
                 <Col md={2} sm={2} xs={4} style={{ textAlign: 'right' }} className="delete-component">
                   <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>

@@ -3,7 +3,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap"
 import DeleteConfirmationModal from "./DeleteConfirmationModal"
 import { useState, useEffect } from "react"
 import '../css/editableEvent.css'
-import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent } from '../utils/editingComponents';
+import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder } from '../utils/editingComponents';
 
 
 export interface editableComponentProps {
@@ -52,20 +52,12 @@ function EditableEventComponent(myProps: editableComponentProps) {
         setImageCaption(myProps.data.caption)
 
         // Create a reference to the database using the provided pathName
-        const components = ref(db, myProps.pathName);
+        const componentRef = ref(db, myProps.pathName);
 
-        onValue(components, (snapshot) => {
-            let max = 0;
-            // Iterate through the retrieved data to find the maximum nested order
-            for (const [, value] of Object.entries(snapshot.val())) {
-                if (value.pageOrder === myProps.pageOrder) {
-                    if (value.nestedOrder > max) {
-                        max = value.nestedOrder
-                    }
-                }
-            }
-            setLastNestedOrder(max);
-        });
+       getMaxNestedOrder(componentRef, myProps.pageOrder, setLastNestedOrder)
+
+      
+
     }, [myProps]);
 
     // Set the buttons that will be rendered above a nested component
