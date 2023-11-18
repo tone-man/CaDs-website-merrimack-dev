@@ -1,0 +1,46 @@
+.background-container {
+    background-color: var(--blue);
+    border-radius: 40px;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.background-container .text-editable-container {
+    color: black;
+    padding: 20px;
+    width: 95%;
+}
+
+.background-container .text-editable-container .styling {
+    padding: 20px;
+    background-color: var(--lightest-grey);
+    border-radius: 20px;
+    border: 1px black solid;
+}
+
+.background-container .title {
+    font-size: var(--largeFont);
+}
+
+
+.background-container h1 {
+    text-align: left;
+    font-size: var(--mediumFont);
+    padding-bottom: 10px;
+}
+
+/* Restyles event and event edit carousle container upon screen resizing */
+@media screen and (max-width: 800px) {
+    .background-container .title {
+        font-size: var(--extraSmallFont);
+        text-align: center;
+    }
+    .header-container h1 {
+        font-size: var(--extraSmallFont);
+        text-align: center;
+    }
+    .background-container .text-editable-container {
+        width: 100%;
+    }
+}

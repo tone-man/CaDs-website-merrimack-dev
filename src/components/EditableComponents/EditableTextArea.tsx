@@ -1,9 +1,9 @@
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import { getDatabase, ref } from 'firebase/database';
-import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../utils/editingComponents';
-import '../css/editableTextComponent.css'
+import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents';
+import '../../css/editableCSS/editableTextComponent.css';
 import EditableFormComponent from './EditableFormComponent';
 
 interface editableComponentProps {
@@ -53,9 +53,9 @@ function EditableTextArea(myProps: editableComponentProps) {
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
         <Row>
-          <Col md={3} sm={3} xs={3}>
+          <Col md={6} sm={6} xs={6}>
             <Row>
-              <Col md={4} sm={6} xs={6} className='reorder-page-component' >
+              <Col md={2} sm={6} xs={6} className='reorder-page-component' >
                 <Button
                   disabled={(myProps.pageOrder === 1 || myProps.pageOrder === 0)}
                   onClick={() =>
@@ -75,12 +75,7 @@ function EditableTextArea(myProps: editableComponentProps) {
             </Row>
           </Col>
 
-          <Col md={6} sm={6} xs={6} style={{ textAlign: 'center' }}>
-            {myProps.type === 'text' ? (
-              <h1 className='title'> Text Area</h1>) :
-              (<h1 className='title'> Accordion</h1>)}
-          </Col>
-          <Col md={3} sm={3} xs={3}>
+          <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="delete-component">
                 <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>
@@ -96,30 +91,41 @@ function EditableTextArea(myProps: editableComponentProps) {
     <div>
       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.type} />
       {buttons}
-      <Container className='text-editable-container '>
-        <Row>
-          <Col md={12} >
-            <EditableFormComponent
-              changedValue='/label'
-              myRef={myRef}
-              value={labelData}
-              setValue={setLabelData}
-              pathName={myProps.pathName}
-              componentKey={myProps.componentKey}
-              label="Label"
-              handleTextAreaChange={handleTextAreaChange} />
-            <EditableFormComponent
-              changedValue='/content'
-              myRef={myRef}
-              value={contentData}
-              setValue={setContentData}
-              pathName={myProps.pathName}
-              componentKey={myProps.componentKey}
-              label="Content"
-              handleTextAreaChange={handleTextAreaChange} />
-
-          </Col>
-        </Row>
+      <Container className='background-container'>
+        <Container className='text-editable-container'>
+          <h1 className='name' style={{ color: 'white' }}>
+            {myProps.type === 'text' ? (
+              <h1 className='title'> Text Area</h1>) :
+              (<h1 className='title'> Drop Down Text</h1>)}</h1>
+          <Container className='styling'>
+            <Row>
+              <Col md={12} >
+                <EditableFormComponent
+                  changedValue='/label'
+                  myRef={myRef}
+                  value={labelData}
+                  setValue={setLabelData}
+                  pathName={myProps.pathName}
+                  componentKey={myProps.componentKey}
+                  label="Label"
+                  handleTextAreaChange={handleTextAreaChange}
+                  rows={1}
+                  delete={false} />
+                <EditableFormComponent
+                  changedValue='/content'
+                  myRef={myRef}
+                  value={contentData}
+                  setValue={setContentData}
+                  pathName={myProps.pathName}
+                  componentKey={myProps.componentKey}
+                  label="Content"
+                  handleTextAreaChange={handleTextAreaChange}
+                  rows={4}
+                  delete={false} />
+              </Col>
+            </Row>
+          </Container>
+        </Container>
       </Container>
     </div >
   )

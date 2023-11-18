@@ -1,0 +1,16 @@
+.editableForm h1 {
+    font-size: var(--smallFont);
+    color: black;
+}
+
+.editableForm .label{
+    font-size: var(--smallFont);
+}
+
+/* Restyles event and event edit carousle container upon screen resizing */
+@media screen and (max-width: 800px) {
+    .editableForm .label{
+        font-size: var(--extraSmallFont);
+    }
+    
+}

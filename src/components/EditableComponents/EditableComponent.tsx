@@ -1,6 +1,6 @@
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { ChangeEvent, useEffect, useState } from 'react';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import { child, get, getDatabase, onValue, ref, set, update } from 'firebase/database';
 
 interface editableComponentProps {

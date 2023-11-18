@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, set, push, child, update, get } from 'firebase/database';
 import { useLocation, useNavigate } from 'react-router-dom';
-import EditableComponent from '../components/EditableComponent';
 import Header from '../components/Header';
 import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
-import '../css/editPage.css'
+
+import '../css/editableCSS/editPage.css'
+
+
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
+import EditableComponent from '../components/EditableComponents/EditableComponent';
+import EditableCarousel, { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
+import EditableFacultyHeader from '../components/EditableComponents/EditableFacultyHeader';
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json'
 import accordionTemplate from '../utils/accordion.json'
-import EditableTextArea from '../components/EditableTextArea';
-import EditableCarousel, { editableComponentProps } from '../components/EditableCarousel';
-import EditableFacultyHeader from '../components/EditableFacultyHeader';
+import EditableTextArea from '../components/EditableComponents/EditableTextArea';
+
 
 /**
  * The EditPage component enables users to edit the components of a page they have ownership of.
@@ -48,14 +52,6 @@ const EditPage = () => {
         });
     }, []);
 
-     /**
-    * Effect hook to fetch project information from the database and update state.
-    * Runs upon initial rendering of page
-    */
-     useEffect(() => {
-            console.log(cannotSubmit, ' disabled or not here')
-    }, [cannotSubmit]);
-
 
 
     /**
@@ -64,16 +60,16 @@ const EditPage = () => {
     */
     useEffect(() => {
         let notvalid = 0;
-        for (const [key, value] of Object.entries(snapshotTemp)) {
-            if (value.type!=='project') {
-                for (const [newkey, newvalue] of Object.entries(value)) {
+        for (const [, value] of Object.entries(snapshotTemp)) {
+            if (value.type !== 'project') {
+                for (const [, newvalue] of Object.entries(value)) {
                     console.log(newvalue);
-                    if (newvalue==='') {
+                    if (newvalue === '') {
                         notvalid++;
                         setCannotSubmit(true);
-                       break
+                        break
                     } else {
-                        if (notvalid ===0){
+                        if (notvalid === 0) {
                             setCannotSubmit(false)
                         }
                     }
@@ -126,7 +122,7 @@ const EditPage = () => {
                                 })
                         }
                     }
-                    else if (value.type ==='header'){
+                    else if (value.type === 'header') {
                         arr.push(
                             <EditableFacultyHeader
                                 key={key}
@@ -331,40 +327,45 @@ const EditPage = () => {
 
     return (
         <div>
-            <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={handleCancel} name={'this draft'} />
+            <DeleteConfirmationModal
+                show={showDeleteModal}
+                onHide={() =>
+                    setShowDeletionModal(false)}
+                onConfirm={handleCancel}
+                name={'this draft'} />
             <Header title={"Edit Page"} />
-            <Container style={{ paddingTop: '40px' }}>
-                <Row>
-                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
-                        <Dropdown>
-                            <Dropdown.Toggle  id="dropdown-basic">
-                                Add a Component
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
-                                <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
-                                <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Box</Dropdown.Item>
-                                {pathName.includes('homepage') &&
-                                    <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
-                                }
-
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Col>
-                </Row>
-                {updatedComponents}
-                <Container fluid style={{width: '90%'}}>
-                <Row>
-                    <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
-                        {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                        <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
-                    </Col>
-                    <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
-                        {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                        <Button disabled={cannotSubmit} onClick={() => handleSave()}>Request Changes</Button>
-                    </Col>
-                </Row>
+            <Container fluid className='edit-page-container'>
+                <Container>
+                    <Row>
+                        <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
+                            <Dropdown>
+                                <Dropdown.Toggle id="dropdown-basic">
+                                    Add a Component
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
+                                    {pathName.includes('homepage') &&
+                                        <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
+                    </Row>
+                    {updatedComponents}
+                    <Container fluid style={{ width: '90%' }}>
+                        <Row>
+                            <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
+                                {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
+                                <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
+                            </Col>
+                            <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
+                                {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
+                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Request Changes</Button>
+                            </Col>
+                        </Row>
+                    </Container>
                 </Container>
             </Container>
         </div>

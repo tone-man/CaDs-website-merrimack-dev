@@ -258,6 +258,14 @@
           "nestedOrder": 0,
           "pageOrder": 1,
           "type": "accordion"
+        },
+        "B": {
+          "phone": "978-702-7677",
+          "email": "vanheckeb@merrimack",
+          "location": "155 pilgrim rd",
+          "nestedOrder": 0,
+          "pageOrder": 7,
+          "type": "contact"
         }
       }
     }

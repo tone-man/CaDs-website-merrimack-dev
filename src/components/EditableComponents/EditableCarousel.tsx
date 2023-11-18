@@ -1,10 +1,10 @@
-import EditableEventComponent from "./EditableEventComponent"
-import '../css/editableEvent.css'
+import EditableEventComponent from "../EditableComponents/EditableEventComponent"
+import '../../css/editableCSS/editableCarousel.css'
 import { Button, Col, Container, Row } from "react-bootstrap"
-import { get, getDatabase, ref } from "firebase/database"
-import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../utils/editingComponents'
+import {getDatabase, ref } from "firebase/database"
+import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents'
 import { useEffect, useState } from "react"
-import DeleteConfirmationModal from "./DeleteConfirmationModal"
+import DeleteConfirmationModal from "../DeleteConfirmationModal"
 
 
 export interface editableComponentProps {
@@ -53,11 +53,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
 
-        <Row>
-          <Col md={12} sm={12} xs={12} style={{ textAlign: 'center' }}>
-            <h1> Event Carousel</h1>
-          </Col>
-        </Row>
+      
         <Row>
 
           <Col md={6} sm={6} xs={6}>
@@ -81,13 +77,14 @@ function EditableCarousel(myProps: eventCarouselProps) {
               </Col>
             </Row>
           </Col>
+        
 
           {/* If the user can add to the component, structure the buttons in this way */}
           {myProps.array[0].data.type === 'event' && (
 
-            <Col md={6} sm={6} xs={6}>
+            <Col md={6} sm={6} xs={5}>
               <Row>
-                <Col md={10} sm={10} xs={8} style={{ textAlign: 'right' }} className="add-component">
+                <Col md={10} sm={6} xs={6} style={{ textAlign: 'right' }} className="add-component">
                   <Button
                     onClick={() =>
                       addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
@@ -95,23 +92,13 @@ function EditableCarousel(myProps: eventCarouselProps) {
                     </i>
                   </Button>
                 </Col>
-                <Col md={2} sm={2} xs={4} style={{ textAlign: 'right' }} className="delete-component">
+                <Col md={2} sm={6} xs={6} style={{ textAlign: 'right' }} className="delete-component">
                   <Button
                     onClick={() =>
                       setShowDeletionModal(true)}>
                     <i className="bi bi-trash">
                     </i>
                   </Button>
-                </Col>
-              </Row>
-            </Col>
-          )}
-          {/* If the user CANNOT add to the component, structure the buttons in this way */}
-          {myProps.array[0].data.type !== 'event' && (
-            <Col md={6} sm={6} xs={6}>
-              <Row>
-                <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="delete-component">
-                  <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>
                 </Col>
               </Row>
             </Col>

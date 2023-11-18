@@ -126,39 +126,51 @@
     font-size: var(--smallFont);
 }
 
-.faculty-body-container .container {
-    margin: auto;
-    justify-content: center;
-    padding-bottom: 10px;
+
+.faculty-body-container .contact-container {
+    background: var(--blue);
+    color: white;
+    border-radius: 20px;
+    width: 50%;
+    padding: 20px;
+    
 }
 
-.faculty-body-container .container .icon {
+ .icon {
     font-size: var(--smallFont);
-    justify-content: center;
-    flex-direction: column;
-   display: flex;
 }
 
-.faculty-body-container .container .contact-text {
+ .contact-text {
     font-family: var(--metropolisRegular);
     font-size: var(--smallFont); 
-    justify-content: center;
-    flex-direction: column;
-   display: flex;
+    overflow-wrap: break-word;
+}
+
+/* Styling add user button alignment upon screen resizing */
+@media screen and (max-width: 800px) {
+    .faculty-body-container .contact-container {
+       width: 100%;
+        
+    }
+    .contact-text {
+        font-size: .75rem; 
+    }
+    .icon {
+        font-size: .75rem; 
+    }
 }
 
 
-.faculty-body-container .container a .publications-text {
+ .container a .publications-text {
     font-family: var(--metropolisRegular);
     font-size: var(--smallFont); 
 }
 
-.faculty-body-container .container a  {
+.container a  {
     color: blue;
     text-decoration: inherit;
 }
-
-.faculty-body-container .accordion-header {
+.accordion-header {
     width: 100%;
     margin: auto;
     text-align: left;

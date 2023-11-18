@@ -1,4 +1,5 @@
 
+import ContactTextArea from "../components/ContactTextArea";
 import { myEventProps } from "../components/Events";
 import EventsCarousel from "../components/EventsCarousel";
 import { facultyMembers } from "../components/FacultyCarousel";
@@ -81,6 +82,7 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 
                 // Get component type
                 const type: string = component.type;
+                console.log(type, 'TYPE HERE')
 
                 // To give a specified order in the containerArr, get the components page and order and check if an array exists there.
                 //If an array exists at that specific component, that means that there is another component whose page order matches.
@@ -89,7 +91,7 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                     containerArr[component.pageOrder] = [];
                 }
 
-                // Switch case that parses through data differently based on what type of data it is
+                // Switch case that parses through data differenFtly based on what type of data it is
                 switch (type) {
                     // If the data is of type project
                     case 'project':
@@ -170,6 +172,17 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                         };
                         break;
 
+                     // If the data is of type accordion, create a FACULTY PAGE accordion object
+                     case 'contact':
+                        console.log(component.location, 'LOCATION')
+                        newObj = {
+                            email: component.email,
+                            phone: component.phone,
+                            location: component.location,
+                            type: 'contact'
+                        };
+                        break;
+
                     // ADD MORE CASES HERE IF NEED BE
 
                     default:
@@ -199,6 +212,7 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
 
     // Iterate through the data in the container Arr
     for (let i = 0; i < containerArr.length; i++) {
+        console.log(containerArr)
        
         if (containerArr[i][0]?.caption) {
              // If the element is an event
@@ -228,9 +242,20 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
         }
         
         else if (containerArr[i][0].type === 'accordion') {
+            console.log("LABEL", containerArr[i][0].label)
             // If the element is an accordion, create an accordion component
             tempArr.push(
                 <FacultyPageAccordion label={containerArr[i][0].label} content={containerArr[i][0].content} />
+            );
+        } 
+        else if (containerArr[i][0].type === 'contact') {
+            console.log("CONTACT", containerArr[i])
+            // If the element is an accordion, create an accordion component
+            tempArr.push(
+                <ContactTextArea
+                    phoneNumber={containerArr[i][0].phoneNumber}
+                    email={containerArr[i][0].email}
+                    location={containerArr[i][0].location} />
             );
         }
     }
