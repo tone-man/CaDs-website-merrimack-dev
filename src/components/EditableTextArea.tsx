@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { getDatabase, ref } from 'firebase/database';
 import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../utils/editingComponents';
+import '../css/editableTextComponent.css'
+import EditableFormComponent from './EditableFormComponent';
 
 interface editableComponentProps {
   pageOrder: number
@@ -10,7 +12,9 @@ interface editableComponentProps {
   data: unknown,
   componentKey: string,
   pathName: string,
+  type: string
 }
+
 
 /**
  * Component for displaying and editing data for a component in a draft.
@@ -37,11 +41,6 @@ function EditableTextArea(myProps: editableComponentProps) {
   }, [myProps]);
 
 
-  // Opens the deletion confirmation modal
-  function handleOpenConfirmationModal() {
-    setShowDeletionModal(true);
-  }
-
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
@@ -49,25 +48,18 @@ function EditableTextArea(myProps: editableComponentProps) {
     setShowDeletionModal(false);
   }
 
-  // Set the buttons that will be displayed for an entire carousel
+  // Render the buttons that will be displayed
   useEffect(() => {
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
-
         <Row>
-          <Col md={12} sm={12} xs={12} style={{ textAlign: 'center' }}>
-            <h1> Text Area</h1>
-          </Col>
-        </Row>
-        <Row>
-
-          <Col md={6} sm={6} xs={6}>
+          <Col md={3} sm={3} xs={3}>
             <Row>
-              <Col md={2} sm={2} xs={5} className='reorder-page-component' >
+              <Col md={4} sm={6} xs={6} className='reorder-page-component' >
                 <Button
                   disabled={(myProps.pageOrder === 1 || myProps.pageOrder === 0)}
                   onClick={() =>
-                    reorderPageComponents(true, myRef, myProps, 'text')}>
+                    reorderPageComponents(true, myRef, myProps)}>
                   <i className="bi bi-arrow-up-short">
                   </i>
                 </Button>
@@ -76,13 +68,19 @@ function EditableTextArea(myProps: editableComponentProps) {
                 <Button
                   disabled={(myProps.pageOrder === 0 || myProps.pageOrder === lastPageOrder)}
                   onClick={() =>
-                    reorderPageComponents(false, myRef, myProps, 'text')}>
+                    reorderPageComponents(false, myRef, myProps)}>
                   <i className="bi bi-arrow-down-short" />
                 </Button>
               </Col>
             </Row>
           </Col>
-          <Col md={6} sm={6} xs={6}>
+
+          <Col md={6} sm={6} xs={6} style={{ textAlign: 'center' }}>
+            {myProps.type === 'text' ? (
+              <h1 className='title'> Text Area</h1>) :
+              (<h1 className='title'> Accordion</h1>)}
+          </Col>
+          <Col md={3} sm={3} xs={3}>
             <Row>
               <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="delete-component">
                 <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>
@@ -96,24 +94,30 @@ function EditableTextArea(myProps: editableComponentProps) {
 
   return (
     <div>
-      <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.data.type} />
-      <Container>
-
-        {buttons}
-        <Row style={{ marginBottom: '10px', marginTop: '25px' }}>
-        </Row>
+      <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.type} />
+      {buttons}
+      <Container className='text-editable-container '>
         <Row>
           <Col md={12} >
-            <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control value={labelData} onChange={(e) => handleTextAreaChange(e, '/label', setLabelData, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={1} style={{ resize: 'none', border: '1px black solid' }} />
-              </Form.Group>
-            </Form>
-            <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control value={contentData} onChange={(e) => handleTextAreaChange(e, '/content', setContentData, myRef, myProps.pathName, myProps.componentKey)} as="textarea" rows={5} style={{ resize: 'none', border: '1px black solid' }} />
-              </Form.Group>
-            </Form>
+            <EditableFormComponent
+              changedValue='/label'
+              myRef={myRef}
+              value={labelData}
+              setValue={setLabelData}
+              pathName={myProps.pathName}
+              componentKey={myProps.componentKey}
+              label="Label"
+              handleTextAreaChange={handleTextAreaChange} />
+            <EditableFormComponent
+              changedValue='/content'
+              myRef={myRef}
+              value={contentData}
+              setValue={setContentData}
+              pathName={myProps.pathName}
+              componentKey={myProps.componentKey}
+              label="Content"
+              handleTextAreaChange={handleTextAreaChange} />
+
           </Col>
         </Row>
       </Container>

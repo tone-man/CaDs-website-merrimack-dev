@@ -4,3 +4,10 @@
     background-color: var(--blue);
 }
 
+/* Restyles event and event edit carousle container upon screen resizing */
+@media screen and (max-width: 800px) {
+    .save-button Button{
+        font-size: var(--extraSmallFont);
+        font-family: var(--metropolisBold);
+    }
+}

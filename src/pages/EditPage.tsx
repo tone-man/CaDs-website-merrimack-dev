@@ -6,12 +6,12 @@ import Header from '../components/Header';
 import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
 import '../css/editPage.css'
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import projectTemplate from '../utils/project.json';
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json'
 import accordionTemplate from '../utils/accordion.json'
 import EditableTextArea from '../components/EditableTextArea';
 import EditableCarousel, { editableComponentProps } from '../components/EditableCarousel';
+import EditableFacultyHeader from '../components/EditableFacultyHeader';
 
 /**
  * The EditPage component enables users to edit the components of a page they have ownership of.
@@ -27,14 +27,10 @@ const EditPage = () => {
     const [updatedComponents, setUpdatedComponents] = useState();
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
     const [snapshotTemp, setSnapshot] = useState({});
+    const [cannotSubmit, setCannotSubmit] = useState(false);
 
     const navigate = useNavigate();
     const db = getDatabase();
-
-    // FOR TESTING PURPOSES ONLY
-    useEffect(() => {
-        console.log("draft snap shot has changed", snapshotTemp)
-    }, [snapshotTemp]);
 
     /**
     * Effect hook to fetch project information from the database and update state.
@@ -42,15 +38,23 @@ const EditPage = () => {
     */
     useEffect(() => {
         // Create a reference to the database using the provided pathName
-        const projects = ref(db, pathName);
+        const componentsRef = ref(db, pathName);
 
         // Set up a listener to the database using onValue
         // The listener will update the state variable 'snapshot' with the retrieved data
-        onValue(projects, (snapshot) => {
+        onValue(componentsRef, (snapshot) => {
             // Update the state variable 'snapshot' with the data from the database
             setSnapshot(snapshot.val());
         });
     }, []);
+
+     /**
+    * Effect hook to fetch project information from the database and update state.
+    * Runs upon initial rendering of page
+    */
+     useEffect(() => {
+            console.log(cannotSubmit, ' disabled or not here')
+    }, [cannotSubmit]);
 
 
 
@@ -59,6 +63,28 @@ const EditPage = () => {
     * Runs whenever 'snapshotTemp' or values in pages change.
     */
     useEffect(() => {
+        let notvalid = 0;
+        for (const [key, value] of Object.entries(snapshotTemp)) {
+            if (value.type!=='project') {
+                for (const [newkey, newvalue] of Object.entries(value)) {
+                    console.log(newvalue);
+                    if (newvalue==='') {
+                        notvalid++;
+                        setCannotSubmit(true);
+                       break
+                    } else {
+                        if (notvalid ===0){
+                            setCannotSubmit(false)
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
         // Initialize an array to store components
         const arr = [];
         let temp = [];
@@ -68,11 +94,10 @@ const EditPage = () => {
             // Loop through each value in the database
             const events: editableComponentProps[][] = [];
             for (const [key, value] of Object.entries(snapshotTemp)) {
-                console.log(value.type, 'value.type')
                 if (key !== 'submitted') {
-                    // Push an EditableComponent with specific props for each value
 
-                    if (value.type === 'text') {
+                    // Push an EditableComponent with specific props for each value
+                    if (value.type === 'text' || value.type === 'accordion') {
                         console.log('text')
                         arr.push(
                             <EditableTextArea
@@ -82,14 +107,15 @@ const EditPage = () => {
                                 componentKey={key}
                                 data={value}
                                 pathName={pathName}
+                                type={value.type}
                             />
                         );
                     }
                     else if (value.type === 'event') {
-                        if (events[value.pageOrder] ===undefined) {
+                        if (events[value.pageOrder] === undefined) {
                             events[value.pageOrder] = []
                         }
-                          if (events[value.pageOrder]){
+                        if (events[value.pageOrder]) {
                             events[value.pageOrder].push(
                                 {
                                     pageOrder: value.pageOrder,
@@ -98,11 +124,21 @@ const EditPage = () => {
                                     componentKey: key,
                                     pathName: pathName
                                 })
-                          }
-                      
+                        }
+                    }
+                    else if (value.type ==='header'){
+                        arr.push(
+                            <EditableFacultyHeader
+                                key={key}
+                                pageOrder={value.pageOrder}
+                                nestedOrder={value.nestedOrder}
+                                componentKey={key}
+                                data={value}
+                                pathName={pathName}
+                            />
+                        );
                     }
                     else {
-                        console.log("anything else")
                         arr.push(
                             <EditableComponent
                                 key={key}
@@ -126,7 +162,6 @@ const EditPage = () => {
                     </>
                 ))
             }
-            
 
             // Sort the array based on 'pageOrder' and 'nestedOrder'
             temp = arr.sort(function (a, b) {
@@ -146,6 +181,7 @@ const EditPage = () => {
      * Marks the draft as submitted by updating the 'submitted' flag.
      */
     const handleSave = () => {
+        console.log("got in")
 
         const draft = ref(db, `drafts/Administrator/homepage/components`);
 
@@ -259,7 +295,7 @@ const EditPage = () => {
                 if (value) {
                     if (maxPageOrder <= value.pageOrder) {
                         maxPageOrder = value.pageOrder + 1;
-                    } 
+                    }
                 }
             }
             newObj.pageOrder = maxPageOrder;
@@ -301,14 +337,14 @@ const EditPage = () => {
                 <Row>
                     <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
                         <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            <Dropdown.Toggle  id="dropdown-basic">
                                 Add a Component
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
-                                <Dropdown.Item onClick={() => addComponent('textarea')}>Text Boxes with Label and Content:</Dropdown.Item>
-                                <Dropdown.Item onClick={() => addComponent('accordion')}>Accordion Text Boxes</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Box</Dropdown.Item>
                                 {pathName.includes('homepage') &&
                                     <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
                                 }
@@ -318,16 +354,18 @@ const EditPage = () => {
                     </Col>
                 </Row>
                 {updatedComponents}
+                <Container fluid style={{width: '90%'}}>
                 <Row>
-                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'right' }} className='save-button'>
+                    <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
                         {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
                         <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
                     </Col>
-                    <Col md={3} sm={3} xs={3} style={{ textAlign: 'left' }} className='save-button'>
+                    <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
                         {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                        <Button onClick={() => handleSave()}>Request Changes</Button>
+                        <Button disabled={cannotSubmit} onClick={() => handleSave()}>Request Changes</Button>
                     </Col>
                 </Row>
+                </Container>
             </Container>
         </div>
     );

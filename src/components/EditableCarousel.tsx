@@ -19,7 +19,6 @@ interface eventCarouselProps {
   array: editableComponentProps[]
   pageOrder: number,
   type: string
-  lastPageOrder: number
 }
 
 
@@ -31,10 +30,10 @@ function EditableCarousel(myProps: eventCarouselProps) {
   const [buttons, setButtons] = useState<JSX.Element | null>(null);
   const [lastPageOrder, setLastPageOrder] = useState<number | null>(null);
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-  
+
   const db = getDatabase();
   const myRef = ref(db);
-  const componentRef = ref(db, myProps.array[myProps.array.length-1].pathName)
+  const componentRef = ref(db, myProps.array[myProps.array.length - 1].pathName)
 
   // Sort through the event carousel based on nested order to maintain correct structure
   const sorted = myProps.array.sort(function (a, b) {
@@ -64,10 +63,21 @@ function EditableCarousel(myProps: eventCarouselProps) {
           <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={2} sm={2} xs={5} className='reorder-page-component' >
-                <Button disabled={(myProps.pageOrder === 1 || myProps.pageOrder === 0)} onClick={() => reorderPageComponents(true, myRef, myProps.array[myProps.array.length - 1], 'carousel')}> <i className="bi bi-arrow-up-short"></i></Button>
+                <Button
+                  disabled={(myProps.pageOrder === 1 || myProps.pageOrder === 0)}
+                  onClick={() =>
+                    reorderPageComponents(true, myRef, myProps.array[myProps.array.length - 1])}>
+                  <i className="bi bi-arrow-up-short">
+                  </i>
+                </Button>
               </Col>
               <Col md={1} sm={1} xs={1} className='reorder-page-component' >
-                <Button disabled={(myProps.pageOrder === 0 || myProps.pageOrder === lastPageOrder)} onClick={() => reorderPageComponents(false, myRef, myProps.array[myProps.array.length - 1], 'carousel')}><i className="bi bi-arrow-down-short" /></Button>
+                <Button
+                  disabled={(myProps.pageOrder === 0 || myProps.pageOrder === lastPageOrder)}
+                  onClick={() =>
+                    reorderPageComponents(false, myRef, myProps.array[myProps.array.length - 1])}>
+                  <i className="bi bi-arrow-down-short" />
+                </Button>
               </Col>
             </Row>
           </Col>
@@ -78,10 +88,20 @@ function EditableCarousel(myProps: eventCarouselProps) {
             <Col md={6} sm={6} xs={6}>
               <Row>
                 <Col md={10} sm={10} xs={8} style={{ textAlign: 'right' }} className="add-component">
-                  <Button onClick={() => addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length-1].pathName))}> <i className="bi bi-plus-lg"></i></Button>
+                  <Button
+                    onClick={() =>
+                      addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
+                    <i className="bi bi-plus-lg">
+                    </i>
+                  </Button>
                 </Col>
                 <Col md={2} sm={2} xs={4} style={{ textAlign: 'right' }} className="delete-component">
-                  <Button onClick={() => setShowDeletionModal(true)}> <i className="bi bi-trash"></i></Button>
+                  <Button
+                    onClick={() =>
+                      setShowDeletionModal(true)}>
+                    <i className="bi bi-trash">
+                    </i>
+                  </Button>
                 </Col>
               </Row>
             </Col>
@@ -102,14 +122,14 @@ function EditableCarousel(myProps: eventCarouselProps) {
   }, [lastPageOrder, myProps]);
 
   // Function to remove the carousel
-  function remove(){
+  function remove() {
     deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)
     setShowDeletionModal(false);
   }
 
   return (
-   <div>
-       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + 'event carousel'} />
+    <div>
+      <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + 'event carousel'} />
       {buttons}
       <div className="event-carousel-container">
         {

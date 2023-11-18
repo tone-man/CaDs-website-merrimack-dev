@@ -2,8 +2,8 @@
 import { myEventProps } from "../components/Events";
 import EventsCarousel from "../components/EventsCarousel";
 import { facultyMembers } from "../components/FacultyCarousel";
-import FacultyMemberAccordion from "../components/FacultyMemberAccordion";
 import FacultyMemberHeader from "../components/FacultyMemberHeader";
+import FacultyPageAccordion from "../components/FacultyPageAccordion";
 import { myProjectProps } from "../components/ProjectCard";
 import { contributerProps } from "../components/ProjectContributer";
 import ProjectList from "../components/ProjectList";
@@ -228,9 +228,9 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
         }
         
         else if (containerArr[i][0].type === 'accordion') {
-            // If the element is an accordion, create a faculty page text area component
+            // If the element is an accordion, create an accordion component
             tempArr.push(
-                <FacultyMemberAccordion accordion={containerArr[i]} />
+                <FacultyPageAccordion label={containerArr[i][0].label} content={containerArr[i][0].content} />
             );
         }
     }

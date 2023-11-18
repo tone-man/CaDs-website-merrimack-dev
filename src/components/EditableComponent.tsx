@@ -47,14 +47,14 @@ function EditableComponent(myProps: editableComponentProps) {
       // Dont allow user to delete component if it is the last event or project
       if (myProps.data.type === 'event' || myProps.data.type === 'project') {
         if (count === 1) {
-          setIsNotDeletable(true)
+          // setIsNotDeletable(true)
         }
         else {
-          setIsNotDeletable(false)
+          // setIsNotDeletable(false)
         }
       }
       // Update the state variable with the maximum nested order
-      setMaxNestedOrder(max);
+      // setMaxNestedOrder(max);
 
     });
   }, [myProps]);

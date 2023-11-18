@@ -218,42 +218,42 @@
           "type": "header"
         },
         "L": {
-          "label": "Label",
+          "label": "three",
           "content": "content",
           "nestedOrder": 0,
           "pageOrder": 3,
           "type": "text"
         },
         "J": {
-          "label": "Label",
+          "label": "two",
           "content": "content",
           "nestedOrder": 0,
           "pageOrder": 2,
           "type": "text"
         },
         "K": {
-          "label": "Label",
+          "label": "six",
           "content": "content",
           "nestedOrder": 0,
-          "pageOrder": 5,
+          "pageOrder": 6,
           "type": "text"
         },
         "R": {
-          "label": "Label",
+          "label": "four",
           "content": "content",
           "nestedOrder": 0,
           "pageOrder": 4,
           "type": "accordion"
         },
         "P": {
-          "label": "Label",
+          "label": "five",
           "content": "content",
-          "nestedOrder": 1,
-          "pageOrder": 4,
+          "nestedOrder": 0,
+          "pageOrder": 5,
           "type": "accordion"
         },
         "X": {
-          "label": "New accordion",
+          "label": "one",
           "content": "content",
           "nestedOrder": 0,
           "pageOrder": 1,
