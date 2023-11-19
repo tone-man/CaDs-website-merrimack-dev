@@ -23,6 +23,7 @@ interface formProps {
  *
 */
 function EditableFormComponent(myProps: formProps) {
+    // console.log(myProps.pathName, 'PATH NAME HERE')
     const [validated, setValidated] = useState(false);
 
     // Checks validity of the component whenever the user clicks away from the form

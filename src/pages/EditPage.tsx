@@ -13,8 +13,10 @@ import EditableFacultyHeader from '../components/EditableComponents/EditableFacu
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json'
 import accordionTemplate from '../utils/accordion.json'
+import contactTemplate from '../utils/contact.json'
 import EditableTextArea from '../components/EditableComponents/EditableTextArea';
 import EditableContact from '../components/EditableComponents/EditableContact';
+import EditableProjectList from '../components/EditableComponents/EditableProjectList';
 
 
 /**
@@ -64,7 +66,7 @@ const EditPage = () => {
         for (const [, value] of Object.entries(snapshotTemp)) {
             if (value.type !== 'project') {
                 for (const [, newvalue] of Object.entries(value)) {
-                    console.log(newvalue);
+                    // console.log(newvalue);
                     if (newvalue === '') {
                         notvalid++;
                         setCannotSubmit(true);
@@ -87,6 +89,7 @@ const EditPage = () => {
         if (snapshotTemp) {
             // Loop through each value in the database
             const events: editableComponentProps[][] = [];
+            const projects: editableComponentProps[][] = [];
             for (const [key, value] of Object.entries(snapshotTemp)) {
                 if (key !== 'submitted') {
 
@@ -111,6 +114,21 @@ const EditPage = () => {
                         }
                         if (events[value.pageOrder]) {
                             events[value.pageOrder].push(
+                                {
+                                    pageOrder: value.pageOrder,
+                                    nestedOrder: value.nestedOrder,
+                                    data: value,
+                                    componentKey: key,
+                                    pathName: pathName
+                                })
+                        }
+                    }
+                    else if (value.type === 'project') {
+                        if (projects[value.pageOrder] === undefined) {
+                            projects[value.pageOrder] = []
+                        }
+                        if (projects[value.pageOrder]) {
+                            projects[value.pageOrder].push(
                                 {
                                     pageOrder: value.pageOrder,
                                     nestedOrder: value.nestedOrder,
@@ -145,17 +163,9 @@ const EditPage = () => {
                             />
                         );
                     }
+                    
                     else {
-                        arr.push(
-                            <EditableComponent
-                                key={key}
-                                pageOrder={value.pageOrder}
-                                nestedOrder={value.nestedOrder}
-                                componentKey={key}
-                                data={value}
-                                pathName={pathName}
-                            />
-                        );
+                        console.log(" in here", value)
                     }
                 }
             }
@@ -169,6 +179,17 @@ const EditPage = () => {
                     </>
                 ))
             }
+            {
+                // Maps each of the events in the events array to a carousel item
+                projects.map((array, index) => (
+                    <>
+                        {
+                            arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} />)
+                        }
+                    </>
+                ))
+            }
+
 
             // Sort the array based on 'pageOrder' and 'nestedOrder'
             temp = arr.sort(function (a, b) {
@@ -291,6 +312,9 @@ const EditPage = () => {
         else if (componentType === 'accordion') {
             newObj = accordionTemplate;
         }
+        else if (componentType === 'contact') {
+            newObj = contactTemplate;
+        }
 
         let maxPageOrder = 0;
 
@@ -356,6 +380,7 @@ const EditPage = () => {
                                     <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
                                     <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
                                     <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('contact')}>Contact Information Template</Dropdown.Item>
                                     {pathName.includes('homepage') &&
                                         <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
                                     }

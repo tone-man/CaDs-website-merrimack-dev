@@ -1,6 +1,9 @@
 import { ChangeEvent } from 'react';
 import { Database, DatabaseReference, child, get, getDatabase, push, ref, set, update } from 'firebase/database'; // Import the appropriate type for DatabaseReference
 import EventTemplate from '../utils/events.json'
+import ProjectTemplate from '../utils/project.json'
+import ContributerTemplate from '../utils/contributer.json'
+import FacultyTemplate from '../utils/faculty.json'
 import { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
 
 // Reference: https://dev.to/tlylt/exploring-key-string-any-in-typescript-4ake
@@ -37,6 +40,7 @@ export const handleTextAreaChange = (
 ) => {
   // Extract the new data from the event
   const newData = event.target.value;
+  console.log(pathName + '/' + componentKey + beingEdited, 'LOOKY HERE')
 
   // Update the state data, or data being shown in the editable component, using the setData function
   setData(newData);
@@ -70,18 +74,80 @@ export async function addNestedComponent(value: editableComponentProps, db: Data
     if (component.data.type === 'event') {
       newObj = EventTemplate;
     }
+    else if (component.data.type === 'project') {
+      newObj = ProjectTemplate;
+    }
 
     if (newObj !== undefined) {
       // Assign page order and nested order for the new component
       newObj.pageOrder = component.pageOrder;
-      newObj.nestedOrder = nestedOrder + 1; // Increment the nested order
-
+      if (nestedOrder === 0){
+        newObj.nestedOrder = nestedOrder; // Increment the nested order
+      }
+      else {
+        newObj.nestedOrder = nestedOrder + 1; // Increment the nested order
+      }
+      
       // Generate a new key for the new component
       const newPostKey = push(child(ref(db), component.pathName)).key;
 
       // Prepare updates for the database
       const updates: UpdatesType = {};
       updates[`${component.pathName}/${newPostKey}`] = newObj;
+
+      // Perform the update in the database
+      return update(ref(db), updates);
+    } else {
+      throw new Error('Error in adding nested component');
+    }
+  } catch (error) {
+    console.error('Error adding nested component:', error);
+    throw error; // Rethrow the error to handle it at a higher level if needed
+  }
+}
+
+
+/**
+ * Adds a new component to the database based on the specified component type.
+ * @param value - Object containing properties for the new component.
+ * @param db - Reference to the Firebase Realtime Database.
+ * @param dbRef - Reference to the specific path in the database.
+ */
+export async function addProjectComponent(value: editableComponentProps, db: Database, dbRef: DatabaseReference, isContributer: boolean) {
+  const pathEnding = isContributer==true ?'/contributers/': '/facultyMembers'
+
+  try {
+    let newObj = undefined;
+    const component = value as valueType;
+
+    const contributerRef = ref((db), `${component.pathName}/${component.componentKey}${pathEnding}`)
+
+    // Asynchronously fetch the max nested order for a specific component
+    const nestedOrder = await getMaxNestedOrder(contributerRef, component.pageOrder, undefined);
+
+    // Check the type of component to be added and set the json template to specified type of component
+    if (isContributer === true) {
+      newObj = ContributerTemplate;
+    }
+    else if (isContributer ==false){
+      newObj = FacultyTemplate;
+    }
+
+    if (newObj !== undefined) {
+      // Assign page order and nested order for the new component
+      if (nestedOrder === 0){
+        newObj.nestedOrder = nestedOrder; 
+      }
+      else {
+        newObj.nestedOrder = nestedOrder + 1; // Increment the nested order
+      }
+
+      // Generate a new key for the new component
+      const newPostKey = push(child(ref(db), `${component.pathName}/${component.componentKey}${pathEnding}`)).key;
+
+      // Prepare updates for the database
+      const updates: UpdatesType = {};
+      updates[`${component.pathName}/${component.componentKey}${pathEnding}${newPostKey}`] = newObj;
 
       // Perform the update in the database
       return update(ref(db), updates);
@@ -310,17 +376,22 @@ export async function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder
   }
 }
 
-export async function getMaxNestedOrder(dbRef: DatabaseReference, pageOrder, setLastNestedOrder) {
+export async function getMaxNestedOrder(dbRef: DatabaseReference, pageOrder: number, setLastNestedOrder) {
   try {
+    console.log("before")
     const snapshot = await get(dbRef); // Assuming "get" is the method you use to fetch data
+    console.log("after")
     let max = 0;
-    for (const [, value] of Object.entries(snapshot.val())) {
-      if (value.pageOrder === pageOrder) {
-        if (value.nestedOrder > max) {
-          max = value.nestedOrder;
+    if (snapshot.val()) {
+      for (const [, value] of Object.entries(snapshot.val())) {
+        if (value.pageOrder === pageOrder) {
+          if (value.nestedOrder > max) {
+            max = value.nestedOrder;
+          }
         }
       }
     }
+
     if (setLastNestedOrder) {
       setLastNestedOrder(max);
     }
@@ -330,3 +401,6 @@ export async function getMaxNestedOrder(dbRef: DatabaseReference, pageOrder, set
     throw error; // Rethrow the error to handle it at a higher level if needed
   }
 }
+
+
+

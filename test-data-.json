@@ -15,30 +15,42 @@
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro"
+              "name": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "bree": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "melissa": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "description": "Did musical lyrics get less sophisticated over time? This project used computational tools to analyze the lyrical sophistication of the Billboard top 100 from 1959 – 2016.",
           "facultyMembers": {
             "Antonio": {
               "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro"
+              "facultyName": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "Brianna": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "Melissa": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "imageAlt": "imageAlt",
@@ -53,30 +65,42 @@
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro"
+              "name": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "bree": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "melissa": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "description": "ROVE is a photo location sharing and tagging app for iOS devices that allows users to upload geotagged photos, tag them with keywords and search for prime photography spots.",
           "facultyMembers": {
             "Antonio": {
               "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro"
+              "facultyName": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "Brianna": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "Melissa": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "imageAlt": "imageAlt",
@@ -91,30 +115,42 @@
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro"
+              "name": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "bree": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "melissa": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "description": "This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.",
           "facultyMembers": {
             "Antonio": {
               "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro"
+              "facultyName": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "Brianna": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "Melissa": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "imageAlt": "imageAlt",
@@ -169,30 +205,42 @@
           "contributers": {
             "antonio": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro"
+              "name": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "bree": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "melissa": {
               "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire"
+              "name": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "description": "Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons",
           "facultyMembers": {
             "Antonio": {
               "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro"
+              "facultyName": "Antonio M Craveiro",
+              "nestedOrder": 0,
+              "pageOrder": 0
             },
             "Brianna": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 1,
+              "pageOrder": 0
             },
             "Melissa": {
               "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire"
+              "facultyName": "Dr. Melissa St. Hilaire",
+              "nestedOrder": 2,
+              "pageOrder": 0
             }
           },
           "imageAlt": "imageAlt",
