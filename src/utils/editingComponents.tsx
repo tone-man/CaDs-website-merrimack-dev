@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { Database, DatabaseReference, child, get, getDatabase, push, ref, set, update } from 'firebase/database'; // Import the appropriate type for DatabaseReference
 import EventTemplate from '../utils/events.json'
-import { editableComponentProps } from '../components/EditableCarousel';
+import { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
 
 // Reference: https://dev.to/tlylt/exploring-key-string-any-in-typescript-4ake
 type UpdatesType = { [key: string]: any };
@@ -290,7 +290,6 @@ export function deletePageComponents(componentArray, pageComponent: editableComp
     const valueRef = ref(db, deletePath);
     set(valueRef, null);
   }
-
 }
 
 

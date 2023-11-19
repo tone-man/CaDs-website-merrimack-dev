@@ -1,6 +1,6 @@
 
 import { Container, Row, Col } from 'react-bootstrap'
-import '../css/facultyMemberPage.css'
+import '../../css/facultyMemberPage.css'
 
 interface contactProps {
     phoneNumber: string,

@@ -1,5 +1,5 @@
 
-import ContactTextArea from "../components/ContactTextArea";
+import ContactTextArea from "../components/FacultyPage/ContactTextArea";
 import { myEventProps } from "../components/Events";
 import EventsCarousel from "../components/EventsCarousel";
 import { facultyMembers } from "../components/FacultyCarousel";
@@ -242,7 +242,6 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
         }
         
         else if (containerArr[i][0].type === 'accordion') {
-            console.log("LABEL", containerArr[i][0].label)
             // If the element is an accordion, create an accordion component
             tempArr.push(
                 <FacultyPageAccordion label={containerArr[i][0].label} content={containerArr[i][0].content} />

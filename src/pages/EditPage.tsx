@@ -6,7 +6,6 @@ import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
 
 import '../css/editableCSS/editPage.css'
 
-
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import EditableComponent from '../components/EditableComponents/EditableComponent';
 import EditableCarousel, { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
@@ -15,6 +14,7 @@ import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json'
 import accordionTemplate from '../utils/accordion.json'
 import EditableTextArea from '../components/EditableComponents/EditableTextArea';
+import EditableContact from '../components/EditableComponents/EditableContact';
 
 
 /**
@@ -59,6 +59,7 @@ const EditPage = () => {
     * Runs whenever 'snapshotTemp' or values in pages change.
     */
     useEffect(() => {
+        // Check if the user can request to change a user's information or not
         let notvalid = 0;
         for (const [, value] of Object.entries(snapshotTemp)) {
             if (value.type !== 'project') {
@@ -76,9 +77,6 @@ const EditPage = () => {
                 }
             }
         }
-
-
-
 
 
         // Initialize an array to store components
@@ -134,6 +132,19 @@ const EditPage = () => {
                             />
                         );
                     }
+                    else if (value.type === 'contact') {
+                        arr.push(
+                            <EditableContact
+                                key={key}
+                                pageOrder={value.pageOrder}
+                                nestedOrder={value.nestedOrder}
+                                componentKey={key}
+                                data={value}
+                                pathName={pathName}
+                                type ="Contact Page"
+                            />
+                        );
+                    }
                     else {
                         arr.push(
                             <EditableComponent
@@ -177,7 +188,6 @@ const EditPage = () => {
      * Marks the draft as submitted by updating the 'submitted' flag.
      */
     const handleSave = () => {
-        console.log("got in")
 
         const draft = ref(db, `drafts/Administrator/homepage/components`);
 
