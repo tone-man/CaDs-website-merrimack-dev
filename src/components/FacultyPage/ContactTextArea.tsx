@@ -20,26 +20,26 @@ function ContactTextArea(myProps: contactProps) {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={4} sm={3} xs={3} style={{textAlign: 'right'}}>
+                        <Col md={3} sm={3} xs={3} style={{textAlign: 'right'}}>
                             <i className="bi bi-telephone-fill icon"></i>
                         </Col>
-                        <Col md={6} sm={9} xs={8} style={{  textAlign: 'left' }} >
+                        <Col md={9} sm={9} xs={8} style={{  textAlign: 'left' }} >
                             <h1 className="contact-text"> {myProps.email}</h1>
                         </Col>
                     </Row>
                     <Row>
-                    <Col md={4} sm={3} xs={3} style={{textAlign: 'right'}}>
+                    <Col md={3} sm={3} xs={3} style={{textAlign: 'right'}}>
                             <i className="bi bi-envelope-fill icon"></i>
                         </Col>
-                        <Col md={6} sm={9} xs={8} style={{  textAlign: 'left' }} >
+                        <Col md={9} sm={9} xs={8} style={{  textAlign: 'left' }} >
                             <h1 className="contact-text" > {myProps.email}</h1>
                         </Col>
                     </Row>
                     <Row >
-                    <Col md={4} sm={3} xs={3} style={{textAlign: 'right'}}>
+                    <Col md={3} sm={3} xs={3} style={{textAlign: 'right'}}>
                             <i className="bi bi-building-fill icon"></i>
                         </Col>
-                        <Col md={6} sm={9} xs={8} style={{  textAlign: 'left' }} >
+                        <Col md={9} sm={9} xs={8} style={{  textAlign: 'left' }} >
                             <h1 className="contact-text"> {myProps.location}</h1>
                         </Col>
                     </Row>

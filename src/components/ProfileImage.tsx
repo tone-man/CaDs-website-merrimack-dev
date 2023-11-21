@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Image } from 'react-bootstrap';
-import merrimackLogo from '../imgs/logo.webp';
+import merrimackLogo from '../imgs/melissa.webp';
 
 // Interface for the profile image props
 //TODO : Actually load in image correctly after we can fetch images successfully from the database

@@ -1,47 +1,60 @@
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import { getDatabase, ref } from 'firebase/database';
-import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents';
+
 import '../../css/editableCSS/editableTextComponent.css';
+
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import EditableFormComponent from './EditableFormComponent';
+import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents';
+
+export interface editableContactProps {
+  phone: string,
+  email: string,
+  location: string
+}
 
 interface editableComponentProps {
   pageOrder: number
   nestedOrder: number
-  data: unknown,
+  data: editableContactProps,
   componentKey: string,
   pathName: string,
   type: string
 }
 
-
 /**
- * Component for displaying and editing data for a component in a draft.
+ * Component for displaying and editing a contact form
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableContact(myProps: editableComponentProps) {
-  const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [location, setLocation] = useState('');
-  const [lastPageOrder, setLastPageOrder] = useState(null);
-  const [buttons, setButtons] = useState<JSX.Element | null>(null);
 
   const db = getDatabase();
   const myRef = ref(db)
   const componentRef = ref(db, myProps.pathName)
 
+  // Create useStates for all data that we will be displaying
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [location, setLocation] = useState('');
 
-  // Set the JSON value that will be displayed to the text area whenever myProps change
+  const [buttons, setButtons] = useState<JSX.Element | null>(null);
+  const [lastPageOrder, setLastPageOrder] = useState(null);
+  const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+
+
+  // Initialize email, phone, and location usestates using data from props in the useEffect (once on initial render).
   useEffect(() => {
     setEmail(myProps.data.email);
     setPhoneNumber(myProps.data.phone);
     setLocation(myProps.data.location);
+  }, []);
 
+
+  // Set last page order using getMaxPageOrder on componentRef and myProps changes.
+  useEffect(() => {
     getMaxPageOrder(componentRef, setLastPageOrder)
-  }, [myProps]);
-
+  }, [componentRef, myProps]);
 
 
   // Handles confirmed deletion and hiding the modal
@@ -87,7 +100,7 @@ function EditableContact(myProps: editableComponentProps) {
         </Row>
       </Container>
     )
-  }, [lastPageOrder, myProps]);
+  }, [lastPageOrder, myProps, myRef]);
 
   return (
     <div>
@@ -96,9 +109,9 @@ function EditableContact(myProps: editableComponentProps) {
       <Container className='background-container'>
         <Container className='text-editable-container'>
           <h1 className='name' style={{ color: 'white' }}>
-         
-              <h1 className='title'> Contact Information</h1>
-              </h1>
+
+            <h1 className='title'> Contact Information</h1>
+          </h1>
           <Container className='styling'>
             <Row>
               <Col md={12} >
@@ -124,7 +137,7 @@ function EditableContact(myProps: editableComponentProps) {
                   handleTextAreaChange={handleTextAreaChange}
                   rows={1}
                   delete={false} />
-                     <EditableFormComponent
+                <EditableFormComponent
                   changedValue='/location'
                   myRef={myRef}
                   value={location}

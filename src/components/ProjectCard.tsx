@@ -77,6 +77,7 @@ function projectCardContent(
 //Interface for the the project component props on the home page. 
 //TODO: Add image to interface after images are able to be fetched successfully from database
 export interface myProjectProps {
+    type: string,
     title: string,
     description: string,
     projectLink: string,

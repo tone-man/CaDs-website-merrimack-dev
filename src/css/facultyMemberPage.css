@@ -128,6 +128,8 @@
 
 
 .faculty-body-container .contact-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
     background: var(--blue);
     color: white;
     border-radius: 20px;
@@ -170,7 +172,7 @@
     color: blue;
     text-decoration: inherit;
 }
-.stop .accordion-header {
+.accordion-header {
     width: 100%;
     margin: auto;
     text-align: left;

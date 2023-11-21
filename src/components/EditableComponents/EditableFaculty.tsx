@@ -1,32 +1,47 @@
-import { getDatabase, ref} from 'firebase/database';
-import  { useEffect, useState } from 'react'
-import EditableFormComponent from './EditableFormComponent';
-import { deleteNestedComponent, handleTextAreaChange } from '../../utils/editingComponents';
-import '../../css/editableCSS/editableProject.css'
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import { getDatabase, ref } from 'firebase/database';
+import { useEffect, useState } from 'react'
 
+import '../../css/editableCSS/editableProject.css'
+
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import EditableFormComponent from './EditableFormComponent';
+import { deleteNestedComponent, getMaxProjectOrder, handleTextAreaChange } from '../../utils/editingComponents';
+
+interface editableFacultyProps {
+    facultyName: string,
+    facultyImg: string
+}
 interface editableContributerProps {
     pageOrder: number
     nestedOrder: number
-    data: unknown,
+    data: editableFacultyProps,
     componentKey: string,
     pathName: string,
 }
 
 function EditableFaculty(myProps: editableContributerProps) {
-    const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-
     const db = getDatabase();
     const myRef = ref(db)
 
-    // Set the JSON value that will be displayed to the text area whenever myProps change
+    // Create useStates for all data that we will be displaying
+    const [name, setName] = useState('');
+    const [image, setImage] = useState('');
+
+    const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+    const [lastNestedOrder, setLastNestedOrder] = useState();
+
+    // Initialize image and name usestates using data from props in the useEffect (once on initial render).
     useEffect(() => {
         setImage(myProps.data.facultyImg);
         setName(myProps.data.facultyName);
-    }, [myProps]);
+    }, []);
 
+    // Get max nested order of the faculty carousel
+    useEffect(() => {
+        getMaxProjectOrder(myProps,db, setLastNestedOrder) 
+    }, [db, lastNestedOrder, myProps]);
+
+    
     // Handles confirmed deletion and hiding the modal
     function remove() {
         deleteNestedComponent(myProps, db)
@@ -54,7 +69,7 @@ function EditableFaculty(myProps: editableContributerProps) {
                 label="Faculty Name"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
-                delete={true}
+                delete={lastNestedOrder !==0}
                 handleOpenConfirmationModal={handleOpenConfirmationModal} />
             <EditableFormComponent
                 changedValue='/facultyImg'

@@ -1,32 +1,52 @@
-import { getDatabase, ref, remove } from 'firebase/database';
-import React, { useEffect, useState } from 'react'
-import Container from 'react-bootstrap/esm/Container';
+import { getDatabase, ref } from 'firebase/database';
+import { useEffect, useState } from 'react'
+
+import '../../css/editableCSS/editableProject.css'
+
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import EditableFormComponent from './EditableFormComponent';
 import { deleteNestedComponent, handleTextAreaChange } from '../../utils/editingComponents';
-import '../../css/editableCSS/editableProject.css'
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import { getMaxProjectOrder } from '../../utils/editingComponents';
 
 interface editableContributerProps {
+    name: string,
+    description: string
+}
+interface editableComponentProps {
     pageOrder: number
     nestedOrder: number
-    data: unknown,
+    data: editableContributerProps,
     componentKey: string,
     pathName: string,
 }
 
-function EditableContributers(myProps: editableContributerProps) {
-    const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
+/**
+ * Component for displaying and editing a contributer
+ * Allows edit, deletion, and addition privileges to users.
+ */
+function EditableContributers(myProps: editableComponentProps) {
 
     const db = getDatabase();
     const myRef = ref(db)
 
-    // Set the JSON value that will be displayed to the text area whenever myProps change
+    // Create useStates for all data that we will be displaying
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+
+    const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
+    const [lastNestedOrder, setLastNestedOrder] = useState()
+
+    // Initialize name and description usestates using data from props in the useEffect (once on initial render).
     useEffect(() => {
         setDescription(myProps.data.description);
         setName(myProps.data.name);
-    }, [myProps]);
+    }, []);
+
+    // Get max nested ordering for the contributers list
+    useEffect(() => {
+        getMaxProjectOrder(myProps,db, setLastNestedOrder) 
+    }, [db, lastNestedOrder, myProps]);
+
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
@@ -44,7 +64,7 @@ function EditableContributers(myProps: editableContributerProps) {
                 show={showDeleteModal}
                 onHide={() => setShowDeletionModal(false)}
                 onConfirm={remove}
-                name={'this contributer'} />
+                name={'contributer ' + myProps.data.name} />
             <EditableFormComponent
                 changedValue='/name'
                 myRef={myRef}
@@ -55,7 +75,7 @@ function EditableContributers(myProps: editableContributerProps) {
                 label="Name"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
-                delete={true}
+                delete={lastNestedOrder !==0}
                 handleOpenConfirmationModal={handleOpenConfirmationModal} />
             <EditableFormComponent
                 changedValue='/description'

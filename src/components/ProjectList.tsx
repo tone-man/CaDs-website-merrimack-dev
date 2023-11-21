@@ -30,6 +30,7 @@ function ProjectList(myProps: projectProps) {
                         // Maps each of the project elements in the projects array to a project card
                         myProps.projectArray.map((projects, index) => (
                             <ProjectCard
+                                type={projects.type}
                                 key={index}
                                 imageDescription={projects.imageDescription}
                                 projectLink={projects.projectLink}

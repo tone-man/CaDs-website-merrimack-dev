@@ -1,52 +1,34 @@
 import { getDatabase, ref } from "firebase/database"
 import { Container, Col, Row, Button, Accordion } from "react-bootstrap"
-import DeleteConfirmationModal from "../DeleteConfirmationModal"
 import { useState, useEffect } from "react"
+
 import '../../css/editableCSS/editableEvent.css'
-import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder, addNestedComponent, addProjectComponent } from '../../utils/editingComponents';
+import '../../css/editableCSS/editableProject.css'
+
+import EditableFaculty from "./EditableFaculty"
 import EditableFormComponent from "./EditableFormComponent"
 import EditableContributers from "./EditableContributers"
-import '../../css/editableCSS/editableProject.css'
-import EditableFaculty from "./EditableFaculty"
-
-
-export interface EventData {
-    description: string;
-    title: string;
-    location: string;
-    date: string;
-    link: string;
-    imgSource: string;
-    imageAlt: string;
-    caption: string;
-}
-
+import DeleteConfirmationModal from "../DeleteConfirmationModal"
+import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder, addProjectComponent } from '../../utils/editingComponents';
 
 export interface editableComponentProps {
-    pageOrder: number
-    nestedOrder: number
-    data: unknown,
-    componentKey: string,
-    pathName: string,
-}
-
-export interface editableProps {
     pageOrder: number
     nestedOrder: number
     data: any,
     componentKey: string,
     pathName: string,
 }
+
 /**
- * Component for displaying and editing event data for a component in a draft.
+ * Component for displaying and editing project data
  * Allows edit and deletion privileges to users.
  */
-function EditableProject(myProps: editableProps) {
+function EditableProject(myProps: editableComponentProps) {
 
     const db = getDatabase();
     const myRef = ref(db);
 
-    // Get all data that we will be displaying
+    // Create useStates for all data that we will be displaying
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');
 
@@ -55,31 +37,27 @@ function EditableProject(myProps: editableProps) {
     const [imageAlt, setImageAlt] = useState('');
     const [imageDescription, setImageDescription] = useState('');
 
-    const [lastNestedOrder, setLastNestedOrder] = useState<number | null>(null);
     const [buttons, setButtons] = useState<JSX.Element | null>(null);
+    const [lastNestedOrder, setLastNestedOrder] = useState<number | null>(null);
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
 
-
-    // Set the JSON value that will be displayed to the text area whenever myProps change
+    // Initialize usestates using data from props in the useEffect (once on initial render).
     useEffect(() => {
-
-
-
         setDescription(myProps.data.description);
         setTitle(myProps.data.title);
-
         setLink(myProps.data.projectLink);
         setImageSource(myProps.data.imgSource);
         setImageAlt(myProps.data.imageAlt)
         setImageDescription(myProps.data.imageDescription)
+    }, []);
 
-        // Create a reference to the database using the provided pathName
+    // Get max nested order for specific component
+    useEffect(() => {
         const componentRef = ref(db, myProps.pathName);
-
         // Get the max nested order for the specific component
         getMaxNestedOrder(componentRef, myProps.pageOrder, setLastNestedOrder)
+    }, [db, myProps]);
 
-    }, [myProps]);
 
     // Set the buttons that will be rendered
     useEffect(() => {
@@ -112,7 +90,7 @@ function EditableProject(myProps: editableProps) {
                 </Row>
             </>
         )
-    }, [lastNestedOrder, myProps]);
+    }, [lastNestedOrder, myProps, myRef]);
 
 
     // Opens the deletion confirmation modal
@@ -125,6 +103,37 @@ function EditableProject(myProps: editableProps) {
         deleteNestedComponent(myProps, db)
         setShowDeletionModal(false);
     }
+    let contributorsArray: { key: string; contributor: any }[] = [];
+    let facultyArray: { key: string; facultyMember: any }[] = [];
+
+    //Sorts the contributers by nested order
+    // Reference: https://stackoverflow.com/questions/38824349/how-to-convert-an-object-to-an-array-of-key-value-pairs-in-javascript
+    if (myProps.data.contributers && Object.keys(myProps.data.contributers).length !== 0) {
+
+        contributorsArray = Object.keys(myProps.data.contributers).map((key) => ({
+            key,
+            contributor: myProps.data.contributers[key],
+        }));
+
+        contributorsArray = contributorsArray.sort((a, b) => {
+            return a.contributor.nestedOrder - b.contributor.nestedOrder;
+        });
+
+    }
+
+    //Sorts the contributers by nested order
+    // Reference: https://stackoverflow.com/questions/38824349/how-to-convert-an-object-to-an-array-of-key-value-pairs-in-javascript
+    if (myProps.data.facultyMembers && Object.keys(myProps.data.facultyMembers).length !== 0) {
+        facultyArray = Object.keys(myProps.data.facultyMembers).map((key) => ({
+            key,
+            facultyMember: myProps.data.facultyMembers[key],
+        }));
+
+        facultyArray = facultyArray.sort((a, b) => {
+            return a.facultyMember.nestedOrder - b.facultyMember.nestedOrder;
+        });
+    }
+
 
 
     return (
@@ -136,7 +145,6 @@ function EditableProject(myProps: editableProps) {
                 onConfirm={remove}
                 name={'this ' + myProps.data.type} />
             <Container className="individual-event">
-
                 {buttons}
                 <Container className="event-styling" >
                     <Row>
@@ -150,9 +158,8 @@ function EditableProject(myProps: editableProps) {
                             label="Title"
                             handleTextAreaChange={handleTextAreaChange}
                             rows={1}
-                            delete={true}
+                            delete={lastNestedOrder !== 0}
                             handleOpenConfirmationModal={handleOpenConfirmationModal} />
-
                         <EditableFormComponent
                             changedValue='/description'
                             myRef={myRef}
@@ -216,6 +223,7 @@ function EditableProject(myProps: editableProps) {
                             rows={1} />
                     </Row>
 
+                    {/*Go through and map each contributer object to an editable contributer component  */}
                     <Accordion className="contributer-accordion" >
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>
@@ -228,33 +236,31 @@ function EditableProject(myProps: editableProps) {
                                             <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                                                 <Button
                                                     onClick={() =>
-                                                        addProjectComponent(myProps, db, ref(db, myProps.pathName), true)}>
+                                                        addProjectComponent(myProps, db, true)}>
                                                     <i className="bi bi-plus-lg" />
                                                 </Button>
                                             </Col>
 
                                         </Row>
                                     </Col>
-                                    {(myProps.data && typeof myProps.data.contributers === 'object') && (
-                                        Object.keys(myProps.data.contributers).map((key) => {
-                                            const contributor = myProps.data.contributers[key];
-                                            return (
-                                                <EditableContributers
-                                                    data={contributor}
-                                                    pageOrder={contributor.pageOrder}
-                                                    nestedOrder={contributor.nestedOrder}
-                                                    componentKey={key}
-                                                    pathName={myProps.pathName + "/" + myProps.componentKey + '/contributers'}
-                                                    key={key}
-                                                />
-                                            );
-                                        })
+                                    {contributorsArray.length > 0 && (
+                                        contributorsArray.map(({ key, contributor }) => (
+                                            <EditableContributers
+                                                data={contributor}
+                                                pageOrder={contributor.pageOrder}
+                                                nestedOrder={contributor.nestedOrder}
+                                                componentKey={key}
+                                                pathName={`${myProps.pathName}/${myProps.componentKey}/contributers`}
+                                                key={key}
+                                            />
+                                        ))
                                     )}
                                 </Accordion.Body>
                             </div>
                         </Accordion.Item>
                     </Accordion>
 
+                    {/*Go through and map each faculty object to an editable facultty component  */}
                     <Accordion className="contributer-accordion" >
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>
@@ -267,27 +273,24 @@ function EditableProject(myProps: editableProps) {
                                             <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                                                 <Button
                                                     onClick={() =>
-                                                        addProjectComponent(myProps, db, ref(db, myProps.pathName), true)}>
+                                                        addProjectComponent(myProps, db, false)}>
                                                     <i className="bi bi-plus-lg" />
                                                 </Button>
                                             </Col>
 
                                         </Row>
                                     </Col>
-                                    {(myProps.data && typeof myProps.data.facultyMembers === 'object') && (
-                                        Object.keys(myProps.data.facultyMembers).map((key) => {
-                                            const faculty = myProps.data.facultyMembers[key];
-                                            return (
-                                                <EditableFaculty
-                                                    data={faculty}
-                                                    pageOrder={faculty.pageOrder}
-                                                    nestedOrder={faculty.nestedOrder}
-                                                    componentKey={key}
-                                                    pathName={myProps.pathName + "/" + myProps.componentKey + '/facultyMembers'}
-                                                    key={key}
-                                                />
-                                            );
-                                        })
+                                    {facultyArray.length > 0 && (
+                                        facultyArray.map(({ key, facultyMember }) => (
+                                            <EditableFaculty
+                                                data={facultyMember}
+                                                pageOrder={facultyMember.pageOrder}
+                                                nestedOrder={facultyMember.nestedOrder}
+                                                componentKey={key}
+                                                pathName={`${myProps.pathName}/${myProps.componentKey}/facultyMembers`}
+                                                key={key}
+                                            />
+                                        ))
                                     )}
                                 </Accordion.Body>
                             </div>

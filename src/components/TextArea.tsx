@@ -10,7 +10,7 @@ function TextArea(myProps: textProps) {
     return (
         <div>
             <Container className="faculty-body-container">
-                <Container fluid>
+                <Container>
                     <Row>
                         <Col>
                             <h1 className="label"><span> {myProps.label}</span></h1>

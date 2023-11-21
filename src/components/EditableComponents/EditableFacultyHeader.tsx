@@ -1,40 +1,48 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { getDatabase, ref } from 'firebase/database';
-import '../../css/editableCSS/editableTextComponent.css'
-import { handleTextAreaChange } from '../../utils/editingComponents';
-import EditableFormComponent from './EditableFormComponent';
 
+import '../../css/editableCSS/editableTextComponent.css'
+
+import EditableFormComponent from './EditableFormComponent';
+import { handleTextAreaChange } from '../../utils/editingComponents';
+
+export interface editableHeaderProps {
+    departmentName: string,
+    facultyName: string,
+    facultyTitle: string,
+    imgSource: string
+}
 interface editableComponentProps {
     pageOrder: number
     nestedOrder: number
-    data: unknown,
+    data: editableHeaderProps,
     componentKey: string,
     pathName: string,
 }
 
-
 /**
- * Component for displaying and editing data for a component in a draft.
- * Allows edit, deletion, and addition privileges to users.
+ * Component for displaying and editing data for faculty header
+ * Allows edit privileges to users.
  */
 function EditableFacultyHeader(myProps: editableComponentProps) {
+    const db = getDatabase();
+    const myRef = ref(db)
+
+    // Create useStates for all data that we will be displaying
     const [departmentName, setDepartmentName] = useState('');
     const [facultyName, setFacultyName] = useState('');
     const [facultyTitle, setFacultyTitle] = useState('');
     const [imgSource, setImageSource] = useState('');
 
-    const db = getDatabase();
-    const myRef = ref(db)
-
-    // Set the JSON value that will be displayed to the text area whenever myProps change
-    useEffect(() => {
+  // Initialize content and label usestates using data from props in the useEffect (once on initial render).
+  useEffect(() => {
         setDepartmentName(myProps.data.departmentName);
         setFacultyName(myProps.data.facultyName);
         setFacultyTitle(myProps.data.facultyTitle);
         setImageSource(myProps.data.imgSource);
-    }, [myProps]);
-
+    }, []);
+    
 
     return (
         <div>
@@ -43,7 +51,6 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                     <h1 className='title' style={{ color: 'white' }}> Your Information</h1>
 
                     <Container className='styling'>
-
                         <EditableFormComponent
                             changedValue='/facultyName'
                             myRef={myRef}

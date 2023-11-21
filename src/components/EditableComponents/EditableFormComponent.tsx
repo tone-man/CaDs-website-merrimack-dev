@@ -1,33 +1,31 @@
 import { DatabaseReference } from 'firebase/database'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
+
 import '../../css/editableCSS/editableForm.css'
-
-
 interface formProps {
     label: string
     value: string,
-    handleTextAreaChange: any,
     changedValue: string
-    setValue: Dispatch<SetStateAction<string>>,
     myRef: DatabaseReference,
     pathName: string,
     componentKey: string
     rows: number,
     delete: boolean
-    handleOpenConfirmationModal?: any
+    handleTextAreaChange: any,
+    setValue: Dispatch<SetStateAction<string>>,
+    handleOpenConfirmationModal?: () => void; // Optional function prop
 }
 /**
- * EditableFormComponent is a functional component that renders a form with a textarea,
- * allowing users to input and edit text based on the provided props.
- *
+ * EditableFormComponent is a component that renders a form with a textarea that users can edit,
+ * Reduces repetitive code
 */
 function EditableFormComponent(myProps: formProps) {
-    // console.log(myProps.pathName, 'PATH NAME HERE')
     const [validated, setValidated] = useState(false);
 
     // Checks validity of the component whenever the user clicks away from the form
-    const handleValidity = (event) => {
+    // Reference: https://stackoverflow.com/questions/61395873/how-to-use-useeffect-to-update-and-render-the-component
+    const handleValidity = (event: React.FocusEvent<HTMLInputElement>) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -40,6 +38,7 @@ function EditableFormComponent(myProps: formProps) {
         <div className='editableForm'>
             <Form noValidate validated={validated}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    {/* If you CAN delete this component, add a deletion button*/}
                     {myProps.delete === true && (
                         <Row>
                             <Col md={6} sm={6} xs={6}>
@@ -56,6 +55,7 @@ function EditableFormComponent(myProps: formProps) {
                             </Col>
                         </Row>
                     )}
+                    {/* If you cant delete this component, make a normal label */}
                     {myProps.delete === false && (
                         <Form.Label className="form-label" id="customFile" aria-required>
                             <h1 className='metropolisRegular label'>{myProps.label}</h1>

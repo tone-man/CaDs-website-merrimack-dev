@@ -1,17 +1,18 @@
-
-import ContactTextArea from "../components/FacultyPage/ContactTextArea";
-import { myEventProps } from "../components/Events";
-import EventsCarousel from "../components/EventsCarousel";
-import { facultyMembers } from "../components/FacultyCarousel";
-import FacultyMemberHeader from "../components/FacultyMemberHeader";
-import FacultyPageAccordion from "../components/FacultyPageAccordion";
-import { myProjectProps } from "../components/ProjectCard";
-import { contributerProps } from "../components/ProjectContributer";
 import ProjectList from "../components/ProjectList";
 import TextArea from "../components/TextArea";
+import ContactTextArea from "../components/FacultyPage/ContactTextArea";
+import EventsCarousel from "../components/EventsCarousel";
+import FacultyMemberHeader from "../components/FacultyMemberHeader";
+import FacultyPageAccordion from "../components/FacultyPageAccordion";
+
+import { myEventProps } from "../components/Events";
+import { facultyMembers } from "../components/FacultyCarousel";
+import { myProjectProps } from "../components/ProjectCard";
+import { contributerProps } from "../components/ProjectContributer";
 
 // Function that creates and returns a project object
 export function makeProjectObject(
+    type: string,
     title: string,
     description: string,
     imageDescription: string,
@@ -23,6 +24,7 @@ export function makeProjectObject(
     databaseKey: string
 ): myProjectProps {
     return {
+        type: type,
         title: title,
         description: description,
         imageDescription: imageDescription,
@@ -37,6 +39,7 @@ export function makeProjectObject(
 
 // Function that creates and returns an event object
 export function makeEventObject(
+    type: string,
     imgSource: string,
     imageAlt: string,
     caption: string,
@@ -48,6 +51,7 @@ export function makeEventObject(
     databaseKey: string
 ): myEventProps {
     return {
+        type: type,
         imgSource: imgSource,
         imageAlt: imageAlt,
         caption: caption,
@@ -61,14 +65,14 @@ export function makeEventObject(
 }
 
 /**
- * Parses through snapshot data and converts them into components based on the specified type that will be rendered on page.
+ * Reference: https://stackoverflow.com/questions/71324797/react-typescript-what-does-dispatchsetstateactionboolean-stand-for
+ * Parses through snapshot data and converts each value into components that will be rendered on the page based on the specified type.
  * @param snapShot - The snapshot data to be parsed.
  * @param setRenderedComponents - The state setter for the rendered components.
  */
 export function parseDataToComponents(snapShot: unknown, setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[]>>) {
     const containerArr: unknown[][] = [];
 
-    // Check if snapshot data is present
     if (snapShot) {
 
         // Iterate through the entries in the snapshot
@@ -82,18 +86,18 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 
                 // Get component type
                 const type: string = component.type;
-                console.log(type, 'TYPE HERE')
 
-                // To give a specified order in the containerArr, get the components page and order and check if an array exists there.
+                // To ensure components render in specified order, the order must be set in the containerArr.
+                // To do this, get the page order of a component and check if the container arr at that index has an array there already.
                 //If an array exists at that specific component, that means that there is another component whose page order matches.
                 //Otherwise, a new array needs to be created
                 if (containerArr[component.pageOrder] === undefined) {
                     containerArr[component.pageOrder] = [];
                 }
 
-                // Switch case that parses through data differenFtly based on what type of data it is
+                // Switch case that parses through data differently based on what type of component it is
                 switch (type) {
-                    // If the data is of type project
+                    // If the component is of type project
                     case 'project':
                         // Parse faculty members
                         for (const facultyKey in component.facultyMembers) {
@@ -101,8 +105,16 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             facultyArray.push({
                                 facultyName: facultyMember.facultyName,
                                 facultyImg: facultyMember.facultyImg,
+                                nestedOrder: facultyMember.nestedOrder,
+                                pageOrder: facultyMember.pageOrder
                             });
                         }
+                        // Sort the array based on 'pageOrder' and 'nestedOrder'
+                        facultyArray.sort(function (a, b) {
+                            return (
+                                a.nestedOrder - b.nestedOrder
+                            );
+                        });
 
                         // Parse contributers 
                         for (const contributerKey in component.contributers) {
@@ -110,11 +122,20 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             contributersArr.push({
                                 name: contributer.name,
                                 description: contributer.description,
+                                nestedOrder: contributer.nestedOrder
                             });
                         }
 
+                         // Sort the array based on 'pageOrder' and 'nestedOrder'
+                         contributersArr.sort(function (a, b) {
+                            return (
+                                a.nestedOrder - b.nestedOrder
+                            );
+                        });
+
                         // Create a project object
                         newObj = makeProjectObject(
+                            'project',
                             component.title,
                             component.description,
                             component.imageDescription,
@@ -130,6 +151,7 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                     // If the data is of type project, Create a project object
                     case 'event':
                         newObj = makeEventObject(
+                            'event',
                             component.imgSource,
                             component.imageAlt,
                             component.caption,
@@ -172,8 +194,8 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                         };
                         break;
 
-                     // If the data is of type accordion, create a FACULTY PAGE accordion object
-                     case 'contact':
+                    // If the data is of type accordion, create a FACULTY PAGE accordion object
+                    case 'contact':
                         console.log(component.location, 'LOCATION')
                         newObj = {
                             email: component.email,
@@ -182,11 +204,8 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             type: 'contact'
                         };
                         break;
-
                     // ADD MORE CASES HERE IF NEED BE
-
                     default:
-
                         break;
                 }
 
@@ -209,56 +228,58 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 export function createRenderArray(containerArr: unknown[][], setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[]>>) {
     // Initialize a temp array to store the rendered components
     const tempArr: JSX.Element[] = [];
+    let component;
 
     // Iterate through the data in the container Arr
     for (let i = 0; i < containerArr.length; i++) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const firstItem = containerArr[i][0] as Record<string, any>;
         console.log(containerArr)
-       
-        if (containerArr[i][0]?.caption) {
-             // If the element is an event
-            tempArr.push(<EventsCarousel eventsArray={containerArr[i]} />);
-           
-        } else if (containerArr[i][0]?.projectLink) {
-             // If the element is a project
-            tempArr.push(<ProjectList projectArray={containerArr[i]} />);
-        }
-        
-        else if (containerArr[i][0].type === 'header') {
-            // If the element is a faculty page header, create a header component
-            tempArr.push(
-                <FacultyMemberHeader
-                    departmentName={containerArr[i][0].departmentName}
-                    facultyName="'faculty name"
-                    facultyTitle="facultty title"
-                    profileImg="image" />
-            );
-        }
-       
-        else if (containerArr[i][0].type === 'text') {
-             // If the element is a text area, create a faculty page text area component
-            tempArr.push(
-                <TextArea label={containerArr[i][0].label} content={containerArr[i][0].content} />
-            );
-        }
-        
-        else if (containerArr[i][0].type === 'accordion') {
-            // If the element is an accordion, create an accordion component
-            tempArr.push(
-                <FacultyPageAccordion label={containerArr[i][0].label} content={containerArr[i][0].content} />
-            );
-        } 
-        else if (containerArr[i][0].type === 'contact') {
-            console.log("CONTACT", containerArr[i])
-            // If the element is an accordion, create an accordion component
-            tempArr.push(
-                <ContactTextArea
-                    phoneNumber={containerArr[i][0].phoneNumber}
-                    email={containerArr[i][0].email}
-                    location={containerArr[i][0].location} />
-            );
+
+        switch (firstItem?.type) {
+            case 'event':
+                component = containerArr[i] as myEventProps[]
+                tempArr.push(<EventsCarousel eventsArray={component} />);
+                break;
+            case 'project':
+                component = containerArr[i] as myProjectProps[]
+                tempArr.push(<ProjectList projectArray={component} />);
+                break;
+            case 'header':
+                tempArr.push(
+                    <FacultyMemberHeader
+                        departmentName={firstItem.departmentName}
+                        facultyName={firstItem.facultyName}
+                        facultyTitle={firstItem.facultyTitle}
+                        profileImg="image"
+                    />
+                );
+                break;
+            case 'text':
+                tempArr.push(
+                    <TextArea label={firstItem.label} content={firstItem.content} />
+                );
+                break;
+            case 'accordion':
+                tempArr.push(
+                    <FacultyPageAccordion label={firstItem.label} content={firstItem.content} />
+                );
+                break;
+            case 'contact':
+                tempArr.push(
+                    <ContactTextArea
+                        phoneNumber={firstItem.phoneNumber}
+                        email={firstItem.email}
+                        location={firstItem.location}
+                    />
+                );
+                break;
+            default:
+                // Handle unexpected types 
+                console.log(`Unexpected type encountered: ${firstItem?.type}`);
+                break;
         }
     }
-
     // Set the rendered components to the temporary array
     setRenderedComponents(tempArr);
 }

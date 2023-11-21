@@ -1,22 +1,24 @@
 import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "react-bootstrap";
-import '../css/facultyDirectory.css';
-import Header from "./Header";
 import { useRef, useState } from "react";
+
+import '../css/facultyDirectory.css';
+
 import FacultyMemberDirectory, {facultyMember}from "./FacultyMemberDirectory";
+import Header from "./Header";
 
 
 //Create an array of faculty member objects
 const facultyArray: facultyMember[] = [
-    { name: 'John Doe', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
-    { name: 'Dr. Christopher Stuetzle', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
-    { name: 'Dr. Zachary Kissel', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/faculty'}
+    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
+    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
+    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
+    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
+    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
+    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
+    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
+    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
+    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
+    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
 ];
 
 // Faculty Directory components

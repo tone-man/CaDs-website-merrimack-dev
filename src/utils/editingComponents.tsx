@@ -13,14 +13,14 @@ type UpdatesType = { [key: string]: any };
 interface valueType {
   pageOrder: number
   nestedOrder: number
-  data: unknown,
+  data: any,
   componentKey: string,
-  pathName: string,
+  pathName: string
 }
 
 
 /**
- * Handles the change event of any editable component on the editable component being changed.
+ * Handles the change event of any editable component
  * Updates state data and the corresponding data in the database.
  * 
  * @param event - The event triggered by the textarea change.
@@ -36,16 +36,9 @@ export const handleTextAreaChange = (
   setData: React.Dispatch<React.SetStateAction<string>>,
   dbRef: DatabaseReference,
   pathName: string,
-  componentKey: string
-) => {
-  // Extract the new data from the event
+  componentKey: string) => {
+
   const newData = event.target.value;
-  console.log(pathName + '/' + componentKey + beingEdited, 'LOOKY HERE')
-
-  // Update the state data, or data being shown in the editable component, using the setData function
-  setData(newData);
-
-  // Create an object to store the updates for the database
   const updates: UpdatesType = {};
   updates[pathName + '/' + componentKey + beingEdited] = newData;
 
@@ -54,6 +47,9 @@ export const handleTextAreaChange = (
     .catch((error) => {
       console.error('Error updating nested orders:', error);
     });
+
+  //Set the data shown in the text area to the newData
+  setData(newData);
 };
 
 /**
@@ -61,8 +57,9 @@ export const handleTextAreaChange = (
  * @param value - Object containing properties for the new component.
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific path in the database.
+ *  * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
  */
-export async function addNestedComponent(value: editableComponentProps, db: Database, dbRef: DatabaseReference) {
+export async function addNestedComponent(value: valueType, db: Database, dbRef: DatabaseReference) {
   try {
     let newObj = undefined;
     const component = value as valueType;
@@ -81,17 +78,13 @@ export async function addNestedComponent(value: editableComponentProps, db: Data
     if (newObj !== undefined) {
       // Assign page order and nested order for the new component
       newObj.pageOrder = component.pageOrder;
-      if (nestedOrder === 0){
-        newObj.nestedOrder = nestedOrder; // Increment the nested order
+      if (nestedOrder) {
+        newObj.nestedOrder = nestedOrder;
       }
-      else {
-        newObj.nestedOrder = nestedOrder + 1; // Increment the nested order
-      }
-      
+
       // Generate a new key for the new component
       const newPostKey = push(child(ref(db), component.pathName)).key;
 
-      // Prepare updates for the database
       const updates: UpdatesType = {};
       updates[`${component.pathName}/${newPostKey}`] = newObj;
 
@@ -102,24 +95,21 @@ export async function addNestedComponent(value: editableComponentProps, db: Data
     }
   } catch (error) {
     console.error('Error adding nested component:', error);
-    throw error; // Rethrow the error to handle it at a higher level if needed
+    throw error;
   }
 }
 
-
 /**
- * Adds a new component to the database based on the specified component type.
+ * Adds a new nested Project component to the database based on the specified component type.
  * @param value - Object containing properties for the new component.
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific path in the database.
  */
-export async function addProjectComponent(value: editableComponentProps, db: Database, dbRef: DatabaseReference, isContributer: boolean) {
-  const pathEnding = isContributer==true ?'/contributers/': '/facultyMembers'
-
+export async function addProjectComponent(value: editableComponentProps, db: Database, isContributer: boolean) {
   try {
+    const pathEnding = isContributer == true ? '/contributers/' : '/facultyMembers/'
     let newObj = undefined;
     const component = value as valueType;
-
     const contributerRef = ref((db), `${component.pathName}/${component.componentKey}${pathEnding}`)
 
     // Asynchronously fetch the max nested order for a specific component
@@ -129,23 +119,19 @@ export async function addProjectComponent(value: editableComponentProps, db: Dat
     if (isContributer === true) {
       newObj = ContributerTemplate;
     }
-    else if (isContributer ==false){
+    else if (isContributer == false) {
       newObj = FacultyTemplate;
     }
 
     if (newObj !== undefined) {
       // Assign page order and nested order for the new component
-      if (nestedOrder === 0){
-        newObj.nestedOrder = nestedOrder; 
-      }
-      else {
-        newObj.nestedOrder = nestedOrder + 1; // Increment the nested order
+      if (nestedOrder) {
+        newObj.nestedOrder = nestedOrder;
       }
 
       // Generate a new key for the new component
       const newPostKey = push(child(ref(db), `${component.pathName}/${component.componentKey}${pathEnding}`)).key;
 
-      // Prepare updates for the database
       const updates: UpdatesType = {};
       updates[`${component.pathName}/${component.componentKey}${pathEnding}${newPostKey}`] = newObj;
 
@@ -156,7 +142,7 @@ export async function addProjectComponent(value: editableComponentProps, db: Dat
     }
   } catch (error) {
     console.error('Error adding nested component:', error);
-    throw error; // Rethrow the error to handle it at a higher level if needed
+    throw error;
   }
 }
 
@@ -168,7 +154,7 @@ export async function addProjectComponent(value: editableComponentProps, db: Dat
  * @param component - The component to be reordered.
  */
 export function reorderNestedComponents(isMoveUp: boolean, dbRef: DatabaseReference, component: editableComponentProps) {
-  console.log('reordering nested components');
+  console.log('Reordering nested components');
 
   // Fetch the existing data to perform reordering
   get(child(dbRef, component.pathName)).then((snapshot) => {
@@ -181,7 +167,6 @@ export function reorderNestedComponents(isMoveUp: boolean, dbRef: DatabaseRefere
 
         // Check if the current nested component is different from the one being reordered
         if (key !== component.componentKey) {
-          // Check if the two components are the same page order
           const isSamePageOrder = nestedValue.pageOrder === component.pageOrder;
 
           // Conditions to swap positions between adjacent nested components
@@ -216,12 +201,11 @@ export function reorderNestedComponents(isMoveUp: boolean, dbRef: DatabaseRefere
  * @param isMoveUp - A boolean indicating whether to move the component up.
  * @param dbRef - Reference to the database.
  * @param component - The component to be reordered.
- * @param type - Optional string indicating the type of component.
  */
 export async function reorderPageComponents(
   isMoveUp: boolean,
   dbRef: DatabaseReference,
-  component: any, // Update the type as per your requirement
+  component: any,
 ) {
 
   try {
@@ -234,13 +218,16 @@ export async function reorderPageComponents(
 
         const isSamePageOrder = newValue.pageOrder === component.pageOrder;
 
+        // If it is the same page order, decrement/increment the pageOrder based on whether we want to move up or down
         if (isSamePageOrder) {
           if (isMoveUp) {
             updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder - 1;
           } else {
             updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder + 1;
           }
-        } else {
+        }
+        // If it is not the same page order, check if we want to switch that page orders position with our current component
+        else {
           if (isMoveUp) {
             if (newValue.pageOrder + 1 === component.pageOrder) {
               updates[`${component.pathName}/${key}/pageOrder`] = newValue.pageOrder + 1;
@@ -256,7 +243,7 @@ export async function reorderPageComponents(
     }
   } catch (error) {
     console.error(error);
-    throw error; // Re-throw the error to handle it at a higher level if needed
+    throw error;
   }
 }
 
@@ -266,15 +253,14 @@ export async function reorderPageComponents(
 * @param component - The component to be deleted.
 * @param db - Database reference.
 */
-export async function deleteNestedComponent(component: editableComponentProps, db: Database) {
-  console.log("deleted nested component");
+export async function deleteNestedComponent(component: any, db: Database) {
+  console.log("Delete nested component");
 
   // Delete the component from the database
   const deletePath = `${component.pathName}/${component.componentKey}`;
   const valueRef = ref(db, deletePath);
   await set(valueRef, null);
 
-  // Reference to the main database
   const dbRef = ref(getDatabase());
   let count = 0;
   const updates: UpdatesType = {};
@@ -299,11 +285,11 @@ export async function deleteNestedComponent(component: editableComponentProps, d
       }
     }
 
-    // Perform the updates for nested components
     await update(dbRef, updates);
+
     // Check if there are no more components in the same group
-    if (count === 0) {
-      // If there are no more components in the group, go through and delete everything in the group and reorder accordingly
+    if (count === 0 && component.type !== 'project') {
+      // If there are no more components in the group, go through and delete the parent group and reorder accordingly
       await deletePageComponents(undefined, component, db, dbRef);
     }
   } catch (error) {
@@ -319,8 +305,8 @@ export async function deleteNestedComponent(component: editableComponentProps, d
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific database node.
  */
-export function deletePageComponents(componentArray, pageComponent: editableComponentProps, db: Database, dbRef: DatabaseReference) {
-  console.log("DELETE PAGE ORDERING")
+export function deletePageComponents(componentArray: any, pageComponent: any, db: Database, dbRef: DatabaseReference) {
+  console.log("Delete page component")
 
   // Reorder page components
   get(child(dbRef, pageComponent.pathName)).then((snapshot) => {
@@ -328,9 +314,10 @@ export function deletePageComponents(componentArray, pageComponent: editableComp
       const updates: UpdatesType = {};
       // Iterate through existing components to reorder based on the specified page component
       for (const [key, value] of Object.entries(snapshot.val())) {
-        if (value.pageOrder > pageComponent.pageOrder) {
+        const component = value as valueType;
+        if (component.pageOrder > pageComponent.pageOrder) {
           // Update pageOrder for components with order greater than the deleted component's order
-          updates[pageComponent.pathName + '/' + key + '/pageOrder'] = value.pageOrder - 1;
+          updates[pageComponent.pathName + '/' + key + '/pageOrder'] = component.pageOrder - 1;
         }
         update(dbRef, updates);
       }
@@ -339,12 +326,11 @@ export function deletePageComponents(componentArray, pageComponent: editableComp
     console.error(error);
   });
 
-  // Delete every single component in a page ordering
-  //  (i.e). Events in an event carousel, accordions in the accordion array
+  // Delete every single component with given page order
+  //  (i.e). All Events in an event carousel
   if (componentArray !== undefined) {
     for (let i = 0; i < componentArray.array.length; i++) {
       const deletePath = componentArray.array[i].pathName + "/" + componentArray.array[i].componentKey + '/';
-      console.log(deletePath, 'DELETE PATH')
       const valueRef = ref(db, deletePath);
       set(valueRef, null);
     }
@@ -352,20 +338,26 @@ export function deletePageComponents(componentArray, pageComponent: editableComp
     // (i.e). A text area component
   } else {
     const deletePath = pageComponent.pathName + "/" + pageComponent.componentKey + '/';
-    console.log(deletePath, 'DELETE PATH')
     const valueRef = ref(db, deletePath);
     set(valueRef, null);
   }
 }
 
-
-export async function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder) {
+/**
+ * Gets the maximum page order from the database.
+ * Optionally updates the last page order using use state if provided.
+ * @param dbRef The reference to the database.
+ * @param setLastPageOrder A function to set the last page order if provided.
+ * @returns Max page order.
+ */
+export async function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder: any) {
   try {
     const snapshot = await get(dbRef); // Assuming "get" is the method you use to fetch data
     let max = 0;
     for (const [, value] of Object.entries(snapshot.val())) {
-      if (value.pageOrder > max) {
-        max = value.pageOrder;
+      const component = value as valueType;
+      if (component.pageOrder > max) {
+        max = component.pageOrder;
       }
     }
     setLastPageOrder(max);
@@ -376,31 +368,67 @@ export async function getMaxPageOrder(dbRef: DatabaseReference, setLastPageOrder
   }
 }
 
-export async function getMaxNestedOrder(dbRef: DatabaseReference, pageOrder: number, setLastNestedOrder) {
+/**
+ * Gets the maximum nested order for a given pageOrder from the database.
+ * Optionally updates the last nested order use State if provided.
+ * @param dbRef The reference to the database.
+ * @param pageOrder The page order we are looking to add a nested component to
+ * @param setLastNestedOrder A use state function
+ * @returns Max nested order
+ */
+export async function getMaxNestedOrder(dbRef: DatabaseReference, pageOrder: number, setLastNestedOrder: any) {
   try {
-    console.log("before")
-    const snapshot = await get(dbRef); // Assuming "get" is the method you use to fetch data
-    console.log("after")
-    let max = 0;
+    const snapshot = await get(dbRef);
     if (snapshot.val()) {
+      let max = 0;
+      // Iterate through each component in the snapshot
       for (const [, value] of Object.entries(snapshot.val())) {
-        if (value.pageOrder === pageOrder) {
-          if (value.nestedOrder > max) {
-            max = value.nestedOrder;
+        const component = value as valueType;
+        if (component.pageOrder === pageOrder) {
+          if (component.nestedOrder >= max) {
+            max = component.nestedOrder + 1;
           }
         }
       }
+      if (setLastNestedOrder) {
+        setLastNestedOrder(max - 1);
+      }
+      return max;
     }
-
-    if (setLastNestedOrder) {
-      setLastNestedOrder(max);
-    }
-    return max;
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error; // Rethrow the error to handle it at a higher level if needed
+    throw error;
   }
 }
 
-
-
+/**
+ * Gets the maximum nested order for either a contributer or faculty component in a project list
+ * @param component The component whose nested order we want to know
+ * @param setLastNestedOrder A use state function
+ * @returns Max nested order
+ */
+export async function getMaxProjectOrder(component: any, db: Database, setLastNestedOrder: any) {
+  try {
+    const myRef = ref((db), `${component.pathName}/`)
+    const snapshot = await get(myRef);
+    if (snapshot.val()) {
+      let max = 0;
+      // Iterate through each component in the snapshot
+      for (const [, value] of Object.entries(snapshot.val())) {
+        const component = value as valueType;
+        if (component.pageOrder === 0) {
+          if (component.nestedOrder >= max) {
+            max = component.nestedOrder + 1;
+          }
+        }
+      }
+      if (setLastNestedOrder) {
+        setLastNestedOrder(max - 1);
+      }
+      return max;
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}

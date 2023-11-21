@@ -1,29 +1,28 @@
-import EditableEventComponent from "../EditableComponents/EditableEventComponent"
-import '../../css/editableCSS/editableCarousel.css'
 import { Button, Col, Container, Row } from "react-bootstrap"
-import {getDatabase, ref } from "firebase/database"
-import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents'
+import { getDatabase, ref } from "firebase/database"
 import { useEffect, useState } from "react"
-import DeleteConfirmationModal from "../DeleteConfirmationModal"
 
+import '../../css/editableCSS/editableCarousel.css'
+
+import DeleteConfirmationModal from "../DeleteConfirmationModal"
+import EditableEventComponent, { editableEventProps } from "../EditableComponents/EditableEventComponent"
+import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents'
 
 export interface editableComponentProps {
   pageOrder: number
   nestedOrder: number
-  data: unknown,
+  data: editableEventProps,
   componentKey: string,
   pathName: string,
 }
-
 interface eventCarouselProps {
   array: editableComponentProps[]
   pageOrder: number,
   type: string
 }
 
-
 /**
- * Component for displaying and editing data for a component in a draft.
+ * Component for creating an editable carousel which will allow users to edit events in the carousel
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableCarousel(myProps: eventCarouselProps) {
@@ -42,20 +41,17 @@ function EditableCarousel(myProps: eventCarouselProps) {
     );
   });
 
-  // Get the max page order right away
+  // Get the max page order for the page
   useEffect(() => {
     getMaxPageOrder(componentRef, setLastPageOrder)
-  }, [myProps]);
+  }, [componentRef, myProps]);
 
 
-  // Set the buttons that will be displayed for an entire carousel
+  // Set the buttons that will be displayed for the entire editable carousel
   useEffect(() => {
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
-
-      
         <Row>
-
           <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={2} sm={2} xs={5} className='reorder-page-component' >
@@ -77,36 +73,32 @@ function EditableCarousel(myProps: eventCarouselProps) {
               </Col>
             </Row>
           </Col>
-        
 
-          {/* If the user can add to the component, structure the buttons in this way */}
-          {myProps.array[0].data.type === 'event' && (
-
-            <Col md={6} sm={6} xs={5}>
-              <Row>
-                <Col md={10} sm={6} xs={6} style={{ textAlign: 'right' }} className="add-component">
-                  <Button
-                    onClick={() =>
-                      addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
-                    <i className="bi bi-plus-lg">
-                    </i>
-                  </Button>
-                </Col>
-                <Col md={2} sm={6} xs={6} style={{ textAlign: 'right' }} className="delete-component">
-                  <Button
-                    onClick={() =>
-                      setShowDeletionModal(true)}>
-                    <i className="bi bi-trash">
-                    </i>
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          )}
+          {/* Add nested component button and delete event carousel button */}
+          <Col md={6} sm={6} xs={5}>
+            <Row>
+              <Col md={10} sm={6} xs={6} style={{ textAlign: 'right' }} className="add-component">
+                <Button
+                  onClick={() =>
+                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
+                  <i className="bi bi-plus-lg">
+                  </i>
+                </Button>
+              </Col>
+              <Col md={2} sm={6} xs={6} style={{ textAlign: 'right' }} className="delete-component">
+                <Button
+                  onClick={() =>
+                    setShowDeletionModal(true)}>
+                  <i className="bi bi-trash">
+                  </i>
+                </Button>
+              </Col>
+            </Row>
+          </Col>
         </Row>
       </Container>
     )
-  }, [lastPageOrder, myProps]);
+  }, [db, lastPageOrder, myProps, myRef]);
 
   // Function to remove the carousel
   function remove() {
@@ -120,7 +112,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
       {buttons}
       <div className="event-carousel-container">
         {
-          // Maps each of the editable events in the events array to an editable events item
+          // Maps each of the events in the events array to an editable events component
           sorted.map((element) => (
             <>
               <EditableEventComponent

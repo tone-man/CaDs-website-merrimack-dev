@@ -256,9 +256,9 @@
     "faculty": {
       "components": {
         "header": {
-          "facultyTitle": "President of School",
-          "facultyName": "Melissa St. Hilaire",
-          "departmentName": "CADS",
+          "facultyTitle": "Assistant Professor of Data Science",
+          "facultyName": "DR. MELISSA ST. HILAIRE",
+          "departmentName": "Computer and Data Science Department",
           "imgSource": "src/imgs/projectpic.webp",
           "imageAlt": "imageAlt",
           "nestedOrder": 0,
@@ -266,53 +266,53 @@
           "type": "header"
         },
         "L": {
-          "label": "three",
-          "content": "content",
-          "nestedOrder": 0,
-          "pageOrder": 3,
-          "type": "text"
-        },
-        "J": {
-          "label": "two",
-          "content": "content",
+          "label": "Research",
+          "content": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards. .",
           "nestedOrder": 0,
           "pageOrder": 2,
           "type": "text"
         },
-        "K": {
-          "label": "six",
-          "content": "content",
+        "J": {
+          "label": "Recent Publications",
+          "content":  "Publications",
           "nestedOrder": 0,
-          "pageOrder": 6,
-          "type": "text"
+          "pageOrder": 3,
+          "type": "accordion"
+        },
+        "K": {
+          "label": "Education",
+          "content": "Education",
+          "nestedOrder": 0,
+          "pageOrder": 4,
+          "type": "accordion"
         },
         "R": {
           "label": "four",
           "content": "content",
           "nestedOrder": 0,
-          "pageOrder": 4,
+          "pageOrder": 5,
           "type": "accordion"
         },
         "P": {
           "label": "five",
           "content": "content",
           "nestedOrder": 0,
-          "pageOrder": 5,
+          "pageOrder": 6,
           "type": "accordion"
         },
         "X": {
           "label": "one",
           "content": "content",
           "nestedOrder": 0,
-          "pageOrder": 1,
+          "pageOrder": 7,
           "type": "accordion"
         },
         "B": {
-          "phone": "978-702-7677",
-          "email": "vanheckeb@merrimack",
-          "location": "155 pilgrim rd",
+          "phone": "978-837-5892",
+          "email": "sthilairem@merrimack.edu",
+          "location": "Eng Inno Ctr 510 Turnpike 202T",
           "nestedOrder": 0,
-          "pageOrder": 7,
+          "pageOrder": 1,
           "type": "contact"
         }
       }

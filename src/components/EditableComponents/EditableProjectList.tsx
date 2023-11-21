@@ -1,12 +1,11 @@
-import '../../css/editableCSS/editableCarousel.css'
-import { Button, Col, Container, Row } from "react-bootstrap"
-import {getDatabase, ref } from "firebase/database"
-import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents'
-import { useEffect, useState } from "react"
-import DeleteConfirmationModal from "../DeleteConfirmationModal"
-import EditableProject from "./EditableProject"
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { getDatabase, ref } from 'firebase/database';
+import { useEffect, useState } from 'react';
 
+import '../../css/editableCSS/editableCarousel.css';
 
+import EditableProject from './EditableProject';
+import { addNestedComponent, reorderPageComponents, getMaxPageOrder } from '../../utils/editingComponents';
 export interface editableComponentProps {
   pageOrder: number
   nestedOrder: number
@@ -21,34 +20,24 @@ interface eventCarouselProps {
   type: string
 }
 
-
 /**
- * Component for displaying and editing data for a component in a draft.
+ * Component that holds the editable project components
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableProjectList(myProps: eventCarouselProps) {
-  const [buttons, setButtons] = useState<JSX.Element | null>(null);
-  const [lastPageOrder, setLastPageOrder] = useState<number | null>(null);
-  const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-
   const db = getDatabase();
   const myRef = ref(db);
   const componentRef = ref(db, myProps.array[myProps.array.length - 1].pathName)
 
-  // Sort through the event carousel based on nested order to maintain correct structure
-  const sorted = myProps.array.sort(function (a, b) {
-    return (
-      a.nestedOrder - b.nestedOrder
-    );
-  });
+  const [buttons, setButtons] = useState<JSX.Element | null>(null);
+  const [lastPageOrder, setLastPageOrder] = useState<number | null>(null);
 
-  // Get the max page order right away
+  // Get the max page order for the page
   useEffect(() => {
     getMaxPageOrder(componentRef, setLastPageOrder)
-  }, [myProps]);
+  }, [componentRef, myProps]);
 
-
-  // Set the buttons that will be displayed for an entire carousel
+  // Set the buttons that will be displayed for the project list
   useEffect(() => {
     setButtons(
       <Container style={{ width: '95%' }} className="buttons-container">
@@ -75,43 +64,38 @@ function EditableProjectList(myProps: eventCarouselProps) {
               </Col>
             </Row>
           </Col>
-        
 
-          {/* If the user can add to the component, structure the buttons in this way */}
-          {myProps.array[0].data.type === 'project' && (
-
-            <Col md={6} sm={6} xs={5}>
-              <Row>
-                <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
-                  <Button
-                    onClick={() =>
-                      addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
-                    <i className="bi bi-plus-lg">
-                    </i>
-                  </Button>
-                </Col>
-                
-              </Row>
-            </Col>
-          )}
+          {/*Add project to project list button */}
+          <Col md={6} sm={6} xs={5}>
+            <Row>
+              <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
+                <Button
+                  onClick={() =>
+                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
+                  <i className="bi bi-plus-lg">
+                  </i>
+                </Button>
+              </Col>
+            </Row>
+          </Col>
         </Row>
       </Container>
     )
-  }, [lastPageOrder, myProps]);
+  }, [db, lastPageOrder, myProps, myRef]);
 
-  // Function to remove the carousel
-  function remove() {
-    deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)
-    setShowDeletionModal(false);
-  }
+  // Sort the projects based on nested order to maintain correct structure
+  const sorted = myProps.array.sort(function (a, b) {
+    return (
+      a.nestedOrder - b.nestedOrder
+    );
+  });
 
   return (
     <div>
-      <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + 'event carousel'} />
       {buttons}
       <div className="event-carousel-container">
         {
-          // Maps each of the editable events in the events array to an editable events item
+          // Maps each of the projects in the project array to an editable project component
           sorted.map((element) => (
             <>
               <EditableProject

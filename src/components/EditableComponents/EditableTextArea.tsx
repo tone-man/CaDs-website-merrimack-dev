@@ -1,46 +1,52 @@
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import { getDatabase, ref } from 'firebase/database';
-import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents';
-import '../../css/editableCSS/editableTextComponent.css';
-import EditableFormComponent from './EditableFormComponent';
 
+import '../../css/editableCSS/editableTextComponent.css';
+
+import EditableFormComponent from './EditableFormComponent';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents';
+
+export interface editableTextProps {
+  content: string;
+  label: string;
+}
 interface editableComponentProps {
   pageOrder: number
   nestedOrder: number
-  data: unknown,
+  data: editableTextProps,
   componentKey: string,
   pathName: string,
   type: string
 }
 
-
 /**
- * Component for displaying and editing data for a component in a draft.
+ * Component for displaying and editing data in either an accordion or a text area.
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableTextArea(myProps: editableComponentProps) {
+  const db = getDatabase();
+  const myRef = ref(db)
+  const componentRef = ref(db, myProps.pathName)
+
+  // Create useStates for all data that we will be displaying
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
   const [contentData, setContentData] = useState('');
   const [labelData, setLabelData] = useState('');
   const [lastPageOrder, setLastPageOrder] = useState(null);
   const [buttons, setButtons] = useState<JSX.Element | null>(null);
 
-  const db = getDatabase();
-  const myRef = ref(db)
-  const componentRef = ref(db, myProps.pathName)
-
-
-  // Set the JSON value that will be displayed to the text area whenever myProps change
+  // Initialize content and label usestates using data from props in the useEffect (once on initial render).
   useEffect(() => {
     setContentData(myProps.data.content);
     setLabelData(myProps.data.label);
+  }, []);
 
+  // Set last page order using getMaxPageOrder function call
+  useEffect(() => {
     getMaxPageOrder(componentRef, setLastPageOrder)
-  }, [myProps]);
-
-
+  }, [componentRef, myProps]);
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
@@ -85,7 +91,7 @@ function EditableTextArea(myProps: editableComponentProps) {
         </Row>
       </Container>
     )
-  }, [lastPageOrder, myProps]);
+  }, [lastPageOrder, myProps, myRef]);
 
   return (
     <div>
