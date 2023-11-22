@@ -1,0 +1,18 @@
+.save-button Button{
+    font-size: var(--smallFont);
+    font-family: var(--metropolisBold);
+    background-color: var(--blue);
+    margin-bottom: 25px;
+    margin-top: 50px;
+}
+
+
+
+
+/* Restyles event and event edit carousle container upon screen resizing */
+@media screen and (max-width: 800px) {
+    .save-button Button{
+        font-size: var(--extraSmallFont);
+    }
+}
+

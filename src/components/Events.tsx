@@ -4,6 +4,7 @@ import '../css/events.css';
 import pic from '../imgs/footer-stadium.webp';
 
 export interface myEventProps {
+    type: string,
     imgSource: string,
     imageAlt: string,
     caption: string,

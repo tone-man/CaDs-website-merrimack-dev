@@ -1,13 +1,37 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, set, push, child, update } from 'firebase/database';
+import { getDatabase, ref, onValue, set, push, child, update, get } from 'firebase/database';
 import { useLocation, useNavigate } from 'react-router-dom';
-import EditableComponent from '../components/EditableComponent';
-import Header from '../components/Header';
 import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
-import '../css/editPage.css'
+
+import '../css/editableCSS/editPage.css';
+
+import Header from '../components/Header';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import projectTemplate from '../utils/project.json';
+import EditableCarousel, { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
+import EditableFacultyHeader, { editableHeaderProps } from '../components/EditableComponents/EditableFacultyHeader';
+import EditableTextArea, { editableTextProps } from '../components/EditableComponents/EditableTextArea';
+import EditableContact, { editableContactProps } from '../components/EditableComponents/EditableContact';
+import EditableProjectList from '../components/EditableComponents/EditableProjectList';
+import { editableEventProps } from '../components/EditableComponents/EditableEventComponent';
+
 import eventTemplate from '../utils/events.json';
+import textAreaTemplate from '../utils/textarea.json';
+import accordionTemplate from '../utils/accordion.json';
+import contactTemplate from '../utils/contact.json';
+
+
+// Define an interface for the structure of the nested components
+interface valueType {
+    pageOrder: number
+    nestedOrder: number
+    data: unknown,
+    componentKey: string,
+    pathName: string,
+    type: string
+}
+
+type UpdatesType = { [key: string]: any };
+
 
 /**
  * The EditPage component enables users to edit the components of a page they have ownership of.
@@ -20,75 +44,202 @@ const EditPage = () => {
     const location = useLocation();
     const { pathName } = location.state as { pathName: string };
 
-    const [updatedComponents, setUpdatedComponents] = useState();
+    const [updatedComponents, setUpdatedComponents] = useState<JSX.Element[] | undefined>(undefined);
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
-    const [snapshotTemp, setSnapshot] = useState({});
+    const [componentsSnapshot, setComponentsSnapshot] = useState({});
+    const [cannotSubmit, setCannotSubmit] = useState(false);
 
     const navigate = useNavigate();
     const db = getDatabase();
 
-    // FOR TESTING PURPOSES ONLY
-    useEffect(() => {
-        console.log("draft snap shot has changed", snapshotTemp)
-    }, [snapshotTemp]);
-
     /**
-    * Effect hook to fetch project information from the database and update state.
+    * Effect hook to fetch component information from the database and update state.
     * Runs upon initial rendering of page
     */
     useEffect(() => {
-        // Create a reference to the database using the provided pathName
-        const projects = ref(db, pathName);
+        const componentsRef = ref(db, pathName);
 
         // Set up a listener to the database using onValue
-        // The listener will update the state variable 'snapshot' with the retrieved data
-        onValue(projects, (snapshot) => {
-            // Update the state variable 'snapshot' with the data from the database
-            setSnapshot(snapshot.val());
+        // The listener will update the state variable 'snapshot' with the retrieved database data
+        onValue(componentsRef, (snapshot) => {
+            setComponentsSnapshot(snapshot.val());
         });
     }, []);
 
 
     /**
     * Effect hook to process database information and create editable components.
-    * Runs whenever 'snapshotTemp' or values in pages change.
+    * Runs whenever 'componentSnapshot' or values in the page changes.
     */
     useEffect(() => {
-        // Initialize an array to store components
-        const arr = [];
-        let temp = [];
+        // Check if the user has all values entered, if not don't allow the user to submit
+        let notvalid = 0;
+        for (const [, value] of Object.entries(componentsSnapshot)) {
+            const nestedValue = value as valueType;
+            // If a value doesn't have text, don't allow the user to submit
+            for (const [, newValue] of Object.entries(nestedValue)) {
+                if (typeof newValue === 'object') {
+                    // Iterate through the keys of newValue
+                    Object.keys(newValue).forEach(key => {
+                        // Access properties of newValue[key]
+                        const entry = newValue[key];
 
-        // Check if 'snapshotTemp' has data
-        if (snapshotTemp) {
-            // Loop through each value in the database
-            for (const [key, value] of Object.entries(snapshotTemp)) {
-                if (key !== 'submitted') {
-                    // Push an EditableComponent with specific props for each value
-                    arr.push(
-                        <EditableComponent
-                            key={key}
-                            pageOrder={value.pageOrder}
-                            nestedOrder={value.nestedOrder}
-                            componentKey={key}
-                            data={value}
-                            pathName={pathName}
-                        />
-                    );
+                        // Check if entry is an object and iterate through its keys
+                        if (typeof entry === 'object') {
+                            Object.keys(entry).forEach(innerKey => {
+                                if (entry[innerKey] === '') {
+                                    notvalid++;
+                                    setCannotSubmit(true);
+                                    return
+                                } else {
+                                    if (notvalid === 0) {
+                                        setCannotSubmit(false)
+                                    }
+                                }
+                            })
+                        }
+                    })
+
                 }
+                else {
+                    if (newValue === '') {
+                        notvalid++;
+                        setCannotSubmit(true);
+                        break
+                    } else {
+                        if (notvalid === 0) {
+                            setCannotSubmit(false)
+                        }
+                    }
+                }
+            }
+        }
 
+        let arr: JSX.Element[] = [];
+
+        if (componentsSnapshot) {
+
+            const events: editableComponentProps[][] = [];
+            const projects: editableComponentProps[][] = [];
+            let component = undefined;
+
+            // Iterate through every component in the snapshot
+            for (const [key, value] of Object.entries(componentsSnapshot)) {
+                if (key !== 'submitted') {
+                    const newvalue = value as valueType;
+
+                    // Generate specific components based on newvalue's type:
+                    switch (newvalue.type) {
+                        // If the component is a text or accordion component 
+                        case 'text':
+                        case 'accordion':
+                            component = value as editableTextProps;
+                            arr.push(
+                                <EditableTextArea
+                                    key={key}
+                                    pageOrder={newvalue.pageOrder}
+                                    nestedOrder={newvalue.nestedOrder}
+                                    componentKey={key}
+                                    data={component}
+                                    pathName={pathName}
+                                    type={newvalue.type}
+                                />
+                            );
+                            break;
+                        // If the component is an event
+                        case 'event':
+                            component = value as editableEventProps;
+                            if (events[newvalue.pageOrder] === undefined) {
+                                events[newvalue.pageOrder] = [];
+                            }
+                            if (events[newvalue.pageOrder]) {
+                                events[newvalue.pageOrder].push({
+                                    pageOrder: newvalue.pageOrder,
+                                    nestedOrder: newvalue.nestedOrder,
+                                    data: component,
+                                    componentKey: key,
+                                    pathName: pathName,
+                                });
+                            }
+                            break;
+                        // If the component is a project
+                        case 'project':
+                            if (projects[newvalue.pageOrder] === undefined) {
+                                projects[newvalue.pageOrder] = [];
+                            }
+                            if (projects[newvalue.pageOrder]) {
+                                projects[newvalue.pageOrder].push({
+                                    pageOrder: newvalue.pageOrder,
+                                    nestedOrder: newvalue.nestedOrder,
+                                    data: value,
+                                    componentKey: key,
+                                    pathName: pathName,
+                                });
+                            }
+                            break;
+                        // If the component is a header (specifically for the faculty page)
+                        case 'header':
+                            component = value as editableHeaderProps;
+                            arr.push(
+                                <EditableFacultyHeader
+                                    key={key}
+                                    pageOrder={newvalue.pageOrder}
+                                    nestedOrder={newvalue.nestedOrder}
+                                    componentKey={key}
+                                    data={component}
+                                    pathName={pathName}
+                                />
+                            );
+                            break;
+                        // If the component is a contact component
+                        case 'contact':
+                            component = value as editableContactProps;
+                            arr.push(
+                                <EditableContact
+                                    key={key}
+                                    pageOrder={newvalue.pageOrder}
+                                    nestedOrder={newvalue.nestedOrder}
+                                    componentKey={key}
+                                    data={component}
+                                    pathName={pathName}
+                                    type="Contact Page"
+                                />
+                            );
+                            break;
+                        default:
+                            console.log(' in here', value);
+                            break;
+                    }
+                }
+            }
+            // Maps each of the events in the events array to a carousel item
+            {
+                events.map((_array, index) => (
+                    <>
+                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} />)}
+                    </>
+                ))
+            }
+            // Maps each of the projects in the projects array to an editable project item
+            {
+                projects.map((_array, index) => (
+                    <>
+                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} />)}
+                    </>
+                ))
             }
 
             // Sort the array based on 'pageOrder' and 'nestedOrder'
-            temp = arr.sort(function (a, b) {
+            arr = arr.sort(function (a, b) {
                 return (
                     a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
                 );
             });
 
             // Update state variable 'updatedComponents' with the sorted array
-            setUpdatedComponents(temp);
+            setUpdatedComponents(arr);
         }
-    }, [snapshotTemp]);
+    }, [componentsSnapshot, pathName]);
 
 
     /**
@@ -96,29 +247,50 @@ const EditPage = () => {
      * Marks the draft as submitted by updating the 'submitted' flag.
      */
     const handleSave = () => {
-        const dbRef = ref(getDatabase());
 
-        // Create an object to store updates for each editable component
-        const updates = {};
+        console.log(pathName, 'pathName')
 
-        // Mark the draft as submitted by updating the 'submitted' flag
-        updates[`${pathName}/submitted/`] = true;
+        const splitString = pathName.split('/');
+        const newPathName = "pages/" +splitString.slice(2).join('/');
+        const draft = ref(db, pathName);
 
-        // Perform the update in the database
-        update(dbRef, updates)
+        // Retrieve data from the database
+        get(draft)
+            .then((snapshot) => {
+                //   // If no draft exists at the specified path, create a new draft
+                if (snapshot.val() !== null) {
+                    const valueRef = ref(db, newPathName);
+                    // Set the entire path to null to clear any existing data
+                    set(valueRef, null);
 
-        // Navigate away to the home page
-        navigate('/');
-    };
+                    // For every single component in the snapshot
+                    for (const [key, value] of Object.entries(snapshot.val())) {
+                        const myRef = ref(db, newPathName+"/" + key);
+                        // Add it to the drafts with the same exact key
+                        set(myRef, value)
+                            .then(() => {
+                                console.log('Data added successfully!');
+                            })
+                            .catch((error) => {
+                                console.error('Error adding data: ', error);
+                            });
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error reading data: ', error);
+            });
+    }
+
 
     /**
+    *  TODO: Get rid of this function because do we want to allow users to actually delete functions
     * Handles the cancellation of the editing process.
     * Deletes the draft in the database and navigates the user back to the home page.
+    * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
     */
     const handleCancel = () => {
         const deletePath = pathName;
-
-        // Create a reference to the database using the provided deletePath
         const valueRef = ref(db, deletePath);
 
         // Set the data at the specified key in the database to null (deletion)
@@ -128,84 +300,92 @@ const EditPage = () => {
         navigate('/');
     };
 
-/**
- * Adds a new component to the database based on the specified component type.
- * @param componentType - The type of component to be added (e.g., 'project' or 'event' (WILL BE MORE IN FUTURE !)).
- * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
- */
-function addComponent(componentType: string) {
-    let newObj = undefined;
-  
-    // Determine the template based on the component type
-    if (componentType === 'project') {
-      newObj = projectTemplate;
-    } else if (componentType === 'event') {
-      newObj = eventTemplate;
-    }
-  
-    let maxNesting = 0;
-  
-    if (newObj) {
-      // Iterate through existing components to find the maximum nesting order for the same type
-      for (const [, value] of Object.entries(snapshotTemp)) {
-        if (value) {
-          if (value.type === componentType) {
-            // Update the maxNesting if a component of the same type with higher nesting order is found
-            if (maxNesting < value.nestedOrder) {
-              maxNesting = value.nestedOrder;
-            }
-  
-            // Assign the page order from an existing component of the same type
-            newObj.pageOrder = value.pageOrder;
-          }
+    /**
+     * Adds a new component to the database based on the specified component type.
+     * @param componentType - The type of component to be added (e.g., 'project' or 'event').
+     * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
+     */
+    function addComponent(componentType: string) {
+        let newObj = undefined;
+
+        // Determine the template based on the component type
+        if (componentType === 'event') {
+            newObj = eventTemplate;
         }
-      }
-  
-      // Set the new component's nestedOrder to be one greater than the maximum found
-      newObj.nestedOrder = maxNesting + 1;
-  
-      // Generate a new key for the new component
-      const newPostKey = push(child(ref(db), pathName)).key;
-  
-      // Prepare updates for the database
-      const updates = {};
-      updates[pathName + '/' + newPostKey] = newObj;
-  
-      // Perform the update in the database
-      return update(ref(db), updates);
+        else if (componentType === 'textarea') {
+            newObj = textAreaTemplate;
+        }
+        else if (componentType === 'accordion') {
+            newObj = accordionTemplate;
+        }
+        else if (componentType === 'contact') {
+            newObj = contactTemplate;
+        }
+
+        let maxPageOrder = 0;
+
+        if (newObj) {
+            // Iterate through existing components to find the maximum page order
+            newObj.nestedOrder = 0;
+            for (const [, value] of Object.entries(componentsSnapshot)) {
+                const newValue = value as valueType;
+                if (newValue) {
+                    if (maxPageOrder <= newValue.pageOrder) {
+                        maxPageOrder = newValue.pageOrder + 1;
+                    }
+                }
+            }
+            newObj.pageOrder = maxPageOrder;
+        }
+        // Generate a new key for the new component
+        const newPostKey = push(child(ref(db), pathName)).key;
+
+        // Prepare updates for the database
+        const updates: UpdatesType = {};
+        updates[pathName + '/' + newPostKey] = newObj;
+
+        // Perform the update in the database
+        return update(ref(db), updates);
     }
-  }
 
     return (
         <div>
-            <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={handleCancel} name={'this draft'} />
+            <DeleteConfirmationModal
+                show={showDeleteModal}
+                onHide={() => setShowDeletionModal(false)}
+                onConfirm={handleCancel}
+                name={'this draft'} />
             <Header title={"Edit Page"} />
-            <Container style={{ paddingTop: '40px' }}>
-                <Row>
-                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                Add a Component
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => addComponent('event')}>Event</Dropdown.Item>
-                                <Dropdown.Item onClick={() => addComponent('project')}>Project</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Col>
-                </Row>
-                {updatedComponents}
-                <Row>
-                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'right' }} className='save-button'>
-                        {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                        <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
-                    </Col>
-                    <Col md={3} sm={3} xs={3} style={{ textAlign: 'left' }} className='save-button'>
-                        {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                        <Button onClick={() => handleSave()}>Request Changes</Button>
-                    </Col>
-                </Row>
+            <Container fluid className='edit-page-container'>
+                <Container>
+                    <Row>
+                        <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
+                            <Dropdown>
+                                <Dropdown.Toggle id="dropdown-basic">
+                                    Add a Component
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('contact')}>Contact Information Template</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
+                    </Row>
+                    {updatedComponents}
+                    <Container fluid style={{ width: '90%' }}>
+                        <Row>
+                            <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
+                                {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
+                                <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
+                            </Col>
+                            <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
+                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Request Changes</Button>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Container>
             </Container>
         </div>
     );

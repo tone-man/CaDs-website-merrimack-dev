@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import '../css/formModal.css'
-import '../css/whiteListSection.css'
-import TextInputFormGroup from './TextInputFormGroup';
+import '../../css/formModal.css'
+import '../../css/whiteListIndividual.css'
+import TextInputFormGroup from '../TextInputFormGroup';
 
 interface addUserProps {
     addUser: (name: string, email: string, image: string) => void;

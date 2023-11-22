@@ -89,7 +89,7 @@ function NavBar() {
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
                             <Nav.Link id='home' href="/" >Home</Nav.Link>
-                            <Nav.Link id='faculty' href="/faculty">Faculty</Nav.Link>
+                            <Nav.Link id='faculty' href="/facultyDirectory">Faculty</Nav.Link>
                             <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">

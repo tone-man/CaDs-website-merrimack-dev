@@ -1,29 +1,26 @@
-import { Row, Col, Button, Container } from 'react-bootstrap';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ConfirmDraftModal from '../components/ConfirmDraftModal';
-import { AuthContext } from '../App';
-import { parseDataToComponents } from '../utils/parseAndRenderComponents';
-import { handleEditButtonClick, createNewDraft } from '../utils/createNewDraft';
-import Header from '../components/Header';
 
-// The home page shows users the projectlist and events carousel 
-const Home = () => {
+import { ref, onValue, getDatabase } from "firebase/database";
+import { useContext, useEffect, useState } from "react";
+import { parseDataToComponents } from "../utils/parseAndRenderComponents";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import ConfirmDraftModal from "../components/ConfirmDraftModal";
+import { handleEditButtonClick, createNewDraft } from '../utils/createNewDraft';
+import { AuthContext } from "../App";
+import { useNavigate } from "react-router-dom";
+
+
+function FacultyPage() {
+    const [snapShot, setSnapshot] = useState({});
     const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>([]);
     const [showDraftModal, setShowDraftModal] = useState<boolean>(false);
-    const [snapShot, setSnapshot] = useState<object>({});
-    const db = getDatabase();
-
-    // https://reactnavigation.org/docs/use-navigation/#:~:text=useNavigation%20is%20a%20hook%20which,of%20a%20deeply%20nested%20child.
-    const navigate = useNavigate();
     const user = useContext(AuthContext);
-
+    const db = getDatabase();
+    const navigate = useNavigate();
 
     // Gets all of the components in the homepage
     // https://firebase.google.com/docs/database/web/read-and-write
     useEffect(() => {
-        const projects = ref(db, 'pages/homepage/components');
+        const projects = ref(db, 'pages/faculty/components');
 
         // Stores a listener for the database in a useState variable
         onValue(projects, (snapshot) => {
@@ -37,15 +34,14 @@ const Home = () => {
         parseDataToComponents(snapShot, setRenderedComponents);
     }, [snapShot]);
 
-
-    //  Wrapper function for handling the click event on the "Edit Page" button.
-    const handleEditButtonClickWrapper = () => {
-        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/homepage`);
+       //  Wrapper function for handling the click event on the "Edit Page" button.
+       const handleEditButtonClickWrapper = () => {
+        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/faculty`);
     };
 
     //  Wrapper function for handling the create new draft
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
-        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/homepage/components`);
+        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/faculty/components`);
     };
 
     return (
@@ -57,7 +53,6 @@ const Home = () => {
                     onCreateDraft={(value) => createNewDraftWrapper(value)}
                     name={user.name} />
             }
-            <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
             {renderedComponents}
             {/* Render edit button conditionally */}
             {user !== null &&
@@ -70,8 +65,8 @@ const Home = () => {
                     </Row>
                 </Container>
             }
-        </div>
-    );
-};
+        </div >
+    )
+}
 
-export default Home;
+export default FacultyPage

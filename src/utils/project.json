@@ -1,22 +1,26 @@
 {
     "contributers": {
-        "antonio": {
-            "description": "Antonio Description",
-            "name": "Antonio M Craveiro"
+        "first": {
+            "description": "Contributer description",
+            "name": "Contributer name",
+            "nestedOrder": 0,
+            "pageOrder": 0
         }
     },
-    "description": "Description Value",
+    "description": "Description",
     "facultyMembers": {
-        "Antonio": {
-            "facultyImg": "Antonio Image",
-            "facultyName": "Antonio M Craveiro"
+        "first": {
+            "facultyImg": "Faculty Image",
+            "facultyName": "Faculty Name",
+            "pageOrder": 0,
+            "nestedOrder": 0
         }
     },
-    "imageAlt": "Image Alt Value",
-    "imageDescription": "Image Description Value",
+    "imageAlt": "Image Alt",
+    "imageDescription": "Image Description",
     "nestedOrder": 0,
     "pageOrder": 0,
-    "projectLink": "Link Value",
+    "projectLink": "Link",
     "title": "Title",
     "type": "project"
 }
