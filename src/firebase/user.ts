@@ -3,6 +3,14 @@
  * 
  * @author Tone-Man
  */
+export interface UserInterface {
+    id: string,
+    email: string,
+    name: string,
+    photoURL: string,
+    userLevel: string
+}
+
 export default class User {
     private _id: string;
     private _email: string;
@@ -35,7 +43,7 @@ export default class User {
         return this._photoURL;
     }
 
-    get user_level(): string {
+    get userLevel(): string {
         return this._userLevel;
     }
 
@@ -56,7 +64,7 @@ export default class User {
         this._photoURL = photoURL;
     }
 
-    set user_level(user_level: string) {
+    set userLevel(user_level: string) {
         this._userLevel = user_level;
     }
 }
