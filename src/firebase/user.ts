@@ -9,6 +9,11 @@ export interface UserInterface {
     name: string,
     photoURL: string,
     userLevel: string
+    phoneNumber: string,
+    title: string,
+    pronouns: string,
+    department: string,
+    location: string
 }
 
 export default class User {
@@ -17,13 +22,24 @@ export default class User {
     private _name: string;
     private _photoURL: string;
     private _userLevel: string;
+    private _phoneNumber: string;
+    private _title: string;
+    private _pronouns: string;
+    private _department: string;
+    private _location: string;
 
-    constructor(id: string, email: string, name: string, photoURL: string, user_level: string) {
+    constructor(id: string, email: string, name: string, photoURL: string, userLevel: string,
+        phoneNumber: string, title: string, pronouns: string, department: string, location: string) {
         this._id = id;
         this._email = email;
         this._name = name;
         this._photoURL = photoURL;
-        this._userLevel = user_level;
+        this._userLevel = userLevel;
+        this._phoneNumber = phoneNumber;
+        this._title = title;
+        this._pronouns = pronouns;
+        this._department = department;
+        this._location = location;
     }
 
     // Getter methods
@@ -47,6 +63,25 @@ export default class User {
         return this._userLevel;
     }
 
+    get phoneNumber(): string {
+        return this._phoneNumber;
+    }
+
+    get title(): string {
+        return this._title;
+    }
+
+    get department(): string {
+        return this._department;
+    }
+
+    get pronouns(): string {
+        return this._pronouns;
+    }
+
+    get location(): string {
+        return this._location;
+    }
     // Setter methods
     set id(id: string) {
         this._id = id;
@@ -64,7 +99,27 @@ export default class User {
         this._photoURL = photoURL;
     }
 
-    set userLevel(user_level: string) {
-        this._userLevel = user_level;
+    set userLevel(userLevel: string) {
+        this._userLevel = userLevel;
+    }
+
+    set phoneNumber(phoneNumber: string) {
+        this._phoneNumber = phoneNumber;
+    }
+
+    set title(title: string) {
+        this._title = title;
+    }
+
+    set department(department: string) {
+        this._department = department;
+    }
+
+    set pronouns(pronouns: string) {
+        this._pronouns = pronouns;
+    }
+
+    set location(location: string) {
+        this._location = location;
     }
 }
