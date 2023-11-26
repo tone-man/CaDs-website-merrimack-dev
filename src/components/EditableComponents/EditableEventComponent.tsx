@@ -25,6 +25,7 @@ export interface editableComponentProps {
     data: editableEventProps,
     componentKey: string,
     pathName: string,
+    addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -32,7 +33,7 @@ export interface editableComponentProps {
  * Allows edit and deletion privileges to users.
  */
 function EditableEventComponent(myProps: editableComponentProps) {
-
+    
     const db = getDatabase();
     const myRef = ref(db);
 
@@ -113,7 +114,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteNestedComponent(myProps, db)
+        deleteNestedComponent(myProps, db, myProps.addToast, "event")
         setShowDeletionModal(false);
     }
 

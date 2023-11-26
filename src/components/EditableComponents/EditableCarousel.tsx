@@ -18,7 +18,8 @@ export interface editableComponentProps {
 interface eventCarouselProps {
   array: editableComponentProps[]
   pageOrder: number,
-  type: string
+  type: string,
+  addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -26,6 +27,7 @@ interface eventCarouselProps {
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableCarousel(myProps: eventCarouselProps) {
+  
   const [buttons, setButtons] = useState<JSX.Element | null>(null);
   const [lastPageOrder, setLastPageOrder] = useState<number | null>(null);
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
@@ -80,7 +82,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
               <Col md={10} sm={6} xs={6} style={{ textAlign: 'right' }} className="add-component">
                 <Button
                   onClick={() =>
-                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
+                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName), myProps.addToast, "event")}>
                   <i className="bi bi-plus-lg">
                   </i>
                 </Button>
@@ -102,7 +104,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
 
   // Function to remove the carousel
   function remove() {
-    deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)
+    deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef, myProps.addToast, "event carousel")
     setShowDeletionModal(false);
   }
 
@@ -122,6 +124,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
                 componentKey={element.componentKey}
                 data={element.data}
                 pathName={element.pathName}
+                addToast={myProps.addToast}
               />
             </>
           ))

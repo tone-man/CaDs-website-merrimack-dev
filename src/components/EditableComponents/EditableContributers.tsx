@@ -18,6 +18,7 @@ interface editableComponentProps {
     data: editableContributerProps,
     componentKey: string,
     pathName: string,
+    addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -25,7 +26,7 @@ interface editableComponentProps {
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableContributers(myProps: editableComponentProps) {
-
+    
     const db = getDatabase();
     const myRef = ref(db)
 
@@ -50,7 +51,7 @@ function EditableContributers(myProps: editableComponentProps) {
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteNestedComponent(myProps, db)
+        deleteNestedComponent(myProps, db, myProps.addToast, "contributer")
         setShowDeletionModal(false);
     }
     // Opens the deletion confirmation modal
@@ -75,7 +76,7 @@ function EditableContributers(myProps: editableComponentProps) {
                 label="Name"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
-                delete={lastNestedOrder !==0}
+                delete={lastNestedOrder !==1}
                 handleOpenConfirmationModal={handleOpenConfirmationModal} />
             <EditableFormComponent
                 changedValue='/description'

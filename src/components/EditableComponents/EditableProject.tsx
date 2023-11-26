@@ -17,6 +17,7 @@ export interface editableComponentProps {
     data: any,
     componentKey: string,
     pathName: string,
+    addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -24,7 +25,7 @@ export interface editableComponentProps {
  * Allows edit and deletion privileges to users.
  */
 function EditableProject(myProps: editableComponentProps) {
-
+    
     const db = getDatabase();
     const myRef = ref(db);
 
@@ -100,7 +101,7 @@ function EditableProject(myProps: editableComponentProps) {
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteNestedComponent(myProps, db)
+        deleteNestedComponent(myProps, db, myProps.addToast, "project")
         setShowDeletionModal(false);
     }
     let contributorsArray: { key: string; contributor: any }[] = [];
@@ -236,7 +237,7 @@ function EditableProject(myProps: editableComponentProps) {
                                             <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                                                 <Button
                                                     onClick={() =>
-                                                        addProjectComponent(myProps, db, true)}>
+                                                        addProjectComponent(myProps, db, true, myProps.addToast)}>
                                                     <i className="bi bi-plus-lg" />
                                                 </Button>
                                             </Col>
@@ -252,6 +253,7 @@ function EditableProject(myProps: editableComponentProps) {
                                                 componentKey={key}
                                                 pathName={`${myProps.pathName}/${myProps.componentKey}/contributers`}
                                                 key={key}
+                                                addToast={myProps.addToast}
                                             />
                                         ))
                                     )}
@@ -273,7 +275,7 @@ function EditableProject(myProps: editableComponentProps) {
                                             <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                                                 <Button
                                                     onClick={() =>
-                                                        addProjectComponent(myProps, db, false)}>
+                                                        addProjectComponent(myProps, db, false, myProps.addToast)}>
                                                     <i className="bi bi-plus-lg" />
                                                 </Button>
                                             </Col>
@@ -289,6 +291,7 @@ function EditableProject(myProps: editableComponentProps) {
                                                 componentKey={key}
                                                 pathName={`${myProps.pathName}/${myProps.componentKey}/facultyMembers`}
                                                 key={key}
+                                                addToast={myProps.addToast}
                                             />
                                         ))
                                     )}

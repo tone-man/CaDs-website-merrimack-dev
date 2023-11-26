@@ -6,6 +6,7 @@ import '../../css/editableCSS/editableCarousel.css';
 
 import EditableProject from './EditableProject';
 import { addNestedComponent, reorderPageComponents, getMaxPageOrder } from '../../utils/editingComponents';
+
 export interface editableComponentProps {
   pageOrder: number
   nestedOrder: number
@@ -17,7 +18,8 @@ export interface editableComponentProps {
 interface eventCarouselProps {
   array: editableComponentProps[]
   pageOrder: number,
-  type: string
+  type: string,
+  addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -71,7 +73,7 @@ function EditableProjectList(myProps: eventCarouselProps) {
               <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                 <Button
                   onClick={() =>
-                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
+                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName), myProps.addToast, "project")}>
                   <i className="bi bi-plus-lg">
                   </i>
                 </Button>
@@ -105,6 +107,7 @@ function EditableProjectList(myProps: eventCarouselProps) {
                 componentKey={element.componentKey}
                 data={element.data}
                 pathName={element.pathName}
+                addToast={myProps.addToast}
               />
             </>
           ))

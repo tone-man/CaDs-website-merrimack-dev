@@ -18,6 +18,7 @@ import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json';
 import accordionTemplate from '../utils/accordion.json';
 import contactTemplate from '../utils/contact.json';
+import useToastContext from '../components/toasts/useToastContext';
 
 
 // Define an interface for the structure of the nested components
@@ -38,6 +39,7 @@ type UpdatesType = { [key: string]: any };
  * This page provides the interface for users to modify and manage components within a specific page.
  */
 const EditPage = () => {
+    const addToast = useToastContext();
 
     // https://www.educative.io/answers/how-to-use-the-uselocation-hook-in-react
     // Reads in param that was passed in (Tells users the path to look at for the database)
@@ -143,6 +145,7 @@ const EditPage = () => {
                                     data={component}
                                     pathName={pathName}
                                     type={newvalue.type}
+                                    addToast={addToast}
                                 />
                             );
                             break;
@@ -203,6 +206,7 @@ const EditPage = () => {
                                     data={component}
                                     pathName={pathName}
                                     type="Contact Page"
+                                    addToast={addToast}
                                 />
                             );
                             break;
@@ -216,7 +220,7 @@ const EditPage = () => {
             {
                 events.map((_array, index) => (
                     <>
-                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} />)}
+                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} addToast={addToast} />)}
                     </>
                 ))
             }
@@ -224,7 +228,7 @@ const EditPage = () => {
             {
                 projects.map((_array, index) => (
                     <>
-                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} />)}
+                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast}/>)}
                     </>
                 ))
             }
@@ -309,16 +313,16 @@ const EditPage = () => {
         let newObj = undefined;
 
         // Determine the template based on the component type
-        if (componentType === 'event') {
+        if (componentType === 'event carousel') {
             newObj = eventTemplate;
         }
-        else if (componentType === 'textarea') {
+        else if (componentType === 'text area') {
             newObj = textAreaTemplate;
         }
         else if (componentType === 'accordion') {
             newObj = accordionTemplate;
         }
-        else if (componentType === 'contact') {
+        else if (componentType === 'contact template') {
             newObj = contactTemplate;
         }
 
@@ -344,6 +348,8 @@ const EditPage = () => {
         const updates: UpdatesType = {};
         updates[pathName + '/' + newPostKey] = newObj;
 
+        addToast(`Successfully added ${componentType} component`, "success");
+
         // Perform the update in the database
         return update(ref(db), updates);
     }
@@ -365,10 +371,10 @@ const EditPage = () => {
                                     Add a Component
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('event carousel')}>Event Carousel</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('text area')}>Text Box</Dropdown.Item>
                                     <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('contact')}>Contact Information Template</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('contact template')}>Contact Information Template</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Col>

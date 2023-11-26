@@ -17,9 +17,11 @@ interface editableContributerProps {
     data: editableFacultyProps,
     componentKey: string,
     pathName: string,
+    addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 function EditableFaculty(myProps: editableContributerProps) {
+    
     const db = getDatabase();
     const myRef = ref(db)
 
@@ -34,6 +36,7 @@ function EditableFaculty(myProps: editableContributerProps) {
     useEffect(() => {
         setImage(myProps.data.facultyImg);
         setName(myProps.data.facultyName);
+       
     }, []);
 
     // Get max nested order of the faculty carousel
@@ -41,10 +44,15 @@ function EditableFaculty(myProps: editableContributerProps) {
         getMaxProjectOrder(myProps,db, setLastNestedOrder) 
     }, [db, lastNestedOrder, myProps]);
 
+      // Get max nested order of the faculty carousel
+      useEffect(() => {
+      console.log(lastNestedOrder, 'LAST NESTED ORDER')
+    }, [lastNestedOrder]);
+
     
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteNestedComponent(myProps, db)
+        deleteNestedComponent(myProps, db, myProps.addToast, "faculty member")
         setShowDeletionModal(false);
     }
     // Opens the deletion confirmation modal
@@ -69,7 +77,7 @@ function EditableFaculty(myProps: editableContributerProps) {
                 label="Faculty Name"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
-                delete={lastNestedOrder !==0}
+                delete={lastNestedOrder !==1}
                 handleOpenConfirmationModal={handleOpenConfirmationModal} />
             <EditableFormComponent
                 changedValue='/facultyImg'

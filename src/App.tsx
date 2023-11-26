@@ -11,6 +11,7 @@ import Dashboard from "./pages/dashboard";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import "./App.css";
+import { ToastContextProvider } from "./components/toasts/ToastContext";
 
 // Authentication context
 const auth = getAuth(FireBaseApp);
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={user}>
+      <ToastContextProvider>
       <Router>
         <NavBar />
         <Routes>
@@ -59,6 +61,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      </ToastContextProvider>
     </AuthContext.Provider>
   );
 }

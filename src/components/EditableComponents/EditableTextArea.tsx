@@ -18,7 +18,8 @@ interface editableComponentProps {
   data: editableTextProps,
   componentKey: string,
   pathName: string,
-  type: string
+  type: string,
+  addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -26,6 +27,7 @@ interface editableComponentProps {
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableTextArea(myProps: editableComponentProps) {
+  
   const db = getDatabase();
   const myRef = ref(db)
   const componentRef = ref(db, myProps.pathName)
@@ -50,7 +52,7 @@ function EditableTextArea(myProps: editableComponentProps) {
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
-    deletePageComponents(undefined, myProps, db, myRef)
+    deletePageComponents(undefined, myProps, db, myRef, myProps.addToast, myProps.type === 'text' ? "text area": "accordion")
     setShowDeletionModal(false);
   }
 

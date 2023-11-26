@@ -21,6 +21,7 @@ interface editableComponentProps {
   componentKey: string,
   pathName: string,
   type: string
+  addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -59,7 +60,7 @@ function EditableContact(myProps: editableComponentProps) {
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
-    deletePageComponents(undefined, myProps, db, myRef)
+    deletePageComponents(undefined, myProps, db, myRef, myProps.addToast, "contact template")
     setShowDeletionModal(false);
   }
 
