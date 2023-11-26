@@ -19,8 +19,6 @@ function NavBar() {
     const [isFocused, setIsFocused] = useState(false);
     const user: User | null = useContext(UserContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
-
-    console.log(user);
     // This useEffect displays/hides the search bar when isFocused changes
     useEffect(() => {
         const searchBar = document.getElementById('searchBar-container');
