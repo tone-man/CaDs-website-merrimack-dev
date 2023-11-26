@@ -6,7 +6,7 @@ import TextInputFormGroup from './TextInputFormGroup';
 
 interface editUserProps {
     editUser: (id: number, name: string, email: string, image: string | undefined) => void;
-    id: number,
+    id: string,
     name: string,
     email: string
 }
