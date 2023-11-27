@@ -1,11 +1,15 @@
 import { DatabaseReference } from 'firebase/database';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import ReactQuill from 'react-quill';
+import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'quill-emoji/dist/quill-emoji.css';
 import 'quill-mention/dist/quill.mention.css';
 import '../../css/editableCSS/editableForm.css'
+import * as Emoji from "quill-emoji";
+
+// References: https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
+// Reference: https://codesandbox.io/p/sandbox/react-quill-with-markdown-g8193?file=%2Fsrc%2FEditor.tsx%3A58%2C18
 
 interface formProps {
     label: string;
@@ -30,6 +34,26 @@ function EditableFormComponent(myProps: formProps) {
         temp.innerHTML = html;
         return temp.innerText.trim().length > 0;
     }
+
+    Quill.register("modules/emoji", Emoji);
+    const TOOLBAR_OPTIONS = [
+        [
+            "emoji",
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            { 'color': [] },
+            { 'background': [] },
+            { 'script': 'sub' },
+            { 'script': 'super' },
+            'blockquote',
+            'code-block',
+            { 'list': 'ordered' },
+            { 'list': 'bullet' },
+            'link',
+        ],
+      ];
 
     return (
         <div className='editableForm'>
@@ -72,39 +96,13 @@ function EditableFormComponent(myProps: formProps) {
                             );
                         }}
                         modules={{
-                            toolbar: [
-                                [
-                                    'bold',
-                                    'italic',
-                                    'underline',
-                                    'strike',
-                                    { 'color': [] },
-                                    { 'background': [] },
-                                    { 'script': 'sub' },
-                                    { 'script': 'super' },
-                                    'blockquote',
-                                    'code-block',
-                                    { 'list': 'ordered' },
-                                    { 'list': 'bullet' },
-                                    'link',
-                                ],
-                            ]
-                        }}
-                        formats={[
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strike',
-                            'color',
-                            'background',
-                            'script',
-                            'blockquote',
-                            'code-block',
-                            'list',
-                            'bullet',
-                            'link',
-                           
-                        ]}
+                            toolbar: {
+                              container: TOOLBAR_OPTIONS
+                            },
+                            "emoji-toolbar": true,
+                            "emoji-textarea": false,
+                            "emoji-shortname": false
+                          }}
                         style={{ resize: 'none', border: '1px black solid', background: 'white' }}
                         className='description-text'
                     />

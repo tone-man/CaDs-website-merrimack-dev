@@ -11,6 +11,7 @@ interface headerProps {
 }
 
 function FacultyMemberHeader(myProps: headerProps) {
+
   return (
     <div>
       <Container fluid className="faculty-header-container">
@@ -22,7 +23,7 @@ function FacultyMemberHeader(myProps: headerProps) {
                     </Row>
                     <Row>
                         <Col>
-                            <h1 className="faculty-name" dangerouslySetInnerHTML={{ __html: myProps.facultyName }}></h1>
+                            <h1 className="faculty-name" style={{textDecoration: 'overline 3px yellow'}} dangerouslySetInnerHTML={{ __html: myProps.facultyName }}></h1>
                         </Col>
                     </Row>
                     <Row>

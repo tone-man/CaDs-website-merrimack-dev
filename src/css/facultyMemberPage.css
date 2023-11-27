@@ -20,11 +20,6 @@
     text-transform: uppercase;
 }
 
-.faculty-header-container .faculty-name span {
-    border-top: 3px solid yellow;
-    padding-top: 5px;
-}
-
 .faculty-header-container .faculty-title {
     font-family: var(--metropolisRegular);
     font-size: var(--smallFont);
