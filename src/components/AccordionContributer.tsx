@@ -31,7 +31,9 @@ function AccordionContributer(myProps: accordionProps) {
                             // Maps each contributer in the array to a project contributer item
                             myProps.contributers.map((contributer, index) => (
                                 <ProjectContributer key={index}
-                                    name={contributer.name} description={contributer.description} />
+                                    name={contributer.name} 
+                                    description={contributer.description}
+                                    nestedOrder={index} />
                             ))
                         }
                     </Accordion.Body>

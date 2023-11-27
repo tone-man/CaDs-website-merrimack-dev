@@ -17,17 +17,17 @@ function FacultyMemberHeader(myProps: headerProps) {
                 <Container>
                     <Row>
                         <Col>
-                            <h1 className="department-name"> {myProps.departmentName}</h1>
+                            <h1 className="department-name" dangerouslySetInnerHTML={{ __html: myProps.departmentName }}></h1>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h1 className="faculty-name">  <span>{myProps.facultyName}</span></h1>
+                            <h1 className="faculty-name" dangerouslySetInnerHTML={{ __html: myProps.facultyName }}></h1>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h1 className="faculty-title">{myProps.facultyTitle}</h1>
+                            <h1 className="faculty-title" dangerouslySetInnerHTML={{ __html: myProps.facultyTitle }}></h1>
                         </Col>
                     </Row>
                     <Row className='image-row' >

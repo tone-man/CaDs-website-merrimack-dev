@@ -1,88 +1,120 @@
-import { DatabaseReference } from 'firebase/database'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
-
+import { DatabaseReference } from 'firebase/database';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Row, Col, Button, Form } from 'react-bootstrap';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import 'quill-emoji/dist/quill-emoji.css';
+import 'quill-mention/dist/quill.mention.css';
 import '../../css/editableCSS/editableForm.css'
+
 interface formProps {
-    label: string
-    value: string,
-    changedValue: string
-    myRef: DatabaseReference,
-    pathName: string,
-    componentKey: string
-    rows: number,
-    delete: boolean
-    handleTextAreaChange: any,
-    setValue: Dispatch<SetStateAction<string>>,
+    label: string;
+    value: string;
+    changedValue: string;
+    myRef: DatabaseReference;
+    pathName: string;
+    componentKey: string;
+    rows: number;
+    delete: boolean;
+    handleTextAreaChange: any;
+    setValue: Dispatch<SetStateAction<string>>;
     handleOpenConfirmationModal?: () => void; // Optional function prop
 }
-/**
- * EditableFormComponent is a component that renders a form with a textarea that users can edit,
- * Reduces repetitive code
-*/
-function EditableFormComponent(myProps: formProps) {
-    const [validated, setValidated] = useState(false);
 
-    // Checks validity of the component whenever the user clicks away from the form
-    // Reference: https://stackoverflow.com/questions/61395873/how-to-use-useeffect-to-update-and-render-the-component
-    const handleValidity = (event: React.FocusEvent<HTMLInputElement>) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        setValidated(true);
-    };
+function EditableFormComponent(myProps: formProps) {
+    const [editorValidated, setEditorValidated] = useState(true);
+
+    // Reference: https://stackoverflow.com/questions/34673544/sanitize-html-string-without-using-dangerouslysetinnerhtml-for-length-check
+    function hasVisibleText(html: string): boolean {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.innerText.trim().length > 0;
+    }
 
     return (
         <div className='editableForm'>
-            <Form noValidate validated={validated}>
+            <Form noValidate validated={editorValidated}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    {/* If you CAN delete this component, add a deletion button*/}
                     {myProps.delete === true && (
                         <Row>
                             <Col md={6} sm={6} xs={6}>
                                 <Col md={12} sm={12} xs={12}>
                                     <Form.Label className="form-label" id="customFile" aria-required>
-                                        <h1 className='metropolisRegular label' >{myProps.label}</h1>
+                                        <h1 className='metropolisRegular label' dangerouslySetInnerHTML={{ __html: myProps.label }}></h1>
                                     </Form.Label>
                                 </Col>
                             </Col>
                             <Col md={6} sm={6} xs={6}>
                                 <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="delete-nested-component">
-                                    <Button onClick={myProps.handleOpenConfirmationModal}> <i className="bi bi-x-lg"></i></Button>
+                                    <Button onClick={myProps.handleOpenConfirmationModal}><i className="bi bi-x-lg"></i></Button>
                                 </Col>
                             </Col>
                         </Row>
                     )}
-                    {/* If you cant delete this component, make a normal label */}
                     {myProps.delete === false && (
                         <Form.Label className="form-label" id="customFile" aria-required>
-                            <h1 className='metropolisRegular label'>{myProps.label}</h1>
+                            <h1 className='metropolisRegular label' dangerouslySetInnerHTML={{ __html: myProps.label }}></h1>
                         </Form.Label>
                     )}
-                    <Form.Control
-                        required
+                    <ReactQuill
+                        theme="snow"
                         value={myProps.value}
-                        onBlur={handleValidity}
-                        onChange={(e) =>
+                        onChange={(text) => {
+                            const isEmpty = !hasVisibleText(text);
+                            setEditorValidated(!isEmpty); // Set validation based on whether the content is empty
                             myProps.handleTextAreaChange(
-                                e,
+                                { target: { value: text } },
                                 myProps.changedValue,
                                 myProps.setValue,
                                 myProps.myRef,
                                 myProps.pathName,
-                                myProps.componentKey)}
-                        as="textarea"
-                        rows={myProps.rows}
-                        style={{ resize: 'none', border: '1px black solid' }} />
-                    <Form.Control.Feedback type="invalid" >
+                                myProps.componentKey
+                            );
+                        }}
+                        modules={{
+                            toolbar: [
+                                [
+                                    'bold',
+                                    'italic',
+                                    'underline',
+                                    'strike',
+                                    { 'color': [] },
+                                    { 'background': [] },
+                                    { 'script': 'sub' },
+                                    { 'script': 'super' },
+                                    'blockquote',
+                                    'code-block',
+                                    { 'list': 'ordered' },
+                                    { 'list': 'bullet' },
+                                    'link',
+                                ],
+                            ]
+                        }}
+                        formats={[
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strike',
+                            'color',
+                            'background',
+                            'script',
+                            'blockquote',
+                            'code-block',
+                            'list',
+                            'bullet',
+                            'link',
+                           
+                        ]}
+                        style={{ resize: 'none', border: '1px black solid', background: 'white' }}
+                        className='description-text'
+                    />
+                    <Form.Control.Feedback type="invalid" style={{ display: editorValidated ? 'none' : 'block' }}>
                         <h2 className='metropolisRegular extraSmallFont'> Please provide a valid {myProps.label}.</h2>
                     </Form.Control.Feedback>
                 </Form.Group>
             </Form>
-        </div >
-    )
+        </div>
+    );
 }
 
-export default EditableFormComponent
+export default EditableFormComponent;

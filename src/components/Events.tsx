@@ -20,13 +20,13 @@ export interface myEventProps {
 function Events(props: myEventProps) {
     return (
         <div>
-            <Card className='event-card' style={{background: 'rgb(20, 54, 100)', color : 'white'}}>
+            <Card className='event-card' style={{ background: 'rgb(20, 54, 100)', color: 'white' }}>
                 <Card.Body>
                     <Row>
                         {/* Event Title */}
                         <Col md={12} xs={12}>
                             <Card.Title className='card-header'>
-                                <h1>{props.title}</h1>
+                                <h1 dangerouslySetInnerHTML={{ __html: props.title }}></h1>
                             </Card.Title>
                         </Col>
                     </Row>
@@ -36,15 +36,20 @@ function Events(props: myEventProps) {
                             <Card.Img src={pic} className="card-image" alt={props.imageAlt} />
                         </Col>
                         <Col md={8} sm={12} xs={12} className='event-text'>
-                            <Card.Text>
-                                {props.description}
-                            </Card.Text>
+                            <Card.Text dangerouslySetInnerHTML={{ __html: props.description }}></Card.Text>
                         </Col>
                     </Row>
                 </Card.Body>
                 <Card.Footer>
                     {/* Event Date and location*/}
-                    <h5 className='event-information' style={{ textAlign: 'center', paddingBottom: '20px' }}> <i> {props.date} | {props.location}</i></h5>
+                    <Row>
+                        <Col>
+                            <h5 className='event-information' style={{ textAlign: 'right', paddingBottom: '20px' }} dangerouslySetInnerHTML={{ __html: props.date }}></h5>
+                        </Col>
+                        <Col>
+                            <h5 className='event-information' style={{ textAlign: 'left', paddingBottom: '20px' }} dangerouslySetInnerHTML={{ __html: props.location }}></h5>
+                        </Col>
+                    </Row>
                 </Card.Footer>
             </Card>
         </div>

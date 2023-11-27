@@ -1,10 +1,11 @@
 .faculty-header-container {
     padding: 20px;
     background-color: var(--blue);
-    height: 400px;
+    height: auto;
     margin: auto;
     color: white;
     width: auto;
+   
 }
 
 .faculty-header-container .department-name {

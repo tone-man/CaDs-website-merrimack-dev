@@ -80,7 +80,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
             <>
                 <Row style={{ display: 'flex', alignItems: 'center' }}>
                     <Col md={8} sm={8} xs={12} className="nested-component-title">
-                        <h1> {myProps.data.title}</h1>
+                        <h1 dangerouslySetInnerHTML={{ __html: myProps.data.title }}></h1>
                     </Col>
                     <Col md={4} sm={4} xs={12} >
                         <Row>

@@ -13,12 +13,12 @@ function TextArea(myProps: textProps) {
                 <Container>
                     <Row>
                         <Col>
-                            <h1 className="label"><span> {myProps.label}</span></h1>
+                            <h1 className="label" dangerouslySetInnerHTML={{ __html: myProps.label}}></h1>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h1 className="body-text"> {myProps.content}</h1>
+                            <h1 className="body-text" dangerouslySetInnerHTML={{ __html: myProps.content}}></h1>
                         </Col>
                     </Row>
                 </Container>

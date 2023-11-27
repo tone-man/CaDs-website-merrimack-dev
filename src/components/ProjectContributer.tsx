@@ -17,12 +17,10 @@ function ProjectContributer(myProps: contributerProps) {
                         <Row>
                             <Col md={3} sm={12} xs={12}>
                                 <ProfileImage size='70px' position='mx-auto' />
-                                <h1 className='featured-text' style={{ color: 'black' }}> {myProps.name}</h1>
+                                <h1 className='featured-text' style={{ color: 'black' }}dangerouslySetInnerHTML={{ __html: myProps.name}}></h1>
                             </Col>
                             <Col md={9} sm={12} xs={12}>
-                                <h1 className='contributor-info'>
-                                    {myProps.description}
-                                </h1>
+                                <h1 className='contributor-info' dangerouslySetInnerHTML={{ __html: myProps.description }}></h1>
                             </Col>
                         </Row>
                     </Col>

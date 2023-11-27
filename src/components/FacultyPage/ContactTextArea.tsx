@@ -24,7 +24,7 @@ function ContactTextArea(myProps: contactProps) {
                             <i className="bi bi-telephone-fill icon"></i>
                         </Col>
                         <Col md={9} sm={9} xs={8} style={{  textAlign: 'left' }} >
-                            <h1 className="contact-text"> {myProps.email}</h1>
+                            <h1 className="contact-text" dangerouslySetInnerHTML={{ __html: myProps.phoneNumber }}></h1>
                         </Col>
                     </Row>
                     <Row>
@@ -32,7 +32,7 @@ function ContactTextArea(myProps: contactProps) {
                             <i className="bi bi-envelope-fill icon"></i>
                         </Col>
                         <Col md={9} sm={9} xs={8} style={{  textAlign: 'left' }} >
-                            <h1 className="contact-text" > {myProps.email}</h1>
+                            <h1 className="contact-text" dangerouslySetInnerHTML={{ __html: myProps.email }}></h1>
                         </Col>
                     </Row>
                     <Row >
@@ -40,7 +40,7 @@ function ContactTextArea(myProps: contactProps) {
                             <i className="bi bi-building-fill icon"></i>
                         </Col>
                         <Col md={9} sm={9} xs={8} style={{  textAlign: 'left' }} >
-                            <h1 className="contact-text"> {myProps.location}</h1>
+                            <h1 className="contact-text" dangerouslySetInnerHTML={{ __html: myProps.location }}></h1>
                         </Col>
                     </Row>
                 </Container>

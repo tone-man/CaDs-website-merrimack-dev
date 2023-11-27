@@ -268,7 +268,7 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
             case 'contact':
                 tempArr.push(
                     <ContactTextArea
-                        phoneNumber={firstItem.phoneNumber}
+                        phoneNumber={firstItem.phone}
                         email={firstItem.email}
                         location={firstItem.location}
                     />

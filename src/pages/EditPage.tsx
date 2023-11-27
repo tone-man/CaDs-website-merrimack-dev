@@ -89,7 +89,7 @@ const EditPage = () => {
                         // Check if entry is an object and iterate through its keys
                         if (typeof entry === 'object') {
                             Object.keys(entry).forEach(innerKey => {
-                                if (entry[innerKey] === '') {
+                                if (!hasVisibleText(entry[innerKey])) {
                                     notvalid++;
                                     setCannotSubmit(true);
                                     return
@@ -101,10 +101,9 @@ const EditPage = () => {
                             })
                         }
                     })
-
                 }
                 else {
-                    if (newValue === '') {
+                    if (!hasVisibleText(newValue)) {
                         notvalid++;
                         setCannotSubmit(true);
                         break
@@ -228,7 +227,7 @@ const EditPage = () => {
             {
                 projects.map((_array, index) => (
                     <>
-                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast}/>)}
+                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast} />)}
                     </>
                 ))
             }
@@ -246,6 +245,13 @@ const EditPage = () => {
     }, [componentsSnapshot, pathName]);
 
 
+    // Reference: https://stackoverflow.com/questions/34673544/sanitize-html-string-without-using-dangerouslysetinnerhtml-for-length-check
+    function hasVisibleText(html: string): boolean {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.innerText.trim().length > 0;
+    }
+
     /**
      * Writes the changes made to each editable component to their specific spot in the database.
      * Marks the draft as submitted by updating the 'submitted' flag.
@@ -255,7 +261,7 @@ const EditPage = () => {
         console.log(pathName, 'pathName')
 
         const splitString = pathName.split('/');
-        const newPathName = "pages/" +splitString.slice(2).join('/');
+        const newPathName = "pages/" + splitString.slice(2).join('/');
         const draft = ref(db, pathName);
 
         // Retrieve data from the database
@@ -269,7 +275,7 @@ const EditPage = () => {
 
                     // For every single component in the snapshot
                     for (const [key, value] of Object.entries(snapshot.val())) {
-                        const myRef = ref(db, newPathName+"/" + key);
+                        const myRef = ref(db, newPathName + "/" + key);
                         // Add it to the drafts with the same exact key
                         set(myRef, value)
                             .then(() => {

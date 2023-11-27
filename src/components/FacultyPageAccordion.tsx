@@ -13,9 +13,9 @@ function FacultyPageAccordion(myProps: facultyPageAccordionInterface) {
                     <Accordion className="accordion-container">
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>
-                                <h4 className="accordion-header">{myProps.label} </h4></Accordion.Header>
+                                <h4 className="accordion-header" dangerouslySetInnerHTML={{ __html: myProps.label}}></h4></Accordion.Header>
                             <Accordion.Body>
-                                {myProps.content}
+                            <h4 dangerouslySetInnerHTML={{ __html: myProps.content}}></h4>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>

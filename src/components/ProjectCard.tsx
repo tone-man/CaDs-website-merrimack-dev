@@ -28,7 +28,7 @@ function projectCardContent(
             {/*This positions & styles the Title & Faculty Member Carousel  */}
             <Row style={{ marginBottom: '20px' }} className="d-flex justify-content-center align-items-center">
                 <Col md={{ span: 6, offset: 0 }}>
-                    <h1 className='title-text'> {title} </h1>
+                    <h1 className='title-text' dangerouslySetInnerHTML={{ __html: title }}></h1>
                 </Col>
                 <Col md={{ span: 3, offset: 3 }} xs={{ span: 12, offset: 0 }}>
                     <FacultyCarousel faculty={facultyMembers} />
@@ -45,7 +45,7 @@ function projectCardContent(
                             className='rounded overflow-hidden project-images'
                         />
                         <Figure.Caption style={{ textAlign: 'center' }}>
-                            <i> {imageDescription}</i>
+                        <h3 className='extraSmallFont' dangerouslySetInnerHTML={{ __html: imageDescription }}></h3>
                         </Figure.Caption>
                     </Figure>
                 </Col>
@@ -54,9 +54,7 @@ function projectCardContent(
                 <Col md={{ span: 8, offset: 0 }} sm={12} xs={12}>
                     <section >
                         <div className='no-scrollbar description-div'>
-                            <h2 className='description-text'>
-                                {description}
-                            </h2>
+                            <h2 className='description-text' dangerouslySetInnerHTML={{ __html: description }}></h2>
                         </div>
                         <a href={link} id ="project-link">
                             <h1 className='featured-text' id="read-more"> Read More</h1>
