@@ -36,19 +36,19 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
 
         // Checks form validity
         if (form.checkValidity()) {
-            
+
             // Gets form information and calls editUser() with the respective info
             if (fullNameRef.current && emailRef.current) {
                 const fullName = fullNameRef.current.value;
                 const email = emailRef.current.value;
-                if (selectedImage){
+                if (selectedImage) {
                     editUser(id, fullName, email, URL.createObjectURL(selectedImage));
                     setSelectedImage(null);
                 }
                 else {
                     editUser(id, fullName, email, undefined);
                 }
-                
+
             }
             setValidated(true);
             handleClose();
@@ -71,33 +71,113 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
                     <Modal.Body >
-                        
-                      {/* Full Name Text Input */}
+                        {/* Full Name Text Input */}
                         <Row className="mb-3">
                             <TextInputFormGroup
                                 controlId='validationCustom01'
                                 label='Full Name'
                                 required={true}
-                                placeholder='John Doe'
+                                placeholder='Ex: John Doe'
                                 alt='Full Name Text Input'
                                 inputRef={fullNameRef}
                                 type='text'
-                                default={name}
                                 feedbackMessage='Please enter full name' />
                         </Row>
-                        
-                        {/*Email Text Input */}
+
+
+                        {/*Email Text Input*/}
                         <Row className="mb-3">
                             <TextInputFormGroup
                                 controlId='validationCustom02'
                                 label='Email'
                                 type='email'
                                 required={true}
-                                placeholder='name@example.com'
+                                placeholder='Ex: name@example.com'
                                 alt='Email Text Input'
                                 inputRef={emailRef}
-                                feedbackMessage='Please enter a valid email'
-                                default={email} />
+                                feedbackMessage='Please enter a valid email' />
+                        </Row>
+                        {/*User Level Input*/}
+                        <Row className="mb-3">
+                            <Form.Label><h2 className='smallFont metropolisRegular'>User Level</h2></Form.Label>
+                            {['Faculty', 'Administrator'].map((userLevel) => (
+                                <div key={userLevel} className="mb-3">
+                                    <Form.Check
+                                        type='radio'
+                                        id={userLevel}
+                                        label={userLevel}
+                                        name="userLevels"
+                                    />
+                                </div>
+                            ))}
+                        </Row>
+
+                        {/*User Level Input*/}
+                        <Row className="mb-3">
+                            <Form.Label><h2 className='smallFont metropolisRegular'>Preffered Pronouns</h2></Form.Label>
+                            {['he/him', 'she/her', 'they/them'].map((pronouns) => (
+                                <div key={pronouns} className="mb-3">
+                                    <Form.Check
+                                        type='radio'
+                                        id={pronouns}
+                                        label={pronouns}
+                                        name="prounouns"
+                                    />
+                                </div>
+                            ))}
+                        </Row>
+
+                        {/* Title Input */}
+                        <Row className="mb-3">
+                            <TextInputFormGroup
+                                controlId='validationCustom04'
+                                label='Position'
+                                type='text'
+                                required={true}
+                                placeholder='Ex: Adjunct Professor'
+                                alt='Title Text Input'
+                                inputRef={undefined}
+                                feedbackMessage='Please enter a valid location' />
+                        </Row>
+                        {/* Department Input */}
+                        <Row className="mb-3">
+                            <TextInputFormGroup
+                                controlId='validationCustom05'
+                                label='Department'
+                                type='text'
+                                required={true}
+                                placeholder='Ex: Campus Center'
+                                alt='Department Text Input'
+                                inputRef={undefined}
+                                feedbackMessage='Please enter a valid location' />
+                        </Row>
+
+                        {/* Location Input */}
+                        <Row className="mb-3">
+                            <TextInputFormGroup
+                                controlId='validationCustom03'
+                                label='Office Location'
+                                type='text'
+                                required={true}
+                                placeholder='Ex: 101 Campus Room'
+                                alt='Office Location Text Input'
+                                inputRef={undefined}
+                                feedbackMessage='Please enter a valid location' />
+                        </Row>
+
+
+
+                        {/* Phone Number Input */}
+                        <Row className="mb-3">
+                            <TextInputFormGroup
+                                controlId='validationCustom07'
+                                label='Phone Number'
+                                type='text'
+                                required={true}
+                                placeholder='Ex: 123-654-0987'
+                                alt='Phonenumber Text Input'
+                                inputRef={undefined}
+                                feedbackMessage='Please enter a valid location' />
                         </Row>
                         {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
                         {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}

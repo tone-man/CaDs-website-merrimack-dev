@@ -69,8 +69,6 @@ function App() {
 
       const { userLevel, email } = snapshot.val();
 
-      console.log(userLevel, email, uid)
-
       // Move data to a key with the uid
       set(ref(db, 'users/' + uid), {
         name: result.displayName,

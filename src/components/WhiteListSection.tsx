@@ -20,9 +20,6 @@ function WhiteListSection(userArray: UserInterface[]) {
         setFilterUserList(userArray.userArray);
     }, [userArray]);
 
-    useEffect(() => {
-        console.log(filterUserList, filterUserList.length, "ENTHETN");
-    }, [filterUserList]);
 
     // Search function for whitelist
     function search() {
@@ -65,7 +62,7 @@ function WhiteListSection(userArray: UserInterface[]) {
             });
         }
 
-        
+
     }
 
     return (
@@ -105,7 +102,7 @@ function WhiteListSection(userArray: UserInterface[]) {
                                 // Maps each user  in the array to a whitelist 
                                 filterUserList.map((user, index) => (
                                     <div key={index} style={index !== filterUserList.length - 1 || filterUserList.length < 3 ? { borderBottom: '1px black solid' } : {}}>
-                                        <WhiteListIndividual onDelete={() => deleteUser(user.id)} onEdit={editUser} user={user}/>
+                                        <WhiteListIndividual onDelete={() => deleteUser(user.id)} onEdit={editUser} user={user} />
                                     </div>
                                 ))
                             ) :

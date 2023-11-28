@@ -18,7 +18,6 @@ interface WhiteListIndividualProps {
 
 // Creates individual component for those in the whitelist
 function WhiteListIndividual({ user, onDelete, onEdit }: WhiteListIndividualProps) {
-    console.log("TEHNEHNTEN");
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
 
     // Triggers deletion and closes confirmation modal
@@ -45,7 +44,7 @@ function WhiteListIndividual({ user, onDelete, onEdit }: WhiteListIndividualProp
 
                         {/* Pass in user's image if there exists one */}
                         {user.photoURL !== 'img' ?
-                            (<ProfileImage size='60px' position='mx-auto' image={user.photoURL} />) 
+                            (<ProfileImage size='60px' position='mx-auto' image={user.photoURL} />)
                             :
                             (<ProfileImage size='60px' position='mx-auto' />)}
                     </Col>
