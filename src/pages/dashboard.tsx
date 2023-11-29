@@ -13,8 +13,7 @@ const db = getDatabase(); //Global DB Connection
 //Create an array of faculty member objects
 const pageArray: pageProps[] = [
     { pageName: 'Home Page', pageLink: '/' },
-    { pageName: 'Faculty $FacultyName Profile Page', pageLink: '/' },
-    { pageName: 'New Project $SuperCALAFRAGALISTICEXPIALADOCIOUSSuperCALAFRAGALISTICEXPIALADOCIOUS', pageLink: '/' },
+    { pageName: 'Melissa\'s Profile Page', pageLink: '/' },
 ];
 
 
@@ -31,7 +30,7 @@ const Dashboard = () => {
         if (!user)
             return;
 
-        const requestRef = ref(db, `/requests/${user.id}`);
+        const requestRef = ref(db, `/requests`);
 
         onValue(requestRef, (snapshot) => {
             const requestList: requestProps[] = [];
@@ -65,12 +64,8 @@ const Dashboard = () => {
             setAllowedUsersList(allowedUsersList);
         })
     }, []);
-
-
-
+    
     // Get the list of projects from the database
-
-
     return (
         <div>
             <Header title={(user) ?
@@ -80,8 +75,14 @@ const Dashboard = () => {
 
 
                 <PageSection pages={pageArray} />
-                <RequestSection requests={requests} />
-                <WhiteListSection userArray={allowedUsersList} />
+                {
+                    (1==1) && (
+                        <>
+                        <RequestSection requests={requests} />
+                        <WhiteListSection userArray={allowedUsersList} />
+                        </>
+                    )
+                }
             </div>
         </div>
     );

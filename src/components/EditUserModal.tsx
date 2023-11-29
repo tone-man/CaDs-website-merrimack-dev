@@ -114,7 +114,7 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
 
                         {/*User Level Input*/}
                         <Row className="mb-3">
-                            <Form.Label><h2 className='smallFont metropolisRegular'>Preffered Pronouns</h2></Form.Label>
+                            <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
                             {['he/him', 'she/her', 'they/them'].map((pronouns) => (
                                 <div key={pronouns} className="mb-3">
                                     <Form.Check
