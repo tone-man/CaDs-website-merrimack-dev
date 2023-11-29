@@ -26,8 +26,8 @@ const TextInputFormGroup = (myProps: formInputProps) => {
                 type={myProps.type}
                 placeholder={myProps.placeholder}
                 alt={myProps.alt}
-                ref={myProps.inputRef ? myProps.inputRef: null}
-                defaultValue={myProps.default ? myProps.default: ''}
+                ref={myProps.inputRef ? myProps.inputRef : null}
+                defaultValue={myProps.default ? myProps.default : ''}
             />
             <Form.Control.Feedback type="invalid">
                 <h6 style={{ color: 'white' }}>{myProps.feedbackMessage}</h6>
