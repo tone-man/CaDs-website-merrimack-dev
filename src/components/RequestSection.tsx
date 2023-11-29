@@ -4,7 +4,6 @@ import { Container, Col, Row, Button } from "react-bootstrap";
 import "../css/requestSection.css";
 import ProfileImage from "./ProfileImage";
 import Request from "../firebase/requests";
-import RequestModal from "./ViewRequestModal";
 import { useState } from "react";
 import ViewRequestModal from "./ViewRequestModal";
 
@@ -55,31 +54,31 @@ function RequestSection(myProps: myRequestProps) {
                       <ProfileImage size="60px" position="ml-auto" />
                     </Col>
                     <Col md={7} sm={10} xs={8} className="request-name">
-                      <h3 className="smallFont">{requests.requestName}</h3>
+                      <h3 className="smallFont">{requests.requestTitle}</h3>
                     </Col>
-                    
+
                     {/* Edit and Delete Buttons */}
                     <Col md={2} sm={12} xs={12} className='margin-auto'>
-                        <Row>
-                            <Button className='edit-button' onClick={handleShow}>View</Button>
-                        </Row>
-                        <Row style={{ padding: '10px 0px 0px 0px' }}>
-                            <Button className='delete-button'>Delete</Button>
-                        </Row>
+                      <Row>
+                        <Button className='edit-button' onClick={handleShow}>View</Button>
+                      </Row>
+                      <Row style={{ padding: '10px 0px 0px 0px' }}>
+                        <Button className='delete-button'>Delete</Button>
+                      </Row>
                     </Col>
                   </Row>
                 </div>
               ))
-              ) : (
-                  // Otherwise, display empty text
-                  <div className="empty">
+            ) : (
+              // Otherwise, display empty text
+              <div className="empty">
                 <h4>
                   {" "}
                   <i>No pages are available </i>
                 </h4>
               </div>
             )}
-            <ViewRequestModal show={showModal} showModal={handleShow} handleClose={handleClose} request={new Request("Hi", "Bob", "a", "hi.")}/>
+            <ViewRequestModal show={showModal} showModal={handleShow} handleClose={handleClose} request={new Request("Contributor Request", "Mike Masco", "mascom@merrimack.edu", "Hi, I would like to be featured here if possible.")} />
           </div>
         </div>
       </Container>
