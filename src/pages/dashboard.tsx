@@ -7,6 +7,7 @@ import WhiteListSection from "../components/WhiteListSection";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { UserContext } from "../App";
 import User, { UserInterface } from "../firebase/user";
+import EditProfile from "../components/EditProfile";
 
 const db = getDatabase(); //Global DB Connection
 
@@ -64,7 +65,7 @@ const Dashboard = () => {
             setAllowedUsersList(allowedUsersList);
         })
     }, []);
-    
+
     // Get the list of projects from the database
     return (
         <div>
@@ -73,13 +74,13 @@ const Dashboard = () => {
             } />
             <div style={{ background: 'rgb(224, 224, 224)' }}>
 
-
+                <EditProfile user={user} onEdit={undefined} />
                 <PageSection pages={pageArray} />
                 {
-                    (1==1) && (
+                    (1 == 1) && (
                         <>
-                        <RequestSection requests={requests} />
-                        <WhiteListSection userArray={allowedUsersList} />
+                            <RequestSection requests={requests} />
+                            <WhiteListSection userArray={allowedUsersList} />
                         </>
                     )
                 }
