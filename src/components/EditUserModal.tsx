@@ -3,17 +3,19 @@ import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../css/formModal.css'
 import '../css/whiteListSection.css'
 import TextInputFormGroup from './TextInputFormGroup';
+import User from '../firebase/user';
+import { update } from 'firebase/database';
 
 interface editUserProps {
-    editUser: (id: number, name: string, email: string, image: string | undefined) => void;
-    id: string,
-    name: string,
-    email: string
+    updateUser: (user: User) => void;
+    user: User | null;
 }
 
 // This modal pops up to allow users to edit white list user information
 // TODO: Add more information potentially
-function EditUserModal({ editUser, id, name, email }: editUserProps) {
+function EditUserModal(props: editUserProps) {
+    const updateUser = props.updateUser;
+    const user = props.user;
 
     // UseRef and UseState variable declarations
     const fullNameRef = useRef<HTMLInputElement | null>(null);
@@ -42,11 +44,10 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
                 const fullName = fullNameRef.current.value;
                 const email = emailRef.current.value;
                 if (selectedImage) {
-                    editUser(id, fullName, email, URL.createObjectURL(selectedImage));
-                    setSelectedImage(null);
+                    updateUser(user);
                 }
                 else {
-                    editUser(id, fullName, email, undefined);
+                    updateUser(user);
                 }
 
             }
@@ -65,119 +66,135 @@ function EditUserModal({ editUser, id, name, email }: editUserProps) {
             </Row>
 
             {/* Modal with nested form components */}
-            <Modal show={show} onHide={handleClose} className='customized-modal'>
+            <Modal size="lg" show={show} onHide={handleClose} className='customized-modal'>
                 <Modal.Header closeButton>
                     <Modal.Title><h1 className='mediumFont metropolisBold'>Edit User {name}</h1></Modal.Title>
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
-                    <Modal.Body >
+                    <Modal.Body>
                         {/* Full Name Text Input */}
-                        <Row className="mb-3">
-                            <TextInputFormGroup
-                                controlId='validationCustom01'
-                                label='Full Name'
-                                required={true}
-                                placeholder='Ex: John Doe'
-                                alt='Full Name Text Input'
-                                inputRef={fullNameRef}
-                                type='text'
-                                feedbackMessage='Please enter full name' />
-                        </Row>
+                        <Row>
+                            <Col md={6} sm={12} className="mb-3">
 
+                                <TextInputFormGroup
+                                    controlId='validationCustom01'
+                                    label='Full Name'
+                                    required={true}
+                                    placeholder='Ex: John Doe'
+                                    alt='Full Name Text Input'
+                                    inputRef={fullNameRef}
+                                    type='text'
+                                    feedbackMessage='Please enter full name' />
+                            </Col>
 
-                        {/*Email Text Input*/}
-                        <Row className="mb-3">
-                            <TextInputFormGroup
-                                controlId='validationCustom02'
-                                label='Email'
-                                type='email'
-                                required={true}
-                                placeholder='Ex: name@example.com'
-                                alt='Email Text Input'
-                                inputRef={emailRef}
-                                feedbackMessage='Please enter a valid email' />
-                        </Row>
-                        {/*User Level Input*/}
-                        <Row className="mb-3">
-                            <Form.Label><h2 className='smallFont metropolisRegular'>User Level</h2></Form.Label>
-                            {['Faculty', 'Administrator'].map((userLevel) => (
-                                <div key={userLevel} className="mb-3">
-                                    <Form.Check
-                                        type='radio'
-                                        id={userLevel}
-                                        label={userLevel}
-                                        name="userLevels"
-                                    />
-                                </div>
-                            ))}
-                        </Row>
-
-                        {/*User Level Input*/}
-                        <Row className="mb-3">
-                            <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
-                            {['he/him', 'she/her', 'they/them'].map((pronouns) => (
-                                <div key={pronouns} className="mb-3">
-                                    <Form.Check
-                                        type='radio'
-                                        id={pronouns}
-                                        label={pronouns}
-                                        name="prounouns"
-                                    />
-                                </div>
-                            ))}
+                            {/*Email Text Input*/}
+                            <Col md={6} sm={12} className="mb-3">
+                                <TextInputFormGroup
+                                    controlId='validationCustom02'
+                                    label='Email'
+                                    type='email'
+                                    required={true}
+                                    placeholder='Ex: name@example.com'
+                                    alt='Email Text Input'
+                                    inputRef={emailRef}
+                                    feedbackMessage='Please enter a valid email' />
+                            </Col>
                         </Row>
 
                         {/* Title Input */}
-                        <Row className="mb-3">
-                            <TextInputFormGroup
-                                controlId='validationCustom04'
-                                label='Position'
-                                type='text'
-                                required={true}
-                                placeholder='Ex: Adjunct Professor'
-                                alt='Title Text Input'
-                                inputRef={undefined}
-                                feedbackMessage='Please enter a valid location' />
-                        </Row>
-                        {/* Department Input */}
-                        <Row className="mb-3">
-                            <TextInputFormGroup
-                                controlId='validationCustom05'
-                                label='Department'
-                                type='text'
-                                required={true}
-                                placeholder='Ex: Campus Center'
-                                alt='Department Text Input'
-                                inputRef={undefined}
-                                feedbackMessage='Please enter a valid location' />
+                        <Row>
+                            <Col md={6} sm={12} className="mb-3">
+
+                                <TextInputFormGroup
+                                    controlId='validationCustom04'
+                                    label='Position'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: Adjunct Professor'
+                                    alt='Title Text Input'
+                                    inputRef={undefined}
+                                    feedbackMessage='Please enter a valid location' />
+                            </Col>
+
+                            {/* Department Input */}
+                            <Col md={6} sm={12} className="mb-3">
+
+
+                                <TextInputFormGroup
+                                    controlId='validationCustom05'
+                                    label='Department'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: Campus Center'
+                                    alt='Department Text Input'
+                                    inputRef={undefined}
+                                    feedbackMessage='Please enter a valid location' />
+                            </Col>
                         </Row>
 
                         {/* Location Input */}
-                        <Row className="mb-3">
-                            <TextInputFormGroup
-                                controlId='validationCustom03'
-                                label='Office Location'
-                                type='text'
-                                required={true}
-                                placeholder='Ex: 101 Campus Room'
-                                alt='Office Location Text Input'
-                                inputRef={undefined}
-                                feedbackMessage='Please enter a valid location' />
+                        <Row>
+                            <Col md={6} sm={12} className="mb-3">
+
+                                <TextInputFormGroup
+                                    controlId='validationCustom03'
+                                    label='Office Location'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: 101 Campus Room'
+                                    alt='Office Location Text Input'
+                                    inputRef={undefined}
+                                    feedbackMessage='Please enter a valid location' />
+                            </Col>
+
+                            {/* Phone Number Input */}
+                            <Col md={6} sm={12} className="mb-3">
+
+                                <TextInputFormGroup
+                                    controlId='validationCustom07'
+                                    label='Phone Number'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: 123-654-0987'
+                                    alt='Phonenumber Text Input'
+                                    inputRef={undefined}
+                                    feedbackMessage='Please enter a valid location' />
+                            </Col>
                         </Row>
 
+                        {/*User Level Input*/}
+                        <Row>
+                            <Col md={6} sm={12} className="mb-3">
+
+                                <Form.Label><h2 className='smallFont metropolisRegular'>User Level</h2></Form.Label>
+                                {['Faculty', 'Administrator'].map((userLevel) => (
+                                    <div key={userLevel} className="mb-3">
+                                        <Form.Check
+                                            type='radio'
+                                            id={userLevel}
+                                            label={userLevel}
+                                            name="userLevels"
+                                        />
+                                    </div>
+                                ))}
+                            </Col>
 
 
-                        {/* Phone Number Input */}
-                        <Row className="mb-3">
-                            <TextInputFormGroup
-                                controlId='validationCustom07'
-                                label='Phone Number'
-                                type='text'
-                                required={true}
-                                placeholder='Ex: 123-654-0987'
-                                alt='Phonenumber Text Input'
-                                inputRef={undefined}
-                                feedbackMessage='Please enter a valid location' />
+                            {/*User Level Input*/}
+                            <Col md={6} sm={12} className="mb-3">
+
+                                <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
+                                {['he/him', 'she/her', 'they/them'].map((pronouns) => (
+                                    <div key={pronouns} className="mb-3">
+                                        <Form.Check
+                                            type='radio'
+                                            id={pronouns}
+                                            label={pronouns}
+                                            name="prounouns"
+                                        />
+                                    </div>
+                                ))}
+                            </Col>
                         </Row>
                         {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
                         {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}
