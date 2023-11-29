@@ -2,21 +2,23 @@ import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "reac
 import '../css/facultyDirectory.css';
 import Header from "./Header";
 import { useRef, useState } from "react";
-import FacultyMemberDirectory, {facultyMember}from "./FacultyMemberDirectory";
+import FacultyMemberDirectory, { facultyMember } from "./FacultyMemberDirectory";
 
 
 //Create an array of faculty member objects
 const facultyArray: facultyMember[] = [
-    { name: 'John Doe', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
-    { name: 'Dr. Christopher Stuetzle', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
-    { name: 'Dr. Zachary Kissel', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-    , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink:'/'}
+    {
+        name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
+        , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink: '/', photoURL: 'https://lh3.googleusercontent.com/a-/ALV-UjWeIN34qJPkxscprE8LXjWxgqGv7T3b4sjgaISeR0yfyw=s48-p'
+    },
+    {
+        name: 'Dr. Christopher Stuetzle', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
+        , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink: '/', photoURL: 'https://lh3.googleusercontent.com/a-/ALV-UjXJQAJfA5y8pKWzTyNADGFO4sKs4QAdjJpbbz2q4vStk_sc=s48-p'
+    },
+    {
+        name: 'Dr. Zachary Kissel', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
+        , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink: '/', photoURL: 'https://lh3.googleusercontent.com/a-/ALV-UjWNK_ft4gLQrzm20K7DWeVVKE9mcOCDoZZMiu1gzsLkLw=s48-p'
+    },
 ];
 
 // Faculty Directory components
@@ -54,25 +56,25 @@ function FacultyDirectory() {
                     </div>
                 </Row>
                 {/* Results Number */}
-                <Row style={{paddingBottom: '75px'}}>
-                    <Col md={6} sm={6}  xs = {6} className="resultsInfo">
+                <Row style={{ paddingBottom: '75px' }}>
+                    <Col md={6} sm={6} xs={6} className="resultsInfo">
                         <Button> {visibleUsers.length}</Button>
                     </Col>
-                    <Col md={6} sm={6} xs = {6} style={{margin: 'auto'}}>
+                    <Col md={6} sm={6} xs={6} style={{ margin: 'auto' }}>
                         <h1 className="smallFont metropolisRegular"> Results</h1>
                     </Col>
                 </Row>
-                <Container style ={{paddingBottom: '50px'}}>
-                {
+                <Container style={{ paddingBottom: '50px' }}>
+                    {
                         // Maps each of the visible faculty members to an individual faculty member component
                         visibleUsers.map((faculty, index) => (
                             <FacultyMemberDirectory key={index}
                                 facultyMember={faculty}
-                                isLast={index=== visibleUsers.length-1 ? true : false}
+                                isLast={index === visibleUsers.length - 1 ? true : false}
                             />
                         ))
                     }
-                    </Container>
+                </Container>
             </Container>
         </div>
     )
