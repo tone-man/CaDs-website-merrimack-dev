@@ -1,0 +1,4 @@
+.container-white-bordered {
+    border: 1px black solid;
+    background-color: white;
+}
