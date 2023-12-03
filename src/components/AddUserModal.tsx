@@ -1,9 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, HtmlHTMLAttributes } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../css/formModal.css'
 import '../css/whiteListSection.css'
 import TextInputFormGroup from './TextInputFormGroup';
-import { User } from '../firebase/user';
+import FireBaseApp from '../firebase';
+import { emailToFirebase } from '../firebase/firebaseFormatter';
+import { getDatabase, ref, set } from 'firebase/database';
+import User from '../firebase/user';
 
 // This modal pops up to provide the user with a format to enter new user information
 // TODO: Add more information potentially
@@ -11,8 +14,12 @@ function AddUserModal() {
 
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
-    const userLevel = useRef<HTMLInputElement | null>(null);
-    const phoneNumber = useRef<HTMLInputElement | null>(null);
+    const userLevelRef = useRef<HTMLInputElement | null>(null);
+    const phoneNumberRef = useRef<HTMLInputElement | null>(null);
+    const titleRef = useRef<HTMLInputElement | null>(null);
+    const departmentRef = useRef<HTMLInputElement | null>(null);
+    const prounounsRef = useRef<HTMLInputElement | null>(null);
+    const officeLocationRef = useRef<HTMLInputElement | null>(null);
 
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
@@ -31,10 +38,15 @@ function AddUserModal() {
         // Checks form validity
         if (form.checkValidity()) {
             // Gets form information and calls addUser() with respective info
-            if (fullNameRef.current && emailRef.current && userLevel.current && phoneNumber.current) {
-
-                setSelectedImage(null);
+            if (!fullNameRef.current || !emailRef.current || !userLevelRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
+                console.error("error");
+            } else {
+                const db = getDatabase(FireBaseApp);
+                let id = emailToFirebase(emailRef.current.value);
+                let newUser = new User(id, emailRef.current.value, fullNameRef.current.value, "", userLevelRef.current.value, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                set(ref(db, 'users/' + id), newUser);
             }
+            // TODO: Photos
             handleClose();
         }
         setValidated(true);
@@ -97,7 +109,7 @@ function AddUserModal() {
                                     required={true}
                                     placeholder='Ex: Adjunct Professor'
                                     alt='Title Text Input'
-                                    inputRef={undefined}
+                                    inputRef={titleRef}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
 
@@ -112,7 +124,7 @@ function AddUserModal() {
                                     required={true}
                                     placeholder='Ex: Campus Center'
                                     alt='Department Text Input'
-                                    inputRef={undefined}
+                                    inputRef={departmentRef}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
                         </Row>
@@ -128,7 +140,7 @@ function AddUserModal() {
                                     required={true}
                                     placeholder='Ex: 101 Campus Room'
                                     alt='Office Location Text Input'
-                                    inputRef={undefined}
+                                    inputRef={officeLocationRef}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
 
@@ -142,7 +154,7 @@ function AddUserModal() {
                                     required={true}
                                     placeholder='Ex: 123-654-0987'
                                     alt='Phonenumber Text Input'
-                                    inputRef={undefined}
+                                    inputRef={phoneNumberRef}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
                         </Row>
@@ -159,23 +171,27 @@ function AddUserModal() {
                                             id={userLevel}
                                             label={userLevel}
                                             name="userLevels"
+                                            ref={userLevelRef}
+                                            value={userLevel}
                                         />
                                     </div>
                                 ))}
                             </Col>
 
 
-                            {/*User Level Input*/}
+                            {/*Pronouns Input*/}
                             <Col md={6} sm={12} className="mb-3">
 
                                 <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
-                                {['he/him', 'she/her', 'they/them'].map((pronouns) => (
-                                    <div key={pronouns} className="mb-3">
+                                {['he/him', 'she/her', 'they/them'].map((pronouns, index) => (
+                                    <div key={index} className="mb-3">
                                         <Form.Check
                                             type='radio'
                                             id={pronouns}
                                             label={pronouns}
                                             name="prounouns"
+                                            value={index}
+                                            ref={prounounsRef}
                                         />
                                     </div>
                                 ))}

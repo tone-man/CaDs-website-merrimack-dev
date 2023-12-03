@@ -7,11 +7,10 @@ import DeleteConfirmationModal from './DeleteConfirmationModal'; // Import your 
 import EditUserModal from './EditUserModal';
 import { useState } from 'react';
 import User from '../firebase/user';
-import { UserInterface } from '../firebase/user';
 
 // Interface for the indivual in the whitelist
 interface WhiteListIndividualProps {
-    user: UserInterface
+    user: User
     onDelete: () => void; // onDelete prop 
     onEdit: (id: number, name: string, email: string, image: string | undefined) => void;
 }
@@ -22,6 +21,7 @@ function WhiteListIndividual({ user, onDelete, onEdit }: WhiteListIndividualProp
 
     // Triggers deletion and closes confirmation modal
     const handleDelete = (): void => {
+        console.log(user);
         setShowDeletionModal(false);
         onDelete();
     };

@@ -7,6 +7,8 @@ import AddUserModal from './AddUserModal';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
 import User, { UserInterface } from '../firebase/user';
+import { getDatabase, ref, remove } from 'firebase/database';
+import FireBaseApp from '../firebase';
 
 // This component creates the basic container for those on the whitelist
 function WhiteListSection(userArray: UserInterface[]) {
@@ -33,8 +35,8 @@ function WhiteListSection(userArray: UserInterface[]) {
     // Deletes user from whitelist
     // TODO: Pass deleted user info back to database
     function deleteUser(id: string) {
-        const keptUsers = userList.filter(user => user.id !== id);
-        setUserList(keptUsers);
+        const db = getDatabase(FireBaseApp);
+        remove(ref(db, `users/${id}`));
     }
 
     // Adds user to the whitelist. 
