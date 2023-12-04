@@ -12,7 +12,7 @@ import User from '../firebase/user';
 interface WhiteListIndividualProps {
     user: User
     onDelete: () => void; // onDelete prop 
-    onEdit: (id: number, name: string, email: string, image: string | undefined) => void;
+    onEdit: (user: User) => void;
 }
 
 // Creates individual component for those in the whitelist
@@ -56,7 +56,7 @@ function WhiteListIndividual({ user, onDelete, onEdit }: WhiteListIndividualProp
 
                     {/* Edit and Delete Buttons */}
                     <Col md={2} sm={12} xs={12} className='margin-auto'>
-                        <EditUserModal editUser={onEdit} id={user.id} name={user.name} email={user.email} />
+                        <EditUserModal updateUser={onEdit} user={user} />
                         <Row style={{ padding: '10px' }}>
                             <Button className='delete-button' onClick={handleOpenConfirmationModal}>Delete</Button>
                         </Row>

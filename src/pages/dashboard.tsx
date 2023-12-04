@@ -58,8 +58,8 @@ const Dashboard = () => {
         onValue(usersRef, (snapshot) => {
             const allowedUsersList: User[] = [];
             snapshot.forEach((child) => {
-                const { email, name, photoURL, userLevel } = child.val();
-                allowedUsersList.push(new User(child.key, email, name, photoURL, userLevel));
+                const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = child.val();
+                allowedUsersList.push(new User(child.key, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location));
             });
 
             setAllowedUsersList(allowedUsersList);

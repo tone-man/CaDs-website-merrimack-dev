@@ -122,4 +122,21 @@ export default class User {
     set location(location: string) {
         this._location = location;
     }
+
+    /**
+     * Returns the user in a way that firbase handles
+     */
+    toFirebaseObject() {
+        return {
+            email: this._email,
+            name: this._name,
+            photoURL: this._photoURL,
+            userLevel: this._userLevel,
+            phoneNumber: this._phoneNumber,
+            title: this._title,
+            pronouns: this._pronouns,
+            department: this._department,
+            location: this._location,
+        }
+    }
 }

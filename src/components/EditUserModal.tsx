@@ -8,7 +8,7 @@ import { update } from 'firebase/database';
 
 interface editUserProps {
     updateUser: (user: User) => void;
-    user: User | null;
+    user: User;
 }
 
 // This modal pops up to allow users to edit white list user information
@@ -18,10 +18,17 @@ function EditUserModal(props: editUserProps) {
     const user = props.user;
 
     // UseRef and UseState variable declarations
-    const fullNameRef = useRef<HTMLInputElement | null>(null);
-    const emailRef = useRef<HTMLInputElement | null>(null);
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
+    const fullNameRef = useRef<HTMLInputElement | null>(null);
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const userLevelRef = useRef<HTMLInputElement | null>(null);
+    const phoneNumberRef = useRef<HTMLInputElement | null>(null);
+    const titleRef = useRef<HTMLInputElement | null>(null);
+    const departmentRef = useRef<HTMLInputElement | null>(null);
+    const prounounsRef = useRef<HTMLInputElement | null>(null);
+    const officeLocationRef = useRef<HTMLInputElement | null>(null);
+
     const [selectedImage, setSelectedImage] = useState<File | null>(null); // Use File type for selectedImage state
 
     // Handles opening/closing the modal
@@ -38,22 +45,18 @@ function EditUserModal(props: editUserProps) {
 
         // Checks form validity
         if (form.checkValidity()) {
-
-            // Gets form information and calls editUser() with the respective info
-            if (fullNameRef.current && emailRef.current) {
-                const fullName = fullNameRef.current.value;
-                const email = emailRef.current.value;
-                if (selectedImage) {
-                    updateUser(user);
-                }
-                else {
-                    updateUser(user);
-                }
-
+            // Gets form information and calls addUser() with respective info
+            if (!fullNameRef.current || !emailRef.current || !userLevelRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
+                console.error("error");
+            } else {
+                let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, "", userLevelRef.current.value, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                updateUser(updatedUser)
             }
-            setValidated(true);
+            // TODO: Photos
             handleClose();
         }
+        setValidated(true);
+        handleClose();
     };
 
 
@@ -84,7 +87,9 @@ function EditUserModal(props: editUserProps) {
                                     alt='Full Name Text Input'
                                     inputRef={fullNameRef}
                                     type='text'
+                                    default={user.name}
                                     feedbackMessage='Please enter full name' />
+
                             </Col>
 
                             {/*Email Text Input*/}
@@ -97,6 +102,7 @@ function EditUserModal(props: editUserProps) {
                                     placeholder='Ex: name@example.com'
                                     alt='Email Text Input'
                                     inputRef={emailRef}
+                                    default={user.email}
                                     feedbackMessage='Please enter a valid email' />
                             </Col>
                         </Row>
@@ -112,7 +118,8 @@ function EditUserModal(props: editUserProps) {
                                     required={true}
                                     placeholder='Ex: Adjunct Professor'
                                     alt='Title Text Input'
-                                    inputRef={undefined}
+                                    inputRef={titleRef}
+                                    default={user.title}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
 
@@ -127,7 +134,8 @@ function EditUserModal(props: editUserProps) {
                                     required={true}
                                     placeholder='Ex: Campus Center'
                                     alt='Department Text Input'
-                                    inputRef={undefined}
+                                    inputRef={departmentRef}
+                                    default={user.department}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
                         </Row>
@@ -143,7 +151,8 @@ function EditUserModal(props: editUserProps) {
                                     required={true}
                                     placeholder='Ex: 101 Campus Room'
                                     alt='Office Location Text Input'
-                                    inputRef={undefined}
+                                    inputRef={officeLocationRef}
+                                    default={user.location}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
 
@@ -157,7 +166,8 @@ function EditUserModal(props: editUserProps) {
                                     required={true}
                                     placeholder='Ex: 123-654-0987'
                                     alt='Phonenumber Text Input'
-                                    inputRef={undefined}
+                                    inputRef={phoneNumberRef}
+                                    default={user.phoneNumber}
                                     feedbackMessage='Please enter a valid location' />
                             </Col>
                         </Row>
@@ -174,6 +184,9 @@ function EditUserModal(props: editUserProps) {
                                             id={userLevel}
                                             label={userLevel}
                                             name="userLevels"
+                                            ref={userLevelRef}
+                                            value={userLevel}
+                                            defaultChecked={(userLevel == user.userLevel) ? false : true}
                                         />
                                     </div>
                                 ))}
@@ -184,13 +197,16 @@ function EditUserModal(props: editUserProps) {
                             <Col md={6} sm={12} className="mb-3">
 
                                 <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
-                                {['he/him', 'she/her', 'they/them'].map((pronouns) => (
-                                    <div key={pronouns} className="mb-3">
+                                {['he/him', 'she/her', 'they/them'].map((pronouns, index) => (
+                                    <div key={index} className="mb-3">
                                         <Form.Check
                                             type='radio'
                                             id={pronouns}
                                             label={pronouns}
                                             name="prounouns"
+                                            ref={prounounsRef}
+                                            value={index}
+                                            defaultChecked={(String(index) == user.pronouns) ? false : true}
                                         />
                                     </div>
                                 ))}

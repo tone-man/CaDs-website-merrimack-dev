@@ -7,7 +7,7 @@ import AddUserModal from './AddUserModal';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
 import User, { UserInterface } from '../firebase/user';
-import { getDatabase, ref, remove } from 'firebase/database';
+import { getDatabase, ref, remove, set } from 'firebase/database';
 import FireBaseApp from '../firebase';
 
 // This component creates the basic container for those on the whitelist
@@ -39,32 +39,11 @@ function WhiteListSection(userArray: UserInterface[]) {
         remove(ref(db, `users/${id}`));
     }
 
-    // Adds user to the whitelist. 
-    //TODO: Actually pass this information back to database
-    function addUser(name: string, email: string, image: string) {
-        // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects
-        const newID = userList.length > 0 ? (Math.max(...userList.map(user => user.id)) + 1) : 0;
-        const newUser: userProps = { userImage: image, userEmail: email, userName: name, id: newID };
-        setUserList([newUser, ...userList]);
-    }
-
     // Edits user information in the whitelist
     // TODO: Pass edited user information back to database
-    function editUser(id: string, name: string, email: string, image: string | undefined) {
-        if (image != undefined) {
-            setUserList(prevUsers => {
-                const updatedUsers = prevUsers.map(user => (user.id === id ? { ...user, userName: name, userEmail: email, userImage: image } : user));
-                return updatedUsers;
-            });
-        }
-        else {
-            setUserList(prevUsers => {
-                const updatedUsers = prevUsers.map(user => (user.id === id ? { ...user, userName: name, userEmail: email } : user));
-                return updatedUsers;
-            });
-        }
-
-
+    function editUser(user: User) {
+        const db = getDatabase(FireBaseApp);
+        set(ref(db, `users/${user.id}`), user.toFirebaseObject());
     }
 
     return (
@@ -115,7 +94,7 @@ function WhiteListSection(userArray: UserInterface[]) {
 
                     {/* Add user button */}
                     <div className='positioning'>
-                        <AddUserModal addUser={addUser} />
+                        <AddUserModal />
                     </div>
 
                 </div>

@@ -44,7 +44,7 @@ function AddUserModal() {
                 const db = getDatabase(FireBaseApp);
                 let id = emailToFirebase(emailRef.current.value);
                 let newUser = new User(id, emailRef.current.value, fullNameRef.current.value, "", userLevelRef.current.value, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
-                set(ref(db, 'users/' + id), newUser);
+                set(ref(db, 'users/' + id), newUser.toFirebaseObject());
             }
             // TODO: Photos
             handleClose();
