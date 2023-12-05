@@ -4,7 +4,7 @@ import '../css/projectCard.css'
 import { Card, Col, Figure, Row } from 'react-bootstrap';
 import AccordionContributer from './AccordionContributer';
 import FacultyCarousel, { facultyMembers } from './FacultyCarousel';
-import pic from '../imgs/footer-stadium.webp';
+import pic from '../imgs/analysis.webp';
 import { contributerProps } from './ProjectContributer';
 
 

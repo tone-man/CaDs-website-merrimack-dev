@@ -20,7 +20,7 @@ function ProfileImage(myProps: myImageProps) {
             {/* Creates a rounded image */}
             <Image
                 className="rounded-circle overflow-hidden"
-                src={(myProps.image) ? myProps.image: merrimackLogo}
+                src= {(myProps.image) ? myProps.image: merrimackLogo}
                 alt="Profile Picture"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', border: '1px solid black' }}
             />

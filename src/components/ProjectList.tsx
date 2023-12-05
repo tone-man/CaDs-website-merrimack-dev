@@ -22,7 +22,7 @@ function ProjectList(myProps: projectProps) {
                         <Col md={{ span: 12 }} style={{ padding: '20px' }} className='black-color'>
                             <h1 className='metropolisBold uppercase'> Explore Our Faculty Led Projects</h1>
                             <h5 className='metropolisThin smallFont'> Learn about some of the amazing projects that faculty members
-                                from the Computer Science and Data Science department
+                                from the Computer and Data Sciences department
                                 have worked on in recent years. </h5>
                         </Col>
                     </Row>

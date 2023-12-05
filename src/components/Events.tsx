@@ -1,7 +1,7 @@
 
 import { Card, Row, Col } from 'react-bootstrap';
 import '../css/events.css';
-import pic from '../imgs/footer-stadium.webp';
+import pic from '../imgs/careers.webp';
 
 export interface myEventProps {
     type: string,

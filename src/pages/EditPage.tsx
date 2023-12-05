@@ -393,7 +393,7 @@ const EditPage = () => {
                                 <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
                             </Col>
                             <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
-                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Request Changes</Button>
+                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Publish Changes</Button>
                             </Col>
                         </Row>
                     </Container>
