@@ -1,14 +1,14 @@
-import ProjectList from "../components/ProjectList";
-import TextArea from "../components/TextArea";
+import ProjectList from "../components/HomePageComponents/ProjectList";
+import TextArea from "../components/FacultyPage/TextArea";
 import ContactTextArea from "../components/FacultyPage/ContactTextArea";
 import EventsCarousel from "../components/EventsCarousel";
-import FacultyMemberHeader from "../components/FacultyMemberHeader";
-import FacultyPageAccordion from "../components/FacultyPageAccordion";
+import FacultyMemberHeader from "../components/FacultyPage/FacultyMemberHeader";
+import FacultyPageAccordion from "../components/FacultyPage/FacultyPageAccordion";
 
 import { myEventProps } from "../components/Events";
-import { facultyMembers } from "../components/FacultyCarousel";
-import { myProjectProps } from "../components/ProjectCard";
-import { contributerProps } from "../components/ProjectContributer";
+import { facultyMembers } from "../components/HomePageComponents/FacultyCarousel";
+import { myProjectProps } from "../components/HomePageComponents/ProjectCard";
+import { contributerProps } from "../components/HomePageComponents/ProjectContributer";
 
 // Function that creates and returns a project object
 export function makeProjectObject(

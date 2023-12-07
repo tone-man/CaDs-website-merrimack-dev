@@ -6,7 +6,9 @@
     margin-top: 50px;
 }
 
-
+.edit-container{
+    width: 90%;
+}
 
 
 /* Restyles event and event edit carousle container upon screen resizing */
@@ -14,5 +16,9 @@
     .save-button Button{
         font-size: var(--extraSmallFont);
     }
+    .edit-container{
+        width: 100%;
+    }
+    
 }
 

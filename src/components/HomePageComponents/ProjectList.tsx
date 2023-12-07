@@ -1,9 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import '../../css/universal.css'
+import '../../css/homepageCSS/ProjectList.css'
+
 import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
-import '../css/universal.css'
-import '../css/ProjectList.css'
+import Header from '../Header';
+
 
 
 interface projectProps {
@@ -46,6 +50,7 @@ function ProjectList(myProps: projectProps) {
                     }
                 </Container >
             </Container>
+            <Header img={'src/imgs/OBCenter.jpg'} title='Upcoming Events' />
         </>
     )
 }

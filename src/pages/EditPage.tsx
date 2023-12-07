@@ -368,8 +368,7 @@ const EditPage = () => {
                 onConfirm={handleCancel}
                 name={'this draft'} />
             <Header title={"Edit Page"} />
-            <Container fluid className='edit-page-container'>
-                <Container>
+            <Container fluid className='edit-container'>
                     <Row>
                         <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
                             <Dropdown>
@@ -386,7 +385,7 @@ const EditPage = () => {
                         </Col>
                     </Row>
                     {updatedComponents}
-                    <Container fluid style={{ width: '90%' }}>
+                    <Container fluid>
                         <Row>
                             <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
                                 {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
@@ -398,7 +397,6 @@ const EditPage = () => {
                         </Row>
                     </Container>
                 </Container>
-            </Container>
         </div>
     );
 };

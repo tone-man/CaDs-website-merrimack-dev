@@ -1,6 +1,9 @@
 import { Container, Row, Col } from 'react-bootstrap'
-import ProfileImage from './ProfileImage'
-import '../css/facultyMemberPage.css'
+
+import '../../css/DirectoryCSS/facultyMemberDirectory.css'
+
+import ProfileImage from '../ProfileImage'
+
 
 interface headerProps {
     departmentName: string,
@@ -10,6 +13,7 @@ interface headerProps {
 
 }
 
+// Header that appears on the top of each faculty member's page
 function FacultyMemberHeader(myProps: headerProps) {
 
   return (
@@ -31,7 +35,7 @@ function FacultyMemberHeader(myProps: headerProps) {
                             <h1 className="faculty-title" dangerouslySetInnerHTML={{ __html: myProps.facultyTitle }}></h1>
                         </Col>
                     </Row>
-                    <Row className='image-row' >
+                    <Row className='image-row'>
                         <Col className="faculty-col">
                             <a href="/facultyDirectory">
                                 <h1 className="return-to-directory-text">

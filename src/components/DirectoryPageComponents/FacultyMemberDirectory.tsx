@@ -1,6 +1,8 @@
 import { Container, Row, Col, Button } from "react-bootstrap"
-import '../css/facultyMemberDirectory.css'
-import ProfileImage from "./ProfileImage";
+
+import '../../css/DirectoryCSS/facultyMemberDirectory.css'
+
+import ProfileImage from "../ProfileImage";
 
 export interface facultyMember {
     name: string,
@@ -34,7 +36,7 @@ function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
                         <h1 className="pronouns"> {facultyMember.pronouns}</h1>
                     </Container>
                 </Col>
-                <Col md={4} sm={8} xs={8} >
+                <Col md={4} sm={8} xs={8}>
                     {/* Department and contact information*/}
                     <Container className="information-container">
                         <div className="position">

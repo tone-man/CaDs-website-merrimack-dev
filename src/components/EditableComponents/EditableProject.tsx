@@ -2,7 +2,7 @@ import { getDatabase, ref } from "firebase/database"
 import { Container, Col, Row, Button, Accordion } from "react-bootstrap"
 import { useState, useEffect } from "react"
 
-import '../../css/editableCSS/editableEvent.css'
+import '../../css/editableCSS/editableNested.css'
 import '../../css/editableCSS/editableProject.css'
 
 import EditableFaculty from "./EditableFaculty"
@@ -25,7 +25,7 @@ export interface editableComponentProps {
  * Allows edit and deletion privileges to users.
  */
 function EditableProject(myProps: editableComponentProps) {
-    
+
     const db = getDatabase();
     const myRef = ref(db);
 
@@ -65,12 +65,12 @@ function EditableProject(myProps: editableComponentProps) {
         setButtons(
             <>
                 <Row style={{ display: 'flex', alignItems: 'center' }}>
-                    <Col md={8} sm={8} xs={12} className="nested-component-title">
+                <Col md={9} sm={12} xs={12} className='nested-component-title'  style={{ color: 'white' }}>
                         <h1 dangerouslySetInnerHTML={{ __html: myProps.data.title }}></h1>
                     </Col>
-                    <Col md={4} sm={4} xs={12} >
+                    <Col md={3} sm={12} xs={12}>
                         <Row>
-                            <Col className="reorder-nested-component" md={6} sm={6} xs={5} style={{ textAlign: 'right' }}>
+                        <Col className="reorder-nested-component" md={6} sm={5} xs={5} style={{ textAlign: 'right' }}>
                                 <Button
                                     disabled={myProps.nestedOrder === 0}
                                     onClick={() =>
@@ -79,7 +79,7 @@ function EditableProject(myProps: editableComponentProps) {
                                     </i>
                                 </Button>
                             </Col>
-                            <Col className="reorder-nested-component" md={6} sm={3} xs={5} style={{ textAlign: 'left' }}>
+                            <Col className="reorder-nested-component" md={6} sm={5} xs={5} style={{ textAlign: 'left' }}>
                                 <Button
                                     disabled={myProps.nestedOrder === lastNestedOrder}
                                     onClick={() => reorderNestedComponents(false, myRef, myProps)}>
@@ -135,19 +135,17 @@ function EditableProject(myProps: editableComponentProps) {
         });
     }
 
-
-
     return (
         <div>
-
             <DeleteConfirmationModal
                 show={showDeleteModal}
                 onHide={() => setShowDeletionModal(false)}
                 onConfirm={remove}
                 name={'this ' + myProps.data.type} />
-            <Container className="individual-event">
-                {buttons}
-                <Container className="event-styling" >
+            <Container fluid className='background-container'>
+                <Container fluid className='text-editable-container'>
+                    {buttons}
+                    <Container fluid className='styling'>
                     <Row>
                         <EditableFormComponent
                             changedValue='/title'
@@ -231,9 +229,9 @@ function EditableProject(myProps: editableComponentProps) {
                                 <h4 className="header">Contributers</h4>
                             </Accordion.Header>
                             <div className="accordion-body-container">
-                                <Accordion.Body >
-                                    <Col md={12} sm={12} xs={12}>
-                                        <Row>
+                                <Accordion.Body>
+                                    <Row>
+                                        <Col md={12} sm={12} xs={12}>
                                             <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                                                 <Button
                                                     onClick={() =>
@@ -241,22 +239,21 @@ function EditableProject(myProps: editableComponentProps) {
                                                     <i className="bi bi-plus-lg" />
                                                 </Button>
                                             </Col>
-
-                                        </Row>
-                                    </Col>
-                                    {contributorsArray.length > 0 && (
-                                        contributorsArray.map(({ key, contributor }) => (
-                                            <EditableContributers
-                                                data={contributor}
-                                                pageOrder={contributor.pageOrder}
-                                                nestedOrder={contributor.nestedOrder}
-                                                componentKey={key}
-                                                pathName={`${myProps.pathName}/${myProps.componentKey}/contributers`}
-                                                key={key}
-                                                addToast={myProps.addToast}
-                                            />
-                                        ))
-                                    )}
+                                        </Col>
+                                        {contributorsArray.length > 0 && (
+                                            contributorsArray.map(({ key, contributor }) => (
+                                                <EditableContributers
+                                                    data={contributor}
+                                                    pageOrder={contributor.pageOrder}
+                                                    nestedOrder={contributor.nestedOrder}
+                                                    componentKey={key}
+                                                    pathName={`${myProps.pathName}/${myProps.componentKey}/contributers`}
+                                                    key={key}
+                                                    addToast={myProps.addToast}
+                                                />
+                                            ))
+                                        )}
+                                    </Row>
                                 </Accordion.Body>
                             </div>
                         </Accordion.Item>
@@ -299,7 +296,7 @@ function EditableProject(myProps: editableComponentProps) {
                             </div>
                         </Accordion.Item>
                     </Accordion>
-
+                    </Container>
                 </Container>
             </Container >
         </div >

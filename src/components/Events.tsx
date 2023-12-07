@@ -1,7 +1,9 @@
 
 import { Card, Row, Col } from 'react-bootstrap';
 import '../css/events.css';
-import pic from '../imgs/careers.webp';
+import '../css/homepageCSS/imageModal.css'
+import pic from '../imgs/Tillman_Laney_ResearchPoster.pptx.jpg';
+import { useEffect, useState } from 'react';
 
 export interface myEventProps {
     type: string,
@@ -18,8 +20,45 @@ export interface myEventProps {
 
 // This creates the event component that will be in the events carousel
 function Events(props: myEventProps) {
+    const [modal, setModal] = useState<null | HTMLElement>(null);
+    const [modalImg, setModalImg] = useState<null | HTMLElement>(null);
+    const [captionText, setCaptionText] = useState<null | HTMLElement>(null);
+
+    useEffect(() => {
+        setModal(document.getElementById("myModal") as HTMLElement);
+        setModalImg(document.getElementById("img") as HTMLElement);
+        setCaptionText(document.getElementById("caption") as HTMLElement);
+    }, []);
+
+      // Modal Reference: https://www.w3schools.com/howto/howto_css_modal_images.asp
+    // Trigger modal when user clicks on image
+    function triggerModal() {
+        modal as HTMLElement;
+        modalImg as HTMLElement;
+        captionText as HTMLElement;
+        if (modal) {
+            modal.style.display = "block";
+            modalImg.src = pic;
+            captionText.innerHTML = imageDescription;
+        }
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    function closeModal() {
+        console.log("close modal")
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
     return (
         <div>
+            {/* <!-- The Modal for the image--> */}
+            <div id="myModal" className="image-modal">
+                <span className="image-close" onClick={closeModal}>&times;</span>
+                <img className="image-modal-content" id="img" />
+                <div id="caption"></div>
+            </div>
             <Card className='event-card' style={{ background: 'rgb(20, 54, 100)', color: 'white' }}>
                 <Card.Body>
                     <Row>
@@ -33,7 +72,7 @@ function Events(props: myEventProps) {
                     <Row>
                         {/* Event Image, and image description */}
                         <Col md={4} xs={12} className='image-container'>
-                            <Card.Img src={pic} className="card-image" alt={props.imageAlt} />
+                            <Card.Img src={pic} className="card-image" alt={props.imageAlt} onClick={triggerModal} />
                         </Col>
                         <Col md={8} sm={12} xs={12} className='event-text'>
                             <Card.Text dangerouslySetInnerHTML={{ __html: props.description }}></Card.Text>

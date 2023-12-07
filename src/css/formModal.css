@@ -1,7 +1,35 @@
-/* Styles the modal */
+/* Styles the modal for requests */
 
+/* Styles modal container */
 .customized-modal .modal-content {
   background-color: var(--blue);
   color: white;
   padding: 20px;
+}
+
+/* Styles the tooltip that appears upon hovering over the button */
+.tooltip-text{
+  font-size: var(--extraSmallFont);
+  font-family: var(--caslonRegular)
+}
+
+/* Styles the button and the icon */
+.request-button {
+ height: fit-content;
+}
+
+.request-icon {
+  color: black;
+  font-size: var(--smallFont);
+}
+
+/* Styling tooltip and icon size */
+@media screen and (max-width: 600px) {
+  .tooltip-text{
+    font-size: .75rem;
+  }
+  .request-icon {
+    color: black;
+    font-size: .75rem;
+  }
 }

@@ -29,7 +29,7 @@ function FormModal() {
   // Customized tooltip that appears upon hovering on the buttom
   const tooltip = (
     <Tooltip id="tooltip">
-      <h2 className='extraSmallFont caslonRegular'>Interested in being featured on this project? Make a request here! </h2>
+      <h2 className='tooltip-text'>Interested in being featured on this project? Make a request here! </h2>
     </Tooltip>
   );
 
@@ -39,8 +39,8 @@ function FormModal() {
       {/* Adds the tooltip to the Request to Be Featured button */}
       <ButtonToolbar>
         <OverlayTrigger placement="left" overlay={tooltip}>
-          <Button variant='light' style={{ height: '60px' }} onClick={handleShow}>
-            <i className="bi bi-people-fill" style={{ color: 'black', fontSize: '2rem' }} aria-label='Request to be Featured Icon'></i>
+          <Button variant='light' className='request-button' onClick={handleShow}>
+            <i className="bi bi-people-fill request-icon" aria-label='Request to be Featured Icon'></i>
           </Button>
         </OverlayTrigger>
       </ButtonToolbar>

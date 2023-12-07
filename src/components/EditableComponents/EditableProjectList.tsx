@@ -2,7 +2,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { getDatabase, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
 
-import '../../css/editableCSS/editableCarousel.css';
+import '../../css/editableCSS/editableList.css';
 
 import EditableProject from './EditableProject';
 import { addNestedComponent, reorderPageComponents, getMaxPageOrder } from '../../utils/editingComponents';
@@ -42,9 +42,8 @@ function EditableProjectList(myProps: eventCarouselProps) {
   // Set the buttons that will be displayed for the project list
   useEffect(() => {
     setButtons(
-      <Container style={{ width: '95%' }} className="buttons-container">
-
-        <Row>
+      <Container fluid>
+      <Row className="buttons-container">
           <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={2} sm={2} xs={5} className='reorder-page-component' >
@@ -68,7 +67,7 @@ function EditableProjectList(myProps: eventCarouselProps) {
           </Col>
 
           {/*Add project to project list button */}
-          <Col md={6} sm={6} xs={5}>
+          <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
                 <Button
@@ -95,7 +94,7 @@ function EditableProjectList(myProps: eventCarouselProps) {
   return (
     <div>
       {buttons}
-      <div className="event-carousel-container">
+      <div className="editable-list-container">
         {
           // Maps each of the projects in the project array to an editable project component
           sorted.map((element) => (

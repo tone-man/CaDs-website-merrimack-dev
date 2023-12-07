@@ -1,8 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import '../../css/homepageCSS/facultyCarousel.css'
+
 import { Carousel } from 'react-bootstrap';
-import ProfileImage from './ProfileImage';
-import '../css/facultyCarousel.css'
+import ProfileImage from '../ProfileImage';
+
 
 
 // Interface for the faculty members. Each faculty member should have a name and image

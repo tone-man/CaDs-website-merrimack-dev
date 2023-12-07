@@ -46,11 +46,10 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
 
     return (
         <div>
-            <Container className='background-container'>
-                <Container className='text-editable-container '>
+            <Container fluid className='background-container'>
+                <Container fluid className='text-editable-container'>
                     <h1 className='title' style={{ color: 'white' }}> Your Information</h1>
-
-                    <Container className='styling'>
+                    <Container fluid className='styling'>
                         <EditableFormComponent
                             changedValue='/facultyName'
                             myRef={myRef}

@@ -4,11 +4,12 @@
 .faculty-directory .row {
     border-top: 1px black solid;
     padding: 10px 0px;
+    display: flex;
+    justify-content: center;
+    /* Horizontal centering */
+    align-items: center;
+    /* Vertical centering */
 }
-.faculty-directory .row .col {
-    margin: auto;
-}
-
 
 /* Style the button that links to the faculty page*/
 .faculty-directory .link-button {
@@ -27,55 +28,57 @@
 .faculty-directory .row .profile-container {
     padding: 10px;
     width: 100%;
-    height: 300px;
+    height: fit-content;
     text-align: center;
-    border-right: 1px darkslategray solid;
 }
 
 /* Styles text */
 .faculty-directory .row .profile-container .text {
     text-align: center;
     width: 100%;
+    word-wrap: break-word;
 }
 
+/* Styles name */
 .faculty-directory .row .profile-container .name {
     padding-top: 10px;
     padding-bottom: 10px;
     font-family: var(--caslonBold);
     font-size: var(--smallFont);
+    word-wrap: break-word;
 }
 
+/* Styles title */
 .faculty-directory .row .profile-container .title {
     padding-bottom: 10px;
     font-family: var(--caslonRegular);
     color: rgb(56, 57, 58);
     font-size: 1.2rem;
+    word-wrap: break-word;
 }
 
+/* Styles pronounds */
 .faculty-directory .row .profile-container .pronouns {
     padding-bottom: 10px;
     font-family: var(--caslonRegular);
     color: rgb(78, 80, 81);
     font-size: var(--extraSmallFont);
+    word-wrap: break-word;
 }
 
 /* Styles container holding faculty member information */
 .faculty-directory .row .information-container {
     text-align: left;
-    height: 300px;
+    height: fit-content;
     width: 100%;
     margin: auto;
+    border-left: 1px darkslategray solid;
+
 }
 
-/* Styles text */
+/* Styles position, title, and context in information-container */
 .faculty-directory .row .information-container .position {
     padding: 20px 0px;
-}
-
-.faculty-directory .row .information-container .title {
-    font-family: var(--caslonBold);
-    color: var(--blue);
-    font-size: 1.25rem;
 }
 
 .faculty-directory .row .information-container .title {
@@ -88,14 +91,20 @@
     font-family: var(--caslonRegular);
     color: rgb(56, 57, 58);
     font-size: var(--extraSmallFont);
+    word-wrap: break-word;
 }
 
 /* Restyles profile container and the information container based on screen size */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 750px) {
     .faculty-directory .row .profile-container {
-        border-right: none !important;
         padding-bottom: 10px;
     }
+
+    .faculty-directory .row .information-container {
+        border-left: none !important;
+        padding-bottom: 10px;
+    }
+
     .faculty-directory .row .information-container .position {
         padding: 20px 0px;
     }

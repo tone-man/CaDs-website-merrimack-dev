@@ -1,11 +1,12 @@
 import { Col, Container, Row } from 'react-bootstrap'
-import '../css/facultyMemberPage.css'
+import '../../css/facultyPageCSS/facultyPage.css'
 
 export interface textProps {
     label: string,
     content: string,
 }
 
+// Text area component 
 function TextArea(myProps: textProps) {
     return (
         <div>
@@ -13,7 +14,7 @@ function TextArea(myProps: textProps) {
                 <Container>
                     <Row>
                         <Col>
-                            <h1 className="label" dangerouslySetInnerHTML={{ __html: myProps.label}}></h1>
+                            <h1 className="label" dangerouslySetInnerHTML={{ __html: `<span>${myProps.label}</span>` }}></h1>
                         </Col>
                     </Row>
                     <Row>

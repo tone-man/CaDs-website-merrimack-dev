@@ -1,16 +1,29 @@
-.editableForm h1 {
-    font-size: var(--smallFont);
-    color: black;
-}
+
 
 .editableForm .label{
     font-size: var(--smallFont);
 }
+
+
+/* Example CSS in an external file */
+.my-editor .ql-editor {
+    font-size: var(--extraSmallFont); /* Change the font size as needed */
+    font-family: var(--caslonRegular);
+  }
 
 /* Restyles event and event edit carousle container upon screen resizing */
 @media screen and (max-width: 800px) {
     .editableForm .label{
         font-size: var(--extraSmallFont);
     }
-    
+}
+
+/* Restyles event and event edit carousle container upon screen resizing */
+@media screen and (max-width: 600px) {
+    .editableForm .label{
+        font-size: 1rem;
+    }
+    .editableForm .content{
+        font-size: var(--extraSmallFont);
+    }
 }

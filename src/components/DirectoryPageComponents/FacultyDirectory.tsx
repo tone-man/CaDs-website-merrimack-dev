@@ -1,10 +1,10 @@
 import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "react-bootstrap";
 import { useRef, useState } from "react";
 
-import '../css/facultyDirectory.css';
+import '../../css/DirectoryCSS/facultyDirectory.css';
 
 import FacultyMemberDirectory, {facultyMember}from "./FacultyMemberDirectory";
-import Header from "./Header";
+import Header from "../Header";
 
 
 //Create an array of faculty member objects

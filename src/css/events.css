@@ -14,10 +14,11 @@
 /* Styles the image container  */
 .event-card .image-container {
     margin: auto;
-    width: 300px; 
+    width: 325px; 
     max-width: 100%; 
   }
 
+  /* Styles image and image on hover */
 .event-card .image-container .card-image {
     width: 100%; 
     height: auto;
@@ -27,6 +28,12 @@
     margin-bottom: 40px
 }
 
+.event-card .image-container .card-image:hover {
+ cursor: pointer;
+ opacity: .7;
+}
+
+/* Styles event text, the title and the event information */
 .event-card .event-text {
     margin: auto;
     text-align: center;
@@ -49,6 +56,21 @@
 /* Resizes the event image container on screen resizing */
 @media screen and (max-width: 1600px) {
     .event-card .image-container{
-      min-width: 300px;
+      min-width: 400px;
     }
   }
+
+  /* Resizes the event image container on screen resizing */
+@media screen and (max-width: 1200px) {
+  .event-card .image-container{
+    min-width: 300px;
+  }
+}
+
+  /* Resizes the event image container on screen resizing */
+  @media screen and (max-width: 300px) {
+    .event-card .image-container{
+      min-width: 150px;
+    }
+  }
+

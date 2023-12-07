@@ -59,8 +59,8 @@ function EditableTextArea(myProps: editableComponentProps) {
   // Render the buttons that will be displayed
   useEffect(() => {
     setButtons(
-      <Container style={{ width: '95%' }} className="buttons-container">
-        <Row>
+      <Container fluid>
+        <Row className="buttons-container">
           <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={2} sm={6} xs={6} className='reorder-page-component' >
@@ -99,13 +99,13 @@ function EditableTextArea(myProps: editableComponentProps) {
     <div>
       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.type} />
       {buttons}
-      <Container className='background-container'>
-        <Container className='text-editable-container'>
-          <h1 className='name' style={{ color: 'white' }}>
+      <Container fluid className='background-container'>
+      <Container fluid className='text-editable-container'>
+        <h1 className='title' style={{ color: 'white' }}>
             {myProps.type === 'text' ? (
               <h1 className='title'> Text Area</h1>) :
               (<h1 className='title'> Drop Down Text</h1>)}</h1>
-          <Container className='styling'>
+          <Container fluid className='styling'>
             <Row>
               <Col md={12} >
                 <EditableFormComponent
