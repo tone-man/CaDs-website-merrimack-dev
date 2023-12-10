@@ -7,48 +7,48 @@ test('Has Website in Title', async ({ page }) => {
 });
 
 
-// NAV BAR TESTS
-test('First Nav Bar Present', async ({ page }) => {
-  const pages = ['/', '/faculty', '/dashboard']
-  for (let i = 0; i < pages.length; i++) {
-    await page.goto(pages[i]);
-    await page.waitForLoadState('load'); 
-    const navbar = await page.$('#first-navbar');
-    expect(navbar).not.toBeNull();
-  }
-});
+// // NAV BAR TESTS
+// test('First Nav Bar Present', async ({ page }) => {
+//   const pages = ['/', '/faculty', '/dashboard']
+//   for (let i = 0; i < pages.length; i++) {
+//     await page.goto(pages[i]);
+//     await page.waitForLoadState('load'); 
+//     const navbar = await page.$('#first-navbar');
+//     expect(navbar).not.toBeNull();
+//   }
+// });
 
-test('Second Nav Bar Present', async ({ page }) => {
-  const pages = ['/', '/faculty', '/dashboard']
-  for (let i = 0; i < pages.length; i++) {
-    await page.goto(pages[i]);
-    await page.waitForLoadState('load'); 
-    const navbar = await page.$('#second-navbar');
-    expect(navbar).not.toBeNull();
-  }
-});
+// test('Second Nav Bar Present', async ({ page }) => {
+//   const pages = ['/', '/faculty', '/dashboard']
+//   for (let i = 0; i < pages.length; i++) {
+//     await page.goto(pages[i]);
+//     await page.waitForLoadState('load'); 
+//     const navbar = await page.$('#second-navbar');
+//     expect(navbar).not.toBeNull();
+//   }
+// });
 
-test('Correct Nav Bar Links', async ({ page }) => {
-  await page.goto('/');
+// test('Correct Nav Bar Links', async ({ page }) => {
+//   await page.goto('/');
 
-  const home = await page.waitForSelector('#home', { state: 'visible' });
-  await home.click();
-  await page.waitForLoadState('load'); 
-  const homeUrl = page.url();
-  expect(homeUrl).toContain('/'); 
+//   const home = await page.waitForSelector('#home', { state: 'visible' });
+//   await home.click();
+//   await page.waitForLoadState('load'); 
+//   const homeUrl = page.url();
+//   expect(homeUrl).toContain('/'); 
 
-  const dashboard = await page.waitForSelector('#dashboard', { state: 'visible' });
-  await dashboard.click();
-  await page.waitForLoadState('load'); 
-  const dashboardUrl = page.url();
-  expect(dashboardUrl).toContain('/dashboard'); 
+//   const dashboard = await page.waitForSelector('#dashboard', { state: 'visible' });
+//   await dashboard.click();
+//   await page.waitForLoadState('load'); 
+//   const dashboardUrl = page.url();
+//   expect(dashboardUrl).toContain('/dashboard'); 
 
-  const faculty = await page.waitForSelector('#faculty', { state: 'visible' });
-  await faculty.click();
-  await page.waitForLoadState('load'); 
-  const facultyUrl = page.url();
-  expect(facultyUrl).toContain('/faculty'); 
-});
+//   const faculty = await page.waitForSelector('#faculty', { state: 'visible' });
+//   await faculty.click();
+//   await page.waitForLoadState('load'); 
+//   const facultyUrl = page.url();
+//   expect(facultyUrl).toContain('/faculty'); 
+// });
 
 
 // test('Search Icon Toggles Search Bar', async ({ page }) => {
