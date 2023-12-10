@@ -3,7 +3,6 @@
     font-family: var(--metropolisRegular);
     padding-top: 20px;
     padding-bottom: 20px;
-    border: none  !important;
     margin: auto;
 }
 .contributer-accordion .header{
@@ -14,12 +13,21 @@
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='black'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
+/* These two classes determine styling of the accordion button that triggers the drop down for the left project card*/
+.contributer-accordion .accordion-button:is(.collapsed),
+.contributer-accordion  .accordion-button:not(.collapsed) {
+    z-index: 0;
+}
 
 /*The container for each of the events in the event carousel */
 .accordion-body-container {
+    width: 95%;
+    margin: auto;
     background-color: white;
     font-size: var(--mediumFont);
-    color: white;
+    border: none;
+    color: black;
+    box-shadow:none;
 }
 
 .accordion-body-container .individual-contributer{
@@ -33,11 +41,17 @@
     margin-bottom: 30px;
 }
 
+.contributer-accordion  .accordion-item {
+    box-shadow:none;
+  }
+
 
 /* Restyles event and event edit carousle container upon screen resizing */
 @media screen and (max-width: 800px) {
     .contributer-accordion .header{
         font-size: var(--extraSmallFont);
     }
-    
+    .accordion-body-container {
+        width: 100%;
+    }
 }

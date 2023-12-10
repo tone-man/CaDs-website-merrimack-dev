@@ -21,6 +21,7 @@ interface editableComponentProps {
   componentKey: string,
   pathName: string,
   type: string
+  addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -59,15 +60,15 @@ function EditableContact(myProps: editableComponentProps) {
 
   // Handles confirmed deletion and hiding the modal
   function remove() {
-    deletePageComponents(undefined, myProps, db, myRef)
+    deletePageComponents(undefined, myProps, db, myRef, myProps.addToast, "contact template")
     setShowDeletionModal(false);
   }
 
   // Render the buttons that will be displayed
   useEffect(() => {
     setButtons(
-      <Container style={{ width: '95%' }} className="buttons-container">
-        <Row>
+      <Container fluid>
+        <Row className="buttons-container">
           <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={2} sm={6} xs={6} className='reorder-page-component' >
@@ -106,13 +107,10 @@ function EditableContact(myProps: editableComponentProps) {
     <div>
       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + myProps.type} />
       {buttons}
-      <Container className='background-container'>
-        <Container className='text-editable-container'>
-          <h1 className='name' style={{ color: 'white' }}>
-
-            <h1 className='title'> Contact Information</h1>
-          </h1>
-          <Container className='styling'>
+      <Container fluid className='background-container'>
+        <Container fluid className='text-editable-container'>
+        <h1 className='title' style={{ color: 'white' }}> Contact Information</h1>
+          <Container fluid className='styling'>
             <Row>
               <Col md={12} >
                 <EditableFormComponent

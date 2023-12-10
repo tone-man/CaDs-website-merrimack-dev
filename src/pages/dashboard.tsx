@@ -19,7 +19,6 @@ const pageArray: pageProps[] = [
 
 
 const Dashboard = () => {
-    const [snapshotTemp, setSnapshot] = useState<requestProps | object>({});
     const [requests, setRequests] = useState<requestProps[]>([]);
     const [allowedUsersList, setAllowedUsersList] = useState<UserInterface[]>([]);
     const user: User | null = useContext(UserContext);
@@ -35,9 +34,9 @@ const Dashboard = () => {
 
         onValue(requestRef, (snapshot) => {
             const requestList: requestProps[] = [];
-            snapshot.forEach((request) => {
-                requestList.push(request.val());
-            });
+            for (const [key, value] of Object.entries(snapshot.val())) {
+                requestList.push({value: value, key: key});
+            }
 
             setRequests(requestList);
         })

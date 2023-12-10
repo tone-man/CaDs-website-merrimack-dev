@@ -1,7 +1,7 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { getDatabase, ref, onValue, off, set, update, remove } from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, onValue, set, remove } from "firebase/database";
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
 import FacultyDirectory from "./pages/facultyDirectoryPage";
@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import "./App.css";
 import User from "./firebase/user";
 import { emailToFirebase } from "./firebase/firebaseFormatter";
+import { ToastContextProvider } from "./components/toasts/ToastContext";
 
 // Authentication context
 const auth = getAuth(FireBaseApp);
@@ -95,6 +96,7 @@ function App() {
 
   return (
     <UserContext.Provider value={user}>
+      <ToastContextProvider>
       <Router>
         <NavBar />
         <Routes>
@@ -106,6 +108,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      </ToastContextProvider>
     </UserContext.Provider>
   );
 }

@@ -1,9 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import '../../css/universal.css'
+import '../../css/homepageCSS/ProjectList.css'
+
 import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
-import '../css/universal.css'
-import '../css/ProjectList.css'
+import Header from '../Header';
+
 
 
 interface projectProps {
@@ -22,7 +26,7 @@ function ProjectList(myProps: projectProps) {
                         <Col md={{ span: 12 }} style={{ padding: '20px' }} className='black-color'>
                             <h1 className='metropolisBold uppercase'> Explore Our Faculty Led Projects</h1>
                             <h5 className='metropolisThin smallFont'> Learn about some of the amazing projects that faculty members
-                                from the Computer Science and Data Science department
+                                from the Computer and Data Sciences department
                                 have worked on in recent years. </h5>
                         </Col>
                     </Row>
@@ -33,10 +37,10 @@ function ProjectList(myProps: projectProps) {
                                 type={projects.type}
                                 key={index}
                                 imageDescription={projects.imageDescription}
+                                image={projects.image}
                                 projectLink={projects.projectLink}
                                 description={projects.description}
                                 title={projects.title}
-                                imageAlt={projects.imageAlt}
                                 number={index}
                                 facultyMembers={projects.facultyMembers}
                                 contributers={projects.contributers}
@@ -46,6 +50,7 @@ function ProjectList(myProps: projectProps) {
                     }
                 </Container >
             </Container>
+            <Header img={'src/imgs/OBCenter.jpg'} title='Upcoming Events' />
         </>
     )
 }

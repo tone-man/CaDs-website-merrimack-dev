@@ -7,9 +7,11 @@ import { UserContext } from '../App';
 import { parseDataToComponents } from '../utils/parseAndRenderComponents';
 import { handleEditButtonClick, createNewDraft } from '../utils/createNewDraft';
 import Header from '../components/Header';
+import useToastContext from '../components/toasts/useToastContext';
 
 // The home page shows users the projectlist and events carousel 
 const Home = () => {
+    const addToast = useToastContext();
     const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>([]);
     const [showDraftModal, setShowDraftModal] = useState<boolean>(false);
     const [snapShot, setSnapshot] = useState<object>({});
@@ -40,12 +42,12 @@ const Home = () => {
 
     //  Wrapper function for handling the click event on the "Edit Page" button.
     const handleEditButtonClickWrapper = () => {
-        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/homepage`);
+        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/homepage`, addToast);
     };
 
     //  Wrapper function for handling the create new draft
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
-        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/homepage/components`);
+        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/homepage/components`, addToast);
     };
 
     return (

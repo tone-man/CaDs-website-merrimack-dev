@@ -9,7 +9,7 @@ import { handleTextAreaChange } from '../../utils/editingComponents';
 
 export interface editableHeaderProps {
     departmentName: string,
-    facultyName: string,
+    name: string,
     facultyTitle: string,
     imgSource: string
 }
@@ -31,14 +31,14 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
 
     // Create useStates for all data that we will be displaying
     const [departmentName, setDepartmentName] = useState('');
-    const [facultyName, setFacultyName] = useState('');
+    const [name, setName] = useState('');
     const [facultyTitle, setFacultyTitle] = useState('');
     const [imgSource, setImageSource] = useState('');
 
   // Initialize content and label usestates using data from props in the useEffect (once on initial render).
   useEffect(() => {
         setDepartmentName(myProps.data.departmentName);
-        setFacultyName(myProps.data.facultyName);
+        setName(myProps.data.name);
         setFacultyTitle(myProps.data.facultyTitle);
         setImageSource(myProps.data.imgSource);
     }, []);
@@ -46,16 +46,15 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
 
     return (
         <div>
-            <Container className='background-container'>
-                <Container className='text-editable-container '>
+            <Container fluid className='background-container'>
+                <Container fluid className='text-editable-container'>
                     <h1 className='title' style={{ color: 'white' }}> Your Information</h1>
-
-                    <Container className='styling'>
+                    <Container fluid className='styling'>
                         <EditableFormComponent
-                            changedValue='/facultyName'
+                            changedValue='/name'
                             myRef={myRef}
-                            value={facultyName}
-                            setValue={setFacultyName}
+                            value={name}
+                            setValue={setName}
                             pathName={myProps.pathName}
                             componentKey={myProps.componentKey}
                             label="Faculty Name"

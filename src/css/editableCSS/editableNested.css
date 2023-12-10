@@ -1,30 +1,14 @@
-
-
-/* Container for just one event and its information */
-.individual-event {
-    padding-top: 15px;
-    padding-bottom: 30px;
-    width: 90%;
-}
-
-/* Styling for the actual event container */
-.individual-event .event-styling {
-    box-shadow: 5px 5px 5px var(--darkGrey);
-    padding: 20px;
-    background-color:var(--lightest-grey);
-    border-radius: 20px;
-    color: black;
-}
+/* Container for one nested component */
 
 
 
-/* Title styling for the header above a specific event in the event carousel */
-.individual-event .nested-component-title {
-    font-size: var(--mediumFont);
-    color: white;
+/* Title styling for the header above a specific nested component in a parent component */
+.background-container .nested-component-title h1 {
     font-family: var(--metropolisBold);
-    text-align: left;
+    font-size: var(--largeFont);
+    color: white;
     margin: auto;
+    word-wrap: break-word;
 }
 
 
@@ -35,7 +19,7 @@
     margin: auto;
 }
 
-/* Styling for buttons themselves, upon hover and when disabled */
+/* Styling for the reorder buttons themselves, upon hover and when disabled */
 .reorder-nested-component button {
     background-color: transparent;
     color: white;
@@ -43,13 +27,11 @@
     border: none;
     margin: auto;
 }
-
 .reorder-nested-component button:disabled {
     opacity: .5;
     background-color: transparent;
     color: white;
 }
-
 .reorder-nested-component button:hover {
     color: var(--yellow);
     background-color: transparent;
@@ -59,29 +41,40 @@
 
 /* Styling for the delete nested component button, upon hover as well */
 .delete-nested-component button {
+    color: black;
     background-color: transparent;
     font-size: 25px;
-    color: black;
     border: none;
 }
-
 .delete-nested-component button:hover {
-    background-color: transparent;
     color: red;
+    background-color: transparent;
 }
 
 
-/* Restyles event and event edit carousle container upon screen resizing */
+/* Restyles upon screen resizing */
 @media screen and (max-width: 800px) {
-    .individual-event .nested-component-title {
-        font-size: .75rem;
+    .background-container .nested-component-title h1 {
+        font-size: var(--mediumFont);
         text-align: center;
     }
     .reorder-nested-component button {
-        background-color: transparent;
-        color: white;
-        font-size: 40px;
-        border: none;
-        margin: auto;
+        text-align: center;
+        font-size: var(--mediumFont);
+    }
+}
+
+
+/* Restyles upon screen resizing */
+@media screen and (max-width: 600px) {
+    .background-container .nested-component-title h1 {
+        font-size: var(--smallFont);
+    }
+}
+
+/* Restyles upon screen resizing */
+@media screen and (max-width: 300px) {
+    .background-container .nested-component-title h1 {
+        font-size: var(--extraSmallFont);
     }
 }

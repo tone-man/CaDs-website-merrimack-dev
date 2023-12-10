@@ -1,6 +1,5 @@
 import { Carousel, Col } from 'react-bootstrap';
 import Events, { myEventProps } from './Events';
-import Header from './Header';
 import '../css/eventsCarousel.css'
 
 interface myEventListProps {
@@ -13,7 +12,6 @@ function EventsCarousel(myProps: myEventListProps) {
 
     return (
         <div>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Upcoming Events' />
             <div className='carousel-container'>
                 <Col md={9} xs={12}>
                     <div className='custom-carousel'>
@@ -26,8 +24,7 @@ function EventsCarousel(myProps: myEventListProps) {
                                             <Events
                                                 type={events.type}
                                                 key={events.databaseKey}
-                                                imgSource={events.imgSource}
-                                                imageAlt={events.imageAlt}
+                                                image={events.image}
                                                 link={events.link}
                                                 description={events.description}
                                                 caption={events.caption}

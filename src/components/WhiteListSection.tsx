@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Col, FormControl, InputGroup, Row } from 'react-bootstrap'
 import { useRef, useState, useEffect } from 'react';
-import WhiteListIndividual, { userProps } from './WhiteListIndividual';
+import WhiteListIndividual from './WhiteListIndividual';
 import AddUserModal from './FacultyPage/AddUserModal';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
@@ -10,24 +10,28 @@ import User, { UserInterface } from '../firebase/user';
 import { getDatabase, ref, remove, set } from 'firebase/database';
 import FireBaseApp from '../firebase';
 
+interface whitelistProps {
+    userArray:  UserInterface[];
+}
+
 // This component creates the basic container for those on the whitelist
-function WhiteListSection(userArray: UserInterface[]) {
+function WhiteListSection(props: whitelistProps) {
 
     const searchBarRef = useRef<HTMLInputElement | null>(null);
-    const [filterUserList, setFilterUserList] = useState(userArray);
-    const [userList, setUserList] = useState(userArray);
+    const [filterUserList, setFilterUserList] = useState<UserInterface[]>(props.userArray);
+    const [userList, setUserList] = useState<UserInterface[]>(props.userArray);
 
     useEffect(() => {
-        setUserList(userArray.userArray);
-        setFilterUserList(userArray.userArray);
-    }, [userArray]);
+        setUserList(props.userArray);
+        setFilterUserList(props.userArray);
+    }, [props]);
 
 
     // Search function for whitelist
     function search() {
         if (searchBarRef.current) {
             const searchElement = searchBarRef.current.value.trim().toLowerCase();
-            const foundUsers = userList.filter(user => user.userName.toLowerCase().includes(searchElement));
+            const foundUsers = userList.filter(user => user.name.toLowerCase().includes(searchElement));
             setFilterUserList(foundUsers);
         }
     }

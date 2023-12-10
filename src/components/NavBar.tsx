@@ -6,7 +6,7 @@ import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserContext } from '../App';
 import User from '../firebase/user';
@@ -83,46 +83,48 @@ function NavBar() {
     return (
         <nav>
             {/* The first nav bar styling */}
-            <Navbar className="navbar-custom" id="first-navbar">
+            <Navbar className="navbar-custom" expand="md" id="first-navbar" variant="dark">
                 <Container>
-                    <Navbar.Toggle className="ms-auto" aria-controls="navBarContent" />
-                    <Navbar.Collapse id="navBarContent">
+                    {/* Order: https://stackoverflow.com/questions/53695359/collapsing-navbar-moves-uncollapsable-items-away-from-navbar */}
+                    <Navbar.Toggle className="ml-auto order-1" aria-controls="navBarContent" />
+                    <Navbar.Collapse id="navBarContent" className="order-2">
                         <Nav className="mr-auto">
                             <Nav.Link id='home' href="/" >Home</Nav.Link>
                             <Nav.Link id='faculty' href="/facultyDirectory">Faculty</Nav.Link>
-                            <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link>
-                        </Nav>
-                        <Nav className="ms-auto">
-                            {/* If a user is logged in, they will see their profile image */}
-                            {(user) ? (
-                                <>
-                                    <NavDropdown
-                                        title={
-                                            <div className="pull-right">
-                                                <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
-                                            </div>
-                                        }
-                                        id="basic-nav-dropdown"
-                                        className='no-indicator-dropdown '>
-                                        <NavDropdown.Item color='red' className='drop-down-item'>
-                                            <h3 className='text' id='logOutButton' onClick={logOut}>Log Out</h3>
-                                        </NavDropdown.Item>
-                                    </NavDropdown>
-                                </>
-                            ) : (
-                                //  If a user is not logged in, they will see the log in button 
-                                <div className='mr-auto'>
-                                    <Button className="logInButton" id='login-button' onClick={() => {
-                                        const auth = getAuth(FireBaseApp);
-                                        const provider = new GoogleAuthProvider();
-                                        signInWithRedirect(auth, provider);
-                                    }}>
-                                        Log In
-                                    </Button>
-                                </div>
-                            )}
+                          {user &&  <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link> }
+                            <Nav.Link id='help' target="_blank" href='https://drive.google.com/file/d/1P4T0Q2TVONEr5h6impU1d6r-9EcihvGE/view?usp=sharing'>Help</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
+                    {/* If a user is logged in, they will see their profile image */}
+                    <div className="ms-auto d-flex align-items-center photo-order">
+                        {(user) ? (
+                            <>
+                                <NavDropdown
+                                    title={
+                                        <div>
+                                            <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
+                                        </div>
+                                    }
+                                    id="basic-nav-dropdown"
+                                    className='no-indicator-dropdown'>
+                                    <NavDropdown.Item color='red' className='drop-down-item'>
+                                        <h3 className='text' id='logOutButton' onClick={logOut}>Log Out</h3>
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </>
+                        ) : (
+                            //  If a user is not logged in, they will see the log in button 
+                            <div className='mr-auto'>
+                                <Button className="logInButton" id='login-button' onClick={() => {
+                                    const auth = getAuth(FireBaseApp);
+                                    const provider = new GoogleAuthProvider();
+                                    signInWithRedirect(auth, provider);
+                                }}>
+                                    Log In
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </Container>
             </Navbar>
             {/* The second nav bar styling */}

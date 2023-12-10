@@ -1,6 +1,8 @@
 import { Container, Row, Col, Button } from "react-bootstrap"
-import '../css/facultyMemberDirectory.css'
-import ProfileImage from "./ProfileImage";
+
+import '../../css/DirectoryCSS/facultyMemberDirectory.css'
+
+import ProfileImage from "../ProfileImage";
 
 export interface facultyMember {
     name: string,
@@ -9,7 +11,7 @@ export interface facultyMember {
     department: string,
     pronouns: string,
     title: string,
-    pageLink: string,
+    pageLink?: string,
     photoURL: string
 }
 
@@ -22,6 +24,8 @@ interface FacultyMemberDirectoryProps {
 function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
 
     const { facultyMember, isLast } = props;
+
+    facultyMember.pageLink == '/faculty'
 
     return (
         <Container className="faculty-directory" style={isLast === true ? { borderBottom: '1px black solid' } : {}}>

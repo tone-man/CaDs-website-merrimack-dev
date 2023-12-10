@@ -7,17 +7,13 @@ import '../css/editableCSS/editPage.css';
 
 import Header from '../components/Header';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import EditableCarousel, { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
-import EditableFacultyHeader, { editableHeaderProps } from '../components/EditableComponents/EditableFacultyHeader';
-import EditableTextArea, { editableTextProps } from '../components/EditableComponents/EditableTextArea';
-import EditableContact, { editableContactProps } from '../components/EditableComponents/EditableContact';
-import EditableProjectList from '../components/EditableComponents/EditableProjectList';
-import { editableEventProps } from '../components/EditableComponents/EditableEventComponent';
 
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json';
 import accordionTemplate from '../utils/accordion.json';
 import contactTemplate from '../utils/contact.json';
+import useToastContext from '../components/toasts/useToastContext';
+import { createEditableRenderArray } from '../utils/parseAndRenderComponents';
 
 
 // Define an interface for the structure of the nested components
@@ -30,6 +26,7 @@ interface valueType {
     type: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UpdatesType = { [key: string]: any };
 
 
@@ -38,6 +35,7 @@ type UpdatesType = { [key: string]: any };
  * This page provides the interface for users to modify and manage components within a specific page.
  */
 const EditPage = () => {
+    const addToast = useToastContext();
 
     // https://www.educative.io/answers/how-to-use-the-uselocation-hook-in-react
     // Reads in param that was passed in (Tells users the path to look at for the database)
@@ -64,6 +62,7 @@ const EditPage = () => {
         onValue(componentsRef, (snapshot) => {
             setComponentsSnapshot(snapshot.val());
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -87,7 +86,7 @@ const EditPage = () => {
                         // Check if entry is an object and iterate through its keys
                         if (typeof entry === 'object') {
                             Object.keys(entry).forEach(innerKey => {
-                                if (entry[innerKey] === '') {
+                                if (!hasVisibleText(entry[innerKey])) {
                                     notvalid++;
                                     setCannotSubmit(true);
                                     return
@@ -99,10 +98,9 @@ const EditPage = () => {
                             })
                         }
                     })
-
                 }
                 else {
-                    if (newValue === '') {
+                    if (!hasVisibleText(newValue)) {
                         notvalid++;
                         setCannotSubmit(true);
                         break
@@ -114,133 +112,17 @@ const EditPage = () => {
                 }
             }
         }
+        createEditableRenderArray(componentsSnapshot, setUpdatedComponents, pathName, addToast);
 
-        let arr: JSX.Element[] = [];
+    }, [addToast, componentsSnapshot, pathName]);
 
-        if (componentsSnapshot) {
 
-            const events: editableComponentProps[][] = [];
-            const projects: editableComponentProps[][] = [];
-            let component = undefined;
-
-            // Iterate through every component in the snapshot
-            for (const [key, value] of Object.entries(componentsSnapshot)) {
-                if (key !== 'submitted') {
-                    const newvalue = value as valueType;
-
-                    // Generate specific components based on newvalue's type:
-                    switch (newvalue.type) {
-                        // If the component is a text or accordion component 
-                        case 'text':
-                        case 'accordion':
-                            component = value as editableTextProps;
-                            arr.push(
-                                <EditableTextArea
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                    type={newvalue.type}
-                                />
-                            );
-                            break;
-                        // If the component is an event
-                        case 'event':
-                            component = value as editableEventProps;
-                            if (events[newvalue.pageOrder] === undefined) {
-                                events[newvalue.pageOrder] = [];
-                            }
-                            if (events[newvalue.pageOrder]) {
-                                events[newvalue.pageOrder].push({
-                                    pageOrder: newvalue.pageOrder,
-                                    nestedOrder: newvalue.nestedOrder,
-                                    data: component,
-                                    componentKey: key,
-                                    pathName: pathName,
-                                });
-                            }
-                            break;
-                        // If the component is a project
-                        case 'project':
-                            if (projects[newvalue.pageOrder] === undefined) {
-                                projects[newvalue.pageOrder] = [];
-                            }
-                            if (projects[newvalue.pageOrder]) {
-                                projects[newvalue.pageOrder].push({
-                                    pageOrder: newvalue.pageOrder,
-                                    nestedOrder: newvalue.nestedOrder,
-                                    data: value,
-                                    componentKey: key,
-                                    pathName: pathName,
-                                });
-                            }
-                            break;
-                        // If the component is a header (specifically for the faculty page)
-                        case 'header':
-                            component = value as editableHeaderProps;
-                            arr.push(
-                                <EditableFacultyHeader
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                />
-                            );
-                            break;
-                        // If the component is a contact component
-                        case 'contact':
-                            component = value as editableContactProps;
-                            arr.push(
-                                <EditableContact
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                    type="Contact Page"
-                                />
-                            );
-                            break;
-                        default:
-                            console.log(' in here', value);
-                            break;
-                    }
-                }
-            }
-            // Maps each of the events in the events array to a carousel item
-            {
-                events.map((_array, index) => (
-                    <>
-                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} />)}
-                    </>
-                ))
-            }
-            // Maps each of the projects in the projects array to an editable project item
-            {
-                projects.map((_array, index) => (
-                    <>
-                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} />)}
-                    </>
-                ))
-            }
-
-            // Sort the array based on 'pageOrder' and 'nestedOrder'
-            arr = arr.sort(function (a, b) {
-                return (
-                    a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
-                );
-            });
-
-            // Update state variable 'updatedComponents' with the sorted array
-            setUpdatedComponents(arr);
-        }
-    }, [componentsSnapshot, pathName]);
-
+    // Reference: https://stackoverflow.com/questions/34673544/sanitize-html-string-without-using-dangerouslysetinnerhtml-for-length-check
+    function hasVisibleText(html: string): boolean {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.innerText.trim().length > 0;
+    }
 
     /**
      * Writes the changes made to each editable component to their specific spot in the database.
@@ -251,7 +133,7 @@ const EditPage = () => {
         console.log(pathName, 'pathName')
 
         const splitString = pathName.split('/');
-        const newPathName = "pages/" +splitString.slice(2).join('/');
+        const newPathName = "pages/" + splitString.slice(2).join('/');
         const draft = ref(db, pathName);
 
         // Retrieve data from the database
@@ -265,7 +147,7 @@ const EditPage = () => {
 
                     // For every single component in the snapshot
                     for (const [key, value] of Object.entries(snapshot.val())) {
-                        const myRef = ref(db, newPathName+"/" + key);
+                        const myRef = ref(db, newPathName + "/" + key);
                         // Add it to the drafts with the same exact key
                         set(myRef, value)
                             .then(() => {
@@ -309,16 +191,16 @@ const EditPage = () => {
         let newObj = undefined;
 
         // Determine the template based on the component type
-        if (componentType === 'event') {
+        if (componentType === 'event carousel') {
             newObj = eventTemplate;
         }
-        else if (componentType === 'textarea') {
+        else if (componentType === 'text area') {
             newObj = textAreaTemplate;
         }
         else if (componentType === 'accordion') {
             newObj = accordionTemplate;
         }
-        else if (componentType === 'contact') {
+        else if (componentType === 'contact template') {
             newObj = contactTemplate;
         }
 
@@ -344,6 +226,8 @@ const EditPage = () => {
         const updates: UpdatesType = {};
         updates[pathName + '/' + newPostKey] = newObj;
 
+        addToast(`Successfully added ${componentType} component`, "success");
+
         // Perform the update in the database
         return update(ref(db), updates);
     }
@@ -356,8 +240,7 @@ const EditPage = () => {
                 onConfirm={handleCancel}
                 name={'this draft'} />
             <Header title={"Edit Page"} />
-            <Container fluid className='edit-page-container'>
-                <Container>
+            <Container fluid className='edit-container'>
                     <Row>
                         <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
                             <Dropdown>
@@ -365,28 +248,27 @@ const EditPage = () => {
                                     Add a Component
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => addComponent('event')}>Event Carousel</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('textarea')}>Text Box</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('event carousel')}>Event Carousel</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('text area')}>Text Box</Dropdown.Item>
                                     <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('contact')}>Contact Information Template</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => addComponent('contact template')}>Contact Information Template</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Col>
                     </Row>
                     {updatedComponents}
-                    <Container fluid style={{ width: '90%' }}>
+                    <Container fluid>
                         <Row>
                             <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
                                 {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
                                 <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
                             </Col>
                             <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
-                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Request Changes</Button>
+                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Publish Changes</Button>
                             </Col>
                         </Row>
                     </Container>
                 </Container>
-            </Container>
         </div>
     );
 };
