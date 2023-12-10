@@ -6,16 +6,19 @@ import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
+import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
-import { AuthContext } from '../App';
+import { UserContext } from '../App';
+import User from '../firebase/user';
+
+const db = getDatabase(); //Global DB Connection
 
 // Component to create the nav bar
 function NavBar() {
     // Declare useState variables and useRef variables
     const [isFocused, setIsFocused] = useState(false);
-    const user = useContext(AuthContext);
+    const user: User | null = useContext(UserContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
-
     // This useEffect displays/hides the search bar when isFocused changes
     useEffect(() => {
         const searchBar = document.getElementById('searchBar-container');
@@ -44,15 +47,12 @@ function NavBar() {
             }
         }
     }
-    function logOut(){
+    function logOut() {
 
         const auth = getAuth(FireBaseApp);
-        
-        signOut(auth).then(() => {
-            // Sign-out successful. Generate a toast
-          }).catch((error) => {
-            // An error happened. Cenerate a toast
-          });
+
+        //Sign the user out
+        signOut(auth);
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
@@ -94,7 +94,7 @@ function NavBar() {
                         </Nav>
                         <Nav className="ms-auto">
                             {/* If a user is logged in, they will see their profile image */}
-                            {(user != null) ? (
+                            {(user) ? (
                                 <>
                                     <NavDropdown
                                         title={
@@ -104,8 +104,8 @@ function NavBar() {
                                         }
                                         id="basic-nav-dropdown"
                                         className='no-indicator-dropdown '>
-                                        <NavDropdown.Item  color='red' className='drop-down-item'>
-                                           <h3 className='text' id = 'logOutButton' onClick={logOut}>Log Out</h3>
+                                        <NavDropdown.Item color='red' className='drop-down-item'>
+                                            <h3 className='text' id='logOutButton' onClick={logOut}>Log Out</h3>
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                 </>

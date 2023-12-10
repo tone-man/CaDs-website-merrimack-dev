@@ -1,7 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getDatabase, ref, onValue, off, set, update, remove } from "firebase/database";
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
 import FacultyDirectory from "./pages/facultyDirectoryPage";
@@ -11,6 +11,8 @@ import Dashboard from "./pages/dashboard";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import "./App.css";
+import User from "./firebase/user";
+import { emailToFirebase } from "./firebase/firebaseFormatter";
 
 // Authentication context
 const auth = getAuth(FireBaseApp);
@@ -18,36 +20,81 @@ const auth = getAuth(FireBaseApp);
 // Realtime Database context
 const db = getDatabase(FireBaseApp);
 
-export const AuthContext = createContext(null);
+export const UserContext = createContext(null);
 
 // Add routing
 // https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/#
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   onAuthStateChanged(auth, function (result) {
-    if (result) {
 
-      if (user) //Debounce if user already is set.
-        return;
-      // Check that user is within the whitelist
-      const userRef = ref(db, `users/${result.uid}`);
-
-      // Update user when snapshot is retrieved
-      onValue(userRef, (snapshot) => {
-        if (snapshot) {
-          console.log(snapshot.val());
-          setUser(snapshot.val());
-        }
-
-      });
-    } else {
-      setUser(null);
+    // No result then return
+    if (!(result && result.uid && result.email)) {
+      setUser(null)
+      return;
     }
+
+    const uid: string = result.uid;
+    const email: string = emailToFirebase(result.email);
+
+    //Debounce if user already is exists.
+    if (user)
+      return;
+
+    // Create db listeners
+    const uidListener = ref(db, `users/${uid}`);
+    const emailListener = ref(db, `users/${email}`);
+
+    // Listen for the uid
+    onValue(uidListener, (snapshot) => {
+
+      // If snapshot does not exist exit early
+      if (!snapshot.val()) {
+        return;
+      }
+
+      //Since the snapshot exists we just load the data
+      const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = snapshot.val();
+
+      setUser(new User(uid, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location))
+
+    });
+
+    // Listen for the email
+    onValue(emailListener, (snapshot) => {
+
+      // If snapshot does not exist unsubscribe listener
+      if (!snapshot.val()) {
+        //TODO: Unsub listener
+        return;
+      }
+
+      const { email, userLevel, phoneNumber, title, pronouns, department, location } = snapshot.val();
+
+      // Move data to a key with the uid
+      set(ref(db, 'users/' + uid), {
+        email: email,
+        name: result.displayName,
+        photoURL: result.photoURL,
+        userLevel: userLevel,
+        phoneNumber: phoneNumber,
+        pronouns: pronouns,
+        department: department,
+        location: location,
+        title: title,
+      });
+
+      //Delete the email key
+      remove(emailListener);
+
+      //TODO: Unsub listener
+    });
+
   });
 
   return (
-    <AuthContext.Provider value={user}>
+    <UserContext.Provider value={user}>
       <Router>
         <NavBar />
         <Routes>
@@ -59,7 +106,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 }
 

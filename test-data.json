@@ -4,7 +4,7 @@
     "craveroa@merrimack%2Eedu": ""
   },
   "drafts": {
-    "placeholder":{
+    "placeholder": {
       "placeholder": "cant be deleted"
     }
   },
@@ -187,7 +187,6 @@
           "title": "Careers for the Common Good Internship & Career Fair",
           "type": "event"
         },
-        
         "R": {
           "caption": "Caption 1",
           "date": "Date",
@@ -274,7 +273,7 @@
         },
         "J": {
           "label": "Recent Publications",
-          "content":  "Publications",
+          "content": "Publications",
           "nestedOrder": 0,
           "pageOrder": 3,
           "type": "accordion"
@@ -319,27 +318,17 @@
     }
   },
   "requests": {
-    "XkHG9D5s11avzPxTSoGTEMzZIDu1": {
-      "requestName": {
-        "requestLink": "/",
-        "requestName": "New Project $SuperCALAFRAGALISTICEXPIALADOCIOUSSuperCALAFRAGALISTICEXPIALADOCIOUS"
-      },
-      "requestName2": {
-        "requestLink": "/",
-        "requestName": "Request to be Featured"
-      },
-      "requestName3": {
-        "requestLink": "/",
-        "requestName": "New User Application"
-      },
-      "requestName4": {
-        "requestLink": "/",
-        "requestName": "Edit Project $ProjectName"
-      },
-      "requestName5": {
-        "requestLink": "/",
-        "requestName": "Request to be Featured"
-      }
+    "requestName2": {
+      "requestTitle": "Request to be Featured",
+      "requestName": "John Doe",
+      "email": "buddytester922@gmail.com",
+      "requestBody": "Please let me featured."
+    },
+    "requestName3": {
+      "requestTitle": "Request to be Featured",
+      "requestName": "John Doe",
+      "email": "buddytester922@gmail.com",
+      "requestBody": "Please let me featured."
     }
   },
   "users": {
@@ -347,7 +336,19 @@
       "email": "cads.website.merrimack@gmail.com",
       "name": "Administrator",
       "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocJ9Q17xKVZ5jisFVx_On9_gqdQDCAqV3rFFnM58F1Oz=s96-c",
-      "user_level": "Administrator"
+      "userLevel": "Administrator"
+    },
+    "craveiroa@merrimack%2Eedu": {
+      "email": "craveiroa@merrimack.edu",
+      "name": "",
+      "photoURL": "",
+      "userLevel": "Faculty"
+    },
+    "buddytester922@gmail%2Ecom": {
+      "email": "buddytester922@gmail.com",
+      "name": "",
+      "photoURL": "",
+      "userLevel": "Faculty"
     }
   }
 }

@@ -10,6 +10,7 @@ export interface facultyMember {
     pronouns: string,
     title: string,
     pageLink: string,
+    photoURL: string
 }
 
 interface FacultyMemberDirectoryProps {
@@ -28,7 +29,7 @@ function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
                 <Col md={6} sm={12}>
                     {/* Profile image, title, and name */}
                     <Container className="profile-container text">
-                        <ProfileImage size="100px" position="mx-auto" />
+                        <ProfileImage size="100px" position="mx-auto" image={facultyMember.photoURL} />
                         <h1 className="name"> {facultyMember.name}</h1>
                         <h1 className="title"> {facultyMember.title}</h1>
                         <h1 className="pronouns"> {facultyMember.pronouns}</h1>
@@ -52,12 +53,12 @@ function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
                     </Container>
                 </Col>
                 {/* Link to faculty members page*/}
-                <Col style={{margin: 'auto'}} md={2} sm={4} xs={4}>
-                        <a href={facultyMember.pageLink}>
-                            <Button className='link-button'>
-                                <i className="bi bi-arrow-right"></i>
-                            </Button>
-                        </a>
+                <Col style={{ margin: 'auto' }} md={2} sm={4} xs={4}>
+                    <a href={facultyMember.pageLink}>
+                        <Button className='link-button'>
+                            <i className="bi bi-arrow-right"></i>
+                        </Button>
+                    </a>
                 </Col>
             </Row>
         </Container>

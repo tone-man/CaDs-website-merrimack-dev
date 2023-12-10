@@ -61,31 +61,31 @@
     margin: auto;
 }
 
-/* Style the container for the redirecting button */
-.request-container .rows .request-page-button {
-    margin: auto;
-}
-
-/* Style the actual redirecting button */
-.request-container .rows .request-page-button .request-button {
+/* Styling for edit button */
+.dashboard-request-section .edit-button {
     background-color: var(--blue);
-    border-radius: 50px;
-    font-size: 1.25rem;
+    border-radius: 20px;
+    font-family: var(--caslonRegular);
 }
 
-/* Style the actual redirecting button */
-.request-container .rows .link-button {
-    background-color: var(--blue);
-    border-radius: 50px;
-    font-size: 1.25rem;
+/* Styling for edit button on hover */
+.dashboard-request-section .edit-button:hover {
+    background-color: rgb(70, 104, 150);
 }
 
-/* Style for hovering over button */
-.request-container .request-page-button .link-button:hover {
-    background-color: var(--white);
-    color: var(--black);
+/* Styling for delete button */
+.dashboard-request-section .delete-button {
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+    border: 1px black solid;
+    font-family: var(--caslonRegular);
 }
 
+/* Styling for delete button on hover */
+.dashboard-request-section .delete-button:hover {
+    background-color: var(--lightest-grey);
+}
 
 /* Style the empty text that will appear when there are no requests */
 .dashboard-request-section .request-container .empty {

@@ -12,7 +12,4 @@ const firebaseConfig = {
 
 const FireBaseApp = initializeApp(firebaseConfig);
 
-// I think authentication needs to go here w/ observer so it is sitewide
-// Just a hunch tho
-
 export default FireBaseApp;

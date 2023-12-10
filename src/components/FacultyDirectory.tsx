@@ -1,31 +1,39 @@
 import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "react-bootstrap";
-import { useRef, useState } from "react";
-
 import '../css/facultyDirectory.css';
-
-import FacultyMemberDirectory, {facultyMember}from "./FacultyMemberDirectory";
 import Header from "./Header";
-
-
-//Create an array of faculty member objects
-const facultyArray: facultyMember[] = [
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
-    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
-    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
-    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
-    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
-    { name: 'Dr. Melissa St. Hilaire', phoneNumber: '978-837-5892', email: 'email@example.com', department: 'Computer and Data Science Department'
-    , pronouns: 'she/her/hers', title: 'Assistant Professor of Data Science', pageLink:'/faculty'},
-];
+import { useEffect, useRef, useState } from "react";
+import FacultyMemberDirectory, { facultyMember } from "./FacultyMemberDirectory";
+import { getDatabase, ref, onValue } from "firebase/database";
+import FireBaseApp from "../firebase";
+import User from "../firebase/user";
 
 // Faculty Directory components
 function FacultyDirectory() {
 
     const searchBarRef = useRef<HTMLInputElement | null>(null);
-    const [visibleUsers, setVisibleUsers] = useState(facultyArray);
+    const [usersList, setUsersList] = useState<User[] | null>([]);
+    const [visibleUsers, setVisibleUsers] = useState<User[] | null>(usersList);
+
+
+    // gets the list of users from the database (ADMIN ONLY FEATURE)
+    useEffect(() => {
+        const db = getDatabase(FireBaseApp);
+        // Get the references to users and pending users
+        const usersRef = ref(db, `/users`);
+        // const pendingUsersRef = ref(db, '/pendingUsers');
+
+        // Stores a listener for the database in a useState variable
+        onValue(usersRef, (snapshot) => {
+            const users: User[] = [];
+            snapshot.forEach((child) => {
+                const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = child.val();
+                users.push(new User(child.key, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location));
+            });
+
+            setUsersList(users);
+            setVisibleUsers(users);
+        })
+    }, []);
 
     // Search function for faculty members
     function search() {
@@ -56,25 +64,25 @@ function FacultyDirectory() {
                     </div>
                 </Row>
                 {/* Results Number */}
-                <Row style={{paddingBottom: '75px'}}>
-                    <Col md={6} sm={6}  xs = {6} className="resultsInfo">
+                <Row style={{ paddingBottom: '75px' }}>
+                    <Col md={6} sm={6} xs={6} className="resultsInfo">
                         <Button> {visibleUsers.length}</Button>
                     </Col>
-                    <Col md={6} sm={6} xs = {6} style={{margin: 'auto'}}>
+                    <Col md={6} sm={6} xs={6} style={{ margin: 'auto' }}>
                         <h1 className="smallFont metropolisRegular"> Results</h1>
                     </Col>
                 </Row>
-                <Container style ={{paddingBottom: '50px'}}>
-                {
+                <Container style={{ paddingBottom: '50px' }}>
+                    {
                         // Maps each of the visible faculty members to an individual faculty member component
                         visibleUsers.map((faculty, index) => (
                             <FacultyMemberDirectory key={index}
                                 facultyMember={faculty}
-                                isLast={index=== visibleUsers.length-1 ? true : false}
+                                isLast={index === visibleUsers.length - 1 ? true : false}
                             />
                         ))
                     }
-                    </Container>
+                </Container>
             </Container>
         </div>
     )
