@@ -193,7 +193,7 @@ function AddUserModal() {
                                     label='Pronouns'
                                     type='text'
                                     required={true}
-                                    placeholder='Ex: 123-654-0987'
+                                    placeholder='Ex: she/her/hers'
                                     alt='Prounoun Text Input'
                                     inputRef={prounounsRef}
                                     feedbackMessage='Please enter a valid prounouns' />
