@@ -5,7 +5,6 @@ import '../css/formModal.css'
 
 interface myProps {
   show: boolean,
-  showModal: (requestName: string, requestBody: string, requestTitle: string, email: string, projectTitle: string)=> void;
   handleClose: ()=>void;
   request: Request
 }

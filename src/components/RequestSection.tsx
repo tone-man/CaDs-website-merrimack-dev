@@ -29,7 +29,6 @@ function RequestSection(myProps: myRequestProps) {
 
 
   function handleShow(requestName: string, requestBody: string, requestTitle: string, email: string, projectTitle: string, k: string) {
-    console.log(projectTitle, 'project tite')
     setRequestBody(requestBody);
     setRequestName(requestName);
     setRequestTitle(requestTitle);
@@ -108,7 +107,7 @@ function RequestSection(myProps: myRequestProps) {
                 </h4>
               </div>
             )}
-            <ViewRequestModal show={showModal} showModal={handleShow} handleClose={handleClose} request={new Request(requestName, requestBody, requestTitle, email, projectTitle)} />
+            <ViewRequestModal show={showModal} handleClose={handleClose} request={new Request(requestTitle,requestName,email,requestBody,projectTitle)} />
           </div>
         </div>
       </Container>

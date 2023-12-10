@@ -57,6 +57,16 @@ export default class Request {
   set requestBody(value: string) {
     this._requestBody = value;
   }
+
+  toFirebaseObject() {
+    return {
+        requestTitle: this._requestTitle,
+        requestBody: this._requestBody,
+        requestName: this._requestName,
+        projectTitle: this._projectTitle,
+        email: this._email
+    }
+}
 }
 
 
