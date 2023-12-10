@@ -10,6 +10,9 @@ import EditableFormComponent from "./EditableFormComponent"
 import EditableContributers from "./EditableContributers"
 import DeleteConfirmationModal from "../DeleteConfirmationModal"
 import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder, addProjectComponent } from '../../utils/editingComponents';
+import EditableImageForm from "./EditableImageForm"
+
+import '../../css/homepageCSS/imageModal.css'
 
 export interface editableComponentProps {
     pageOrder: number
@@ -34,8 +37,7 @@ function EditableProject(myProps: editableComponentProps) {
     const [title, setTitle] = useState('');
 
     const [link, setLink] = useState('');
-    const [imageSource, setImageSource] = useState('');
-    const [imageAlt, setImageAlt] = useState('');
+    const [image, setImage] = useState('');
     const [imageDescription, setImageDescription] = useState('');
 
     const [buttons, setButtons] = useState<JSX.Element | null>(null);
@@ -47,8 +49,7 @@ function EditableProject(myProps: editableComponentProps) {
         setDescription(myProps.data.description);
         setTitle(myProps.data.title);
         setLink(myProps.data.projectLink);
-        setImageSource(myProps.data.imgSource);
-        setImageAlt(myProps.data.imageAlt)
+        setImage(myProps.data.image);
         setImageDescription(myProps.data.imageDescription)
     }, []);
 
@@ -65,12 +66,12 @@ function EditableProject(myProps: editableComponentProps) {
         setButtons(
             <>
                 <Row style={{ display: 'flex', alignItems: 'center' }}>
-                <Col md={9} sm={12} xs={12} className='nested-component-title'  style={{ color: 'white' }}>
+                    <Col md={9} sm={12} xs={12} className='nested-component-title' style={{ color: 'white' }}>
                         <h1 dangerouslySetInnerHTML={{ __html: myProps.data.title }}></h1>
                     </Col>
                     <Col md={3} sm={12} xs={12}>
                         <Row>
-                        <Col className="reorder-nested-component" md={6} sm={5} xs={5} style={{ textAlign: 'right' }}>
+                            <Col className="reorder-nested-component" md={6} sm={5} xs={5} style={{ textAlign: 'right' }}>
                                 <Button
                                     disabled={myProps.nestedOrder === 0}
                                     onClick={() =>
@@ -146,156 +147,137 @@ function EditableProject(myProps: editableComponentProps) {
                 <Container fluid className='text-editable-container'>
                     {buttons}
                     <Container fluid className='styling'>
-                    <Row>
-                        <EditableFormComponent
-                            changedValue='/title'
-                            myRef={myRef}
-                            value={title}
-                            setValue={setTitle}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Title"
-                            handleTextAreaChange={handleTextAreaChange}
-                            rows={1}
-                            delete={lastNestedOrder !== 0}
-                            handleOpenConfirmationModal={handleOpenConfirmationModal} />
-                        <EditableFormComponent
-                            changedValue='/description'
-                            myRef={myRef}
-                            value={description}
-                            setValue={setDescription}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Description"
-                            handleTextAreaChange={handleTextAreaChange}
-                            rows={3}
-                            delete={false} />
                         <Row>
-                            <Col md={6} sm={12} xs={12}>
-                                <EditableFormComponent
-                                    changedValue='/imgSource'
-                                    myRef={myRef}
-                                    value={imageSource}
-                                    setValue={setImageSource}
-                                    pathName={myProps.pathName}
-                                    componentKey={myProps.componentKey}
-                                    label="Image Source"
-                                    delete={false}
-                                    handleTextAreaChange={handleTextAreaChange}
-                                    rows={1} />
-                            </Col>
-                            <Col md={6} sm={12} xs={12}>
-                                <EditableFormComponent
-                                    changedValue='/imageAlt'
-                                    myRef={myRef}
-                                    value={imageAlt}
-                                    setValue={setImageAlt}
-                                    pathName={myProps.pathName}
-                                    componentKey={myProps.componentKey}
-                                    label="Image Alt"
-                                    delete={false}
-                                    handleTextAreaChange={handleTextAreaChange}
-                                    rows={1} />
-                            </Col>
+                            <EditableFormComponent
+                                changedValue='/title'
+                                myRef={myRef}
+                                value={title}
+                                setValue={setTitle}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Title"
+                                handleTextAreaChange={handleTextAreaChange}
+                                rows={1}
+                                delete={lastNestedOrder !== 0}
+                                handleOpenConfirmationModal={handleOpenConfirmationModal} />
+                            <EditableFormComponent
+                                changedValue='/description'
+                                myRef={myRef}
+                                value={description}
+                                setValue={setDescription}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Description"
+                                handleTextAreaChange={handleTextAreaChange}
+                                rows={3}
+                                delete={false} />
+                            <EditableImageForm
+                                changedValue='/image'
+                                myRef={myRef}
+                                value={image}
+                                setValue={setImage}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Image URL"
+                                handleTextAreaChange={handleTextAreaChange} />
+                            <EditableFormComponent
+                                changedValue='/imageDescription'
+                                myRef={myRef}
+                                value={imageDescription}
+                                setValue={setImageDescription}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Image Description"
+                                handleTextAreaChange={handleTextAreaChange}
+                                delete={false}
+                                rows={1} />
+                            <EditableFormComponent
+                                changedValue='/projectLink'
+                                myRef={myRef}
+                                value={link}
+                                setValue={setLink}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Link"
+                                handleTextAreaChange={handleTextAreaChange}
+                                delete={false}
+                                rows={1} />
                         </Row>
-                        <EditableFormComponent
-                            changedValue='/imageDescription'
-                            myRef={myRef}
-                            value={imageDescription}
-                            setValue={setImageDescription}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Image Description"
-                            handleTextAreaChange={handleTextAreaChange}
-                            delete={false}
-                            rows={1} />
-                        <EditableFormComponent
-                            changedValue='/projectLink'
-                            myRef={myRef}
-                            value={link}
-                            setValue={setLink}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Link"
-                            handleTextAreaChange={handleTextAreaChange}
-                            delete={false}
-                            rows={1} />
-                    </Row>
 
-                    {/*Go through and map each contributer object to an editable contributer component  */}
-                    <Accordion className="contributer-accordion" >
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>
-                                <h4 className="header">Contributers</h4>
-                            </Accordion.Header>
-                            <div className="accordion-body-container">
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md={12} sm={12} xs={12}>
-                                            <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
-                                                <Button
-                                                    onClick={() =>
-                                                        addProjectComponent(myProps, db, true, myProps.addToast)}>
-                                                    <i className="bi bi-plus-lg" />
-                                                </Button>
+                        {/*Go through and map each contributer object to an editable contributer component  */}
+                        <Accordion className="contributer-accordion" >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>
+                                    <h4 className="header">Contributers</h4>
+                                </Accordion.Header>
+                                <div className="accordion-body-container">
+                                    <Accordion.Body>
+                                        <Row>
+                                            <Col md={12} sm={12} xs={12}>
+                                                <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
+                                                    <Button
+                                                        onClick={() =>
+                                                            addProjectComponent(myProps, db, true, myProps.addToast)}>
+                                                        <i className="bi bi-plus-lg" />
+                                                    </Button>
+                                                </Col>
                                             </Col>
+                                            {contributorsArray.length > 0 && (
+                                                contributorsArray.map(({ key, contributor }) => (
+                                                    <EditableContributers
+                                                        data={contributor}
+                                                        pageOrder={contributor.pageOrder}
+                                                        nestedOrder={contributor.nestedOrder}
+                                                        componentKey={key}
+                                                        pathName={`${myProps.pathName}/${myProps.componentKey}/contributers`}
+                                                        key={key}
+                                                        addToast={myProps.addToast}
+                                                    />
+                                                ))
+                                            )}
+                                        </Row>
+                                    </Accordion.Body>
+                                </div>
+                            </Accordion.Item>
+                        </Accordion>
+
+                        {/*Go through and map each faculty object to an editable facultty component  */}
+                        <Accordion className="contributer-accordion" >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>
+                                    <h4 className="header">Faculty</h4>
+                                </Accordion.Header>
+                                <div className="accordion-body-container">
+                                    <Accordion.Body >
+                                        <Col md={12} sm={12} xs={12}>
+                                            <Row>
+                                                <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
+                                                    <Button
+                                                        onClick={() =>
+                                                            addProjectComponent(myProps, db, false, myProps.addToast)}>
+                                                        <i className="bi bi-plus-lg" />
+                                                    </Button>
+                                                </Col>
+
+                                            </Row>
                                         </Col>
-                                        {contributorsArray.length > 0 && (
-                                            contributorsArray.map(({ key, contributor }) => (
-                                                <EditableContributers
-                                                    data={contributor}
-                                                    pageOrder={contributor.pageOrder}
-                                                    nestedOrder={contributor.nestedOrder}
+                                        {facultyArray.length > 0 && (
+                                            facultyArray.map(({ key, facultyMember }) => (
+                                                <EditableFaculty
+                                                    data={facultyMember}
+                                                    pageOrder={facultyMember.pageOrder}
+                                                    nestedOrder={facultyMember.nestedOrder}
                                                     componentKey={key}
-                                                    pathName={`${myProps.pathName}/${myProps.componentKey}/contributers`}
+                                                    pathName={`${myProps.pathName}/${myProps.componentKey}/facultyMembers`}
                                                     key={key}
                                                     addToast={myProps.addToast}
                                                 />
                                             ))
                                         )}
-                                    </Row>
-                                </Accordion.Body>
-                            </div>
-                        </Accordion.Item>
-                    </Accordion>
-
-                    {/*Go through and map each faculty object to an editable facultty component  */}
-                    <Accordion className="contributer-accordion" >
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>
-                                <h4 className="header">Faculty</h4>
-                            </Accordion.Header>
-                            <div className="accordion-body-container">
-                                <Accordion.Body >
-                                    <Col md={12} sm={12} xs={12}>
-                                        <Row>
-                                            <Col md={12} sm={12} xs={12} style={{ textAlign: 'right' }} className="add-component">
-                                                <Button
-                                                    onClick={() =>
-                                                        addProjectComponent(myProps, db, false, myProps.addToast)}>
-                                                    <i className="bi bi-plus-lg" />
-                                                </Button>
-                                            </Col>
-
-                                        </Row>
-                                    </Col>
-                                    {facultyArray.length > 0 && (
-                                        facultyArray.map(({ key, facultyMember }) => (
-                                            <EditableFaculty
-                                                data={facultyMember}
-                                                pageOrder={facultyMember.pageOrder}
-                                                nestedOrder={facultyMember.nestedOrder}
-                                                componentKey={key}
-                                                pathName={`${myProps.pathName}/${myProps.componentKey}/facultyMembers`}
-                                                key={key}
-                                                addToast={myProps.addToast}
-                                            />
-                                        ))
-                                    )}
-                                </Accordion.Body>
-                            </div>
-                        </Accordion.Item>
-                    </Accordion>
+                                    </Accordion.Body>
+                                </div>
+                            </Accordion.Item>
+                        </Accordion>
                     </Container>
                 </Container>
             </Container >

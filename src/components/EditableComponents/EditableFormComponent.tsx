@@ -1,11 +1,14 @@
 import { DatabaseReference } from 'firebase/database';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'quill-emoji/dist/quill-emoji.css';
 import 'quill-mention/dist/quill.mention.css';
 import '../../css/editableCSS/editableForm.css'
+
+
+// import * as Emoji from "../../quill-emojis.d.ts"; // For TypeScript file
 
 // References: https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
 // Reference: https://codesandbox.io/p/sandbox/react-quill-with-markdown-g8193?file=%2Fsrc%2FEditor.tsx%3A58%2C18
@@ -34,7 +37,8 @@ function EditableFormComponent(myProps: formProps) {
         return temp.innerText.trim().length > 0;
     }
 
-    // Quill.register("modules/emoji", Emoji);
+    
+    // Quill.register("emoji", Emoji);
     const TOOLBAR_OPTIONS = [
         [
             'bold',
@@ -50,8 +54,9 @@ function EditableFormComponent(myProps: formProps) {
             { 'list': 'ordered' },
             { 'list': 'bullet' },
             'link',
+            // 'emoji',
         ],
-      ];
+    ];
 
     return (
         <div className='editableForm'>
@@ -79,29 +84,31 @@ function EditableFormComponent(myProps: formProps) {
                         </Form.Label>
                     )}
                     <div className="my-editor">
-                    <ReactQuill
-                        theme="snow"
-                        value={myProps.value}
-                        onChange={(text) => {
-                            const isEmpty = !hasVisibleText(text);
-                            setEditorValidated(!isEmpty); // Set validation based on whether the content is empty
-                            myProps.handleTextAreaChange(
-                                { target: { value: text } },
-                                myProps.changedValue,
-                                myProps.setValue,
-                                myProps.myRef,
-                                myProps.pathName,
-                                myProps.componentKey
-                            );
-                        }}
-                        modules={{
-                            toolbar: {
-                              container: TOOLBAR_OPTIONS
-                            },
-                           
-                          }}
-                        style={{ resize: 'none', border: '1px black solid', background: 'white' }}
-                    />
+                        <ReactQuill
+                            theme="snow"
+                            value={myProps.value}
+                            onChange={(text) => {
+                                const isEmpty = !hasVisibleText(text);
+                                setEditorValidated(!isEmpty); // Set validation based on whether the content is empty
+                                myProps.handleTextAreaChange(
+                                    { target: { value: text } },
+                                    myProps.changedValue,
+                                    myProps.setValue,
+                                    myProps.myRef,
+                                    myProps.pathName,
+                                    myProps.componentKey
+                                );
+                            }}
+                            modules={{
+                                toolbar: {
+                                    container: TOOLBAR_OPTIONS
+                                },
+                                // "emoji-toolbar": true,
+                                // "emoji-textarea": false,
+                                // "emoji-shortname": true
+                            }}
+                            style={{ resize: 'none', border: '1px black solid', background: 'white' }}
+                        />
                     </div>
                     <Form.Control.Feedback type="invalid" style={{ display: editorValidated ? 'none' : 'block' }}>
                         <h2 className='metropolisRegular extraSmallFont'> Please provide a valid {myProps.label}.</h2>

@@ -82,12 +82,13 @@ function NavBar() {
 
     return (
         <nav>
+            {/* <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_from_Silesia2.jpghttps://drive.google.com/file/d/1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T/view?usp=drive_link" alt="Your Image" /> */}
             {/* The first nav bar styling */}
             <Navbar className="navbar-custom" expand="md" id="first-navbar">
                 <Container>
                     {/* Order: https://stackoverflow.com/questions/53695359/collapsing-navbar-moves-uncollapsable-items-away-from-navbar */}
-                    <Navbar.Toggle className="ml-auto order-1" aria-controls="navBarContent"/>
-                    <Navbar.Collapse id="navBarContent"  className="order-2">
+                    <Navbar.Toggle className="ml-auto order-1" aria-controls="navBarContent" />
+                    <Navbar.Collapse id="navBarContent" className="order-2">
                         <Nav className="mr-auto">
                             {/* Navigation links */}
                             <Nav.Link id='home' href="/">Home</Nav.Link>

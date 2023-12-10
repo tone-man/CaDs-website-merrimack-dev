@@ -11,8 +11,8 @@ import ProfileImage from '../ProfileImage';
 // Interface for the faculty members. Each faculty member should have a name and image
 //TODO: Load image in properly 
 export interface facultyMembers {
-    facultyName: string,
-    facultyImg: string
+    name: string,
+    image: string
     pageOrder: number,
     nestedOrder: number
 }
@@ -27,6 +27,7 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
 
     const facultyMembersNum = myProps.faculty.length;
     const facultyMembers = myProps.faculty;
+    console.log(facultyMembers, 'faculty members')
 
     return (
         <div>
@@ -38,8 +39,8 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
                         facultyMembers.map((members, index) => (
                             <Carousel.Item key={index}>
                                 {/* Each carousel item should be composed of a profile image component and the faculty members page */}
-                                <ProfileImage size='70px' position='mx-auto' />
-                                <h1 className='featured-text' dangerouslySetInnerHTML={{ __html: members.facultyName}}></h1>
+                                <ProfileImage size='70px' position='mx-auto' image={members.image}/>
+                                <h1 className='featured-text' dangerouslySetInnerHTML={{ __html: members.name}}></h1>
                             </Carousel.Item>
                         ))
                     }
@@ -47,8 +48,8 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
             ) : (
                 // Otherwise, just create one profile image/faculty name
                 <>
-                    <ProfileImage size='70px' position='mx-auto'/>
-                    <h1 className='featured-text'  dangerouslySetInnerHTML={{ __html: facultyMembers[0].facultyName}}></h1>
+                    <ProfileImage size='70px' position='mx-auto' image= {facultyMembers[0].image}/>
+                    <h1 className='featured-text'  dangerouslySetInnerHTML={{ __html: facultyMembers[0].name}}></h1>
                 </>
             )}
         </div>

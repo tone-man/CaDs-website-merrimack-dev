@@ -1,29 +1,56 @@
-
-
-.editableForm .label{
+.editableForm .label {
     font-size: var(--smallFont);
 }
 
+.editableForm .preview  {
+padding-bottom: 20px;
+}
+
+.editableForm .preview button {
+    float: right;
+    background-color: var(--blue);
+    font-family: var(--caslonRegular);
+}
+
+.overlay {
+    font-size: var(--extraSmallFont);
+    background-color: var(--blue);
+    font-family: var(--caslonRegular);
+}
+
+.overlay a{
+    text-decoration: none; /* no underline */
+}
 
 /* Example CSS in an external file */
 .my-editor .ql-editor {
-    font-size: var(--extraSmallFont); /* Change the font size as needed */
+    font-size: var(--extraSmallFont);
+    /* Change the font size as needed */
     font-family: var(--caslonRegular);
-  }
+}
+
+.my-editor .image-text {
+    padding-left: 15px;
+    padding-top: 10px;
+    font-size: var(--extraSmallFont);
+    /* Change the font size as needed */
+    font-family: var(--caslonRegular);
+}
 
 /* Restyles event and event edit carousle container upon screen resizing */
 @media screen and (max-width: 800px) {
-    .editableForm .label{
+    .editableForm .label {
         font-size: var(--extraSmallFont);
     }
 }
 
 /* Restyles event and event edit carousle container upon screen resizing */
 @media screen and (max-width: 600px) {
-    .editableForm .label{
+    .editableForm .label {
         font-size: 1rem;
     }
-    .editableForm .content{
+
+    .editableForm .content {
         font-size: var(--extraSmallFont);
     }
 }

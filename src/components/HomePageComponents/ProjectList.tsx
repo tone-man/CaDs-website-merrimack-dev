@@ -37,10 +37,10 @@ function ProjectList(myProps: projectProps) {
                                 type={projects.type}
                                 key={index}
                                 imageDescription={projects.imageDescription}
+                                image={projects.image}
                                 projectLink={projects.projectLink}
                                 description={projects.description}
                                 title={projects.title}
-                                imageAlt={projects.imageAlt}
                                 number={index}
                                 facultyMembers={projects.facultyMembers}
                                 contributers={projects.contributers}

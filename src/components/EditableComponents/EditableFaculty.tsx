@@ -6,10 +6,11 @@ import '../../css/editableCSS/editableProject.css'
 import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import EditableFormComponent from './EditableFormComponent';
 import { deleteNestedComponent, getMaxProjectOrder, handleTextAreaChange } from '../../utils/editingComponents';
+import EditableImageForm from './EditableImageForm';
 
 interface editableFacultyProps {
-    facultyName: string,
-    facultyImg: string
+    name: string,
+    image: string
 }
 interface editableContributerProps {
     pageOrder: number
@@ -21,7 +22,7 @@ interface editableContributerProps {
 }
 
 function EditableFaculty(myProps: editableContributerProps) {
-    
+
     const db = getDatabase();
     const myRef = ref(db)
 
@@ -34,22 +35,22 @@ function EditableFaculty(myProps: editableContributerProps) {
 
     // Initialize image and name usestates using data from props in the useEffect (once on initial render).
     useEffect(() => {
-        setImage(myProps.data.facultyImg);
-        setName(myProps.data.facultyName);
-       
+        setImage(myProps.data.image);
+        setName(myProps.data.name);
+
     }, []);
 
     // Get max nested order of the faculty carousel
     useEffect(() => {
-        getMaxProjectOrder(myProps,db, setLastNestedOrder) 
+        getMaxProjectOrder(myProps, db, setLastNestedOrder)
     }, [db, lastNestedOrder, myProps]);
 
-      // Get max nested order of the faculty carousel
-      useEffect(() => {
-      console.log(lastNestedOrder, 'LAST NESTED ORDER')
+    // Get max nested order of the faculty carousel
+    useEffect(() => {
+        console.log(lastNestedOrder, 'LAST NESTED ORDER')
     }, [lastNestedOrder]);
 
-    
+
     // Handles confirmed deletion and hiding the modal
     function remove() {
         deleteNestedComponent(myProps, db, myProps.addToast, "faculty member")
@@ -68,7 +69,7 @@ function EditableFaculty(myProps: editableContributerProps) {
                 onConfirm={remove}
                 name={'this faculty member'} />
             <EditableFormComponent
-                changedValue='/facultyName'
+                changedValue='/name'
                 myRef={myRef}
                 value={name}
                 setValue={setName}
@@ -77,20 +78,18 @@ function EditableFaculty(myProps: editableContributerProps) {
                 label="Faculty Name"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
-                delete={lastNestedOrder !==1}
+                delete={lastNestedOrder !== 1}
                 handleOpenConfirmationModal={handleOpenConfirmationModal} />
-            <EditableFormComponent
-                changedValue='/facultyImg'
+            <EditableImageForm
+                changedValue='/image'
                 myRef={myRef}
                 value={image}
                 setValue={setImage}
                 pathName={myProps.pathName}
                 componentKey={myProps.componentKey}
-                label="Faculty Image"
-                handleTextAreaChange={handleTextAreaChange}
-                rows={1}
-                delete={false} />
-        </div >
+                label="Image URL"
+                handleTextAreaChange={handleTextAreaChange} />
+        </div>
     )
 }
 

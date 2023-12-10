@@ -7,6 +7,7 @@ import '../../css/editableCSS/editableNested.css'
 import EditableFormComponent from "./EditableFormComponent"
 import DeleteConfirmationModal from "../DeleteConfirmationModal"
 import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder } from '../../utils/editingComponents';
+import EditableImageForm from "./EditableImageForm"
 
 export interface editableEventProps {
     description: string;
@@ -14,8 +15,7 @@ export interface editableEventProps {
     location: string;
     date: string;
     link: string;
-    imgSource: string;
-    imageAlt: string;
+    image: string;
     caption: string;
     type: string
 }
@@ -44,8 +44,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
     const [date, setDate] = useState('');
 
     const [link, setLink] = useState('');
-    const [imageSource, setImageSource] = useState('');
-    const [imageAlt, setImageAlt] = useState('');
+    const [image, setImage] = useState('');
     const [imageCaption, setImageCaption] = useState('');
 
     const [buttons, setButtons] = useState<JSX.Element | null>(null);
@@ -59,8 +58,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
         setDate(myProps.data.date);
         setImageCaption(myProps.data.caption);
         setLocation(myProps.data.location);
-        setImageSource(myProps.data.imgSource);
-        setImageAlt(myProps.data.imageAlt);
+        setImage(myProps.data.image);
         setTitle(myProps.data.title);
         setDescription(myProps.data.description);
     }, []);
@@ -79,7 +77,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
         setButtons(
             <>
                 <Row style={{ display: 'flex', alignItems: 'center' }}>
-                    <Col md={9} sm={12} xs={12} className='nested-component-title'  style={{ color: 'white' }}>
+                    <Col md={9} sm={12} xs={12} className='nested-component-title' style={{ color: 'white' }}>
                         <h1 dangerouslySetInnerHTML={{ __html: myProps.data.title }}></h1>
                     </Col>
                     <Col md={3} sm={12} xs={12}>
@@ -183,32 +181,15 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={6} sm={12} xs={12}>
-                                    <EditableFormComponent
-                                        changedValue='/imgSource'
-                                        myRef={myRef}
-                                        value={imageSource}
-                                        setValue={setImageSource}
-                                        pathName={myProps.pathName}
-                                        componentKey={myProps.componentKey}
-                                        label="Image Source"
-                                        delete={false}
-                                        handleTextAreaChange={handleTextAreaChange}
-                                        rows={1} />
-                                </Col>
-                                <Col md={6} sm={12} xs={12}>
-                                    <EditableFormComponent
-                                        changedValue='/imageAlt'
-                                        myRef={myRef}
-                                        value={imageAlt}
-                                        setValue={setImageAlt}
-                                        pathName={myProps.pathName}
-                                        componentKey={myProps.componentKey}
-                                        label="Image Alt"
-                                        delete={false}
-                                        handleTextAreaChange={handleTextAreaChange}
-                                        rows={1} />
-                                </Col>
+                            <EditableImageForm
+                                changedValue='/image'
+                                myRef={myRef}
+                                value={image}
+                                setValue={setImage}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Image URL"
+                                handleTextAreaChange={handleTextAreaChange} />
                             </Row>
                             <EditableFormComponent
                                 changedValue='/caption'

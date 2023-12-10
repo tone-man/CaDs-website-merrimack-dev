@@ -58,9 +58,15 @@ export const handleTextAreaChange = (
  * @param value - Object containing properties for the new component.
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific path in the database.
+ * @param type - The type of component.
  *  * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
  */
-export async function addNestedComponent(value: valueType, db: Database, dbRef: DatabaseReference, addToast: AddToastFunction, type: string) {
+export async function addNestedComponent(
+  value: valueType,
+  db: Database,
+  dbRef: DatabaseReference,
+  addToast: AddToastFunction,
+  type: string) {
   try {
     let newObj = undefined;
     const component = value as valueType;
@@ -139,16 +145,16 @@ export async function addProjectComponent(value: editableComponentProps, db: Dat
       const updates: UpdatesType = {};
       updates[`${component.pathName}/${component.componentKey}${pathEnding}${newPostKey}`] = newObj;
 
-      addToast(`Successfully added a ${isContributer ===true? 'Contributer': 'Faculty Member'} component`, "success")
+      addToast(`Successfully added a ${isContributer === true ? 'Contributer' : 'Faculty Member'} component`, "success")
 
       // Perform the update in the database
       return update(ref(db), updates);
     } else {
-      addToast(`Error while adding a ${isContributer ===true? 'Contributer': 'Faculty Member'} component`, "danger")
+      addToast(`Error while adding a ${isContributer === true ? 'Contributer' : 'Faculty Member'} component`, "danger")
       throw new Error('Error in adding nested component');
     }
   } catch (error) {
-    addToast(`Error while adding a ${isContributer ===true? 'Contributer': 'Faculty Member'} component`, "danger")
+    addToast(`Error while adding a ${isContributer === true ? 'Contributer' : 'Faculty Member'} component`, "danger")
     throw error;
   }
 }

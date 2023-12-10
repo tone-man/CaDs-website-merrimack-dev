@@ -24,8 +24,7 @@ function EventsCarousel(myProps: myEventListProps) {
                                             <Events
                                                 type={events.type}
                                                 key={events.databaseKey}
-                                                imgSource={events.imgSource}
-                                                imageAlt={events.imageAlt}
+                                                image={events.image}
                                                 link={events.link}
                                                 description={events.description}
                                                 caption={events.caption}

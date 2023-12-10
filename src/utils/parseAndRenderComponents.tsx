@@ -10,6 +10,24 @@ import { facultyMembers } from "../components/HomePageComponents/FacultyCarousel
 import { myProjectProps } from "../components/HomePageComponents/ProjectCard";
 import { contributerProps } from "../components/HomePageComponents/ProjectContributer";
 
+import EditableCarousel, { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
+import EditableFacultyHeader, { editableHeaderProps } from '../components/EditableComponents/EditableFacultyHeader';
+import EditableTextArea, { editableTextProps } from '../components/EditableComponents/EditableTextArea';
+import EditableContact, { editableContactProps } from '../components/EditableComponents/EditableContact';
+import EditableProjectList from '../components/EditableComponents/EditableProjectList';
+import { editableEventProps } from '../components/EditableComponents/EditableEventComponent';
+import { DataSnapshot } from "firebase/database";
+
+interface valueType {
+    pageOrder: number
+    nestedOrder: number
+    data: unknown,
+    componentKey: string,
+    pathName: string,
+    type: string
+}
+
+
 // Function that creates and returns a project object
 export function makeProjectObject(
     type: string,
@@ -18,10 +36,10 @@ export function makeProjectObject(
     imageDescription: string,
     projectLink: string,
     number: number,
-    imageAlt: string,
     faculty: facultyMembers[],
     contributers: contributerProps[],
-    databaseKey: string
+    databaseKey: string,
+    image: string
 ): myProjectProps {
     return {
         type: type,
@@ -30,18 +48,17 @@ export function makeProjectObject(
         imageDescription: imageDescription,
         projectLink: projectLink,
         number: number,
-        imageAlt: imageAlt,
         facultyMembers: faculty,
         contributers: contributers,
         databaseKey: databaseKey,
+        image: image
     };
 }
 
 // Function that creates and returns an event object
 export function makeEventObject(
     type: string,
-    imgSource: string,
-    imageAlt: string,
+    image: string,
     caption: string,
     description: string,
     link: string,
@@ -52,8 +69,7 @@ export function makeEventObject(
 ): myEventProps {
     return {
         type: type,
-        imgSource: imgSource,
-        imageAlt: imageAlt,
+        image: image,
         caption: caption,
         description: description,
         link: link,
@@ -103,8 +119,8 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                         for (const facultyKey in component.facultyMembers) {
                             const facultyMember = component.facultyMembers[facultyKey];
                             facultyArray.push({
-                                facultyName: facultyMember.facultyName,
-                                facultyImg: facultyMember.facultyImg,
+                                name: facultyMember.name,
+                                image: facultyMember.image,
                                 nestedOrder: facultyMember.nestedOrder,
                                 pageOrder: facultyMember.pageOrder
                             });
@@ -122,6 +138,7 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             contributersArr.push({
                                 name: contributer.name,
                                 description: contributer.description,
+                                image: contributer.image,
                                 nestedOrder: contributer.nestedOrder
                             });
                         }
@@ -141,10 +158,10 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             component.imageDescription,
                             component.projectLink,
                             0,
-                            component.imageAlt,
                             facultyArray,
                             contributersArr,
-                            key
+                            key,
+                            component.image
                         );
                         break;
 
@@ -152,8 +169,7 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                     case 'event':
                         newObj = makeEventObject(
                             'event',
-                            component.imgSource,
-                            component.imageAlt,
+                            component.image,
                             component.caption,
                             component.description,
                             component.link,
@@ -282,4 +298,145 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
     }
     // Set the rendered components to the temporary array
     setRenderedComponents(tempArr);
+}
+
+
+/**
+ * Creates an array of EDITABLE rendered components based on the snapshot of components its given.
+ * @param  componentsSnapshot - The array containing components to be rendered.
+ * @param  setRenderedComponents - The state setter for the rendered components.
+ * @param  pathName - The path name for the components.
+ * @param addToast - Function to add a toast notification.
+ */
+export function createEditableRenderArray(
+    componentsSnapshot:  DataSnapshot,
+     setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[] | undefined>>, 
+     pathName: string, 
+     addToast:(message: string, type: 'success' | 'warning' | 'danger')=> void) {
+    let arr: JSX.Element[] = [];
+
+        if (componentsSnapshot) {
+
+            const events: editableComponentProps[][] = [];
+            const projects: editableComponentProps[][] = [];
+            let component = undefined;
+
+            // Iterate through every component in the snapshot
+            for (const [key, value] of Object.entries(componentsSnapshot)) {
+                if (key !== 'submitted') {
+                    const newvalue = value as valueType;
+
+                    // Generate specific components based on newvalue's type:
+                    switch (newvalue.type) {
+                        // If the component is a text or accordion component 
+                        case 'text':
+                        case 'accordion':
+                            component = value as editableTextProps;
+                            arr.push(
+                                <EditableTextArea
+                                    key={key}
+                                    pageOrder={newvalue.pageOrder}
+                                    nestedOrder={newvalue.nestedOrder}
+                                    componentKey={key}
+                                    data={component}
+                                    pathName={pathName}
+                                    type={newvalue.type}
+                                    addToast={addToast}
+                                />
+                            );
+                            break;
+                        // If the component is an event
+                        case 'event':
+                            component = value as editableEventProps;
+                            if (events[newvalue.pageOrder] === undefined) {
+                                events[newvalue.pageOrder] = [];
+                            }
+                            if (events[newvalue.pageOrder]) {
+                                events[newvalue.pageOrder].push({
+                                    pageOrder: newvalue.pageOrder,
+                                    nestedOrder: newvalue.nestedOrder,
+                                    data: component,
+                                    componentKey: key,
+                                    pathName: pathName,
+                                });
+                            }
+                            break;
+                        // If the component is a project
+                        case 'project':
+                            if (projects[newvalue.pageOrder] === undefined) {
+                                projects[newvalue.pageOrder] = [];
+                            }
+                            if (projects[newvalue.pageOrder]) {
+                                projects[newvalue.pageOrder].push({
+                                    pageOrder: newvalue.pageOrder,
+                                    nestedOrder: newvalue.nestedOrder,
+                                    data: value,
+                                    componentKey: key,
+                                    pathName: pathName,
+                                });
+                            }
+                            break;
+                        // If the component is a header (specifically for the faculty page)
+                        case 'header':
+                            component = value as editableHeaderProps;
+                            arr.push(
+                                <EditableFacultyHeader
+                                    key={key}
+                                    pageOrder={newvalue.pageOrder}
+                                    nestedOrder={newvalue.nestedOrder}
+                                    componentKey={key}
+                                    data={component}
+                                    pathName={pathName}
+                                />
+                            );
+                            break;
+                        // If the component is a contact component
+                        case 'contact':
+                            component = value as editableContactProps;
+                            arr.push(
+                                <EditableContact
+                                    key={key}
+                                    pageOrder={newvalue.pageOrder}
+                                    nestedOrder={newvalue.nestedOrder}
+                                    componentKey={key}
+                                    data={component}
+                                    pathName={pathName}
+                                    type="Contact Page"
+                                    addToast={addToast}
+                                />
+                            );
+                            break;
+                        default:
+                            console.log(`Unexpected type encountered: ${value}`);
+                            break;
+                    }
+                }
+            }
+            // Maps each of the events in the events array to a carousel item
+            {
+                events.map((_array, index) => (
+                    <>
+                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} addToast={addToast} />)}
+                    </>
+                ))
+            }
+            // Maps each of the projects in the projects array to an editable project item
+            {
+                projects.map((_array, index) => (
+                    <>
+                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast} />)}
+                    </>
+                ))
+            }
+
+            // Sort the array based on 'pageOrder' and 'nestedOrder'
+            arr = arr.sort(function (a, b) {
+                return (
+                    a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
+                );
+            });
+
+            // Update state variable 'updatedComponents' with the sorted array
+            setRenderedComponents(arr);
+        }
 }

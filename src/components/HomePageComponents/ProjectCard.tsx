@@ -11,7 +11,6 @@ import AccordionContributer from './AccordionContributer';
 import FacultyCarousel, { facultyMembers } from './FacultyCarousel';
 import { contributerProps } from './ProjectContributer';
 
-import pic from '../../imgs/OBCenter.jpg';
 
 
 //This function creates the actual project card content, including styling and positioning
@@ -19,7 +18,6 @@ import pic from '../../imgs/OBCenter.jpg';
 function projectCardContent(
     title: string,
     facultyMembers: facultyMembers[],
-    imageAlt: string,
     imageDescription: string,
     description: string,
     link: string,
@@ -27,7 +25,8 @@ function projectCardContent(
     modal: HTMLElement | null,
     modalImg: HTMLImageElement |null,
     captionText: HTMLElement |null,
-    parity: number,) {
+    parity: number,
+    image: string) {
 
 
     // Modal Reference: https://www.w3schools.com/howto/howto_css_modal_images.asp
@@ -38,10 +37,9 @@ function projectCardContent(
         captionText as HTMLElement;
         if (modal && modalImg && captionText) {
             modal.style.display = "block";
-            modalImg.src = pic;
+            modalImg.src = image;
             captionText.innerHTML = imageDescription;
         }
-
     }
 
     // When the user clicks on <span> (x), close the modal
@@ -62,21 +60,21 @@ function projectCardContent(
 
             {/*This positions & styles the Title & Faculty Member Carousel  */}
             <Row style={{ marginBottom: '20px' }} className="d-flex justify-content-center align-items-center">
-                <Col md={{ span: 6, offset: 0 }}>
+                <Col md={{ span: 9, offset: 0 }}>
                     <h1 className='title-text' dangerouslySetInnerHTML={{ __html: title }}></h1>
                 </Col>
-                <Col md={{ span: 3, offset: 3 }}  sm={12} xs={12}>
+                <Col md={{ span: 3, offset: 0 }}  sm={12} xs={12}>
                     <FacultyCarousel faculty={facultyMembers} />
                 </Col>
             </Row>
 
-            <Row>
+            <Row className='d-flex align-items-center'>
                 {/*This positions & styles the image, image Alt, and image description featured on the component  */}
                 <Col className="d-flex justify-content-center align-items-center" md={{ span: 3, offset: 1 }} sm={12} xs={12}>
                     <Figure>
                         <Figure.Image
-                            alt={imageAlt}
-                            src={pic}
+                            alt={`Project ${title} Image`}
+                            src={image}
                             className='rounded overflow-hidden project-images'
                             onClick={() => triggerModal()}
                         />
@@ -87,7 +85,7 @@ function projectCardContent(
                 </Col>
 
                 {/*This positions & styles the description div for the event and the link */}
-                <Col md={8} sm={12} xs={12}>
+                <Col md={8} sm={12} xs={12} className="align-items-center">
                     <section>
                         <div className='no-scrollbar description-div'>
                             <h2 className='description-text' dangerouslySetInnerHTML={{ __html: description }}></h2>
@@ -118,11 +116,11 @@ export interface myProjectProps {
     description: string,
     projectLink: string,
     imageDescription: string,
-    imageAlt: string,
     number: number,
     facultyMembers: facultyMembers[],
     contributers: contributerProps[],
-    databaseKey: string
+    databaseKey: string,
+    image: string
 }
 
 // This component actually creates the alternating project components seen on the home page
@@ -156,7 +154,6 @@ function ProjectCard(myProps: myProjectProps) {
                                 projectCardContent(
                                     myProps.title,
                                     myProps.facultyMembers,
-                                    myProps.imageAlt,
                                     myProps.imageDescription,
                                     myProps.description,
                                     myProps.projectLink,
@@ -164,7 +161,8 @@ function ProjectCard(myProps: myProjectProps) {
                                     modal,
                                     modalImg,
                                     captionText,
-                                    1)
+                                    1,
+                                    myProps.image)
                             }
                         </Card>
                     </Col>
@@ -179,7 +177,6 @@ function ProjectCard(myProps: myProjectProps) {
                                     projectCardContent(
                                         myProps.title,
                                         myProps.facultyMembers,
-                                        myProps.imageAlt,
                                         myProps.imageDescription,
                                         myProps.description,
                                         myProps.projectLink,
@@ -187,7 +184,8 @@ function ProjectCard(myProps: myProjectProps) {
                                         modal,
                                         modalImg,
                                         captionText,
-                                        2)
+                                        2,
+                                        myProps.image)
                                 }
                             </Card>
                         </Col>

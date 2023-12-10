@@ -7,18 +7,13 @@ import '../css/editableCSS/editPage.css';
 
 import Header from '../components/Header';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import EditableCarousel, { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
-import EditableFacultyHeader, { editableHeaderProps } from '../components/EditableComponents/EditableFacultyHeader';
-import EditableTextArea, { editableTextProps } from '../components/EditableComponents/EditableTextArea';
-import EditableContact, { editableContactProps } from '../components/EditableComponents/EditableContact';
-import EditableProjectList from '../components/EditableComponents/EditableProjectList';
-import { editableEventProps } from '../components/EditableComponents/EditableEventComponent';
 
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json';
 import accordionTemplate from '../utils/accordion.json';
 import contactTemplate from '../utils/contact.json';
 import useToastContext from '../components/toasts/useToastContext';
+import { createEditableRenderArray } from '../utils/parseAndRenderComponents';
 
 
 // Define an interface for the structure of the nested components
@@ -31,6 +26,7 @@ interface valueType {
     type: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UpdatesType = { [key: string]: any };
 
 
@@ -66,6 +62,7 @@ const EditPage = () => {
         onValue(componentsRef, (snapshot) => {
             setComponentsSnapshot(snapshot.val());
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -115,134 +112,9 @@ const EditPage = () => {
                 }
             }
         }
+        createEditableRenderArray(componentsSnapshot, setUpdatedComponents, pathName, addToast);
 
-        let arr: JSX.Element[] = [];
-
-        if (componentsSnapshot) {
-
-            const events: editableComponentProps[][] = [];
-            const projects: editableComponentProps[][] = [];
-            let component = undefined;
-
-            // Iterate through every component in the snapshot
-            for (const [key, value] of Object.entries(componentsSnapshot)) {
-                if (key !== 'submitted') {
-                    const newvalue = value as valueType;
-
-                    // Generate specific components based on newvalue's type:
-                    switch (newvalue.type) {
-                        // If the component is a text or accordion component 
-                        case 'text':
-                        case 'accordion':
-                            component = value as editableTextProps;
-                            arr.push(
-                                <EditableTextArea
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                    type={newvalue.type}
-                                    addToast={addToast}
-                                />
-                            );
-                            break;
-                        // If the component is an event
-                        case 'event':
-                            component = value as editableEventProps;
-                            if (events[newvalue.pageOrder] === undefined) {
-                                events[newvalue.pageOrder] = [];
-                            }
-                            if (events[newvalue.pageOrder]) {
-                                events[newvalue.pageOrder].push({
-                                    pageOrder: newvalue.pageOrder,
-                                    nestedOrder: newvalue.nestedOrder,
-                                    data: component,
-                                    componentKey: key,
-                                    pathName: pathName,
-                                });
-                            }
-                            break;
-                        // If the component is a project
-                        case 'project':
-                            if (projects[newvalue.pageOrder] === undefined) {
-                                projects[newvalue.pageOrder] = [];
-                            }
-                            if (projects[newvalue.pageOrder]) {
-                                projects[newvalue.pageOrder].push({
-                                    pageOrder: newvalue.pageOrder,
-                                    nestedOrder: newvalue.nestedOrder,
-                                    data: value,
-                                    componentKey: key,
-                                    pathName: pathName,
-                                });
-                            }
-                            break;
-                        // If the component is a header (specifically for the faculty page)
-                        case 'header':
-                            component = value as editableHeaderProps;
-                            arr.push(
-                                <EditableFacultyHeader
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                />
-                            );
-                            break;
-                        // If the component is a contact component
-                        case 'contact':
-                            component = value as editableContactProps;
-                            arr.push(
-                                <EditableContact
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                    type="Contact Page"
-                                    addToast={addToast}
-                                />
-                            );
-                            break;
-                        default:
-                            console.log(' in here', value);
-                            break;
-                    }
-                }
-            }
-            // Maps each of the events in the events array to a carousel item
-            {
-                events.map((_array, index) => (
-                    <>
-                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} addToast={addToast} />)}
-                    </>
-                ))
-            }
-            // Maps each of the projects in the projects array to an editable project item
-            {
-                projects.map((_array, index) => (
-                    <>
-                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast} />)}
-                    </>
-                ))
-            }
-
-            // Sort the array based on 'pageOrder' and 'nestedOrder'
-            arr = arr.sort(function (a, b) {
-                return (
-                    a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
-                );
-            });
-
-            // Update state variable 'updatedComponents' with the sorted array
-            setUpdatedComponents(arr);
-        }
-    }, [componentsSnapshot, pathName]);
+    }, [addToast, componentsSnapshot, pathName]);
 
 
     // Reference: https://stackoverflow.com/questions/34673544/sanitize-html-string-without-using-dangerouslysetinnerhtml-for-length-check

@@ -7,10 +7,12 @@ import DeleteConfirmationModal from '../DeleteConfirmationModal';
 import EditableFormComponent from './EditableFormComponent';
 import { deleteNestedComponent, handleTextAreaChange } from '../../utils/editingComponents';
 import { getMaxProjectOrder } from '../../utils/editingComponents';
+import EditableImageForm from './EditableImageForm';
 
 interface editableContributerProps {
     name: string,
-    description: string
+    description: string,
+    image: string
 }
 interface editableComponentProps {
     pageOrder: number
@@ -26,13 +28,14 @@ interface editableComponentProps {
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableContributers(myProps: editableComponentProps) {
-    
+
     const db = getDatabase();
     const myRef = ref(db)
 
     // Create useStates for all data that we will be displaying
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [image, setImage] = useState('');
 
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
     const [lastNestedOrder, setLastNestedOrder] = useState()
@@ -41,11 +44,12 @@ function EditableContributers(myProps: editableComponentProps) {
     useEffect(() => {
         setDescription(myProps.data.description);
         setName(myProps.data.name);
+        setImage(myProps.data.image)
     }, []);
 
     // Get max nested ordering for the contributers list
     useEffect(() => {
-        getMaxProjectOrder(myProps,db, setLastNestedOrder) 
+        getMaxProjectOrder(myProps, db, setLastNestedOrder)
     }, [db, lastNestedOrder, myProps]);
 
 
@@ -76,7 +80,7 @@ function EditableContributers(myProps: editableComponentProps) {
                 label="Name"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
-                delete={lastNestedOrder !==1}
+                delete={lastNestedOrder !== 1}
                 handleOpenConfirmationModal={handleOpenConfirmationModal} />
             <EditableFormComponent
                 changedValue='/description'
@@ -89,6 +93,15 @@ function EditableContributers(myProps: editableComponentProps) {
                 handleTextAreaChange={handleTextAreaChange}
                 rows={5}
                 delete={false} />
+            <EditableImageForm
+                changedValue='/image'
+                myRef={myRef}
+                value={image}
+                setValue={setImage}
+                pathName={myProps.pathName}
+                componentKey={myProps.componentKey}
+                label="Image URL"
+                handleTextAreaChange={handleTextAreaChange} />
         </div >
     )
 }

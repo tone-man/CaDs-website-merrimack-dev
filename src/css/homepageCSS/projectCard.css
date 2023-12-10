@@ -63,12 +63,12 @@
 /* Formats the div in which the description text of the event will live */
 .project-card .description-div {
     overflow: auto;
-    max-height: 60vh;
+    max-height: 30vh;
+    min-height: 15vh;
     background: white;
     border-radius: 40px;
     margin: 20px;
-    padding: 40px 20px;
-    height: auto;
+    padding: 20px 20px;
     box-shadow: 10px 10px 20px rgb(0, 0, 0);
 }
 
@@ -114,6 +114,7 @@
     .project-card .description-div {
         width: 100%;
         margin: auto;
+        max-height: max-content;
     }
 
     .project-card .description-text {
