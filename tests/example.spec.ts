@@ -7,26 +7,26 @@ test('Has Website in Title', async ({ page }) => {
 });
 
 
-// // NAV BAR TESTS
-// test('First Nav Bar Present', async ({ page }) => {
-//   const pages = ['/', '/faculty', '/dashboard']
-//   for (let i = 0; i < pages.length; i++) {
-//     await page.goto(pages[i]);
-//     await page.waitForLoadState('load'); 
-//     const navbar = await page.$('#first-navbar');
-//     expect(navbar).not.toBeNull();
-//   }
-// });
+// NAV BAR TESTS
+test('First Nav Bar Present', async ({ page }) => {
+  const pages = ['/', '/faculty', '/dashboard']
+  for (let i = 0; i < pages.length; i++) {
+    await page.goto(pages[i]);
+    await page.waitForLoadState('load'); 
+    const navbar = await page.$('#first-navbar');
+    expect(navbar).not.toBeNull();
+  }
+});
 
-// test('Second Nav Bar Present', async ({ page }) => {
-//   const pages = ['/', '/faculty', '/dashboard']
-//   for (let i = 0; i < pages.length; i++) {
-//     await page.goto(pages[i]);
-//     await page.waitForLoadState('load'); 
-//     const navbar = await page.$('#second-navbar');
-//     expect(navbar).not.toBeNull();
-//   }
-// });
+test('Second Nav Bar Present', async ({ page }) => {
+  const pages = ['/', '/faculty', '/dashboard']
+  for (let i = 0; i < pages.length; i++) {
+    await page.goto(pages[i]);
+    await page.waitForLoadState('load'); 
+    const navbar = await page.$('#second-navbar');
+    expect(navbar).not.toBeNull();
+  }
+});
 
 // test('Correct Nav Bar Links', async ({ page }) => {
 //   await page.goto('/');
