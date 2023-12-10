@@ -29,8 +29,10 @@ function App() {
   onAuthStateChanged(auth, function (result) {
 
     // No result then return
-    if (!(result && result.uid && result.email))
+    if (!(result && result.uid && result.email)) {
+      setUser(null)
       return;
+    }
 
     const uid: string = result.uid;
     const email: string = emailToFirebase(result.email);
@@ -52,9 +54,9 @@ function App() {
       }
 
       //Since the snapshot exists we just load the data
-      const { email, name, photoURL, userLevel } = snapshot.val();
+      const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = snapshot.val();
 
-      setUser(new User(uid, email, name, photoURL, userLevel))
+      setUser(new User(uid, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location))
 
     });
 
@@ -67,14 +69,19 @@ function App() {
         return;
       }
 
-      const { userLevel, email } = snapshot.val();
+      const { email, userLevel, phoneNumber, title, pronouns, department, location } = snapshot.val();
 
       // Move data to a key with the uid
       set(ref(db, 'users/' + uid), {
+        email: email,
         name: result.displayName,
         photoURL: result.photoURL,
-        email: email,
-        userLevel: userLevel
+        userLevel: userLevel,
+        phoneNumber: phoneNumber,
+        pronouns: pronouns,
+        department: department,
+        location: location,
+        title: title,
       });
 
       //Delete the email key

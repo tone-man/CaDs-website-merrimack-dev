@@ -14,7 +14,7 @@ function AddUserModal() {
 
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
-    const userLevelRef = useRef<HTMLInputElement | null>(null);
+    const [userLevel, setUserLevel] = useState<string>("Faculty");
     const phoneNumberRef = useRef<HTMLInputElement | null>(null);
     const titleRef = useRef<HTMLInputElement | null>(null);
     const departmentRef = useRef<HTMLInputElement | null>(null);
@@ -28,6 +28,11 @@ function AddUserModal() {
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserLevel(event.target.value);
+    }
+
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -171,8 +176,9 @@ function AddUserModal() {
                                             id={userLevel}
                                             label={userLevel}
                                             name="userLevels"
-                                            ref={userLevelRef}
                                             value={userLevel}
+                                            required={true}
+                                            onChange={handleRadioChange}
                                         />
                                     </div>
                                 ))}
@@ -182,19 +188,15 @@ function AddUserModal() {
                             {/*Pronouns Input*/}
                             <Col md={6} sm={12} className="mb-3">
 
-                                <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
-                                {['he/him', 'she/her', 'they/them'].map((pronouns, index) => (
-                                    <div key={index} className="mb-3">
-                                        <Form.Check
-                                            type='radio'
-                                            id={pronouns}
-                                            label={pronouns}
-                                            name="prounouns"
-                                            value={index}
-                                            ref={prounounsRef}
-                                        />
-                                    </div>
-                                ))}
+                                <TextInputFormGroup
+                                    controlId='validationCustom08'
+                                    label='Pronouns'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: 123-654-0987'
+                                    alt='Prounoun Text Input'
+                                    inputRef={prounounsRef}
+                                    feedbackMessage='Please enter a valid prounouns' />
                             </Col>
                         </Row>
 

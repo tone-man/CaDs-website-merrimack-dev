@@ -1,31 +1,39 @@
 import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "react-bootstrap";
 import '../css/facultyDirectory.css';
 import Header from "./Header";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FacultyMemberDirectory, { facultyMember } from "./FacultyMemberDirectory";
-
-
-//Create an array of faculty member objects
-const facultyArray: facultyMember[] = [
-    {
-        name: 'Dr. Melissa St. Hilaire', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-        , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink: '/', photoURL: 'https://lh3.googleusercontent.com/a-/ALV-UjWeIN34qJPkxscprE8LXjWxgqGv7T3b4sjgaISeR0yfyw=s48-p'
-    },
-    {
-        name: 'Dr. Christopher Stuetzle', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-        , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink: '/', photoURL: 'https://lh3.googleusercontent.com/a-/ALV-UjXJQAJfA5y8pKWzTyNADGFO4sKs4QAdjJpbbz2q4vStk_sc=s48-p'
-    },
-    {
-        name: 'Dr. Zachary Kissel', phoneNumber: 'XXX-123-4567', email: 'email@example.com', department: 'computer and Data Science'
-        , pronouns: 'she/her/hers', title: 'assistant professor of the Department of Computer and Data Sciences', pageLink: '/', photoURL: 'https://lh3.googleusercontent.com/a-/ALV-UjWNK_ft4gLQrzm20K7DWeVVKE9mcOCDoZZMiu1gzsLkLw=s48-p'
-    },
-];
+import { getDatabase, ref, onValue } from "firebase/database";
+import FireBaseApp from "../firebase";
+import User from "../firebase/user";
 
 // Faculty Directory components
 function FacultyDirectory() {
 
     const searchBarRef = useRef<HTMLInputElement | null>(null);
-    const [visibleUsers, setVisibleUsers] = useState(facultyArray);
+    const [usersList, setUsersList] = useState<User[] | null>([]);
+    const [visibleUsers, setVisibleUsers] = useState<User[] | null>(usersList);
+
+
+    // gets the list of users from the database (ADMIN ONLY FEATURE)
+    useEffect(() => {
+        const db = getDatabase(FireBaseApp);
+        // Get the references to users and pending users
+        const usersRef = ref(db, `/users`);
+        // const pendingUsersRef = ref(db, '/pendingUsers');
+
+        // Stores a listener for the database in a useState variable
+        onValue(usersRef, (snapshot) => {
+            const users: User[] = [];
+            snapshot.forEach((child) => {
+                const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = child.val();
+                users.push(new User(child.key, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location));
+            });
+
+            setUsersList(users);
+            setVisibleUsers(users);
+        })
+    }, []);
 
     // Search function for faculty members
     function search() {

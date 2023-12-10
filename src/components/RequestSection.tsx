@@ -47,7 +47,7 @@ function RequestSection(myProps: myRequestProps) {
               myProps.requests.map((requests, index) => (
                 <div
                   key={index}
-                  style={index !== 0 ? { borderTop: "1px black solid" } : {}}
+                  style={index !== requests.length - 1 || requests.length < 3 ? { borderBottom: '1px black solid' } : {}}
                 >
                   <Row className="rows ml-auto">
                     <Col md={2} sm={2} xs={4} className="profile-image">

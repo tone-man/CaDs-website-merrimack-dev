@@ -4,11 +4,11 @@ import '../css/formModal.css'
 import '../css/whiteListSection.css'
 import TextInputFormGroup from './TextInputFormGroup';
 import User from '../firebase/user';
-import { update } from 'firebase/database';
 
 interface editUserProps {
     updateUser: (user: User) => void;
     user: User;
+    isAdmin: boolean;
 }
 
 // This modal pops up to allow users to edit white list user information
@@ -16,13 +16,14 @@ interface editUserProps {
 function EditUserModal(props: editUserProps) {
     const updateUser = props.updateUser;
     const user = props.user;
+    const isAdmin = props.isAdmin;
 
     // UseRef and UseState variable declarations
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
-    const userLevelRef = useRef<HTMLInputElement | null>(null);
+    const [userLevel, setUserLevel] = useState<string>("Faculty");
     const phoneNumberRef = useRef<HTMLInputElement | null>(null);
     const titleRef = useRef<HTMLInputElement | null>(null);
     const departmentRef = useRef<HTMLInputElement | null>(null);
@@ -35,6 +36,10 @@ function EditUserModal(props: editUserProps) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserLevel(event.target.value);
+    }
+
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -46,14 +51,13 @@ function EditUserModal(props: editUserProps) {
         // Checks form validity
         if (form.checkValidity()) {
             // Gets form information and calls addUser() with respective info
-            if (!fullNameRef.current || !emailRef.current || !userLevelRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
+            if (!fullNameRef.current || !emailRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
                 console.error("error");
             } else {
-                let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, "", userLevelRef.current.value, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, "", userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 updateUser(updatedUser)
             }
             // TODO: Photos
-            handleClose();
         }
         setValidated(true);
         handleClose();
@@ -172,44 +176,42 @@ function EditUserModal(props: editUserProps) {
                             </Col>
                         </Row>
 
-                        {/*User Level Input*/}
+                        {/*User Level Input  (only when isAdmin is true*/}
                         <Row>
+                            {(isAdmin) &&
+
+                                <Col md={6} sm={12} className="mb-3">
+
+                                    <Form.Label><h2 className='smallFont metropolisRegular'>User Level</h2></Form.Label>
+                                    {['Faculty', 'Administrator'].map((userLevel) => (
+                                        <div key={userLevel} className="mb-3">
+                                            <Form.Check
+                                                type='radio'
+                                                id={userLevel}
+                                                label={userLevel}
+                                                name="userLevels"
+                                                value={userLevel}
+                                                required={true}
+                                                defaultChecked={(userLevel == user.userLevel) ? true : false}
+                                                onChange={handleRadioChange}
+                                            />
+                                        </div>
+                                    ))}
+                                </Col>
+                            }
+
+                            {/*Pronouns Input*/}
                             <Col md={6} sm={12} className="mb-3">
-
-                                <Form.Label><h2 className='smallFont metropolisRegular'>User Level</h2></Form.Label>
-                                {['Faculty', 'Administrator'].map((userLevel) => (
-                                    <div key={userLevel} className="mb-3">
-                                        <Form.Check
-                                            type='radio'
-                                            id={userLevel}
-                                            label={userLevel}
-                                            name="userLevels"
-                                            ref={userLevelRef}
-                                            value={userLevel}
-                                            defaultChecked={(userLevel == user.userLevel) ? false : true}
-                                        />
-                                    </div>
-                                ))}
-                            </Col>
-
-
-                            {/*User Level Input*/}
-                            <Col md={6} sm={12} className="mb-3">
-
-                                <Form.Label><h2 className='smallFont metropolisRegular'>Preferred Pronouns</h2></Form.Label>
-                                {['he/him', 'she/her', 'they/them'].map((pronouns, index) => (
-                                    <div key={index} className="mb-3">
-                                        <Form.Check
-                                            type='radio'
-                                            id={pronouns}
-                                            label={pronouns}
-                                            name="prounouns"
-                                            ref={prounounsRef}
-                                            value={index}
-                                            defaultChecked={(String(index) == user.pronouns) ? false : true}
-                                        />
-                                    </div>
-                                ))}
+                                <TextInputFormGroup
+                                    controlId='validationCustom08'
+                                    label='Pronouns'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: 123-654-0987'
+                                    alt='Prounoun Text Input'
+                                    inputRef={prounounsRef}
+                                    default={user.pronouns}
+                                    feedbackMessage='Please enter a valid prounouns' />
                             </Col>
                         </Row>
                         {/* https://mdbootstrap.com/docs/standard/forms/file/ */}

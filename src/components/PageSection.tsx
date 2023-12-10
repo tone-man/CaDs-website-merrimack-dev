@@ -57,14 +57,6 @@ function PageSection(myProps: myPageProps) {
                             )}
                     </div>
 
-                    {/* New Project Button 
-                    <Row style={{ paddingTop: '20px' }}>
-                        <Col className='create-new-button mx-auto'>
-                            <Button> Create New Project</Button>
-                        </Col>
-                    </Row>
-                    */}
-
                 </div>
             </Container >
 

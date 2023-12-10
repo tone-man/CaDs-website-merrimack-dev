@@ -47,8 +47,8 @@ const Dashboard = () => {
     // gets the list of users from the database (ADMIN ONLY FEATURE)
     useEffect(() => {
 
-        // if (!user || user.userLevel != "Administrator")
-        //     return;
+        if (!user || user.userLevel != "Administrator")
+            return;
 
         // Get the references to users and pending users
         const usersRef = ref(db, `/users`);
@@ -64,7 +64,7 @@ const Dashboard = () => {
 
             setAllowedUsersList(allowedUsersList);
         })
-    }, []);
+    }, [user]);
 
     // Get the list of projects from the database
     return (
@@ -74,10 +74,10 @@ const Dashboard = () => {
             } />
             <div style={{ background: 'rgb(224, 224, 224)' }}>
 
-                <EditProfile user={user} onEdit={undefined} />
+                <EditProfile user={user} />
                 <PageSection pages={pageArray} />
                 {
-                    (1 == 1) && (
+                    (!user || user.userLevel == "Administrator") && (
                         <>
                             <RequestSection requests={requests} />
                             <WhiteListSection userArray={allowedUsersList} />

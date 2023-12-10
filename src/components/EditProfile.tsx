@@ -1,4 +1,6 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { getDatabase, set, ref } from "firebase/database";
+import FireBaseApp from "../firebase";
 import User from "../firebase/user";
 import "../css/whiteListSection.css"
 import "../css/whiteListIndividual.css"
@@ -8,12 +10,17 @@ import ProfileImage from "./ProfileImage";
 
 interface ProfileProps {
     user: User | null;
-    onEdit: (user: User) => void | undefined;
 }
 
+// Edits user information in the whitelist
+// TODO: Pass edited user information back to database
+function editUser(user: User) {
+    const db = getDatabase(FireBaseApp);
+    set(ref(db, `users/${user.id}`), user.toFirebaseObject());
+}
 export default function EditProfile(props: ProfileProps) {
     const user = props.user;
-    const onEdit = props.onEdit;
+
 
     return (
         <div>
@@ -49,7 +56,7 @@ export default function EditProfile(props: ProfileProps) {
 
                                 {/* Edit and Delete Buttons */}
                                 <Col md={2} sm={12} xs={12} className='margin-auto'>
-                                    <EditUserModal updateUser={onEdit} user={user} />
+                                    <EditUserModal updateUser={editUser} user={user} isAdmin={false} />
                                 </Col>
 
                             </Row>

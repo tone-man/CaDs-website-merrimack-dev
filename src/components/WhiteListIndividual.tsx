@@ -56,7 +56,7 @@ function WhiteListIndividual({ user, onDelete, onEdit }: WhiteListIndividualProp
 
                     {/* Edit and Delete Buttons */}
                     <Col md={2} sm={12} xs={12} className='margin-auto'>
-                        <EditUserModal updateUser={onEdit} user={user} />
+                        <EditUserModal updateUser={onEdit} user={user} isAdmin={true} />
                         <Row style={{ padding: '10px' }}>
                             <Button className='delete-button' onClick={handleOpenConfirmationModal}>Delete</Button>
                         </Row>
