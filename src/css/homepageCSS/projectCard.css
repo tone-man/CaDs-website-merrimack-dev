@@ -1,0 +1,127 @@
+/* Styling for the project card componenet */
+
+
+/* Baseline styling for each project card component. */
+.project-card {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px 1px var(--grey);
+}
+
+/* These two classes determine the color of the project component based on whether it is on the left or right */
+.project-card-left {
+    background-color: var(--blue);
+}
+
+.project-card-right {
+    background-color: var(--darkGrey);
+    box-shadow: -10px 10px 10px 1px var(--grey);
+}
+
+
+/* Formats title text on the project card component */
+.project-card .title-text {
+    padding-left: 50px;
+    font-size: var(--mediumFont);
+    color: white;
+    text-align: left;
+    padding-top: 20px;
+    font-family: var(--caslonBold);
+}
+
+/* Formats link text + the faculty member name text on the project card component + Accordion Contributer component */
+.project-card .featured-text {
+    font-size: var(--extraSmallFont);
+    color: var(--yellow);
+    font-family: var(--caslonRegular);
+    margin: 10px 0 0px;
+    text-align: center;
+}
+
+/* Formats the project images */
+.project-card .project-images {
+    height: auto;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Formats the project images on hover */
+.project-card .project-images:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+/* Formats the caption featured on each image */
+.project-card .figure-caption {
+    color: white;
+    font-size: var(--extraSmallFont);
+    font-family: var(--caslonItalic);
+}
+
+/* Formats the div in which the description text of the event will live */
+.project-card .description-div {
+    overflow: auto;
+    max-height: 30vh;
+    min-height: 15vh;
+    background: white;
+    border-radius: 40px;
+    margin: 20px;
+    padding: 20px 20px;
+    box-shadow: 10px 10px 20px rgb(0, 0, 0);
+}
+
+/* Formats the description text of the event */
+.project-card .description-text {
+    text-align: center;
+    color: black;
+    font-size: 1.2rem;
+    line-height: 25px;
+    font-family: var(--caslonRegular);
+}
+
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_hide_scrollbar_keep_func */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Resizes the project card image container on screen resizing */
+@media screen and (max-width: 1600px) {
+    .project-images {
+        min-width: 175px;
+    }
+
+    .project-card .title-text {
+        text-align: center;
+        padding-left: 0px;
+        padding-bottom: 10px;
+    }
+}
+
+
+/* 100% Image Width on Smaller Screens & Other restyling upon resizing */
+@media only screen and (max-width: 700px) {
+    .project-card .description-div {
+        width: 100%;
+        margin: auto;
+        max-height: max-content;
+    }
+
+    .project-card .description-text {
+        font-size: var(--extraSmallFont);
+    }
+
+    .project-card .title-text {
+        font-size: var(--smallFont);
+    }
+}

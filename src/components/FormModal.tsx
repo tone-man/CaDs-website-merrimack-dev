@@ -2,15 +2,24 @@ import { useState } from 'react';
 import { Button, ButtonToolbar, Col, Form, Modal, Row, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import '../css/formModal.css'
 import TextInputFormGroup from './TextInputFormGroup';
+import { getDatabase, ref, push, child, set } from 'firebase/database';
+
+interface formProps {
+  title: string;
+}
 
 // https://react-bootstrap.netlify.app/docs/forms/validation
 // This modal component has a form nested inside of it that prompts the user for important information that will be sent to 
 //the owner the of the project
 //TODO: Save entered information and send it as a request to the owner of the project
-function FormModal() {
+function FormModal(myProps: formProps) {
+  const db = getDatabase();
 
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
+  const [requestBody, setRequestBody] = useState('');
+  const [requestName, setRequestName] = useState('');
+  const [email, setEmail] = useState('');
 
   // Handles opening/closing the modal
   const handleClose = () => setShow(false);
@@ -18,10 +27,36 @@ function FormModal() {
 
   // Validates and handles the form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevents the default form submission and page reload
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    }
+    else {
+      // Generate new unique key
+      const newPostKey = push(child(ref(db), 'requests')).key;
+      const myRef = ref(db, 'requests' + `/` + newPostKey);
+
+      // Create request object
+      const value = {
+        requestTitle: `Request to be Featured by ${requestName}`,
+        requestBody: requestBody,
+        requestName: requestName,
+        email: email,
+        title: myProps.title
+      }
+
+      // Add it to the requests with the new key
+      set(myRef, value)
+        .then(() => {
+          console.log('Data added successfully!');
+        })
+        .catch((error) => {
+          console.error('Error adding data: ', error);
+        });
+
+      setShow(false);
     }
     setValidated(true);
   };
@@ -29,7 +64,7 @@ function FormModal() {
   // Customized tooltip that appears upon hovering on the buttom
   const tooltip = (
     <Tooltip id="tooltip">
-      <h2 className='extraSmallFont caslonRegular'>Interested in being featured on this project? Make a request here! </h2>
+      <h2 className='tooltip-text'>Interested in being featured on this project? Make a request here! </h2>
     </Tooltip>
   );
 
@@ -39,8 +74,8 @@ function FormModal() {
       {/* Adds the tooltip to the Request to Be Featured button */}
       <ButtonToolbar>
         <OverlayTrigger placement="left" overlay={tooltip}>
-          <Button variant='light' style={{ height: '60px' }} onClick={handleShow}>
-            <i className="bi bi-people-fill" style={{ color: 'black', fontSize: '2rem' }} aria-label='Request to be Featured Icon'></i>
+          <Button variant='light' className='request-button' onClick={handleShow}>
+            <i className="bi bi-people-fill request-icon" aria-label='Request to be Featured Icon'></i>
           </Button>
         </OverlayTrigger>
       </ButtonToolbar>
@@ -53,28 +88,29 @@ function FormModal() {
         <Form noValidate validated={validated} onSubmit={handleSubmit}  >
           <Modal.Body >
 
-           {/* Full Name Text Input */}
+            {/* Full Name Text Input */}
             <Row className="mb-3">
               <TextInputFormGroup
-                controlId='validationCustom01'
+                controlId='name'
                 label='Full Name'
                 type='text'
                 required={true}
                 placeholder='John Doe'
                 alt='Full Name Text Input'
-                feedbackMessage='Please choose your full name.' />
+                feedbackMessage='Please choose your full name.'
+                setData={setRequestName} />
             </Row>
-
-              {/*Email Text Input */}
+            {/*Email Text Input */}
             <Row className="mb-3">
               <TextInputFormGroup
-                controlId='validationCustom02'
+                controlId='email'
                 label='Email'
                 type='email'
                 required={true}
                 placeholder='name@example.com'
                 alt='Email Text Input'
-                feedbackMessage='Please enter a valid email' />
+                feedbackMessage='Please enter a valid email'
+                setData={setEmail} />
             </Row>
 
             {/*Request Text Input */}
@@ -82,6 +118,8 @@ function FormModal() {
               <Form.Group controlId="validationCustomUsername">
                 <Form.Label><h2 className='smallFont metropolisRegular'>Request</h2></Form.Label>
                 <Form.Control
+                  onChange={(event) => setRequestBody(event.target.value)} // Inline function to update the state
+                  id='body'
                   className='extraSmallFont metropolisRegular'
                   as="textarea"
                   rows={3}
@@ -92,11 +130,11 @@ function FormModal() {
                   aria-label='Request Text Input'
                 />
                 <Form.Control.Feedback type="invalid">
-                <h6 style={{ color: 'white' }}>Please enter your Request</h6>
+                  <h6 style={{ color: 'white' }}>Please enter your Request</h6>
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            
+
           </Modal.Body>
           <Modal.Footer >
             {/* Submit and Cancel Buttons */}

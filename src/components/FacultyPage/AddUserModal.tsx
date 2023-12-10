@@ -1,7 +1,7 @@
-import { useState, useRef, HtmlHTMLAttributes } from 'react';
+import { useState, useRef } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../../css/formModal.css'
-import '../../css/whiteListSection.css'
+import '../../css/whiteListIndividual.css'
 import TextInputFormGroup from '../TextInputFormGroup';
 import FireBaseApp from '../../firebase';
 import { emailToFirebase } from '../../firebase/firebaseFormatter';
@@ -43,12 +43,12 @@ function AddUserModal() {
         // Checks form validity
         if (form.checkValidity()) {
             // Gets form information and calls addUser() with respective info
-            if (!fullNameRef.current || !emailRef.current || !userLevelRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
+            if (!fullNameRef.current || !emailRef.current || !userLevel || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
                 console.error("error");
             } else {
                 const db = getDatabase(FireBaseApp);
-                let id = emailToFirebase(emailRef.current.value);
-                let newUser = new User(id, emailRef.current.value, fullNameRef.current.value, "", userLevelRef.current.value, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                const id = emailToFirebase(emailRef.current.value);
+                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, "", userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 set(ref(db, 'users/' + id), newUser.toFirebaseObject());
             }
             // TODO: Photos

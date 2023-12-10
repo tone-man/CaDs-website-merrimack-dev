@@ -1,5 +1,5 @@
-/*The container for each of the events in the event carousel */
-.event-carousel-container {
+/*The container for each of the parent components */
+.editable-list-container {
     background-color: var(--blue);
     font-size: var(--mediumFont);
     color: white;
@@ -8,38 +8,37 @@
     padding-top: 20px;
     margin-bottom: 20px;
     margin-top: 10px;
+    width: 100%;
 }
 
 
-/* Container for buttons and header of the events-container */
+/* Container for buttons and header of the parents-component */
 .buttons-container {
     padding-top: 50px;
     padding-bottom: 20px;
+    width: 100%;
 }
 
 
-/* Styling for the delete component button, upon hover as well */
+/* Styling for the delete parent component button, upon hover as well */
 .delete-component button {
     background-color: red;
     font-size: 25px;
     color: white;
     border: none;
 }
-
 .delete-component button:hover {
     background-color: rgb(216, 30, 30);
 }
 
 
-
-/* Styling for the add component button, upon hover as well */
+/* Styling for the add parent component button, upon hover as well */
 .add-component button {
     background-color: var(--blue);
     font-size: 25px;
     color: white;
     border: none;
 }
-
 .add-component button:hover {
     background-color: var(--darkGrey);
 }
@@ -56,11 +55,9 @@
     font-size: 30px;
     border: none;
 }
-
 .reorder-page-component button:hover {
     background-color: var(--darkGrey);
 }
-
 .reorder-page-component button:disabled {
     opacity: .5;
     background-color: var(--blue);
@@ -68,7 +65,7 @@
 }
 
 
-/* Restyles event and event edit carousle container upon screen resizing */
+/* Restyles buttons upon resizing */
 @media screen and (max-width: 800px) {
     .reorder-page-component button {
         font-size: 15px;

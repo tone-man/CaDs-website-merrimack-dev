@@ -2,7 +2,7 @@ import { Button, Col, Container, Row } from "react-bootstrap"
 import { getDatabase, ref } from "firebase/database"
 import { useEffect, useState } from "react"
 
-import '../../css/editableCSS/editableCarousel.css'
+import '../../css/editableCSS/editableList.css'
 
 import DeleteConfirmationModal from "../DeleteConfirmationModal"
 import EditableEventComponent, { editableEventProps } from "../EditableComponents/EditableEventComponent"
@@ -18,7 +18,8 @@ export interface editableComponentProps {
 interface eventCarouselProps {
   array: editableComponentProps[]
   pageOrder: number,
-  type: string
+  type: string,
+  addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -26,6 +27,7 @@ interface eventCarouselProps {
  * Allows edit, deletion, and addition privileges to users.
  */
 function EditableCarousel(myProps: eventCarouselProps) {
+  
   const [buttons, setButtons] = useState<JSX.Element | null>(null);
   const [lastPageOrder, setLastPageOrder] = useState<number | null>(null);
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
@@ -50,8 +52,8 @@ function EditableCarousel(myProps: eventCarouselProps) {
   // Set the buttons that will be displayed for the entire editable carousel
   useEffect(() => {
     setButtons(
-      <Container style={{ width: '95%' }} className="buttons-container">
-        <Row>
+      <Container fluid>
+        <Row className="buttons-container">
           <Col md={6} sm={6} xs={6}>
             <Row>
               <Col md={2} sm={2} xs={5} className='reorder-page-component' >
@@ -75,17 +77,17 @@ function EditableCarousel(myProps: eventCarouselProps) {
           </Col>
 
           {/* Add nested component button and delete event carousel button */}
-          <Col md={6} sm={6} xs={5}>
+          <Col md={6} sm={6} xs={6}>
             <Row>
-              <Col md={10} sm={6} xs={6} style={{ textAlign: 'right' }} className="add-component">
+              <Col md={10} sm={10} xs={9} style={{ textAlign: 'right' }} className="add-component">
                 <Button
                   onClick={() =>
-                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName))}>
+                    addNestedComponent(myProps.array[myProps.array.length - 1], db, ref(db, myProps.array[myProps.array.length - 1].pathName), myProps.addToast, "event")}>
                   <i className="bi bi-plus-lg">
                   </i>
                 </Button>
               </Col>
-              <Col md={2} sm={6} xs={6} style={{ textAlign: 'right' }} className="delete-component">
+              <Col md={2} sm={2} xs={3} style={{ textAlign: 'right' }} className="delete-component">
                 <Button
                   onClick={() =>
                     setShowDeletionModal(true)}>
@@ -102,7 +104,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
 
   // Function to remove the carousel
   function remove() {
-    deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef)
+    deletePageComponents(myProps, myProps.array[myProps.array.length - 1], db, myRef, myProps.addToast, "event carousel")
     setShowDeletionModal(false);
   }
 
@@ -110,7 +112,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
     <div>
       <DeleteConfirmationModal show={showDeleteModal} onHide={() => setShowDeletionModal(false)} onConfirm={remove} name={'this ' + 'event carousel'} />
       {buttons}
-      <div className="event-carousel-container">
+      <div className="editable-list-container">
         {
           // Maps each of the events in the events array to an editable events component
           sorted.map((element) => (
@@ -122,6 +124,7 @@ function EditableCarousel(myProps: eventCarouselProps) {
                 componentKey={element.componentKey}
                 data={element.data}
                 pathName={element.pathName}
+                addToast={myProps.addToast}
               />
             </>
           ))

@@ -2,11 +2,12 @@ import { getDatabase, ref } from "firebase/database"
 import { Button, Container, Col, Row } from "react-bootstrap"
 import { useState, useEffect } from "react"
 
-import '../../css/editableCSS/editableEvent.css'
+import '../../css/editableCSS/editableNested.css'
 
 import EditableFormComponent from "./EditableFormComponent"
 import DeleteConfirmationModal from "../DeleteConfirmationModal"
 import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder } from '../../utils/editingComponents';
+import EditableImageForm from "./EditableImageForm"
 
 export interface editableEventProps {
     description: string;
@@ -14,8 +15,7 @@ export interface editableEventProps {
     location: string;
     date: string;
     link: string;
-    imgSource: string;
-    imageAlt: string;
+    image: string;
     caption: string;
     type: string
 }
@@ -25,6 +25,7 @@ export interface editableComponentProps {
     data: editableEventProps,
     componentKey: string,
     pathName: string,
+    addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
 /**
@@ -43,8 +44,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
     const [date, setDate] = useState('');
 
     const [link, setLink] = useState('');
-    const [imageSource, setImageSource] = useState('');
-    const [imageAlt, setImageAlt] = useState('');
+    const [image, setImage] = useState('');
     const [imageCaption, setImageCaption] = useState('');
 
     const [buttons, setButtons] = useState<JSX.Element | null>(null);
@@ -52,14 +52,13 @@ function EditableEventComponent(myProps: editableComponentProps) {
     const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
 
 
-  // Initialize usestates using data from props in the useEffect (once on initial render).
-  useEffect(() => {
+    // Initialize usestates using data from props in the useEffect (once on initial render).
+    useEffect(() => {
         setLink(myProps.data.link);
         setDate(myProps.data.date);
         setImageCaption(myProps.data.caption);
         setLocation(myProps.data.location);
-        setImageSource(myProps.data.imgSource);
-        setImageAlt(myProps.data.imageAlt);
+        setImage(myProps.data.image);
         setTitle(myProps.data.title);
         setDescription(myProps.data.description);
     }, []);
@@ -78,12 +77,12 @@ function EditableEventComponent(myProps: editableComponentProps) {
         setButtons(
             <>
                 <Row style={{ display: 'flex', alignItems: 'center' }}>
-                    <Col md={8} sm={8} xs={12} className="nested-component-title">
-                        <h1> {myProps.data.title}</h1>
+                    <Col md={9} sm={12} xs={12} className='nested-component-title' style={{ color: 'white' }}>
+                        <h1 dangerouslySetInnerHTML={{ __html: myProps.data.title }}></h1>
                     </Col>
-                    <Col md={4} sm={4} xs={12} >
+                    <Col md={3} sm={12} xs={12}>
                         <Row>
-                            <Col className="reorder-nested-component" md={6} sm={6} xs={5} style={{ textAlign: 'right' }}>
+                            <Col className="reorder-nested-component" md={6} sm={5} xs={5} style={{ textAlign: 'right' }}>
                                 <Button
                                     disabled={myProps.nestedOrder === 0}
                                     onClick={() =>
@@ -92,7 +91,7 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                     </i>
                                 </Button>
                             </Col>
-                            <Col className="reorder-nested-component" md={6} sm={3} xs={5} style={{ textAlign: 'left' }}>
+                            <Col className="reorder-nested-component" md={6} sm={5} xs={5} style={{ textAlign: 'left' }}>
                                 <Button
                                     disabled={myProps.nestedOrder === lastNestedOrder}
                                     onClick={() => reorderNestedComponents(false, myRef, myProps)}>
@@ -113,124 +112,109 @@ function EditableEventComponent(myProps: editableComponentProps) {
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
-        deleteNestedComponent(myProps, db)
+        deleteNestedComponent(myProps, db, myProps.addToast, "event")
         setShowDeletionModal(false);
     }
 
     return (
         <div>
-            <Container className="individual-event" >
-                <DeleteConfirmationModal
-                    show={showDeleteModal}
-                    onHide={() => setShowDeletionModal(false)}
-                    onConfirm={remove}
-                    name={'this ' + myProps.data.type} />
-                {buttons}
-                <Container className="event-styling" >
-                    <Row>
-                        <EditableFormComponent
-                            changedValue='/title'
-                            myRef={myRef}
-                            value={title}
-                            setValue={setTitle}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Title"
-                            handleTextAreaChange={handleTextAreaChange}
-                            rows={1}
-                            delete={true}
-                            handleOpenConfirmationModal={handleOpenConfirmationModal} />
+            <DeleteConfirmationModal
+                show={showDeleteModal}
+                onHide={() => setShowDeletionModal(false)}
+                onConfirm={remove}
+                name={'this ' + myProps.data.type} />
+            <Container fluid className='background-container'>
+                <Container fluid className='text-editable-container'>
+                    {buttons}
+                    <Container fluid className='styling'>
+                        <Row>
+                            <EditableFormComponent
+                                changedValue='/title'
+                                myRef={myRef}
+                                value={title}
+                                setValue={setTitle}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Title"
+                                handleTextAreaChange={handleTextAreaChange}
+                                rows={1}
+                                delete={true}
+                                handleOpenConfirmationModal={handleOpenConfirmationModal} />
 
-                        <EditableFormComponent
-                            changedValue='/description'
-                            myRef={myRef}
-                            value={description}
-                            setValue={setDescription}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Description"
-                            handleTextAreaChange={handleTextAreaChange}
-                            rows={3}
-                            delete={false} />
-                        <Row>
-                            <Col md={6} sm={12} xs={12}>
-                                <EditableFormComponent
-                                    changedValue='/location'
-                                    myRef={myRef}
-                                    value={location}
-                                    setValue={setLocation}
-                                    pathName={myProps.pathName}
-                                    componentKey={myProps.componentKey}
-                                    label="Location"
-                                    handleTextAreaChange={handleTextAreaChange}
-                                    delete={false}
-                                    rows={1} />
-                            </Col>
-                            <Col md={6} sm={12} xs={12}>
-                                <EditableFormComponent
-                                    changedValue='/date'
-                                    myRef={myRef}
-                                    value={date}
-                                    setValue={setDate}
-                                    pathName={myProps.pathName}
-                                    componentKey={myProps.componentKey}
-                                    label="Date"
-                                    delete={false}
-                                    handleTextAreaChange={handleTextAreaChange}
-                                    rows={1} />
-                            </Col>
+                            <EditableFormComponent
+                                changedValue='/description'
+                                myRef={myRef}
+                                value={description}
+                                setValue={setDescription}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Description"
+                                handleTextAreaChange={handleTextAreaChange}
+                                rows={3}
+                                delete={false} />
+                            <Row>
+                                <Col md={6} sm={12} xs={12}>
+                                    <EditableFormComponent
+                                        changedValue='/location'
+                                        myRef={myRef}
+                                        value={location}
+                                        setValue={setLocation}
+                                        pathName={myProps.pathName}
+                                        componentKey={myProps.componentKey}
+                                        label="Location"
+                                        handleTextAreaChange={handleTextAreaChange}
+                                        delete={false}
+                                        rows={1} />
+                                </Col>
+                                <Col md={6} sm={12} xs={12}>
+                                    <EditableFormComponent
+                                        changedValue='/date'
+                                        myRef={myRef}
+                                        value={date}
+                                        setValue={setDate}
+                                        pathName={myProps.pathName}
+                                        componentKey={myProps.componentKey}
+                                        label="Date"
+                                        delete={false}
+                                        handleTextAreaChange={handleTextAreaChange}
+                                        rows={1} />
+                                </Col>
+                            </Row>
+                            <Row>
+                            <EditableImageForm
+                                changedValue='/image'
+                                myRef={myRef}
+                                value={image}
+                                setValue={setImage}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Image URL"
+                                handleTextAreaChange={handleTextAreaChange} />
+                            </Row>
+                            <EditableFormComponent
+                                changedValue='/caption'
+                                myRef={myRef}
+                                value={imageCaption}
+                                setValue={setImageCaption}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Image Caption"
+                                handleTextAreaChange={handleTextAreaChange}
+                                delete={false}
+                                rows={1} />
+                            <EditableFormComponent
+                                changedValue='/link'
+                                myRef={myRef}
+                                value={link}
+                                setValue={setLink}
+                                pathName={myProps.pathName}
+                                componentKey={myProps.componentKey}
+                                label="Link"
+                                handleTextAreaChange={handleTextAreaChange}
+                                delete={false}
+                                rows={1} />
                         </Row>
-                        <Row>
-                            <Col md={6} sm={12} xs={12}>
-                                <EditableFormComponent
-                                    changedValue='/imgSource'
-                                    myRef={myRef}
-                                    value={imageSource}
-                                    setValue={setImageSource}
-                                    pathName={myProps.pathName}
-                                    componentKey={myProps.componentKey}
-                                    label="Image Source"
-                                    delete={false}
-                                    handleTextAreaChange={handleTextAreaChange}
-                                    rows={1} />
-                            </Col>
-                            <Col md={6} sm={12} xs={12}>
-                                <EditableFormComponent
-                                    changedValue='/imageAlt'
-                                    myRef={myRef}
-                                    value={imageAlt}
-                                    setValue={setImageAlt}
-                                    pathName={myProps.pathName}
-                                    componentKey={myProps.componentKey}
-                                    label="Image Alt"
-                                    delete={false}
-                                    handleTextAreaChange={handleTextAreaChange}
-                                    rows={1} />
-                            </Col>
-                        </Row>
-                        <EditableFormComponent
-                            changedValue='/caption'
-                            myRef={myRef}
-                            value={imageCaption}
-                            setValue={setImageCaption}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Image Caption"
-                            handleTextAreaChange={handleTextAreaChange}
-                            delete={false}
-                            rows={1} />
-                        <EditableFormComponent
-                            changedValue='/link'
-                            myRef={myRef}
-                            value={link}
-                            setValue={setLink}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Link"
-                            handleTextAreaChange={handleTextAreaChange}
-                            delete={false}
-                            rows={1} />
-                    </Row>
+                    </Container>
                 </Container>
             </Container>
         </div >

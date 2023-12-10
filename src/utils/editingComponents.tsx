@@ -5,6 +5,7 @@ import ProjectTemplate from '../utils/project.json'
 import ContributerTemplate from '../utils/contributer.json'
 import FacultyTemplate from '../utils/faculty.json'
 import { editableComponentProps } from '../components/EditableComponents/EditableCarousel';
+type AddToastFunction = (message: string, type: 'success' | 'warning' | 'danger') => void;
 
 // Reference: https://dev.to/tlylt/exploring-key-string-any-in-typescript-4ake
 type UpdatesType = { [key: string]: any };
@@ -57,9 +58,15 @@ export const handleTextAreaChange = (
  * @param value - Object containing properties for the new component.
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific path in the database.
+ * @param type - The type of component.
  *  * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
  */
-export async function addNestedComponent(value: valueType, db: Database, dbRef: DatabaseReference) {
+export async function addNestedComponent(
+  value: valueType,
+  db: Database,
+  dbRef: DatabaseReference,
+  addToast: AddToastFunction,
+  type: string) {
   try {
     let newObj = undefined;
     const component = value as valueType;
@@ -88,14 +95,17 @@ export async function addNestedComponent(value: valueType, db: Database, dbRef: 
       const updates: UpdatesType = {};
       updates[`${component.pathName}/${newPostKey}`] = newObj;
 
+      addToast(`Successfully added ${type} component`, "success")
+
       // Perform the update in the database
       return update(ref(db), updates);
     } else {
+      addToast(`Error while adding nested component`, "danger")
       throw new Error('Error in adding nested component');
     }
   } catch (error) {
+    addToast(`Error while adding nested component`, "danger")
     console.error('Error adding nested component:', error);
-    throw error;
   }
 }
 
@@ -105,7 +115,7 @@ export async function addNestedComponent(value: valueType, db: Database, dbRef: 
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific path in the database.
  */
-export async function addProjectComponent(value: editableComponentProps, db: Database, isContributer: boolean) {
+export async function addProjectComponent(value: editableComponentProps, db: Database, isContributer: boolean, addToast: AddToastFunction) {
   try {
     const pathEnding = isContributer == true ? '/contributers/' : '/facultyMembers/'
     let newObj = undefined;
@@ -135,13 +145,16 @@ export async function addProjectComponent(value: editableComponentProps, db: Dat
       const updates: UpdatesType = {};
       updates[`${component.pathName}/${component.componentKey}${pathEnding}${newPostKey}`] = newObj;
 
+      addToast(`Successfully added a ${isContributer === true ? 'Contributer' : 'Faculty Member'} component`, "success")
+
       // Perform the update in the database
       return update(ref(db), updates);
     } else {
+      addToast(`Error while adding a ${isContributer === true ? 'Contributer' : 'Faculty Member'} component`, "danger")
       throw new Error('Error in adding nested component');
     }
   } catch (error) {
-    console.error('Error adding nested component:', error);
+    addToast(`Error while adding a ${isContributer === true ? 'Contributer' : 'Faculty Member'} component`, "danger")
     throw error;
   }
 }
@@ -253,7 +266,7 @@ export async function reorderPageComponents(
 * @param component - The component to be deleted.
 * @param db - Database reference.
 */
-export async function deleteNestedComponent(component: any, db: Database) {
+export async function deleteNestedComponent(component: any, db: Database, addToast: AddToastFunction, type: string) {
   console.log("Delete nested component");
 
   // Delete the component from the database
@@ -286,14 +299,16 @@ export async function deleteNestedComponent(component: any, db: Database) {
     }
 
     await update(dbRef, updates);
+    addToast(`Successfully deleted ${type} component`, "success")
 
     // Check if there are no more components in the same group
     if (count === 0 && component.type !== 'project') {
       // If there are no more components in the group, go through and delete the parent group and reorder accordingly
-      await deletePageComponents(undefined, component, db, dbRef);
+      await deletePageComponents(undefined, component, db, dbRef, addToast, 'event carousel');
     }
   } catch (error) {
     console.error(error);
+    addToast(`Error occured when deleting ${type} component`, "danger")
   }
 }
 
@@ -305,7 +320,7 @@ export async function deleteNestedComponent(component: any, db: Database) {
  * @param db - Reference to the Firebase Realtime Database.
  * @param dbRef - Reference to the specific database node.
  */
-export function deletePageComponents(componentArray: any, pageComponent: any, db: Database, dbRef: DatabaseReference) {
+export function deletePageComponents(componentArray: any, pageComponent: any, db: Database, dbRef: DatabaseReference, addToast: AddToastFunction, type: string) {
   console.log("Delete page component")
 
   // Reorder page components
@@ -321,9 +336,11 @@ export function deletePageComponents(componentArray: any, pageComponent: any, db
         }
         update(dbRef, updates);
       }
+      addToast(`Successfully deleted ${type} component`, "success")
     }
   }).catch((error) => {
     console.error(error);
+    addToast(`Error occured when deleting ${type} component`, "danger")
   });
 
   // Delete every single component with given page order
@@ -423,7 +440,8 @@ export async function getMaxProjectOrder(component: any, db: Database, setLastNe
         }
       }
       if (setLastNestedOrder) {
-        setLastNestedOrder(max - 1);
+        console.log(max, 'max here')
+        setLastNestedOrder(max);
       }
       return max;
     }

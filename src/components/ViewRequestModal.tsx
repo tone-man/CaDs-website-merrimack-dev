@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row } from 'react-bootstrap';
 import Request from '../firebase/requests';
 import { Form } from 'react-bootstrap';
@@ -6,30 +5,20 @@ import '../css/formModal.css'
 
 interface myProps {
   show: boolean,
-  showModal: boolean | undefined;
-  handleClose: boolean | undefined;
+  showModal: (requestName: string, requestBody: string, requestTitle: string, email: string, projectTitle: string)=> void;
+  handleClose: ()=>void;
   request: Request
 }
 
 const RequestModal = (props: myProps) => {
-
   return (
+    
     <Modal show={props.show} onHide={props.handleClose} className='customized-modal'>
       <Modal.Header closeButton>
-        <Modal.Title>Request Details</Modal.Title>
+      <Form.Label><h2 className='smallFont metropolisRegular'>Request To Be Featured on {(props.request.projectTitle).replace(/<\/?p>/g, '')}</h2></Form.Label>
       </Modal.Header>
       <Modal.Body>
         <Form.Group>
-          <Row className='mb-3'>
-            <Form.Label><h2 className='smallFont metropolisRegular'>Title:</h2></Form.Label>
-            <Form.Control
-              type="text"
-              name="requestTitle"
-              value={props.request.requestTitle}
-              disabled
-            />
-          </Row>
-
           <Row className='mb-3'>
             <Form.Label><h2 className='smallFont metropolisRegular'>Name:</h2></Form.Label>
             <Form.Control
@@ -68,9 +57,6 @@ const RequestModal = (props: myProps) => {
       <Modal.Footer>
         <Button variant="secondary" onClick={props.handleClose}>
           Close
-        </Button>
-        <Button variant="secondary" onClick={props.handleClose}>
-          Delete
         </Button>
 
       </Modal.Footer>

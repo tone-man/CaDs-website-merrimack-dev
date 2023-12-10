@@ -11,7 +11,8 @@ interface formInputProps {
     feedbackMessage: string,
     inputRef?: React.RefObject<HTMLInputElement>;
     type: string,
-    default?: string
+    default?: string,
+    setData?: React.Dispatch<React.SetStateAction<string>>; 
 }
 
 // This component returns a form group element that's a part of a form. It is intended to reduce repetitive code in forms
@@ -21,6 +22,11 @@ const TextInputFormGroup = (myProps: formInputProps) => {
         <Form.Group controlId={myProps.controlId}>
             <Form.Label><h2 className='smallFont metropolisRegular'>{myProps.label}</h2></Form.Label>
             <Form.Control
+               onChange={
+                myProps.setData 
+                  ? (event) => myProps.setData && myProps.setData(event.target.value) 
+                  : undefined
+              }
                 className='extraSmallFont metropolisRegular'
                 required={myProps.required}
                 type={myProps.type}

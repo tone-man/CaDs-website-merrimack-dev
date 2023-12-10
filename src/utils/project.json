@@ -3,6 +3,7 @@
         "first": {
             "description": "Contributer description",
             "name": "Contributer name",
+            "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
             "nestedOrder": 0,
             "pageOrder": 0
         }
@@ -10,14 +11,14 @@
     "description": "Description",
     "facultyMembers": {
         "first": {
-            "facultyImg": "Faculty Image",
-            "facultyName": "Faculty Name",
+            "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+            "name": "Faculty Name",
             "pageOrder": 0,
             "nestedOrder": 0
         }
     },
-    "imageAlt": "Image Alt",
     "imageDescription": "Image Description",
+    "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
     "nestedOrder": 0,
     "pageOrder": 0,
     "projectLink": "Link",

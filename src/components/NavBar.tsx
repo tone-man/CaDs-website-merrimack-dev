@@ -6,7 +6,7 @@ import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserContext } from '../App';
 import User from '../firebase/user';

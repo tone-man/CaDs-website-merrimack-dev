@@ -1,7 +1,7 @@
 
-import { ref, set, get, Database} from 'firebase/database';
+import { ref, set, get, Database } from 'firebase/database';
 import { NavigateFunction } from 'react-router-dom';
-
+type AddToastFunction = (message: string, type: 'success' | 'warning' | 'danger') => void;
 
 /**
  * Handles the click event on the "Edit" button.
@@ -13,15 +13,20 @@ import { NavigateFunction } from 'react-router-dom';
  * @param navigate - Navigates user to a path
  * @param path - The path to the location in the database.
  */
-export const handleEditButtonClick = (db: Database,  snapShot: object, createNewDraft, setShowDraftModal, navigate: NavigateFunction, path: string) => {
+export const handleEditButtonClick = (db: Database,
+    snapShot: object,
+    createNewDraft: (makeNewDraft: boolean, db: Database, snapShot: object, navigate: NavigateFunction, path: string, addToast: AddToastFunction) => void,
+    setShowDraftModal: React.Dispatch<React.SetStateAction<boolean>>,
+    navigate: NavigateFunction, path: string,
+    addToast: AddToastFunction) => {
     const draft = ref(db, path);
-    
+
     // Retrieve data from the database
     get(draft)
         .then((snapshot) => {
-              // If no draft exists at the specified path, create a new draft
+            // If no draft exists at the specified path, create a new draft
             if (snapshot.val() === null) {
-                createNewDraft(true, db, snapShot, navigate, path);
+                createNewDraft(true, db, snapShot, navigate, path, addToast);
             } else {
                 // Else display a modal to ask the user what to do
                 setShowDraftModal(true);
@@ -41,18 +46,23 @@ export const handleEditButtonClick = (db: Database,  snapShot: object, createNew
  * @param  navigate - Navigates user to a path
  * @param  path - The path to the location in the database.
  */
-export const createNewDraft = (makeNewDraft: boolean, db: Database, snapShot: object, navigate: NavigateFunction, path: string) => {
+export const createNewDraft = (
+    makeNewDraft: boolean,
+    db: Database,
+    snapShot: object,
+    navigate: NavigateFunction,
+    path: string,
+    addToast: AddToastFunction) => {
     // If a new draft should be made
     if (makeNewDraft) {
         // Get the components at the specific page
-        const valueRef = ref(db, path +'/');
+        const valueRef = ref(db, path + '/');
         // Set the entire path to null to clear any existing data
         set(valueRef, null);
-        console.log(valueRef, 'value ref??')
 
         // For every single component in the snapshot
         for (const [key, value] of Object.entries(snapShot)) {
-            const myRef = ref(db, path +`/` + key);
+            const myRef = ref(db, path + `/` + key);
 
             // Add it to the drafts with the same exact key
             set(myRef, value)
@@ -63,6 +73,10 @@ export const createNewDraft = (makeNewDraft: boolean, db: Database, snapShot: ob
                     console.error('Error adding data: ', error);
                 });
         }
+        addToast("Successfully created new draft", "success")
+    }
+    else {
+        addToast("Retrieved old edit draft successfully", "success")
     }
     // Route user to the edit page
     navigate('/edit', { state: { pathName: path } });

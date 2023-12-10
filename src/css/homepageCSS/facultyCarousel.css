@@ -1,0 +1,4 @@
+/* Gets rid of carousel indicators for the faculty members carousel*/
+.carousel-indicators {
+    display: none;
+}

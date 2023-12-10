@@ -47,6 +47,12 @@
     background-repeat: no-repeat;
 }
 
+/* Formats the project images on hover */
+.project-card .project-images:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
 /* Formats the caption featured on each image */
 .project-card .figure-caption {
     color: white;
@@ -57,13 +63,13 @@
 /* Formats the div in which the description text of the event will live */
 .project-card .description-div {
     overflow: auto;
-    max-height: 60vh;
+    max-height: 30vh;
+    min-height: 15vh;
     background: white;
     border-radius: 40px;
     margin: 20px;
-    padding: 40px 20px;
-    height: auto;
-    box-shadow: 10px 10px 20px rgb(0, 0, 0); 
+    padding: 20px 20px;
+    box-shadow: 10px 10px 20px rgb(0, 0, 0);
 }
 
 /* Formats the description text of the event */
@@ -80,6 +86,7 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
     -ms-overflow-style: none;
@@ -88,14 +95,33 @@
     /* Firefox */
 }
 
-/* Resizes the event image container on screen resizing */
+/* Resizes the project card image container on screen resizing */
 @media screen and (max-width: 1600px) {
-    .project-images{
-       min-width: 150px;
-     }
-     .project-card .title-text{
+    .project-images {
+        min-width: 175px;
+    }
+
+    .project-card .title-text {
         text-align: center;
         padding-left: 0px;
         padding-bottom: 10px;
-     }
-   }
+    }
+}
+
+
+/* 100% Image Width on Smaller Screens & Other restyling upon resizing */
+@media only screen and (max-width: 700px) {
+    .project-card .description-div {
+        width: 100%;
+        margin: auto;
+        max-height: max-content;
+    }
+
+    .project-card .description-text {
+        font-size: var(--extraSmallFont);
+    }
+
+    .project-card .title-text {
+        font-size: var(--smallFont);
+    }
+}

@@ -1,11 +1,11 @@
 import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "react-bootstrap";
-import '../css/facultyDirectory.css';
-import Header from "./Header";
 import { useEffect, useRef, useState } from "react";
-import FacultyMemberDirectory, { facultyMember } from "./FacultyMemberDirectory";
+import '../../css/DirectoryCSS/facultyDirectory.css';
 import { getDatabase, ref, onValue } from "firebase/database";
-import FireBaseApp from "../firebase";
-import User from "../firebase/user";
+import FireBaseApp from "../../firebase";
+import User from "../../firebase/user";
+import FacultyMemberDirectory from "./FacultyMemberDirectory";
+import Header from "../Header";
 
 // Faculty Directory components
 function FacultyDirectory() {
@@ -27,7 +27,9 @@ function FacultyDirectory() {
             const users: User[] = [];
             snapshot.forEach((child) => {
                 const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = child.val();
-                users.push(new User(child.key, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location));
+                if (userLevel !== 'Administrator') {
+                    users.push(new User(child.key, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location));
+                }
             });
 
             setUsersList(users);
@@ -39,7 +41,7 @@ function FacultyDirectory() {
     function search() {
         if (searchBarRef.current) {
             const searchElement = searchBarRef.current.value.trim().toLowerCase();
-            const foundUsers = facultyArray.filter(user => user.name.toLowerCase().includes(searchElement));
+            const foundUsers = usersList.filter(user => user.name.toLowerCase().includes(searchElement));
             setVisibleUsers(foundUsers);
         }
     }
@@ -66,14 +68,14 @@ function FacultyDirectory() {
                 {/* Results Number */}
                 <Row style={{ paddingBottom: '75px' }}>
                     <Col md={6} sm={6} xs={6} className="resultsInfo">
-                        <Button> {visibleUsers.length}</Button>
+                        {visibleUsers && (<Button> {visibleUsers.length}</Button>)}
                     </Col>
                     <Col md={6} sm={6} xs={6} style={{ margin: 'auto' }}>
                         <h1 className="smallFont metropolisRegular"> Results</h1>
                     </Col>
                 </Row>
                 <Container style={{ paddingBottom: '50px' }}>
-                    {
+                    {visibleUsers && (
                         // Maps each of the visible faculty members to an individual faculty member component
                         visibleUsers.map((faculty, index) => (
                             <FacultyMemberDirectory key={index}
@@ -81,7 +83,7 @@ function FacultyDirectory() {
                                 isLast={index === visibleUsers.length - 1 ? true : false}
                             />
                         ))
-                    }
+                    )}
                 </Container>
             </Container>
         </div>

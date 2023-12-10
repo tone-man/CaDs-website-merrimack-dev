@@ -1,34 +1,41 @@
+/* Styling for the header of the faculty page */
+
+/* Styling for entire container of the faculty header */
 .faculty-header-container {
-    padding: 20px;
     background-color: var(--blue);
-    height: 400px;
-    margin: auto;
     color: white;
+
+    height: fit-content;
     width: auto;
+
+    margin: auto;
+    padding: 20px;
 }
 
+/* Styling for the department name */
 .faculty-header-container .department-name {
     padding: 10px 0px;
     font-family: var(--metropolisThin);
     font-size: var(--smallFont);
+    word-wrap: break-word;
 }
 
+/* Styling for the faculty name */
 .faculty-header-container .faculty-name {
     font-family: var(--metropolisBold);
     font-size: var(--largeFont);
+    word-wrap: break-word;
     text-transform: uppercase;
 }
 
-.faculty-header-container .faculty-name span {
-    border-top: 3px solid yellow;
-    padding-top: 5px;
-}
-
+/* Styling for the faculty title */
 .faculty-header-container .faculty-title {
     font-family: var(--metropolisRegular);
+    word-wrap: break-word;
     font-size: var(--smallFont);
 }
 
+/* Styling for the row containing the image and the return to directory text */
 .faculty-header-container .image-row {
     justify-content: center;
 }
@@ -40,6 +47,7 @@
     justify-content: center;
 }
 
+/* Getting rid of typical link UI */
 .faculty-header-container .image-row .faculty-col a {
     color: inherit;
     text-decoration: inherit;
@@ -51,25 +59,19 @@
     font-family: var(--metropolisRegular);
 }
 
-/* Styling add user button alignment upon screen resizing */
+/* Styling upon resizing the screen*/
 @media screen and (max-width: 800px) {
-    .faculty-header-container {
-        height: 425px;
-    }
 
     .faculty-header-container .department-name {
         font-size: var(--extraSmallFont);
-        text-align: center;
     }
 
     .faculty-header-container .faculty-name {
         font-size: var(--smallFont);
-        text-align: center;
     }
 
     .faculty-header-container .faculty-title {
         font-size: var(--extraSmallFont);
-        text-align: center;
     }
 
     .faculty-header-container .faculty-name span {
@@ -81,27 +83,12 @@
         padding-top: 50px;
     }
 
-    .faculty-header-container .image-row .faculty-col .return-to-directory-text {
-        color: var(--yellow);
-        font-size: var(--extraSmallFont);
-        font-family: var(--metropolisRegular);
-        text-align: center;
-    }
 }
 
-/* Styling add user button alignment upon screen resizing */
-@media screen and (max-width: 360px) {
-    .faculty-header-container {
-        height: 550px;
-    }
 
-    .faculty-header-container .image-row .return-to-directory-text {
-        padding-bottom: 20px;
-        font-size: var(--extraSmallFont);
-        text-align: center;
-    }
-}
+/* Styling for the body in the faculty page */
 
+/* Styling for the faculty body */
 .faculty-body-container {
     height: auto;
     margin: auto;
@@ -109,89 +96,89 @@
     width: auto;
 }
 
-.faculty-body-container .label {
-    font-family: var(--metropolisRegular);
-    font-size: var(--mediumFont);
-    text-transform: uppercase;
-    padding-top: 50px;
-    padding-bottom: 10px;
-}
-
-.faculty-body-container .label span {
-    border-bottom: 5px yellow solid;
-}
-
-.faculty-body-container .body-text {
-    font-family: var(--metropolisThin);
-    font-size: var(--smallFont);
-}
-
-
+/* Styling for the contact template form! */
 .faculty-body-container .contact-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
     background: var(--blue);
     color: white;
-    border-radius: 20px;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+
     width: 50%;
     padding: 20px;
-    
+    border-radius: 20px;
+
 }
 
- .icon {
-    font-size: var(--smallFont);
+/* Styles for each icon and the text in the contact form */
+.contact-container .icon {
+    height: 100%;
+    font-size: var(--mediumFont);
 }
 
- .contact-text {
+.contact-container .contact-text {
+    height: 100%;
     font-family: var(--metropolisRegular);
-    font-size: var(--smallFont); 
+    font-size: var(--smallFont);
     overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    display: flex;
+    align-items: center;
+}
+
+/* Styling add user button alignment upon screen resizing */
+@media screen and (max-width: 1200px) {
+    .faculty-body-container .contact-container {
+        width: 60%;
+    }
+
+}
+
+/* Styling add user button alignment upon screen resizing */
+@media screen and (max-width: 1000px) {
+    .contact-container   .contact-text {
+        font-size: var(--extraSmallFont);
+    }
+    .contact-container .icon {
+        height: 100%;
+        font-size: var(--smallFont);
+    }
+
+    .faculty-header-container .image-row .faculty-col h1 {
+        text-align: center;
+        font-size: var(--extraSmallFont);
+    }
 }
 
 /* Styling add user button alignment upon screen resizing */
 @media screen and (max-width: 800px) {
     .faculty-body-container .contact-container {
-       width: 100%;
-        
-    }
-    .contact-text {
-        font-size: .75rem; 
-    }
-    .icon {
-        font-size: .75rem; 
+        width: 100%;
     }
 }
 
+/* ACCORDION STYLING */
 
- .container a .publications-text {
-    font-family: var(--metropolisRegular);
-    font-size: var(--smallFont); 
-}
-
-.container a  {
-    color: blue;
-    text-decoration: inherit;
-}
 .accordion-header {
     width: 100%;
     margin: auto;
     text-align: left;
-    font-size: var(--smallFont);
+    font-size: var(--mediumFont);
     text-transform: uppercase;
     color: var(--blue);
+    word-wrap: break-word;
 }
-
 
 .faculty-body-container .accordion-container {
     margin: auto;
-    width: 80%;
+    width: 100%;
     padding-top: 25px;
+    word-wrap: break-word;
 }
 
 /* https://stackoverflow.com/questions/66335238/changing-the-color-arrow-in-bootstrap */
 /* All three below classes were taken from above link */
-
-
 .faculty-body-container .accordion-button:is(.collapsed),
 .faculty-body-container .accordion-button:not(.collapsed) {
     z-index: 0;
@@ -203,12 +190,35 @@
 }
 
 
+/* REGULAR TEXT AREA STYLING */
+
+/* Styling for the labels that appears on each of the topics */
+.faculty-body-container .label {
+    font-family: var(--metropolisRegular);
+    font-size: var(--mediumFont);
+    text-transform: uppercase;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    word-wrap: break-word;
+}
+
+/* Styling for the span that appears on the label */
+.faculty-body-container .label span {
+    border-bottom: 5px yellow solid;
+}
+
+/* Styling for the content of each section */
+.faculty-body-container .body-text {
+    font-family: var(--metropolisThin);
+    font-size: var(--smallFont);
+    word-wrap: break-word;
+}
 
 
 /* Styling add user button alignment upon screen resizing */
-@media screen and (max-width: 800px) {
-    .faculty-body-container {
-        text-align: center;
+@media screen and (max-width: 600px) {
+    .faculty-body-container .body-text {
+        font-size: var(--extraSmallFont);
     }
 
     .faculty-body-container .label {
@@ -222,6 +232,7 @@
     .faculty-body-container .icon-container {
         text-align: center;
     }
-
-
+    .accordion-header {
+        font-size: var(--smallFont);
+    }
 }

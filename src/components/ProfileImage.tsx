@@ -12,9 +12,10 @@ interface myImageProps {
 // Creates a profile image component
 function ProfileImage(myProps: myImageProps) {
 
+    console.log(myProps.image, 'myProps')
     return (
         // Determines positioning and size of profile picture image
-        <div className={myProps.position} style={{ width: myProps.size, height: myProps.size }}>
+        <div className= {myProps.position} style={{ width: myProps.size, height: myProps.size }}>
             {/* Creates a rounded image */}
             <Image
                 className="rounded-circle overflow-hidden"
