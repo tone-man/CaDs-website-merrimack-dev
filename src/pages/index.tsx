@@ -3,7 +3,7 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmDraftModal from '../components/ConfirmDraftModal';
-import { AuthContext } from '../App';
+import { UserContext } from '../App';
 import { parseDataToComponents } from '../utils/parseAndRenderComponents';
 import { handleEditButtonClick, createNewDraft } from '../utils/createNewDraft';
 import Header from '../components/Header';
@@ -17,7 +17,7 @@ const Home = () => {
 
     // https://reactnavigation.org/docs/use-navigation/#:~:text=useNavigation%20is%20a%20hook%20which,of%20a%20deeply%20nested%20child.
     const navigate = useNavigate();
-    const user = useContext(AuthContext);
+    const user = useContext(UserContext);
 
 
     // Gets all of the components in the homepage

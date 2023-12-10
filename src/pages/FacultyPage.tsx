@@ -5,7 +5,7 @@ import { parseDataToComponents } from "../utils/parseAndRenderComponents";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import ConfirmDraftModal from "../components/ConfirmDraftModal";
 import { handleEditButtonClick, createNewDraft } from '../utils/createNewDraft';
-import { AuthContext } from "../App";
+import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,7 +13,7 @@ function FacultyPage() {
     const [snapShot, setSnapshot] = useState({});
     const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>([]);
     const [showDraftModal, setShowDraftModal] = useState<boolean>(false);
-    const user = useContext(AuthContext);
+    const user = useContext(UserContext);
     const db = getDatabase();
     const navigate = useNavigate();
 
@@ -34,8 +34,8 @@ function FacultyPage() {
         parseDataToComponents(snapShot, setRenderedComponents);
     }, [snapShot]);
 
-       //  Wrapper function for handling the click event on the "Edit Page" button.
-       const handleEditButtonClickWrapper = () => {
+    //  Wrapper function for handling the click event on the "Edit Page" button.
+    const handleEditButtonClickWrapper = () => {
         handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/faculty`);
     };
 
