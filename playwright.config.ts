@@ -33,8 +33,20 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+        name: 'chromium',
+        use: {
+          ...devices['Desktop Chrome'],
+          channel: 'chrome', // or 'msedge' for Microsoft Edge
+          args: [
+            "--disable-notifications",
+            "--disable-gpu",
+            "--disable-setuid-sandbox",
+            "--deterministic-fetch",
+            "--disable-features=IsolateOrigins,site-per-process",
+            "--disable-site-isolation-trials",
+            "--disable-web-security",
+          ], // Add your custom arguments here
+        },
     },
 
     {
