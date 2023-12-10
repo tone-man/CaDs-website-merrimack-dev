@@ -3,7 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Col, FormControl, InputGroup, Row } from 'react-bootstrap'
 import { useRef, useState, useEffect } from 'react';
 import WhiteListIndividual, { userProps } from './WhiteListIndividual';
-import AddUserModal from './AddUserModal';
+import AddUserModal from './FacultyPage/AddUserModal';
 import '../css/requestSection.css'
 import '../css/whiteListSection.css'
 import User, { UserInterface } from '../firebase/user';

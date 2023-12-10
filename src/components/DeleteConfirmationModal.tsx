@@ -24,12 +24,12 @@ function DeleteConfirmationModal({ show, onHide, onConfirm, name }: DeleteConfir
       </Modal.Body>
       <Modal.Footer>
         <Row className='ml-auto'>
-          <Col>
+          <Col xs={6}>
             <Button variant="secondary" onClick={onHide} aria-label='Cancel Button' className='extraSmallFont metropolisRegular'>
               Cancel
             </Button>
           </Col>
-          <Col>
+          <Col xs={6}>
             <Button type='submit' variant="light" aria-label='Submit Button' onClick={onConfirm} className='extraSmallFont metropolisRegular'>
               Delete
             </Button>

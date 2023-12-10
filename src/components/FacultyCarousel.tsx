@@ -10,6 +10,8 @@ import '../css/facultyCarousel.css'
 export interface facultyMembers {
     facultyName: string,
     facultyImg: string
+    pageOrder: number,
+    nestedOrder: number
 }
 
 // Interface for the faculty carousel component. An array of faculty member objects should be passed in

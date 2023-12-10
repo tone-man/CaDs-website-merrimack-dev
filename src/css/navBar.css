@@ -116,12 +116,31 @@
     background-color: var(--lightest-grey);
 }
 
- /* Changes font size and header upon resizing */
- @media screen and (max-width: 800px) {
-    .nav-item .dropdown-menu .dropdown-item  .text{
+/* Changes font size and header upon resizing */
+@media screen and (max-width: 800px) {
+    .nav-item .dropdown-menu .dropdown-item .text {
         font-size: var(--extraSmallFont);
     }
-    .nav-item .dropdown-menu .dropdown-item{
+
+    .nav-item .dropdown-menu .dropdown-item {
         width: 65%;
     }
+}
+
+/* Styling add user button alignment upon screen resizing */
+@media screen and (max-width: 480px) {
+    .logInButton {
+        width: 75px;
+        font-size: .75rem;
+    }
+    .navbar-custom .navbar-nav .nav-link {
+        font-size: .75rem;
+    }
+    .logo {
+        width: 10rem;
+    }
+    .second-navbar .searchBarToggle{
+        font-size: 20px;
+    }
+    
 }

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Container, DropdownButton, Dropdown, FormControl, InputGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Button, Container, FormControl, InputGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
@@ -89,7 +89,7 @@ function NavBar() {
                     <Navbar.Collapse id="navBarContent">
                         <Nav className="mr-auto">
                             <Nav.Link id='home' href="/" >Home</Nav.Link>
-                            <Nav.Link id='faculty' href="/faculty">Faculty</Nav.Link>
+                            <Nav.Link id='faculty' href="/facultyDirectory">Faculty</Nav.Link>
                             <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link>
                         </Nav>
                         <Nav className="ms-auto">

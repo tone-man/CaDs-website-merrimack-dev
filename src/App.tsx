@@ -5,6 +5,7 @@ import { getDatabase, ref, onValue, off, set, update, remove } from "firebase/da
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
 import FacultyDirectory from "./pages/facultyDirectoryPage";
+import FacultyPage from './pages/FacultyPage'
 import EditPage from './pages/EditPage';
 import Dashboard from "./pages/dashboard";
 import NavBar from "./components/NavBar";
@@ -98,7 +99,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/faculty" element={<FacultyDirectory />} />
+          <Route path="/facultyDirectory" element={<FacultyDirectory />} />
+          <Route path="/faculty" element={<FacultyPage />} />
           <Route path='/edit' element={<EditPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>

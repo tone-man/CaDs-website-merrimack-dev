@@ -24,6 +24,8 @@ function EventsCarousel(myProps: myEventListProps) {
                                     <Carousel.Item key={index} interval={20000} >
                                         <div className='nested-container'>
                                             <Events
+                                                type={events.type}
+                                                key={events.databaseKey}
                                                 imgSource={events.imgSource}
                                                 imageAlt={events.imageAlt}
                                                 link={events.link}

@@ -1,0 +1,26 @@
+{
+    "contributers": {
+        "first": {
+            "description": "Contributer description",
+            "name": "Contributer name",
+            "nestedOrder": 0,
+            "pageOrder": 0
+        }
+    },
+    "description": "Description",
+    "facultyMembers": {
+        "first": {
+            "facultyImg": "Faculty Image",
+            "facultyName": "Faculty Name",
+            "pageOrder": 0,
+            "nestedOrder": 0
+        }
+    },
+    "imageAlt": "Image Alt",
+    "imageDescription": "Image Description",
+    "nestedOrder": 0,
+    "pageOrder": 0,
+    "projectLink": "Link",
+    "title": "Title",
+    "type": "project"
+}

@@ -1,12 +1,12 @@
 import { useState, useRef, HtmlHTMLAttributes } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import '../css/formModal.css'
-import '../css/whiteListSection.css'
-import TextInputFormGroup from './TextInputFormGroup';
-import FireBaseApp from '../firebase';
-import { emailToFirebase } from '../firebase/firebaseFormatter';
+import '../../css/formModal.css'
+import '../../css/whiteListSection.css'
+import TextInputFormGroup from '../TextInputFormGroup';
+import FireBaseApp from '../../firebase';
+import { emailToFirebase } from '../../firebase/firebaseFormatter';
 import { getDatabase, ref, set } from 'firebase/database';
-import User from '../firebase/user';
+import User from '../../firebase/user';
 
 // This modal pops up to provide the user with a format to enter new user information
 // TODO: Add more information potentially
