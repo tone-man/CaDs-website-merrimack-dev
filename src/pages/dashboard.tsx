@@ -94,6 +94,15 @@ const Dashboard = () => {
 
         setPageArray(pages);
       });
+    } else {
+        const pagesRef = ref(db, "/pages/" + user.id);
+
+        // Stores a listener for the database in a useState variable
+        onValue(pagesRef, (snapshot) => {
+          const pages: [] = [snapshot.val()];
+
+          setPageArray(pages);
+        }); 
     }
   }, [user]);
 
