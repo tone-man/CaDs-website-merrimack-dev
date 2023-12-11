@@ -23,12 +23,13 @@ function EditUserModal(props: editUserProps) {
     const [show, setShow] = useState(false);
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
-    const [userLevel, setUserLevel] = useState<string>("Faculty");
+    const [userLevel, setUserLevel] = useState<string>(user.userLevel);
     const phoneNumberRef = useRef<HTMLInputElement | null>(null);
     const titleRef = useRef<HTMLInputElement | null>(null);
     const departmentRef = useRef<HTMLInputElement | null>(null);
     const prounounsRef = useRef<HTMLInputElement | null>(null);
     const officeLocationRef = useRef<HTMLInputElement | null>(null);
+    const photoURLRef = useRef<HTMLInputElement | null>(null);
 
     const [selectedImage, setSelectedImage] = useState<File | null>(null); // Use File type for selectedImage state
 
@@ -51,10 +52,10 @@ function EditUserModal(props: editUserProps) {
         // Checks form validity
         if (form.checkValidity()) {
             // Gets form information and calls addUser() with respective info
-            if (!fullNameRef.current || !emailRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
+            if (!fullNameRef.current || !emailRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current || !photoURLRef.current) {
                 console.error("error");
             } else {
-                let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, "", userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, photoURLRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 updateUser(updatedUser)
             }
             // TODO: Photos
@@ -62,7 +63,6 @@ function EditUserModal(props: editUserProps) {
         setValidated(true);
         handleClose();
     };
-
 
     return (
         <>
@@ -214,30 +214,17 @@ function EditUserModal(props: editUserProps) {
                                     feedbackMessage='Please enter a valid prounouns' />
                             </Col>
                         </Row>
-                        {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
-                        {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}
-                        {/* https://surajsharma.net/blog/react-file-upload-accept-only-images */}
-                        {/* Image Selector for new user*/}
-                        <Row className="mb-3">
-                            <Form.Group controlId="validationCustom03">
-                                <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Image</h2></Form.Label>
-                                <input
-                                    type="file" //file selector
-                                    accept="image/png, image/jpeg" //only accept images
-                                    className="form-control"
-                                    id="customFile"
-                                    onChange={(event) => {
-                                        // Get the file that was selected, and set the selected image to it
-                                        const file = event.target.files && event.target.files[0];
-                                        if (file) {
-                                            setSelectedImage(file);
-                                        }
-                                    }}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    <h6 style={{ color: 'white' }}>Please choose an image</h6>
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                        <Row>
+                            <TextInputFormGroup
+                                    controlId='validationCustom09'
+                                    label='Profile Image URL'
+                                    type='text'
+                                    required={true}
+                                    placeholder='Ex: http://url.com'
+                                    alt='Photo Url Input'
+                                    inputRef={photoURLRef}
+                                    default={user.photoURL}
+                                    feedbackMessage='Please enter a valid prounouns' />
                         </Row>
                     </Modal.Body>
                     <Modal.Footer >

@@ -20,10 +20,10 @@ function AddUserModal() {
     const departmentRef = useRef<HTMLInputElement | null>(null);
     const prounounsRef = useRef<HTMLInputElement | null>(null);
     const officeLocationRef = useRef<HTMLInputElement | null>(null);
+    const imageUrlRef = useRef<HTMLInputElement | null>(null);
 
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
@@ -43,15 +43,14 @@ function AddUserModal() {
         // Checks form validity
         if (form.checkValidity()) {
             // Gets form information and calls addUser() with respective info
-            if (!fullNameRef.current || !emailRef.current || !userLevel || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current) {
+            if (!fullNameRef.current || !emailRef.current || !userLevel || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current || !imageUrlRef.current) {
                 console.error("error");
             } else {
                 const db = getDatabase(FireBaseApp);
                 const id = emailToFirebase(emailRef.current.value);
-                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, "", userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, imageUrlRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 set(ref(db, 'users/' + id), newUser.toFirebaseObject());
             }
-            // TODO: Photos
             handleClose();
         }
         setValidated(true);
@@ -199,32 +198,17 @@ function AddUserModal() {
                                     feedbackMessage='Please enter a valid prounouns' />
                             </Col>
                         </Row>
-
-                        {/* https://mdbootstrap.com/docs/standard/forms/file/ */}
-                        {/* https://stackoverflow.com/questions/39484895/how-to-allow-input-type-file-to-select-the-same-file-in-react-component */}
-                        {/* https://surajsharma.net/blog/react-file-upload-accept-only-images */}
-                        {/* Image Selector for new user*/}
-                        <Row className="mb-3">
-                            <Form.Group controlId="validationCustom03">
-                                <Form.Label className="form-label" id="customFile" aria-required><h2 className='smallFont metropolisRegular'>Profile Image</h2></Form.Label>
-                                <input
-                                    type="file" //allow file selector
-                                    accept="image/png, image/jpeg" //only accept images
-                                    className="form-control"
-                                    id="customFile"
-                                    onChange={(event) => {
-                                        // Get the file that was selected, and set the selected image to it
-                                        const file = event.target.files && event.target.files[0];
-                                        if (file) {
-                                            setSelectedImage(file);
-                                        }
-                                    }}
-                                    required={false}
+                        <Row>
+                            <TextInputFormGroup
+                                controlId='validationCustom09'
+                                label='Profile Image URL'
+                                type='text'
+                                required={true}
+                                placeholder='Ex: http://url.com'
+                                alt='Image Url'
+                                inputRef={imageUrlRef}
+                                feedbackMessage='Please enter in an imageURL' 
                                 />
-                                <Form.Control.Feedback type="invalid">
-                                    <h6 style={{ color: 'white' }}>Please choose an image</h6>
-                                </Form.Control.Feedback>
-                            </Form.Group>
                         </Row>
 
                     </Modal.Body>
