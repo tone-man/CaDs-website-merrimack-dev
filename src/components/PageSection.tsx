@@ -31,10 +31,12 @@ function PageSection(myProps: myPageProps) {
     const user = useContext(UserContext);
     const navigate = useNavigate();
     const addToast = useToastContext();
+
+    console.log(myProps.pages);
     
     useEffect(() => {
         if (pageToEdit !== null){
-           handleEditButtonClick(db, pageToEdit, createNewDraft(true, db, pageToEdit.components, navigate, `drafts/${user.id}/${pageToEdit.id}/components`, addToast), setShowDraftModal, navigate, `drafts/${user.id}/${pageToEdit.id}`, addToast);
+           handleEditButtonClick(db, pageToEdit, createNewDraft(true, db, pageToEdit.components, navigate, `drafts/${user.id}/${pageToEdit.key}/components`, addToast), setShowDraftModal, navigate, `drafts/${user.id}/${pageToEdit.id}`, addToast);
         }
        }, [pageToEdit, user]);
 
@@ -46,8 +48,7 @@ function PageSection(myProps: myPageProps) {
     
     //  Wrapper function for handling the create new draft
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
-
-        createNewDraft(makeNewDraft, db, pageToEdit, navigate, `drafts/${user.id}/${page.id}/components`, addToast);
+        createNewDraft(makeNewDraft, db, pageToEdit, navigate, `drafts/${user.id}/${pageToEdit.key}/components`, addToast);
     };
 
     return (

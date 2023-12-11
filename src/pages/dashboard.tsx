@@ -87,7 +87,7 @@ const Dashboard = () => {
         const pages: [] = [];
         snapshot.forEach((child) => {
           const page = child.val();
-          page.id = child.key;
+          page.key = child.key;
 
           pages.push(page);
         });
@@ -100,7 +100,7 @@ const Dashboard = () => {
         // Stores a listener for the database in a useState variable
         onValue(pagesRef, (snapshot) => {
           const pages: [] = [snapshot.val()];
-
+          pages[0].key = snapshot.key;
           setPageArray(pages);
         }); 
     }

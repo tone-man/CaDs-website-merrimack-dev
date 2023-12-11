@@ -182,11 +182,12 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 
                     // If the data is of type header, Create a FACULTY Page header object
                     case 'header':
+                        console.log(component);
                         newObj = {
                             departmentName: component.departmentName,
                             facultyName: component.facultyName,
                             facultyTitle: component.facultyTitle,
-                            profileImg: 'image',
+                            profileImg: component.imgSource,
                             type: 'header',
                         };
                         break;
@@ -262,12 +263,13 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
                 tempArr.push(<ProjectList projectArray={component} />);
                 break;
             case 'header':
+                console.log("firstItem", firstItem)
                 tempArr.push(
                     <FacultyMemberHeader
                         departmentName={firstItem.departmentName}
                         facultyName={firstItem.facultyName}
                         facultyTitle={firstItem.facultyTitle}
-                        profileImg="image"
+                        profileImg={firstItem.profileImg}
                     />
                 );
                 break;
