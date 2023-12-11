@@ -2,9 +2,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Col, Row, Button } from 'react-bootstrap'
 import '../css/pageSection.css'
+import ConfirmDraftModal from './ConfirmDraftModal';
+import { UserContext } from '../App';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getDatabase } from 'firebase/database';
+import FireBaseApp from '../firebase';
+import { createNewDraft, handleEditButtonClick } from '../utils/createNewDraft';
+import useToastContext from './toasts/useToastContext';
+import { useEffect } from 'react';
 
 export interface pageProps {
-    pageName: string,
+    name: string,
     pageLink: string
 }
 
@@ -13,8 +22,34 @@ interface myPageProps {
     pages: pageProps[],
 }
 
+const db = getDatabase(FireBaseApp);
 // Returns the page section of the dashboard
 function PageSection(myProps: myPageProps) {
+    const [showDraftModal, setShowDraftModal] = useState(false);
+    const [pageToEdit, setPageToEdit] = useState(null);
+    
+    const user = useContext(UserContext);
+    const navigate = useNavigate();
+    const addToast = useToastContext();
+    
+    useEffect(() => {
+        if (pageToEdit !== null){
+           handleEditButtonClick(db, pageToEdit, createNewDraft(true, db, pageToEdit.components, navigate, `drafts/${user.id}/${pageToEdit.id}/components`, addToast), setShowDraftModal, navigate, `drafts/${user.id}/${pageToEdit.id}`, addToast);
+        }
+       }, [pageToEdit, user]);
+
+    //  Wrapper function for handling the click event on the "Edit Page" button.
+    const handleEditButtonClickWrapper = (page) => {
+        setPageToEdit(page);
+        
+    };
+    
+    //  Wrapper function for handling the create new draft
+    const createNewDraftWrapper = (makeNewDraft: boolean) => {
+
+        createNewDraft(makeNewDraft, db, pageToEdit, navigate, `drafts/${user.id}/${page.id}/components`, addToast);
+    };
+
     return (
         <div>
             <Container >
@@ -22,7 +57,7 @@ function PageSection(myProps: myPageProps) {
                 <div className='dashboard-page-section'>
                     <Row style={{ paddingBottom: '20px' }}>
                         <Col className='title mx-auto'>
-                            <h1> YOUR PAGES</h1>
+                            <h1>YOUR PAGES</h1>
                         </Col >
                     </Row>
 
@@ -35,12 +70,12 @@ function PageSection(myProps: myPageProps) {
                                     <Row className='rows'>
                                         <Col md={11} xs={9} className='page-name'>
                                             <h3 className='smallFont'>
-                                                {page.pageName}
+                                                {page.name}
                                             </h3>
                                         </Col>
                                         <Col md={1} xs={3} className='new-page-button'>
-                                            <a href={page.pageLink}>
-                                                <Button className='link-button'>
+                                            <a>
+                                                <Button className='link-button' onClick={() => handleEditButtonClickWrapper(page)}>
                                                     <i className="bi bi-arrow-right"></i>
                                                 </Button>
                                             </a>
@@ -56,10 +91,16 @@ function PageSection(myProps: myPageProps) {
                                 </div>
                             )}
                     </div>
-
+                            
                 </div>
             </Container >
 
+            {showDraftModal && user !== null &&
+                <ConfirmDraftModal show={showDraftModal}
+                    onHide={() => setShowDraftModal(false)}
+                    onCreateDraft={(value) => createNewDraftWrapper(value)}
+                    name={user.name} />
+            }
         </div >
     )
 }

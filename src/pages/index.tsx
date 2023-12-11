@@ -42,12 +42,12 @@ const Home = () => {
 
     //  Wrapper function for handling the click event on the "Edit Page" button.
     const handleEditButtonClickWrapper = () => {
-        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/homepage`, addToast);
+        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.id}/homepage`, addToast);
     };
 
     //  Wrapper function for handling the create new draft
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
-        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/homepage/components`, addToast);
+        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.id}/homepage/components`, addToast);
     };
 
     return (
