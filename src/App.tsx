@@ -1,7 +1,7 @@
 import { useState, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, onValue, set, remove } from "firebase/database";
+import { getDatabase, ref, onValue, set, remove, get } from "firebase/database";
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
 import FacultyDirectory from "./pages/facultyDirectoryPage";
@@ -47,6 +47,7 @@ function App() {
     // Create db listeners
     const uidListener = ref(db, `users/${uid}`);
     const emailListener = ref(db, `users/${email}`);
+    const pageListener = ref(db, `pages/${email}`);
 
     // Listen for the uid
     onValue(uidListener, (snapshot) => {
@@ -90,20 +91,30 @@ function App() {
       console.log(newUser);
 
       // Move data to a key with the uid
-      set(ref(db, 'users/' + uid), newUser.toFirebaseObject());
-
-      // Create a new object for faculty
-      const page = generateFacultyPage(newUser);
-      console.log(page);
-
-      set(ref(db, `pages/` + uid), page);
+      set(uidListener, newUser.toFirebaseObject());
 
       // Delete the email key
       remove(emailListener);
-
-      //TODO: Unsub listener
     });
 
+    onValue(pageListener, (snapshot) => {
+      // Move page to a key with the uid
+      console.log("PAGE OBJECT", snapshot.val());
+      console.log(uid);
+
+      // If snapshot does not exist unsubscribe listener
+      if (!snapshot.val()) {
+        //TODO: Unsub listener
+        return;
+      }
+
+      const pageObject: any = snapshot.val()
+
+      if (uid) {
+        set(ref(db, `pages/${uid}`), pageObject);
+        remove(pageListener);
+      }
+    })
   });
 
   return (

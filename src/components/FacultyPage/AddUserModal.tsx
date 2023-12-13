@@ -7,6 +7,7 @@ import FireBaseApp from '../../firebase';
 import { emailToFirebase } from '../../firebase/firebaseFormatter';
 import { getDatabase, ref, set } from 'firebase/database';
 import User from '../../firebase/user';
+import { generateFacultyPage } from '../../utils/createNewDraft';
 
 // This modal pops up to provide the user with a format to enter new user information
 // TODO: Add more information potentially
@@ -50,6 +51,11 @@ function AddUserModal() {
                 const id = emailToFirebase(emailRef.current.value);
                 const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, imageUrlRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 set(ref(db, 'users/' + id), newUser.toFirebaseObject());
+
+                // Create a new object for faculty
+                const page = generateFacultyPage(newUser);
+                set(ref(db, `pages/` + newUser.id), page);
+
             }
             handleClose();
         }
@@ -207,8 +213,8 @@ function AddUserModal() {
                                 placeholder='Ex: http://url.com'
                                 alt='Image Url'
                                 inputRef={imageUrlRef}
-                                feedbackMessage='Please enter in an imageURL' 
-                                />
+                                feedbackMessage='Please enter in an imageURL'
+                            />
                         </Row>
 
                     </Modal.Body>
