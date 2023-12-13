@@ -4,10 +4,11 @@ import { Container, Col, Row, Button } from "react-bootstrap";
 import "../css/requestSection.css";
 import ProfileImage from "./ProfileImage";
 import Request from "../firebase/requests";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ViewRequestModal from "./ViewRequestModal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import { getDatabase, ref, set } from "firebase/database";
+import ToastContext from "./toasts/ToastContext";
 
 // Interface for the request section component. An array of requests will be passed in
 interface myRequestProps {
@@ -27,6 +28,8 @@ function RequestSection(myProps: myRequestProps) {
   const db = getDatabase();
   const [key, setKey] = useState('')
 
+  const addToast = useContext(ToastContext);
+
 
   function handleShow(requestName: string, requestBody: string, requestTitle: string, email: string, projectTitle: string, k: string) {
     setRequestBody(requestBody);
@@ -40,14 +43,15 @@ function RequestSection(myProps: myRequestProps) {
   const handleClose = () => setShowModal(false);
 
   function handleShowDeleteModal(k: string) {
-    setShowDeletionModal(true)
-    setKey(k)
+    setShowDeletionModal(true);
+    setKey(k);
   }
 
   function handleDeletion() {
     const myRef = ref(db, 'requests/' + key);
-    set(myRef, null)
-    setShowDeletionModal(false)
+    set(myRef, null);
+    setShowDeletionModal(false);
+    addToast?.addToast(`Successfully deleted request.`, "success");
   }
 
   return (
@@ -100,14 +104,14 @@ function RequestSection(myProps: myRequestProps) {
               ))
             ) : (
               // Otherwise, display empty text
-              <div className="empty" style={{color: "black"}}>
+              <div className="empty" style={{ color: "black" }}>
                 <h4>
                   {" "}
                   <i>No Requests exist yet! </i>
                 </h4>
               </div>
             )}
-            <ViewRequestModal show={showModal} handleClose={handleClose} request={new Request(requestTitle,requestName,email,requestBody,projectTitle)} />
+            <ViewRequestModal show={showModal} handleClose={handleClose} request={new Request(requestTitle, requestName, email, requestBody, projectTitle)} />
           </div>
         </div>
       </Container>

@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, onValue, set, remove, get } from "firebase/database";
@@ -13,8 +13,7 @@ import Footer from "./components/Footer";
 import "./App.css";
 import User from "./firebase/user";
 import { emailToFirebase } from "./firebase/firebaseFormatter";
-import { ToastContextProvider } from "./components/toasts/ToastContext";
-import { generateFacultyPage } from "./utils/createNewDraft";
+import ToastContext, { ToastContextProvider } from "./components/toasts/ToastContext";
 
 // Authentication context
 const auth = getAuth(FireBaseApp);
@@ -40,7 +39,7 @@ function App() {
     const uid: string = result.uid;
     const email: string = emailToFirebase(result.email);
 
-    //Debounce if user already is exists.
+    //Debounce if a user already is exists in state
     if (user)
       return;
 

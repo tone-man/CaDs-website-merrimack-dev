@@ -1,9 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../css/formModal.css'
 import '../css/whiteListSection.css'
 import TextInputFormGroup from './TextInputFormGroup';
 import User from '../firebase/user';
+import ToastContext from './toasts/ToastContext';
 
 interface editUserProps {
     updateUser: (user: User) => void;
@@ -31,7 +32,7 @@ function EditUserModal(props: editUserProps) {
     const officeLocationRef = useRef<HTMLInputElement | null>(null);
     const photoURLRef = useRef<HTMLInputElement | null>(null);
 
-    const [selectedImage, setSelectedImage] = useState<File | null>(null); // Use File type for selectedImage state
+    const addToast = useContext(ToastContext);
 
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
@@ -56,9 +57,10 @@ function EditUserModal(props: editUserProps) {
                 console.error("error");
             } else {
                 let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, photoURLRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
-                updateUser(updatedUser)
+                updateUser(updatedUser);
+
+                addToast?.addToast(`Successfully edited ${updatedUser.name}`, "success")
             }
-            // TODO: Photos
         }
         setValidated(true);
         handleClose();
@@ -216,15 +218,15 @@ function EditUserModal(props: editUserProps) {
                         </Row>
                         <Row>
                             <TextInputFormGroup
-                                    controlId='validationCustom09'
-                                    label='Profile Image URL'
-                                    type='text'
-                                    required={true}
-                                    placeholder='Ex: http://url.com'
-                                    alt='Photo Url Input'
-                                    inputRef={photoURLRef}
-                                    default={user.photoURL}
-                                    feedbackMessage='Please enter a valid prounouns' />
+                                controlId='validationCustom09'
+                                label='Profile Image URL'
+                                type='text'
+                                required={true}
+                                placeholder='Ex: http://url.com'
+                                alt='Photo Url Input'
+                                inputRef={photoURLRef}
+                                default={user.photoURL}
+                                feedbackMessage='Please include a profile url.' />
                         </Row>
                     </Modal.Body>
                     <Modal.Footer >

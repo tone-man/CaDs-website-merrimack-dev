@@ -28,7 +28,9 @@ const Dashboard = () => {
     onValue(requestRef, (snapshot) => {
       const requestList: requestProps[] = [];
       for (const [key, value] of Object.entries(snapshot.val())) {
-        requestList.push({ value: value, key: key });
+        if (key != "placeholder") {
+          requestList.push({ value: value, key: key });
+        }
       }
 
       setRequests(requestList);

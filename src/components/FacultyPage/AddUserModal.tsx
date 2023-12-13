@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import '../../css/formModal.css'
 import '../../css/whiteListIndividual.css'
@@ -8,6 +8,7 @@ import { emailToFirebase } from '../../firebase/firebaseFormatter';
 import { getDatabase, ref, set } from 'firebase/database';
 import User from '../../firebase/user';
 import { generateFacultyPage } from '../../utils/createNewDraft';
+import ToastContext from '../toasts/ToastContext';
 
 // This modal pops up to provide the user with a format to enter new user information
 // TODO: Add more information potentially
@@ -25,6 +26,8 @@ function AddUserModal() {
 
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
+
+    const addToast = useContext(ToastContext);
 
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
@@ -56,6 +59,7 @@ function AddUserModal() {
                 const page = generateFacultyPage(newUser);
                 set(ref(db, `pages/` + newUser.id), page);
 
+                addToast?.addToast(`Successfully added ${newUser.name} to users`, "success");
             }
             handleClose();
         }
@@ -209,11 +213,11 @@ function AddUserModal() {
                                 controlId='validationCustom09'
                                 label='Profile Image URL'
                                 type='text'
-                                required={true}
+                                required={false}
                                 placeholder='Ex: http://url.com'
                                 alt='Image Url'
                                 inputRef={imageUrlRef}
-                                feedbackMessage='Please enter in an imageURL'
+                                feedbackMessage='Url is optional when creating a user.'
                             />
                         </Row>
 
