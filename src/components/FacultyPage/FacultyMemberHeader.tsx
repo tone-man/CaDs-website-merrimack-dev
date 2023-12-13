@@ -45,7 +45,7 @@ function FacultyMemberHeader(myProps: headerProps) {
                             </a>
                         </Col>
                         <Col>
-                            <ProfileImage size={'200px'} position="mx-auto" />
+                            <ProfileImage  image={myProps.profileImg} size={'200px'} position="mx-auto" />
                         </Col>
                     </Row>
                 </Container>

@@ -10,6 +10,8 @@ import { getDatabase } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserContext } from '../App';
 import User from '../firebase/user';
+import { useNavigate } from 'react-router-dom';
+
 
 const db = getDatabase(); //Global DB Connection
 
@@ -19,6 +21,9 @@ function NavBar() {
     const [isFocused, setIsFocused] = useState(false);
     const user: User | null = useContext(UserContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
+    const navigate = useNavigate();
+
+
     // This useEffect displays/hides the search bar when isFocused changes
     useEffect(() => {
         const searchBar = document.getElementById('searchBar-container');
@@ -53,6 +58,7 @@ function NavBar() {
 
         //Sign the user out
         signOut(auth);
+        navigate('/');
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
@@ -91,7 +97,7 @@ function NavBar() {
                         <Nav className="mr-auto">
                             <Nav.Link id='home' href="/" >Home</Nav.Link>
                             <Nav.Link id='faculty' href="/facultyDirectory">Faculty</Nav.Link>
-                          {user &&  <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link> }
+                            {user && <Nav.Link id='dashboard' href="/dashboard">Dashboard</Nav.Link>}
                             <Nav.Link id='help' target="_blank" href='https://drive.google.com/file/d/1P4T0Q2TVONEr5h6impU1d6r-9EcihvGE/view?usp=sharing'>Help</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
@@ -133,11 +139,13 @@ function NavBar() {
                     <Navbar.Brand target='_blank' href="https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/faculty-staff/">
                         <img className="logo" src={merrimackLogo} alt='Merrimack College Logo' />
                     </Navbar.Brand>
-                    <div>
+                    {/* 
+                        If search is to be added the bar functionality is here.    
+                    <div>  
                         <Button className="searchBarToggle" onClick={toggleSearch} id="searchBarToggle">
                             <i className={isFocused ? "bi bi-x" : "bi bi-search"} aria-label='Search Icon'></i>
                         </Button>
-                    </div>
+                    </div> */}
                 </Container>
                 {/* Won't display the search bar until the search icon is clicked */}
                 <div id="searchBar-container" style={{ display: 'none' }}>

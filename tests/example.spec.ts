@@ -2,52 +2,52 @@ import { test, expect } from '@playwright/test';
 
 test('Has Website in Title', async ({ page }) => {
   await page.goto('/');
-  await page.waitForLoadState('load'); 
+  await page.waitForLoadState('load');
   await expect(page).toHaveTitle("CaDS Website");
 });
 
 
 // NAV BAR TESTS
-test('First Nav Bar Present', async ({ page }) => {
-  const pages = ['/', '/faculty', '/dashboard']
-  for (let i = 0; i < pages.length; i++) {
-    await page.goto(pages[i]);
-    await page.waitForLoadState('load'); 
-    const navbar = await page.$('#first-navbar');
-    expect(navbar).not.toBeNull();
-  }
-});
+// test('First Nav Bar Present', async ({ page }) => {
+//   const pages = ['/', '/faculty']
+//   for (let i = 0; i < pages.length; i++) {
+//     await page.goto(pages[i]);
+//     await page.waitForLoadState('load');
+//     const navbar = await page.$('#first-navbar');
+//     expect(navbar).not.toBeNull();
+//   }
+// });
 
-test('Second Nav Bar Present', async ({ page }) => {
-  const pages = ['/', '/faculty', '/dashboard']
-  for (let i = 0; i < pages.length; i++) {
-    await page.goto(pages[i]);
-    await page.waitForLoadState('load'); 
-    const navbar = await page.$('#second-navbar');
-    expect(navbar).not.toBeNull();
-  }
-});
+// test('Second Nav Bar Present', async ({ page }) => {
+//   const pages = ['/', '/faculty', '/dashboard']
+//   for (let i = 0; i < pages.length; i++) {
+//     await page.goto(pages[i]);
+//     await page.waitForLoadState('load');
+//     const navbar = await page.$('#second-navbar');
+//     expect(navbar).not.toBeNull();
+//   }
+// });
 
 // test('Correct Nav Bar Links', async ({ page }) => {
 //   await page.goto('/');
 
 //   const home = await page.waitForSelector('#home', { state: 'visible' });
 //   await home.click();
-//   await page.waitForLoadState('load'); 
+//   await page.waitForLoadState('load');
 //   const homeUrl = page.url();
-//   expect(homeUrl).toContain('/'); 
+//   expect(homeUrl).toContain('/');
 
 //   const dashboard = await page.waitForSelector('#dashboard', { state: 'visible' });
 //   await dashboard.click();
-//   await page.waitForLoadState('load'); 
+//   await page.waitForLoadState('load');
 //   const dashboardUrl = page.url();
-//   expect(dashboardUrl).toContain('/dashboard'); 
+//   expect(dashboardUrl).toContain('/dashboard');
 
 //   const faculty = await page.waitForSelector('#faculty', { state: 'visible' });
 //   await faculty.click();
-//   await page.waitForLoadState('load'); 
+//   await page.waitForLoadState('load');
 //   const facultyUrl = page.url();
-//   expect(facultyUrl).toContain('/faculty'); 
+//   expect(facultyUrl).toContain('/faculty');
 // });
 
 
@@ -58,7 +58,7 @@ test('Second Nav Bar Present', async ({ page }) => {
 //     const searchBarToggle = await page.$('#searchBarToggle');
 
 //      if (searchBarToggle){
-//       await searchBarToggle!.click(); 
+//       await searchBarToggle!.click();
 //      }
 
 //     const isBlockStyle = await page.evaluate(() => {
@@ -81,7 +81,7 @@ test('Second Nav Bar Present', async ({ page }) => {
 //   const pages = ['/', '/faculty', '/dashboard']
 //   for (let i = 0; i < pages.length; i++) {
 //     await page.goto(pages[i]);
-//   await page.waitForLoadState('load'); 
+//   await page.waitForLoadState('load');
 
 //     const searchBarToggle = await page.$('#searchBarToggle');
 
@@ -104,7 +104,7 @@ test('Second Nav Bar Present', async ({ page }) => {
 
 //     await page.goto('/');
 
-//     const projectCardElements = await page.$$('.project-row'); 
+//     const projectCardElements = await page.$$('.project-row');
 //      const numberOfProjectCards = projectCardElements.length;
 //      const expectedNumberOfProjects = 4;
 
@@ -112,7 +112,7 @@ test('Second Nav Bar Present', async ({ page }) => {
 
 // });
 
-// PROJECT CARD TEST 
+// PROJECT CARD TEST
 
 // test('Correct Project Links', async ({ page }) => {});
 

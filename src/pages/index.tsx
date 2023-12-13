@@ -39,15 +39,9 @@ const Home = () => {
         parseDataToComponents(snapShot, setRenderedComponents);
     }, [snapShot]);
 
-
-    //  Wrapper function for handling the click event on the "Edit Page" button.
-    const handleEditButtonClickWrapper = () => {
-        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/homepage`, addToast);
-    };
-
     //  Wrapper function for handling the create new draft
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
-        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/homepage/components`, addToast);
+        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.id}/homepage/components`, addToast);
     };
 
     return (
@@ -61,17 +55,6 @@ const Home = () => {
             }
             <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
             {renderedComponents}
-            {/* Render edit button conditionally */}
-            {user !== null &&
-                <Container>
-                    <Row>
-                        {/* Edit button. TODO: Render conditionally based on ownership of a page */}
-                        <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
-                            <Button onClick={handleEditButtonClickWrapper}>Edit Page</Button>
-                        </Col>
-                    </Row>
-                </Container>
-            }
         </div>
     );
 };

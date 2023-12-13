@@ -1,10 +1,11 @@
 import { Container, Row, Col, Button } from "react-bootstrap"
-
+import { Navigate, useNavigate } from "react-router-dom"
 import '../../css/DirectoryCSS/facultyMemberDirectory.css'
 
 import ProfileImage from "../ProfileImage";
 
 export interface facultyMember {
+    id: string,
     name: string,
     phoneNumber: string,
     email: string,
@@ -23,7 +24,9 @@ interface FacultyMemberDirectoryProps {
 // Creates an individual faculty member component for the faculty directory
 function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
 
+
     const { facultyMember, isLast } = props;
+    const navigate = useNavigate();
 
     facultyMember.pageLink == '/faculty'
 
@@ -58,11 +61,9 @@ function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
                 </Col>
                 {/* Link to faculty members page*/}
                 <Col style={{ margin: 'auto' }} md={2} sm={4} xs={4}>
-                    <a href={facultyMember.pageLink}>
-                        <Button className='link-button'>
-                            <i className="bi bi-arrow-right"></i>
+                        <Button className='link-button' onClick={() => navigate("/faculty", { state: { id: facultyMember.id}})}>
+                                <i className="bi bi-arrow-right"></i>
                         </Button>
-                    </a>
                 </Col>
             </Row>
         </Container>

@@ -1,5 +1,5 @@
 import { useState, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, onValue, set, remove } from "firebase/database";
 import FireBaseApp from "./firebase";
@@ -14,6 +14,7 @@ import "./App.css";
 import User from "./firebase/user";
 import { emailToFirebase } from "./firebase/firebaseFormatter";
 import { ToastContextProvider } from "./components/toasts/ToastContext";
+import { generateFacultyPage } from "./utils/createNewDraft";
 
 // Authentication context
 const auth = getAuth(FireBaseApp);
@@ -73,20 +74,31 @@ function App() {
 
       const { email, userLevel, phoneNumber, title, pronouns, department, location } = snapshot.val();
 
-      // Move data to a key with the uid
-      set(ref(db, 'users/' + uid), {
-        email: email,
-        name: result.displayName,
-        photoURL: result.photoURL,
-        userLevel: userLevel,
-        phoneNumber: phoneNumber,
-        pronouns: pronouns,
-        department: department,
-        location: location,
-        title: title,
-      });
+      const newUser: User = new User(
+        uid,
+        email,
+        result.displayName,
+        result.photoURL,
+        userLevel,
+        phoneNumber,
+        title,
+        pronouns,
+        department,
+        location
+      );
 
-      //Delete the email key
+      console.log(newUser);
+
+      // Move data to a key with the uid
+      set(ref(db, 'users/' + uid), newUser.toFirebaseObject());
+
+      // Create a new object for faculty
+      const page = generateFacultyPage(newUser);
+      console.log(page);
+
+      set(ref(db, `pages/` + uid), page);
+
+      // Delete the email key
       remove(emailListener);
 
       //TODO: Unsub listener
@@ -97,17 +109,17 @@ function App() {
   return (
     <UserContext.Provider value={user}>
       <ToastContextProvider>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/facultyDirectory" element={<FacultyDirectory />} />
-          <Route path="/faculty" element={<FacultyPage />} />
-          <Route path='/edit' element={<EditPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-        <Footer />
-      </Router>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/facultyDirectory" element={<FacultyDirectory />} />
+            <Route path="/faculty" element={<FacultyPage />} />
+            <Route path='/edit' element={<EditPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+          <Footer />
+        </Router>
       </ToastContextProvider>
     </UserContext.Provider>
   );

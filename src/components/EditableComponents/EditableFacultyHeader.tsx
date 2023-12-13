@@ -6,10 +6,11 @@ import '../../css/editableCSS/editableTextComponent.css'
 
 import EditableFormComponent from './EditableFormComponent';
 import { handleTextAreaChange } from '../../utils/editingComponents';
+import EditableImageForm from './EditableImageForm';
 
 export interface editableHeaderProps {
     departmentName: string,
-    name: string,
+    facultyName: string,
     facultyTitle: string,
     imgSource: string
 }
@@ -38,7 +39,7 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
   // Initialize content and label usestates using data from props in the useEffect (once on initial render).
   useEffect(() => {
         setDepartmentName(myProps.data.departmentName);
-        setName(myProps.data.name);
+        setName(myProps.data.facultyName);
         setFacultyTitle(myProps.data.facultyTitle);
         setImageSource(myProps.data.imgSource);
     }, []);
@@ -90,7 +91,7 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                             </Col>
                         </Row>
 
-                        <EditableFormComponent
+                        <EditableImageForm
                             changedValue='/imgSource'
                             myRef={myRef}
                             value={imgSource}
@@ -99,8 +100,7 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                             componentKey={myProps.componentKey}
                             label="Image Source"
                             handleTextAreaChange={handleTextAreaChange}
-                            rows={1}
-                            delete={false} />
+                            />
                     </Container>
                 </Container>
             </Container>
