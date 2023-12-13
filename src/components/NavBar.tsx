@@ -11,7 +11,7 @@ import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'fireba
 import { UserContext } from '../App';
 import User from '../firebase/user';
 import { useNavigate } from 'react-router-dom';
-
+import ToastContext from './toasts/ToastContext';
 
 const db = getDatabase(); //Global DB Connection
 
@@ -22,6 +22,8 @@ function NavBar() {
     const user: User | null = useContext(UserContext);
     const searchBarRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
+
+    const addToast = useContext(ToastContext);
 
 
     // This useEffect displays/hides the search bar when isFocused changes
@@ -59,6 +61,7 @@ function NavBar() {
         //Sign the user out
         signOut(auth);
         navigate('/');
+        addToast?.addToast(`Successfully signed out!`, "success");
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820

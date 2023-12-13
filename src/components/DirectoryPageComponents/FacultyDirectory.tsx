@@ -27,7 +27,8 @@ function FacultyDirectory() {
             const users: User[] = [];
             snapshot.forEach((child) => {
                 const { email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location } = child.val();
-                if (userLevel !== 'Administrator') {
+                //hide our name for the original admin account
+                if (name !== 'Administrator') {
                     users.push(new User(child.key, email, name, photoURL, userLevel, phoneNumber, title, pronouns, department, location));
                 }
             });

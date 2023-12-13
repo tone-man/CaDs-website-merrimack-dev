@@ -1,7 +1,7 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, onValue, set, remove } from "firebase/database";
+import { getDatabase, ref, onValue, set, remove, get } from "firebase/database";
 import FireBaseApp from "./firebase";
 import Home from "./pages/index";
 import FacultyDirectory from "./pages/facultyDirectoryPage";
@@ -13,8 +13,7 @@ import Footer from "./components/Footer";
 import "./App.css";
 import User from "./firebase/user";
 import { emailToFirebase } from "./firebase/firebaseFormatter";
-import { ToastContextProvider } from "./components/toasts/ToastContext";
-import { generateFacultyPage } from "./utils/createNewDraft";
+import ToastContext, { ToastContextProvider } from "./components/toasts/ToastContext";
 
 // Authentication context
 const auth = getAuth(FireBaseApp);
@@ -40,13 +39,14 @@ function App() {
     const uid: string = result.uid;
     const email: string = emailToFirebase(result.email);
 
-    //Debounce if user already is exists.
+    //Debounce if a user already is exists in state
     if (user)
       return;
 
     // Create db listeners
     const uidListener = ref(db, `users/${uid}`);
     const emailListener = ref(db, `users/${email}`);
+    const pageListener = ref(db, `pages/${email}`);
 
     // Listen for the uid
     onValue(uidListener, (snapshot) => {
@@ -90,20 +90,30 @@ function App() {
       console.log(newUser);
 
       // Move data to a key with the uid
-      set(ref(db, 'users/' + uid), newUser.toFirebaseObject());
-
-      // Create a new object for faculty
-      const page = generateFacultyPage(newUser);
-      console.log(page);
-
-      set(ref(db, `pages/` + uid), page);
+      set(uidListener, newUser.toFirebaseObject());
 
       // Delete the email key
       remove(emailListener);
-
-      //TODO: Unsub listener
     });
 
+    onValue(pageListener, (snapshot) => {
+      // Move page to a key with the uid
+      console.log("PAGE OBJECT", snapshot.val());
+      console.log(uid);
+
+      // If snapshot does not exist unsubscribe listener
+      if (!snapshot.val()) {
+        //TODO: Unsub listener
+        return;
+      }
+
+      const pageObject: any = snapshot.val()
+
+      if (uid) {
+        set(ref(db, `pages/${uid}`), pageObject);
+        remove(pageListener);
+      }
+    })
   });
 
   return (

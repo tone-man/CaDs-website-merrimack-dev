@@ -181,6 +181,7 @@ const EditPage = () => {
         set(valueRef, null);
 
         // Navigate the user back to the home page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         navigate('/dashboard');
     };
 
