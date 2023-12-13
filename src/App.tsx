@@ -1,5 +1,5 @@
 import { useState, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, onValue, set, remove } from "firebase/database";
 import FireBaseApp from "./firebase";
@@ -88,7 +88,7 @@ function App() {
       );
 
       console.log(newUser);
-      
+
       // Move data to a key with the uid
       set(ref(db, 'users/' + uid), newUser.toFirebaseObject());
 
@@ -109,17 +109,17 @@ function App() {
   return (
     <UserContext.Provider value={user}>
       <ToastContextProvider>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/facultyDirectory" element={<FacultyDirectory />} />
-          <Route path="/faculty" element={<FacultyPage />} />
-          <Route path='/edit' element={<EditPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-        <Footer />
-      </Router>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/facultyDirectory" element={<FacultyDirectory />} />
+            <Route path="/faculty" element={<FacultyPage />} />
+            <Route path='/edit' element={<EditPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+          <Footer />
+        </Router>
       </ToastContextProvider>
     </UserContext.Provider>
   );

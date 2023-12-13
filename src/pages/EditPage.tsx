@@ -62,7 +62,7 @@ const EditPage = () => {
         onValue(componentsRef, (snapshot) => {
             setComponentsSnapshot(snapshot.val());
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -152,6 +152,8 @@ const EditPage = () => {
                         set(myRef, value)
                             .then(() => {
                                 console.log('Data added successfully!');
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                navigate('/dashboard');
                             })
                             .catch((error) => {
                                 console.error('Error adding data: ', error);
@@ -179,7 +181,7 @@ const EditPage = () => {
         set(valueRef, null);
 
         // Navigate the user back to the home page
-        navigate('/');
+        navigate('/dashboard');
     };
 
     /**
@@ -241,34 +243,34 @@ const EditPage = () => {
                 name={'this draft'} />
             <Header title={"Edit Page"} />
             <Container fluid className='edit-container'>
+                <Row>
+                    <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
+                        <Dropdown>
+                            <Dropdown.Toggle id="dropdown-basic">
+                                Add a Component
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => addComponent('event carousel')}>Event Carousel</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('text area')}>Text Box</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
+                                <Dropdown.Item onClick={() => addComponent('contact template')}>Contact Information Template</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Col>
+                </Row>
+                {updatedComponents}
+                <Container fluid>
                     <Row>
-                        <Col md={9} sm={9} xs={9} style={{ textAlign: 'left' }} className='save-button'>
-                            <Dropdown>
-                                <Dropdown.Toggle id="dropdown-basic">
-                                    Add a Component
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => addComponent('event carousel')}>Event Carousel</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('text area')}>Text Box</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('accordion')}>DropDown Text</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => addComponent('contact template')}>Contact Information Template</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                        <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
+                            {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
+                            <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
+                        </Col>
+                        <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
+                            <Button disabled={cannotSubmit} onClick={() => handleSave()}>Publish Changes</Button>
                         </Col>
                     </Row>
-                    {updatedComponents}
-                    <Container fluid>
-                        <Row>
-                            <Col md={9} sm={9} xs={6} style={{ textAlign: 'right' }} className='save-button'>
-                                {/* https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement */}
-                                <Button onClick={() => setShowDeletionModal(true)}>Delete Draft</Button>
-                            </Col>
-                            <Col md={3} sm={3} xs={6} style={{ textAlign: 'left' }} className='save-button'>
-                                <Button disabled={cannotSubmit} onClick={() => handleSave()}>Publish Changes</Button>
-                            </Col>
-                        </Row>
-                    </Container>
                 </Container>
+            </Container>
         </div>
     );
 };

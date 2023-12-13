@@ -27,7 +27,7 @@ function FacultyPage() {
 
     // Gets all of the components based on the passed ID
     useEffect(() => {
-        
+
         if (!id) {
             return; // Don't proceed without the ID
         }
@@ -50,11 +50,6 @@ function FacultyPage() {
         parseDataToComponents(snapShot, setRenderedComponents);
     }, [snapShot]);
 
-    //  Wrapper function for handling the click event on the "Edit Page" button.
-    const handleEditButtonClickWrapper = () => {
-        handleEditButtonClick(db, snapShot, createNewDraftWrapper, setShowDraftModal, navigate, `drafts/${user.name}/faculty`, addToast);
-    };
-
     //  Wrapper function for handling the create new draft
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
         createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/faculty/components`, addToast);
@@ -70,17 +65,6 @@ function FacultyPage() {
                     name={user.name} />
             }
             {renderedComponents}
-            {/* Render edit button conditionally */}
-            {user !== null &&
-                <Container>
-                    <Row>
-                        {/* Edit button. TODO: Render conditionally based on ownership of a page */}
-                        <Col md={12} style={{ textAlign: 'right' }} className='edit-button'>
-                            <Button onClick={handleEditButtonClickWrapper}>Edit Page</Button>
-                        </Col>
-                    </Row>
-                </Container>
-            }
         </div >
     )
 }

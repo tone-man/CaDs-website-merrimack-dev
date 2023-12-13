@@ -19,7 +19,9 @@ const Dashboard = () => {
   // Gets the user requests from the database
   useEffect(() => {
     //Check if user object is not empty
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     const requestRef = ref(db, `/requests`);
 
@@ -95,14 +97,14 @@ const Dashboard = () => {
         setPageArray(pages);
       });
     } else {
-        const pagesRef = ref(db, "/pages/" + user.id);
+      const pagesRef = ref(db, "/pages/" + user.id);
 
-        // Stores a listener for the database in a useState variable
-        onValue(pagesRef, (snapshot) => {
-          const pages: [] = [snapshot.val()];
-          pages[0].key = snapshot.key;
-          setPageArray(pages);
-        }); 
+      // Stores a listener for the database in a useState variable
+      onValue(pagesRef, (snapshot) => {
+        const pages: [] = [snapshot.val()];
+        pages[0].key = snapshot.key;
+        setPageArray(pages);
+      });
     }
   }, [user]);
 
@@ -113,10 +115,14 @@ const Dashboard = () => {
       <div style={{ background: "rgb(224, 224, 224)" }}>
         <EditProfile user={user} />
         <PageSection pages={pageArray} />
-        {(!user || user.userLevel == "Administrator") && (
+        {user && (
           <>
-            <RequestSection requests={requests} />
-            <WhiteListSection userArray={allowedUsersList} />
+            {(user.userLevel == "Administrator") && (
+              <>
+                <RequestSection requests={requests} />
+                <WhiteListSection userArray={allowedUsersList} />
+              </>
+            )}
           </>
         )}
       </div>
