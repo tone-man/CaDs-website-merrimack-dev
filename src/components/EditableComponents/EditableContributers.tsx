@@ -69,7 +69,7 @@ function EditableContributers(myProps: editableComponentProps) {
                 show={showDeleteModal}
                 onHide={() => setShowDeletionModal(false)}
                 onConfirm={remove}
-                name={'contributer ' + myProps.data.name} />
+                name={'this contributer'}  />
             <EditableFormComponent
                 changedValue='/name'
                 myRef={myRef}

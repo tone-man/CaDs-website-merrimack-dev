@@ -5,345 +5,548 @@
     }
   },
   "pages": {
-    "homepage": {
+    "aakila@merrimack%2Eedu": {
       "components": {
-        "B": {
-          "contributers": {
-            "antonio": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "bree": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "melissa": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "description": "Did musical lyrics get less sophisticated over time? This project used computational tools to analyze the lyrical sophistication of the Billboard top 100 from 1959 – 2016.",
-          "facultyMembers": {
-            "Antonio": {
-              "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "Brianna": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "Melissa": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "imageAlt": "imageAlt",
-          "imageDescription": "Image Description",
-          "nestedOrder": 1,
-          "pageOrder": 0,
-          "projectLink": "#",
-          "title": "Automated Lyric Analysis",
-          "type": "project"
-        },
-        "C": {
-          "contributers": {
-            "antonio": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "bree": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "melissa": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "description": "ROVE is a photo location sharing and tagging app for iOS devices that allows users to upload geotagged photos, tag them with keywords and search for prime photography spots.",
-          "facultyMembers": {
-            "Antonio": {
-              "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "Brianna": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "Melissa": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "imageAlt": "imageAlt",
-          "imageDescription": "Image Description",
-          "nestedOrder": 0,
-          "pageOrder": 0,
-          "projectLink": "#",
-          "title": "Rove - Photography Exploration App for iOS",
-          "type": "project"
-        },
-        "H": {
-          "contributers": {
-            "antonio": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "bree": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "melissa": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "description": "This project is a 3D fighting game in which characters are made of small blocks called voxels. Characters are also attached to their weapons, which move independently of the characters themselves.",
-          "facultyMembers": {
-            "Antonio": {
-              "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "Brianna": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "Melissa": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "imageAlt": "imageAlt",
-          "imageDescription": "Image Description",
-          "nestedOrder": 3,
-          "pageOrder": 0,
-          "projectLink": "#",
-          "title": "Square Swords 3D Fighting Game",
-          "type": "project"
-        },
-        "J": {
-          "caption": "Caption 1",
-          "date": "Date",
-          "description": "The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.) that are hiring for both internships and full-time positionsFree'",
-          "imageAlt": "imageAlt",
-          "imgSource": "src/imgs/projectpic.webp",
-          "link": "#",
-          "location": "Location",
+        "-NlcivQp-WanWMCBTSnj": {
+          "email": "<p>aakila@merrimack.edu</p>",
+          "location": "<p>Eng Inno Ctr 510 Turnpike 202L</p>",
           "nestedOrder": 0,
           "pageOrder": 1,
-          "title": "Careers for the Common Good Internship & Career Fair",
-          "type": "event"
+          "phone": "<p>978-837-3404</p>",
+          "type": "contact"
         },
-        "L": {
-          "caption": "Caption 1",
-          "date": "Date",
-          "description": "The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.) that are hiring for both internships and full-time positionsFree",
-          "imageAlt": "imageAlt",
-          "imgSource": "src/imgs/projectpic.webp",
-          "link": "#",
-          "location": "Location",
-          "nestedOrder": 1,
-          "pageOrder": 1,
-          "title": "Careers for the Common Good Internship & Career Fair",
-          "type": "event"
-        },
-        "R": {
-          "caption": "Caption 1",
-          "date": "Date",
-          "description": "The Careers of the Common Good Internship & Career Fair is open to current Merrimack students and Merrimack alumni. Within this fair, you will find employers from various industries (typically government, human services, non-profit, education, healthcare, etc.) that are hiring for both internships and full-time positionsFree",
-          "imageAlt": "imageAlt",
-          "imgSource": "src/imgs/projectpic.webp",
-          "link": "#",
-          "location": "Location",
-          "nestedOrder": 0,
-          "pageOrder": 2,
-          "title": "Careers for the Common Good Internship & Career Fair",
-          "type": "event"
-        },
-        "X": {
-          "contributers": {
-            "antonio": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "bree": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "melissa": {
-              "description": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.",
-              "name": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "description": "Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons.Student built a website that acts as a group manager for tabletop role-playing games like Dungeons & Dragons",
-          "facultyMembers": {
-            "Antonio": {
-              "facultyImg": "image",
-              "facultyName": "Antonio M Craveiro",
-              "nestedOrder": 0,
-              "pageOrder": 0
-            },
-            "Brianna": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 1,
-              "pageOrder": 0
-            },
-            "Melissa": {
-              "facultyImg": "image",
-              "facultyName": "Dr. Melissa St. Hilaire",
-              "nestedOrder": 2,
-              "pageOrder": 0
-            }
-          },
-          "imageAlt": "imageAlt",
-          "imageDescription": "Image Description",
-          "nestedOrder": 2,
-          "pageOrder": 0,
-          "projectLink": "#",
-          "title": "D&D Roleplaying Group/Campaign Manager",
-          "type": "project"
-        }
-      }
-    },
-    "faculty": {
-      "components": {
-        "header": {
-          "facultyTitle": "Assistant Professor of Data Science",
-          "facultyName": "DR. MELISSA ST. HILAIRE",
-          "departmentName": "Computer and Data Science Department",
-          "imgSource": "src/imgs/projectpic.webp",
-          "imageAlt": "imageAlt",
-          "nestedOrder": 0,
-          "pageOrder": 0,
-          "type": "header"
-        },
-        "L": {
-          "label": "Research",
-          "content": "For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards. .",
+        "-Nlcj16XaZh-szp6s0UN": {
+          "content": "<ul><li>Ph.D., Biomedical Engineering, University of Massachusetts, Lowell</li><li>M.S., Biomedical-Imaging, Boston University Medical School</li><li>B.S., Computer Science, University of Massachusetts, Boston</li></ul>",
+          "label": "<p>Education</p>",
           "nestedOrder": 0,
           "pageOrder": 2,
           "type": "text"
         },
-        "J": {
-          "label": "Recent Publications",
-          "content": "Publications",
+        "-Nlcj4H1Y4vUq-rEAAaa": {
+          "content": "<p>Adam Aakil, Ph.D. in Biomedical Engineering and clinical innovator, is empowering independence and inspiring the next generation of scientific research. He is a highly acclaimed strategist for neuroimaging abnormalities, liver metabolism, breast and prostate cancer.</p><p>He also has extensive experience in clinical research of human and animal data targeting microvasculature disorder in the brain structures using a deep learning algorithm programmed in MATLAB for quantitative magnetic resonance imaging perfusion (MRP). He has served as a Research Associate at Boston Medical Center, Boston University School of Medicine, and acted as a Postdoctoral Research Fellow at Massachusetts General Hospital Research Institute.</p>",
+          "label": "<p>Professional Experience</p>",
+          "nestedOrder": 0,
+          "pageOrder": 3,
+          "type": "text"
+        },
+        "header": {
+          "departmentName": "<p>Computer and Data Sciences</p>",
+          "facultyName": "DR. ADAM AAKIL",
+          "facultyTitle": "<p>Assistant Instructional Professor</p>",
+          "imageAlt": "imageAlt",
+          "imgSource": "https://drive.google.com/uc?id=1LTptmNR887NzAYgxMMsA-SrtOCsG1mKS",
+          "name": "<p>DR. ADAM AAKIL</p>",
+          "nestedOrder": 0,
+          "pageOrder": 0,
+          "type": "header"
+        }
+      },
+      "name": "Dr. Adam Aakil Page"
+    },
+    "fernandesp@merrimack%2Eedu": {
+      "components": {
+        "-Nlcjfnh8LwktnU4zcYs": {
+          "content": "<ul><li>Stochastic Models</li><li>Natural Language Processing</li><li>Computer Science in Multidisciplinary Environments</li></ul>",
+          "label": "<p>Research Interests</p>",
+          "nestedOrder": 0,
+          "pageOrder": 1,
+          "type": "text"
+        },
+        "-NlcjkPMAd_-7aMgpJy4": {
+          "content": "<ul><li>Ph.D. Computer Science, INP Grenoble, France</li><li>M.Sc. Computer Science, UFRGS, Brazil</li><li>B.Sc. Computer Science, UFRGS, Brazil</li></ul>",
+          "label": "<p>Education</p>",
+          "nestedOrder": 0,
+          "pageOrder": 2,
+          "type": "text"
+        },
+        "-NlcjpCpXB-oLHlyyz8i": {
+          "content": "<ul><li>Simulation, Analytical, and Numerical Methods to Solve Markovian Models</li><li>Machine Learning, Data Mining Algorithms, and Natural Language Processing</li><li>Software Engineering Modeling and Metrics</li><li>Algorithms and Programming Languages</li></ul>",
+          "label": "<p>Areas of Expertise</p>",
           "nestedOrder": 0,
           "pageOrder": 3,
           "type": "accordion"
         },
-        "K": {
-          "label": "Education",
-          "content": "Education",
+        "-NlcjtN2kAr_rnGlIv5r": {
+          "content": "<p>LOPES, L.; DURAN, M. S.; FERNANDES, P.; PARDO, T. A. S. PortiLexicon-UD: a Portuguese Lexical Resource according to Universal Dependencies Model. In: 13th Language Resources and Evaluation Conference (LREC 2022), Marseille, France, 2022.</p><p>ASSUNÇÃO, J.; FERNANDES, P.; VINCENT, J.M. Piecewise Aggregation for HMM Fitting: A Pre-Fitting Model for Seamless Integration with Time-Series Data. International Journal of Software Engineering and Knowledge Engineering, v. 29(11&amp;12), p. 1835-1850, 2019.</p><p>ASSUNÇÃO, J.; FERNANDES, P.; LOPES, L. Language Independent POS-tagging Using Automatically Generated Markov Chains. In: Thirty-First International Conference on Software Engineering and Knowledge Engineering (SEKE 2019), Lisbon, Portugal, 2019.</p><p>CZEKSTER, R.; FERNANDES, P.; LOPES, L.; SANTOS, A. R.; SALES, A.; WEBBER, T. Stochastic Performance Analysis of Global Software Development Teams. ACM Transactions on Software Engineering Methodology, v. 25 (3), p. 26:1-26:32, 2016.</p><p>LOPES, L.; FERNANDES, P.; VIEIRA, R. Estimating term domain relevance through term frequency, disjoint corpora frequency – tf-dcf. Knowledge-based Systems, v. 97 p. 237-249, 2016.</p>",
+          "label": "<p>Recent Publications</p>",
           "nestedOrder": 0,
           "pageOrder": 4,
           "type": "accordion"
         },
-        "R": {
-          "label": "four",
-          "content": "content",
+        "-NlcjvjhfcFDMugA0uG2": {
+          "content": "<ul><li>A​lgorithms and Discrete Structures – Masters in Computer Science​</li><li>Advanced Algorithms – Masters in Computer Science​</li><li>Systems and Languages Survey – Masters in Computer Science</li></ul>",
+          "label": "<p>Teaching\t</p>",
           "nestedOrder": 0,
           "pageOrder": 5,
           "type": "accordion"
         },
-        "P": {
-          "label": "five",
-          "content": "content",
+        "header": {
+          "departmentName": "<p>Computer and Data Sciences</p>",
+          "facultyName": "DR. PAULO FERNANDES",
+          "facultyTitle": "<p>Director, MS Computer Science &amp; Professor of Practice</p>",
+          "imageAlt": "imageAlt",
+          "imgSource": "https://drive.google.com/uc?id=1GAcDcE9_iKzz2UOQFf8s_wSmQ_xV-7tR",
+          "name": "<p>DR. PAULO FERNANDES</p>",
           "nestedOrder": 0,
-          "pageOrder": 6,
-          "type": "accordion"
-        },
-        "X": {
-          "label": "one",
-          "content": "content",
-          "nestedOrder": 0,
-          "pageOrder": 7,
-          "type": "accordion"
-        },
-        "B": {
-          "phone": "978-837-5892",
-          "email": "sthilairem@merrimack.edu",
-          "location": "Eng Inno Ctr 510 Turnpike 202T",
+          "pageOrder": 0,
+          "type": "header"
+        }
+      },
+      "name": "Dr. Paulo Fernandes Page"
+    },
+    "homepage": {
+      "components": {
+        "-NlbDmWhTFJ3xurTwYXB": {
+          "caption": "<p>Picture of Senior Capstone Dinner from previous year</p>",
+          "date": "<p>December 14 at 5:30pm</p>",
+          "description": "<p>The Senior Capstone Dinner stands as a formal event for CaDS department students to present their Capstone projects while enjoying a meal, creating a professional environment to showcase achievements within the department.</p>",
+          "image": "https://drive.google.com/uc?id=17IBYESBJz5hqPk0Ba6GDBR9cfn-R3_wC",
+          "link": "<p>https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/student-projects/</p>",
+          "location": "<p>Mack Club</p>",
           "nestedOrder": 0,
           "pageOrder": 1,
-          "type": "contact"
+          "title": "<p>Senior Capstone dinner</p>",
+          "type": "event"
+        },
+        "-NlcVpil3AUMtHafyk-o": {
+          "contributers": {
+            "-NlcWmM_5ypsOzT127Vl": {
+              "description": "<p>Zachary Kissel, an Associate Professor in Computer Science, explores the connection between cryptography and complexity theory. His work revolves around encrypted data computation, access control, and innovative cryptographic concepts, particularly in the realm of searchable encryption techniques. Kissel has made notable contributions through various published papers in theoretical cryptography.</p>",
+              "image": "https://drive.google.com/uc?id=1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T",
+              "name": "<p>Dr. Zachary Kissel</p>",
+              "nestedOrder": 1,
+              "pageOrder": 0
+            },
+            "-NlcWo0aoQAUqAnxIDxs": {
+              "description": "<p>Joseph Nemeczky, a Merrimack College student, contributed to the project \"Federated Machine Learning for Healthcare Data,\" focusing on innovative applications of machine learning techniques in the healthcare domain.</p>",
+              "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+              "name": "<p><span style=\"color: rgb(34, 34, 34);\">Joseph&nbsp;Nemeczky</span></p>",
+              "nestedOrder": 2,
+              "pageOrder": 0
+            },
+            "-NlcZ31A_MN9REOHv5Ur": {
+              "description": "<p>Fotios Kokkotos, an Associate Professor of Practice in Data Science and Analytics and Co-Director of Undergraduate Studies in Data Science, specializes in data science, optimization algorithms, and predictive modeling. His expertise extends to big data algorithms, particularly within healthcare applications.</p>",
+              "image": "https://drive.google.com/uc?id=18wYQU-MT0-F3_9oM8m19JPdBbnOMIoFp",
+              "name": "<p>Dr. Fotios Kokkotos</p>",
+              "nestedOrder": 3,
+              "pageOrder": 0
+            },
+            "first": {
+              "description": "<p>Christopher Stuetzle, Chair and Associate Professor in Computer and Data Sciences, drives research in three domains: addressing food insecurity through community engagement, refining Federated Machine Learning for healthcare, and using data-driven methods to alleviate traffic congestion.</p>",
+              "image": "https://drive.google.com/uc?id=1iv4R3RHo0G2KPwbk15BoowqZRBIL6uma",
+              "name": "<p>Dr. Christopher Stuetzle</p>",
+              "nestedOrder": 0,
+              "pageOrder": 0
+            }
+          },
+          "description": "<p>Data-driven Machine Learning (ML) has emerged as a promising approach to building predictive models from medical data, which is collected in huge volumes by modern healthcare systems. Unfortunately, existing medical data is not fully utilized by the industry since there are data silos and privacy concerns with accessibility to the data. Health data are highly sensitive, subject to regulation and cannot be used for research without appropriate patient consent and ethical approval. In addition, these datasets have a significant business value and companies are not willing to share with researchers for the fear of losing a considerable amount of revenue. The main focus of this project is to explore a new technology called Federated Machine Learning (FML), which is a learning method that seeks to address the problem of data sharing, data governance and privacy by training algorithms collaboratively without exchanging the underlying datasets.</p><p>FML is a transformative technology that can be a game changer for the healthcare industry with positive impacts for patient health outcomes. The strength of FML is that sensitive training data does not need to be moved beyond the firewalls of the institutions in which they reside. Instead, ML models are created locally at each participating institution (data agent) and only model characteristics are exchanged. Once training has been completed, the trained consensus model benefits from the knowledge accumulated across all data agents. We believe that FML holds significant potential for enabling precision medicine at large scale. The aim of this project is to construct an FML platform, perform and execute FML with different data agents and provide context and detail for the community regarding the benefits, limitations and impact of FML in the context of digital health. We are exploring three different types of FML (horizontal, vertical, and transfer) as well as two structures of execution: a centralized aggregator and peer to peer network.</p>",
+          "facultyMembers": {
+            "-NlcYNf8np_fzkjcVIq-": {
+              "image": "https://drive.google.com/uc?id=1iv4R3RHo0G2KPwbk15BoowqZRBIL6uma",
+              "name": "<p>Dr. Christopher Stuetzle</p>",
+              "nestedOrder": 1,
+              "pageOrder": 0
+            },
+            "-NlcYyHFp1yvn-T5CD6E": {
+              "image": "https://drive.google.com/uc?id=18wYQU-MT0-F3_9oM8m19JPdBbnOMIoFp",
+              "name": "<p>Dr. Fotios Kokkotos</p>",
+              "nestedOrder": 2,
+              "pageOrder": 0
+            },
+            "first": {
+              "image": "https://drive.google.com/uc?id=1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T",
+              "name": "<p>Dr. Zachary Kissel</p>",
+              "nestedOrder": 0,
+              "pageOrder": 0
+            }
+          },
+          "image": "https://drive.google.com/uc?id=191p9wpD1i_pMxHiobzYDLuZaz8dfX_z8",
+          "imageDescription": "<p>FL- Aggregation Server</p>",
+          "nestedOrder": 0,
+          "pageOrder": 0,
+          "projectLink": "<p><br></p>",
+          "title": "<p>Federated Machine Learning for Healthcare Data</p>",
+          "type": "project"
+        },
+        "-NlcZdtCRTbbkmHNL8j6": {
+          "contributers": {
+            "-Nlc_SUBCxFOBeypebX6": {
+              "description": "<p>Cynthia Carlson, Chair and Associate Professor in Civil Engineering, is dedicated to fostering healthier communities through her research in walkability and public health, water resources engineering, and sustainable infrastructure design. Her focus extends to exploring innovative teaching methodologies, employing hands-on experiential learning to educate aspiring engineers across various age groups.</p>",
+              "image": "https://drive.google.com/uc?id=1Nrww4kiFo5aD--5PSTHG2pW1Dbsn2qbi",
+              "name": "<p>Dr. Cynthia Carlson</p>",
+              "nestedOrder": 1,
+              "pageOrder": 0
+            },
+            "-Nlc_bfODB-LXe5BX4tn": {
+              "description": "<p>Eleanor Shonkoff, an Associate Clinical Professor specializing in Nutrition and Public Health, focuses her research on child obesity prevention, nutrition, and family health within underserved communities grappling with food insecurity. Her work delves into the connections between parental factors, child dietary habits, and obesity risk, employing mixed methods approaches. Additionally, Shonkoff explores innovative teaching methods like mindfulness while co-founding initiatives like the Food Justice Research and Action Cluster.</p>",
+              "image": "https://drive.google.com/uc?id=13b3XjBfyVduM6ap2VkJZdcVRZe1Vy4jg",
+              "name": "<p><span style=\"color: rgb(55, 65, 81);\">Dr. Eleanor Shonkoff</span></p>",
+              "nestedOrder": 2,
+              "pageOrder": 0
+            },
+            "-Nlc_jzZtEy1zq2BCFpz": {
+              "description": "<p>Erinn Gilson, Chair and Associate Professor in Philosophy, focuses on ethics in politics, emphasizing gender and racial justice while exploring critical prison studies and ethical considerations in food and agriculture. Her expertise extends to feminist theory and contemporary European philosophy</p>",
+              "image": "https://drive.google.com/uc?id=1tTLJl85uyB8-ylL3H3cdW_cewyLz0Yaw",
+              "name": "<p>Dr. Erinn Gilson</p>",
+              "nestedOrder": 3,
+              "pageOrder": 0
+            },
+            "-Nlc_ueSXELoLJNWg4K2": {
+              "description": "<p>Sandra Raponi, an Associate Professor, specializes in political and legal philosophy, emphasizing online harassment, free speech, refugee law, and the right to food. With expertise in global justice, human rights, and international law, her background spans Kant's legal philosophy and climate change justic</p>",
+              "image": "https://drive.google.com/uc?id=1bY6QNs6vWT2iYGSHCxaLlvDn3yHn3c7w",
+              "name": "<p>Dr. Sandra Raponi</p>",
+              "nestedOrder": 4,
+              "pageOrder": 0
+            },
+            "first": {
+              "description": "<p>Christopher Stuetzle, Chair and Associate Professor in Computer and Data Sciences, drives research in three domains: addressing food insecurity through community engagement, refining Federated Machine Learning for healthcare, and using data-driven methods to alleviate traffic congestion.</p>",
+              "image": "https://drive.google.com/uc?id=1iv4R3RHo0G2KPwbk15BoowqZRBIL6uma",
+              "name": "<p>Dr. Christopher Stuetzle</p>",
+              "nestedOrder": 0,
+              "pageOrder": 0
+            }
+          },
+          "description": "<p>Merrimack College’s Food Justice Research and Action Cluster (FJRAC) promotes research, practice and policy to reduce food justice disparities in our communities. Since 2021, our team has centered its projects around food justice in the Merrimack Valley.</p>",
+          "facultyMembers": {
+            "-NlcaNOBUI283BLRbL07": {
+              "image": "https://drive.google.com/uc?id=1iv4R3RHo0G2KPwbk15BoowqZRBIL6uma",
+              "name": "<p>Dr. Christopher Stuetzle</p>",
+              "nestedOrder": 1,
+              "pageOrder": 0
+            },
+            "-NlcaYb29UyUhC0b9amG": {
+              "image": "https://drive.google.com/uc?id=13b3XjBfyVduM6ap2VkJZdcVRZe1Vy4jg",
+              "name": "<p>Dr. Eleanor Shonkoff</p>",
+              "nestedOrder": 2,
+              "pageOrder": 0
+            },
+            "-NlcaidZYjgx9caLbstK": {
+              "image": "https://drive.google.com/uc?id=1tTLJl85uyB8-ylL3H3cdW_cewyLz0Yaw",
+              "name": "<p>Dr. Erinn Gilson</p>",
+              "nestedOrder": 3,
+              "pageOrder": 0
+            },
+            "-Nlcas-xEauUZH9udTGu": {
+              "image": "https://drive.google.com/uc?id=1bY6QNs6vWT2iYGSHCxaLlvDn3yHn3c7w",
+              "name": "<p>Dr. Sandra Raponi</p>",
+              "nestedOrder": 4,
+              "pageOrder": 0
+            },
+            "first": {
+              "image": "https://drive.google.com/uc?id=1Nrww4kiFo5aD--5PSTHG2pW1Dbsn2qbi",
+              "name": "<p>Dr. Cynthia Carlson</p>",
+              "nestedOrder": 0,
+              "pageOrder": 0
+            }
+          },
+          "image": "https://drive.google.com/uc?id=1sBI2S4apuQtwZUVWHlt1Go_UqspQSVAm",
+          "imageDescription": "<p>MERRIMACK FOOD JUSTICE SUMMIT</p>",
+          "nestedOrder": 2,
+          "pageOrder": 0,
+          "projectLink": "<p>https://www.merrimack.edu/research/food-justice-research-and-action-cluster/</p>",
+          "title": "<p>Food Justice Research and Action Cluster</p>",
+          "type": "project"
+        },
+        "-NlccSOw1aNlA7CDLdPY": {
+          "contributers": {
+            "-NlccuG6QK8LdtFzx9MJ": {
+              "description": "<p>Dan Sullivan, a 2020 computer science graduate, created an encrypted image tool for secure storage and searching. Utilizing Java for the server and JavaScript for the client, the tool ensured privacy while managing images</p>",
+              "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+              "name": "<p>Dan Sullivan</p>",
+              "nestedOrder": 1,
+              "pageOrder": 0
+            },
+            "first": {
+              "description": "<p>Zachary Kissel, an Associate Professor in Computer Science, explores the connection between cryptography and complexity theory. His work revolves around encrypted data computation, access control, and innovative cryptographic concepts, particularly in the realm of searchable encryption techniques. Kissel has made notable contributions through various published papers in theoretical cryptography.</p>",
+              "image": "https://drive.google.com/uc?id=1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T",
+              "name": "<p>Dr. Zachary Kissel</p>",
+              "nestedOrder": 0,
+              "pageOrder": 0
+            }
+          },
+          "description": "<p>As a semester-long independent project, Dan Sullivan investigated the power and limits of searchable encryption. Searchable encryption is a cryptographic primitive that allows a user to outsource an encrypted collection of data to a third party, but still retain the ability to execute searches over that data in such a way that the server doesn’t learn the user’s search query.</p><p>This project resulted in an implementation of a dynamic webpage that allowed users to store encrypted images to be stored on the server while still allowing the user to search over the images without revealing what they are looking for. Beyond simple searching, the searchable encryption primitive was applied to the resizing of images with some success.</p>",
+          "facultyMembers": {
+            "first": {
+              "image": "https://drive.google.com/uc?id=1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T",
+              "name": "<p>Dr. Zachary Kissel</p>",
+              "nestedOrder": 0,
+              "pageOrder": 0
+            }
+          },
+          "image": "https://drive.google.com/uc?id=1gHJFpV1OHzpcvSeqONJZVZG0vjgsw_XA",
+          "imageDescription": "<p>Image of the Application</p>",
+          "nestedOrder": 3,
+          "pageOrder": 0,
+          "projectLink": "<p>https://www.merrimack.edu/academics/engineering-and-computational-sciences/computer-and-data-sciences/student-projects/encrypted-image-tool/</p>",
+          "title": "<p>Encrypted Image Tool</p>",
+          "type": "project"
+        },
+        "C": {
+          "contributers": {
+            "-NlcTSqjwxyD8iFv5m1d": {
+              "description": "<p>For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards.</p>",
+              "image": "https://drive.google.com/uc?export=view&id=1gKlrpYkZw91Vu0IzdQsIMGvCSAYPfwy_",
+              "name": "<p>Dr. Melissa St. Hilaire</p>",
+              "nestedOrder": 2,
+              "pageOrder": 0
+            },
+            "-NlcT_RUhLVLtQwYtGcO": {
+              "description": "<p><span style=\"color: rgb(55, 65, 81);\">Dr. Davis-Ajami, previously affiliated with Merrimack College's School of Nursing and Health Sciences, brought expertise and experience to the institution</span></p>",
+              "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+              "name": "<p><span style=\"color: rgb(34, 34, 34);\">Dr. Mary-Lynn Davis-Ajami</span></p>",
+              "nestedOrder": 3,
+              "pageOrder": 0
+            },
+            "-NlcUcHPVr10h0oyd6RU": {
+              "description": "<p><span style=\"color: rgb(55, 65, 81);\">Laney Tillman, a 2023 graduate student, conducted research focusing on medication adherence among patients with Alzheimer's Disease and Related Dementias, utilizing the Medical Expenditure Panel Survey (MEPS) data</span></p>",
+              "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+              "name": "<p><span style=\"color: rgb(34, 34, 34);\">Laney Tillman&nbsp;</span></p>",
+              "nestedOrder": 4,
+              "pageOrder": 0
+            }
+          },
+          "description": "<p><span style=\"color: rgb(34, 34, 34);\">Medical adherence facilitates medical provider’s decisions regarding the patient’s treatment plan and influences patient outcomes. There is little research that investigates medication adherence in Alzheimer’s Disease and Related Dementias (ADRD). The purpose of this study is to determine the factors that contribute to medication adherence among patients with ADRD utilizing the Medical Expenditure Panel Survey (MEPS) data.&nbsp;</span></p>",
+          "facultyMembers": {
+            "-NlcUWK0aAEUFh6aw3QU": {
+              "image": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+              "name": "<p>Dr. Mary-Lynn Davis-Ajami</p>",
+              "nestedOrder": 3,
+              "pageOrder": 0
+            },
+            "Melissa": {
+              "image": "https://drive.google.com/uc?export=view&id=1gKlrpYkZw91Vu0IzdQsIMGvCSAYPfwy_",
+              "name": "<p>Dr. Melissa St. Hilaire</p>",
+              "nestedOrder": 2,
+              "pageOrder": 0
+            }
+          },
+          "image": "https://drive.google.com/uc?export=view&id=1PTmsaiSrrKNvqNsIUMvtpozoQNKXSm1S",
+          "imageDescription": "<p>Project Poster</p>",
+          "nestedOrder": 1,
+          "pageOrder": 0,
+          "projectLink": "<p><br></p>",
+          "title": "<p>Factors Contributing to Medication Adherence in Patients with Alzheimer’s Disease and Related Dementias</p>",
+          "type": "project"
         }
-      }
+      },
+      "name": "Landing Page"
+    },
+    "kisselz@merrimack%2Eedu": {
+      "components": {
+        "-Nlci3P9WaQHTU2L68kE": {
+          "content": "<p>My research interests are at the intersection of cryptography and complexity theory. My research has focused on computing on encrypted data, access control and core cryptographic primitives. I have published several papers in theoretical cryptography, specifically in the area of searchable encryption.</p>",
+          "label": "<p>About me!</p>",
+          "nestedOrder": 0,
+          "pageOrder": 1,
+          "type": "text"
+        },
+        "-Nlci7Yw4XxeWtCcoQh_": {
+          "content": "<ul><li>Cryptography</li><li>Network Security</li></ul>",
+          "label": "<p>Research Interests</p>",
+          "nestedOrder": 0,
+          "pageOrder": 2,
+          "type": "accordion"
+        },
+        "-NlciCptRtnGV7JzmcJz": {
+          "content": "<ul><li>Ph.D., Computer Science, UMass Lowell</li><li>M.S., Computer Science, Northeastern University</li><li>B.S., Computer Science, Merrimack College</li></ul>",
+          "label": "<p>Education</p>",
+          "nestedOrder": 0,
+          "pageOrder": 3,
+          "type": "accordion"
+        },
+        "-NlciRvGbU9OUCJe0Up_": {
+          "content": "<p>Kissel, Zachary A. “Key regression from constrained pseudorandom functions.” Information Processing Letters 147 (2019): 10-13.</p><p>Kissel, Zachary A., and Jie Wang. “Generic Adaptively Secure Searchable Phrase Encryption.” Proceedings on Privacy Enhancing Technologies 2017.1 (2017): 4-20.</p><p>Wang, Jie, and Zachary A. Kissel. “Introduction to Network Security: Theory and Practice.” John Wiley and Sons, 2015.</p><p>Kissel, Zachary A., and Jie Wang. “A Note on Verifiable Privacy-Preserving Tries.” Cloud Computing (CLOUD), 2014 IEEE 7th International Conference on. IEEE, 2014.</p><p>Kissel, Zachary A., and Jie Wang. “Access Control for Untrusted Content Distribution Clouds Using Unidirectional Re-encryption.” High Performance Computing and Simulation (HPCS), 2013 International Conference on. IEEE, 2013.</p><p>Kissel, Zachary A., and Jie Wang. “Verifiable Phrase Search Over Encrypted Data Secure Against a Semi-Honest-but-Curious Adversary.” Distributed Computing Systems Workshops (ICDCSW), 2013 IEEE 33rd International Conference on. IEEE, 2013.</p>",
+          "label": "<p>Recent Publications</p>",
+          "nestedOrder": 0,
+          "pageOrder": 4,
+          "type": "accordion"
+        },
+        "header": {
+          "departmentName": "<p>Computer and Data Sciences</p>",
+          "facultyName": "DR. ZACHARY KISSEL",
+          "facultyTitle": "<p>Associate Professor, Computer Science</p>",
+          "imageAlt": "imageAlt",
+          "imgSource": "https://drive.google.com/uc?id=1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T",
+          "name": "<p>DR. ZACHARY KISSEL</p>",
+          "nestedOrder": 0,
+          "pageOrder": 0,
+          "type": "header"
+        }
+      },
+      "name": "Dr. Zachary Kissel Page"
+    },
+    "sthilairem@merrimack%2Eedu": {
+      "components": {
+        "-NlcfiX12qHPf508_0VE": {
+          "content": "<p><span style=\"color: rgb(70, 72, 74);\">For the past 20 years, Dr. St. Hilaire has been engaged in basic human research with a focus on combining computational and experimental approaches to understand the impact of insufficient sleep and circadian rhythm disruption on human health and performance. She is an accomplished early-stage investigator who recently served as PI on an NIH-funded R21 as well as a NASA-funded Omnibus award, and currently serves as PI on NIH-funded R01 and R03 awards. She also serves as co-I on a number of federally funded studies. </span></p><p><span style=\"color: rgb(70, 72, 74);\">She has over a decade of experience conducting highly controlled inpatient studies, the main focus of which have been to apply different sleep-wake schedules to study changes in neurobehavioral performance and alertness under both total sleep deprivation and different patterns of chronic sleep restriction. Her computational work related to these experiments has focused on the development of mathematical models of sleep, circadian rhythms, light and performance, and machine learning and predictive analytic approaches to identifying an individual’s response to sleep loss phenotype and risk of neurobehavioral impairment. She also has expertise in the analysis of multiple hormones measured from blood samples collected during both inpatient laboratory and field-based studies, including female sex hormones.</span></p>",
+          "label": "<p>Research Summary</p>",
+          "nestedOrder": 0,
+          "pageOrder": 2,
+          "type": "accordion"
+        },
+        "-Nlcfn6hnrAjlbtHKDtT": {
+          "content": "<ul><li>B.S., Mathematical Sciences, Worcester Polytechnic Institute (WPI), Worcester, MA</li><li>M.S., Bioinformatics, Northeastern University, Boston, MA</li><li>Ph.D., Cognitive and Neural Systems, Boston University, Boston MA</li><li>Postdoctoral Research Fellow, Circadian Physiology, Harvard Medical School Boston MA</li></ul>",
+          "label": "<p>Education</p>",
+          "nestedOrder": 0,
+          "pageOrder": 3,
+          "type": "accordion"
+        },
+        "-NlcfzLnmBoFWPpD7sDw": {
+          "content": "<p>St Hilaire MA, Ámundadóttir ML, Rahman SA, Rajaratnam SMW, Rüger M, Brainard GC, Czeisler CA, Andersen M, Gooley JJ, Lockley SW. The spectral sensitivity of human circadian phase resetting and melatonin suppression to light changes dynamically with light duration. Proc Natl Acad Sci U S A. 2022 Dec 20;119(51):e2205301119. doi:&nbsp;<a href=\"https://www.pnas.org/doi/10.1073/pnas.2205301119\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">10.1073/pnas.2205301119</a>. Epub 2022 Dec 12. PMID: 36508661.</p><p>St Hilaire MA, Lockley SW. Measuring Urinary 6-Sulphatoxymelatonin in Humans.</p><p>Methods Mol Biol. 2022;2550:21-28.&nbsp;<a href=\"https://doi.org/10.1007/978-1-0716-2593-4_4\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1007/978-1-0716-2593-4_4</a>. PMID: 36180673.</p><p>St Hilaire MA, Lockley SW. Measuring Dim Light Melatonin Onset in Humans.</p><p>Methods Mol Biol. 2022;2550:13-20.&nbsp;<a href=\"https://doi.org/10.1007/978-1-0716-2593-4_3\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1007/978-1-0716-2593-4_3</a>. PMID: 36180672.</p><p>St Hilaire MA. Modeling (circadian). Prog Brain Res. 2022;273(1):181-198.&nbsp;<a href=\"https://doi.org/10.1016/bs.pbr.2022.04.007\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1016/bs.pbr.2022.04.007</a>.</p><p>Epub 2022 Jul 15. PMID: 35940716.</p><p>St Hilaire MA, Lammers-van der Holst HM, Chinoy ED, Isherwood CM, Duffy JF. Prediction of individual differences in circadian adaptation to night work among older adults: application of a mathematical model using individual sleep-wake and light exposure data. Chronobiol Int.</p><p>2020 Sep-Oct;37(9-10):1404-1411.&nbsp;<a href=\"https://doi.org/10.1080/07420528.2020.1813153\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1080/07420528.2020.1813153</a>.</p><p>Epub 2020 Sep 6. PMID: 32893681; PMCID: PMC7936005.</p><p>Cochrane C, Ba D, Klerman EB, St Hilaire MA. An ensemble mixed effects model of sleep loss and performance. J Theor Biol.</p><p>2021 Jan 21;509:110497.&nbsp;<a href=\"https://doi.org/10.1016/j.jtbi.2020.110497\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1016/j.jtbi.2020.110497</a>.</p><p>Epub 2020 Sep 20. PMID: 32966825; PMCID: PMC8631086.</p><p>Klerman EB, Rahman SA, St Hilaire MA. What time is it? A tale of three clocks, with implications for personalized medicine. J Pineal Res.</p><p>2020 May;68(4):e12646.&nbsp;<a href=\"https://doi.org/10.1111/jpi.12646\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1111/jpi.12646</a>.</p><p>Epub 2020 Mar 25. PMID: 32155668; PMCID: PMC7285860.</p><p>St Hilaire MA, Kristal BS, Rahman SA, Sullivan JP, Quackenbush J, Duffy JF, Barger LK, Gooley JJ, Czeisler CA, Lockley SW. Using a Single Daytime Performance Test to Identify Most Individuals at High-Risk for Performance Impairment during Extended Wake.</p><p>Sci Rep. 2019 Nov 13;9(1):16681.&nbsp;<a href=\"https://doi.org/10.1038/s41598-019-52930-y\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1038/s41598-019-52930-y</a>. PMID: 31723161; PMCID: PMC6853981.</p><p>Kronauer RE, St Hilaire MA, Rahman SA, Czeisler CA, Klerman EB. An Exploration of the Temporal Dynamics of Circadian Resetting Responses to Short- and Long-Duration Light Exposures: Cross-Species Consistencies and Differences. J Biol Rhythms.</p><p>2019 Oct;34(5):497-514.&nbsp;<a href=\"https://doi.org/10.1177/0748730419862702\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 89, 162); background-color: transparent;\">doi: 10.1177/0748730419862702</a>.</p><p>Epub 2019 Aug 1. PMID: 31368391; PMCID: PMC7363039.</p>",
+          "label": "<p>Recent Publications</p>",
+          "nestedOrder": 0,
+          "pageOrder": 4,
+          "type": "accordion"
+        },
+        "-Nlcg8zHSFER9iqtHvRZ": {
+          "email": "<p>sthilairem@merrimack.edu</p>",
+          "location": "<p>Eng Inno Ctr 510 Turnpike 202T</p>",
+          "nestedOrder": 0,
+          "pageOrder": 1,
+          "phone": "<p>978-837-5892</p>",
+          "type": "contact"
+        },
+        "header": {
+          "departmentName": "<p>School of Science and Engineering</p>",
+          "facultyName": "DR. MELISSA ST. HILAIRE",
+          "facultyTitle": "<p>Assistant Professor of Data Science</p>",
+          "imageAlt": "imageAlt",
+          "imgSource": "https://drive.google.com/uc?id=1gKlrpYkZw91Vu0IzdQsIMGvCSAYPfwy_",
+          "name": "<p>DR. MELISSA ST. HILAIRE</p>",
+          "nestedOrder": 0,
+          "pageOrder": 0,
+          "type": "header"
+        }
+      },
+      "name": "Dr. Melissa St. Hilaire Page"
+    },
+    "stuetzlec@merrimack%2Eedu": {
+      "components": {
+        "-NlchK6016Z4UbLDg_hX": {
+          "content": "<p>I have an active research portfolio focusing on three primary areas right now. I am a founding member of the Food Justice Research and Action Cluster (FJRAC). We actively tackle local food insecurity and promote food justice by engaging with community partners and applying our expertise in problem solving efforts in conjunction with their own. The cluster has published papers, run Food Justice Summit events, and exchanged data and resources with community partners.</p><p>Federated Machine Learning (FML) is a data modeling paradigm in which models are fit to datasets from multiple sources without the need for those sources to exchange their data, thus protecting the privacy of the subjects in the data. This technique is state of the art and being employed in the finance, education, and especially healthcare arenas. I work on studying and improving the technique with regard to its use in healthcare.</p><p>Finally, I am engaged in a multiyear initiative to tackle traffic congestion alleviation using genetic algorithms trained on massive traffic datasets. Fitting language models to the datasets allows for the mapping of roadmap featuresets to traffic patterns, thus determining through automated means how a particular urban traffic pattern will contribute to local traffic.</p>",
+          "label": "<p><strong>Research Summary</strong></p>",
+          "nestedOrder": 0,
+          "pageOrder": 1,
+          "type": "text"
+        },
+        "-NlchPBJVDFJno0mTyXM": {
+          "content": "<ul><li>Ph.D., Computer Science, Rensselaer Polytechnic Institute</li><li>B.A., Computer Science and Mathematics, Wheaton College</li></ul>",
+          "label": "<p><strong>Education</strong></p>",
+          "nestedOrder": 0,
+          "pageOrder": 2,
+          "type": "text"
+        },
+        "-NlchWbN9SsGkP6-Cic7": {
+          "content": "<ul><li>Mathematical modeling</li><li>Pedagogy</li><li>Computer Graphics</li><li>UI/UX</li></ul><p><br></p>",
+          "label": "<p>Areas of Expertise</p>",
+          "nestedOrder": 0,
+          "pageOrder": 3,
+          "type": "accordion"
+        },
+        "header": {
+          "departmentName": "<p>Computer and Data Sciences</p>",
+          "facultyName": "DR. CHRISTOPHER STUETZLE",
+          "facultyTitle": "<p>Chair and Associate Professor, Computer and Data Sciences</p>",
+          "imageAlt": "imageAlt",
+          "imgSource": "https://drive.google.com/uc?id=1iv4R3RHo0G2KPwbk15BoowqZRBIL6uma",
+          "name": "<p>DR. CHRISTOPHER STUETZLE</p>",
+          "nestedOrder": 0,
+          "pageOrder": 0,
+          "type": "header"
+        }
+      },
+      "name": "Dr. Christopher Stuetzle Page"
     }
   },
   "requests": {
-    "requestName2": {
-      "requestTitle": "Request to be Featured",
+    "-NlckEnJj3xUq2KO7sS5": {
+      "email": "doej@merrimack.edu",
+      "requestBody": "I worked on this project and was wondering if I could be featured on it. Thank you!",
       "requestName": "John Doe",
-      "email": "buddytester922@gmail.com",
-      "requestBody": "Please let me featured."
+      "requestTitle": "Request to be Featured by John Doe",
+      "title": "<p>Federated Machine Learning for Healthcare Data</p>"
     },
-    "requestName3": {
-      "requestTitle": "Request to be Featured",
-      "requestName": "John Doe",
-      "email": "buddytester922@gmail.com",
-      "requestBody": "Please let me featured."
-    }
+    "-NlckQVF_2Vr8TXj5kG0": {
+      "email": "doej@merrimack.edu",
+      "requestBody": "Wow! Such a cool project, I provided the data for this project and was wondering if I could be featured? Thank you!",
+      "requestName": "Jane Doe",
+      "requestTitle": "Request to be Featured by Jane Doe",
+      "title": "<p>Factors Contributing to Medication Adherence in Patients with Alzheimer’s Disease and Related Dementias</p>"
+    },
+    "-NlckZn5da9GFgAEnfiz": {
+      "email": "smithj@merrimack.edu",
+      "requestBody": "Wow! So cool, would love to get involved in this project somehow if it is still in progress!",
+      "requestName": "Dr. John Smith",
+      "requestTitle": "Request to be Featured by Dr. John Smith",
+      "title": "<p>Encrypted Image Tool</p>"
+    },
+    "placeholder": "do not delete"
   },
   "users": {
     "XkHG9D5s11avzPxTSoGTEMzZIDu1": {
+      "department": "Department Administrator",
       "email": "cads.website.merrimack@gmail.com",
+      "location": "101 Main Campus",
       "name": "Administrator",
-      "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocJ9Q17xKVZ5jisFVx_On9_gqdQDCAqV3rFFnM58F1Oz=s96-c",
+      "phoneNumber": "978-979-9797",
+      "photoURL": "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A",
+      "pronouns": "he/him/his",
+      "title": "Adjunct Professor",
       "userLevel": "Administrator"
     },
-    "craveiroa@merrimack%2Eedu": {
-      "email": "craveiroa@merrimack.edu",
-      "name": "",
-      "photoURL": "",
+    "aakila@merrimack%2Eedu": {
+      "department": "Computer and Data Sciences",
+      "email": "aakila@merrimack.edu",
+      "location": " Eng Inno Ctr 510 Turnpike 202L",
+      "name": "Dr. Adam Aakil",
+      "phoneNumber": " 978-837-3404",
+      "photoURL": "https://drive.google.com/uc?id=1LTptmNR887NzAYgxMMsA-SrtOCsG1mKS",
+      "pronouns": "he/him/his",
+      "title": "Assistant Instructional Professor",
       "userLevel": "Faculty"
     },
-    "buddytester922@gmail%2Ecom": {
-      "email": "buddytester922@gmail.com",
-      "name": "",
-      "photoURL": "",
+    "fernandesp@merrimack%2Eedu": {
+      "department": "Computer and Data Sciences",
+      "email": "fernandesp@merrimack.edu",
+      "location": "Eng Inno Ctr 510 Turnpike",
+      "name": "Dr. Paulo Fernandes",
+      "phoneNumber": "123-XXX-XXX",
+      "photoURL": "https://drive.google.com/uc?id=1GAcDcE9_iKzz2UOQFf8s_wSmQ_xV-7tR",
+      "pronouns": "he/him/his",
+      "title": "Director, MS Computer Science & Professor of Practice",
+      "userLevel": "Faculty"
+    },
+    "kisselz@merrimack%2Eedu": {
+      "department": "Computer and Data Sciences",
+      "email": "kisselz@merrimack.edu",
+      "location": "Eng Inno Ctr 510 Turnpike 202R",
+      "name": "Dr. Zachary Kissel",
+      "phoneNumber": "978-837-5366",
+      "photoURL": "https://drive.google.com/uc?id=1uS96gTZ0lWSJN9yAdLUu-mMM31SR1z_T",
+      "pronouns": "he/him/his",
+      "title": "Associate Professor, Computer Science",
+      "userLevel": "Faculty"
+    },
+    "sthilairem@merrimack%2Eedu": {
+      "department": "School of Science and Engineering",
+      "email": "sthilairem@merrimack.edu",
+      "location": "Eng Inno Ctr 510 Turnpike 202T",
+      "name": "Dr. Melissa St. Hilaire",
+      "phoneNumber": "978-837-5892",
+      "photoURL": "https://drive.google.com/uc?id=1gKlrpYkZw91Vu0IzdQsIMGvCSAYPfwy_",
+      "pronouns": "she/her/hers",
+      "title": "Assistant Professor of Data Science",
+      "userLevel": "Faculty"
+    },
+    "stuetzlec@merrimack%2Eedu": {
+      "department": "Computer and Data Sciences",
+      "email": "stuetzlec@merrimack.edu",
+      "location": "Eng Inno Ctr 510 Turnpike 202O",
+      "name": "Dr. Christopher Stuetzle",
+      "phoneNumber": " 978-837-3405",
+      "photoURL": "https://drive.google.com/uc?id=1iv4R3RHo0G2KPwbk15BoowqZRBIL6uma",
+      "pronouns": "he/him/his",
+      "title": "Chair and Associate Professor, Computer and Data Sciences",
       "userLevel": "Faculty"
     }
   }
