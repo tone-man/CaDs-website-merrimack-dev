@@ -29,7 +29,7 @@ const Home = () => {
 
     return (
         <div>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Led Projects' />
+            <Header img={'https://drive.google.com/uc?id=1-eNEc4RxR4EQP7AINFCvGUSd6NKp5d92'} title='Faculty Led Projects' />
             {renderedComponents}
         </div>
     );

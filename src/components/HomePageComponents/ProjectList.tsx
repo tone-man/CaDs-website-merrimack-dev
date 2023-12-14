@@ -47,7 +47,7 @@ function ProjectList(myProps: projectProps) {
                     }
                 </Container >
             </Container>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Upcoming Events' />
+            <Header img={'https://drive.google.com/uc?id=1-eNEc4RxR4EQP7AINFCvGUSd6NKp5d92'} title='Upcoming Events' />
         </>
     )
 }

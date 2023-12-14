@@ -52,7 +52,7 @@ function FacultyDirectory() {
     }
     return (
         <div>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Directory' />
+            <Header img={'https://drive.google.com/uc?id=1-eNEc4RxR4EQP7AINFCvGUSd6NKp5d92'} title='Faculty Directory' />
             <Container className="faculty-page">
                 <Row>
                     {/* Search Bar */}
