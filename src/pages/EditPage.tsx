@@ -102,7 +102,7 @@ const EditPage = () => {
                     })
                 }
                 else {
-                    if (!hasVisibleText(newValue) && nk !=='projectLink' && nk !=='imgSource') {
+                    if (!hasVisibleText(newValue) && nk !=='projectLink') {
                         notvalid++;
                         setCannotSubmit(true);
                         break

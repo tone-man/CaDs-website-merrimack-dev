@@ -75,7 +75,7 @@ function EditUserModal(props: editUserProps) {
             // Set validation flag to true to display validation messages
             setValidated(true);
         } else {
-            const updatedUser = new User(user.id, emailRef.current!.value, fullNameRef.current!.value, photoURLRef.current!.value, userLevel, phoneNumberRef.current!.value, titleRef.current!.value, prounounsRef.current!.value, departmentRef.current!.value, officeLocationRef.current!.value);
+            const updatedUser = new User(user.id, emailRef.current!.value, fullNameRef.current!.value, photoURLRef.current!.value ? photoURLRef.current!.value: "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A" , userLevel, phoneNumberRef.current!.value, titleRef.current!.value, prounounsRef.current!.value, departmentRef.current!.value, officeLocationRef.current!.value);
             updateUser(updatedUser);
     
             addToast(`Successfully edited ${updatedUser.name}`, "success");

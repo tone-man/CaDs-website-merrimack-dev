@@ -54,7 +54,7 @@ function AddUserModal() {
             } else {
                 const db = getDatabase(FireBaseApp);
                 const id = emailToFirebase(emailRef.current.value);
-                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, imageUrlRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, imageUrlRef.current.value ?imageUrlRef.current.value: "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A" , userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 set(ref(db, 'users/' + id), newUser.toFirebaseObject());
 
                 // Create a new object for faculty
