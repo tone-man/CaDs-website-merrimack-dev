@@ -59,7 +59,7 @@ export function ToastContextProvider({ children }: { children: ReactNode }) {
                 {toasts.map((toast, index) => (
                     <Toast key={index} bg={toast.type} onClose={() => removeToast(index)}>
                         <Toast.Header>
-                            <strong className="me-auto caslonBold">{toast.type === 'success' ? 'Success' : 'Error'}</strong>
+                            <strong className="me-auto caslonBold">{toast.type === 'success' ? 'Success' : 'danger'}</strong>
                             <small className='caslonRegular'>{currentTime}</small>
                         </Toast.Header>
                         <Toast.Body style={{ color: 'white' }} className='caslonRegular'>{toast.message}</Toast.Body>

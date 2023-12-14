@@ -12,11 +12,14 @@ interface formInputProps {
     inputRef?: React.RefObject<HTMLInputElement>;
     type: string,
     default?: string,
+    disabled?: boolean,
     setData?: React.Dispatch<React.SetStateAction<string>>; 
 }
 
 // This component returns a form group element that's a part of a form. It is intended to reduce repetitive code in forms
 const TextInputFormGroup = (myProps: formInputProps) => {
+
+    console.log(myProps.disabled);
 
     return (
         <Form.Group controlId={myProps.controlId}>
@@ -34,6 +37,7 @@ const TextInputFormGroup = (myProps: formInputProps) => {
                 alt={myProps.alt}
                 ref={myProps.inputRef ? myProps.inputRef : null}
                 defaultValue={myProps.default ? myProps.default : ''}
+                disabled={(myProps.disabled) ?  myProps.disabled : false}
             />
             <Form.Control.Feedback type="invalid">
                 <h6 style={{ color: 'white' }}>{myProps.feedbackMessage}</h6>

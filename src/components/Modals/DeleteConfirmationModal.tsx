@@ -1,5 +1,5 @@
 import { Modal, Button, Row, Col } from 'react-bootstrap';
-import '../css/formModal.css'
+import '../../css/formModal.css'
 
 // Interface for modal
 interface DeleteConfirmationModal {

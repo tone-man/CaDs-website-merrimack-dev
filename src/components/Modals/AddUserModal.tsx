@@ -1,19 +1,22 @@
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
+
 import '../../css/formModal.css'
-import '../../css/whiteListIndividual.css'
-import TextInputFormGroup from '../TextInputFormGroup';
+import '../../css/dashboardCSS/whiteListIndividual.css'
+
 import FireBaseApp from '../../firebase';
 import { emailToFirebase } from '../../firebase/firebaseFormatter';
 import { getDatabase, ref, set } from 'firebase/database';
 import User from '../../firebase/user';
+
 import { generateFacultyPage } from '../../utils/createNewDraft';
-import ToastContext from '../toasts/ToastContext';
+import TextInputFormGroup from '../TextInputFormGroup';
+import useToastContext from '../toasts/useToastContext';
 
 // This modal pops up to provide the user with a format to enter new user information
-// TODO: Add more information potentially
 function AddUserModal() {
 
+    // Initializes all usestates
     const fullNameRef = useRef<HTMLInputElement | null>(null);
     const emailRef = useRef<HTMLInputElement | null>(null);
     const [userLevel, setUserLevel] = useState<string>("Faculty");
@@ -27,7 +30,7 @@ function AddUserModal() {
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
 
-    const addToast = useContext(ToastContext);
+    const addToast = useToastContext();
 
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
@@ -36,7 +39,6 @@ function AddUserModal() {
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUserLevel(event.target.value);
     }
-
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -52,14 +54,14 @@ function AddUserModal() {
             } else {
                 const db = getDatabase(FireBaseApp);
                 const id = emailToFirebase(emailRef.current.value);
-                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, imageUrlRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
+                const newUser = new User(id, emailRef.current.value, fullNameRef.current.value, imageUrlRef.current.value ?imageUrlRef.current.value: "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A" , userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
                 set(ref(db, 'users/' + id), newUser.toFirebaseObject());
 
                 // Create a new object for faculty
                 const page = generateFacultyPage(newUser);
                 set(ref(db, `pages/` + newUser.id), page);
 
-                addToast?.addToast(`Successfully added ${newUser.name} to users`, "success");
+                addToast(`Successfully added ${newUser.name} to users`, "success");
             }
             handleClose();
         }

@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 import { DatabaseReference } from 'firebase/database';
 import { Dispatch, SetStateAction, useState } from 'react';
-import {Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import 'react-quill/dist/quill.snow.css';
-import 'quill-emoji/dist/quill-emoji.css';
-import 'quill-mention/dist/quill.mention.css';
 import '../../css/editableCSS/editableForm.css'
 
 interface formProps {
@@ -19,6 +17,7 @@ interface formProps {
     handleOpenConfirmationModal?: () => void; // Optional function prop
 }
 
+//  Function for rendering an editable form for images with a rich text editor.
 function EditableImageForm(myProps: formProps) {
 
     // Get modal & other information for when user clicks on image
@@ -27,7 +26,7 @@ function EditableImageForm(myProps: formProps) {
     const [captionText, setCaptionText] = useState<null | HTMLElement>(null);
     const [image, setImage] = useState(myProps.value);
 
-    // Runs on initial render, gets all components for the modal to pass into the project cards
+    // Runs on initial render, gets all components for the modal
     useEffect(() => {
         setModal(document.getElementById("myModal") as HTMLElement);
         setModalImg(document.getElementById("img") as HTMLImageElement);
@@ -36,7 +35,6 @@ function EditableImageForm(myProps: formProps) {
     }, []);
 
     useEffect(() => {
-        console.log(myProps.value, 'ay')
         setImage(myProps.value);
     }, [myProps.value]);
 
@@ -109,7 +107,7 @@ function EditableImageForm(myProps: formProps) {
                                 style={{ resize: 'none', border: '1px black solid', background: 'white', width: '100%', height: '100%' }}
                             />
                             <div className='preview' >
-                            <Button onClick={triggerModal}>Preview Image</Button>
+                                <Button onClick={triggerModal}>Preview Image</Button>
                             </div>
                         </div>
                     </Form.Group>

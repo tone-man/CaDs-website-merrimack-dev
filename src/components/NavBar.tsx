@@ -1,29 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Container, FormControl, InputGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
+import { Button, Container,Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import '../css/navBar.css';
 import FireBaseApp from '../firebase';
 import ProfileImage from './ProfileImage';
 import merrimackLogo from '../imgs/logo.webp';
-import { getDatabase } from "firebase/database";
 import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserContext } from '../App';
 import User from '../firebase/user';
 import { useNavigate } from 'react-router-dom';
-import ToastContext from './toasts/ToastContext';
+import useToastContext from './toasts/useToastContext';
 
-const db = getDatabase(); //Global DB Connection
 
 // Component to create the nav bar
 function NavBar() {
     // Declare useState variables and useRef variables
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused] = useState(false);
     const user: User | null = useContext(UserContext);
-    const searchBarRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
 
-    const addToast = useContext(ToastContext);
+    const addToast = useToastContext();
 
 
     // This useEffect displays/hides the search bar when isFocused changes
@@ -37,23 +34,6 @@ function NavBar() {
         }
     }, [isFocused]);
 
-    // Whenever the search icon is clicked on the second nav bar, this function changes the isFocused variable
-    function toggleSearch() {
-        setIsFocused(!isFocused);
-    }
-
-    // Whenever the user enters text into the search bar and clicks the search icon, this search function will get triggered
-    //TODO: Actually have this function search something
-    function search() {
-        if (searchBarRef.current) {
-            const searchText = searchBarRef.current.value;
-            if (searchText) {
-                console.log("Search text:", searchText);
-                searchBarRef.current.value = "";
-                console.log("new" + searchBarRef.current.value)
-            }
-        }
-    }
     function logOut() {
 
         const auth = getAuth(FireBaseApp);
@@ -61,7 +41,7 @@ function NavBar() {
         //Sign the user out
         signOut(auth);
         navigate('/');
-        addToast?.addToast(`Successfully signed out!`, "success");
+        addToast(`Successfully signed out!`, "success");
     }
 
     // https://codesandbox.io/s/position-fixed-on-scroll-bqcl2?file=/src/App.js:811-820
@@ -111,7 +91,7 @@ function NavBar() {
                                 <NavDropdown
                                     title={
                                         <div>
-                                            <ProfileImage size='60px' position='mx-auto' image={user.photoURL} />
+                                            <ProfileImage size='60px' position='mx-auto' image={user['photoURL']} />
                                         </div>
                                     }
                                     id="basic-nav-dropdown"
@@ -151,7 +131,8 @@ function NavBar() {
                     </div> */}
                 </Container>
                 {/* Won't display the search bar until the search icon is clicked */}
-                <div id="searchBar-container" style={{ display: 'none' }}>
+                {/* If search is to be added more search bar functionality is here.     */}
+                {/* <div id="searchBar-container" style={{ display: 'none' }}>
                     <div className="input-group searchBar">
                         <InputGroup className='container'>
                             <FormControl id="search-Bar"
@@ -165,7 +146,7 @@ function NavBar() {
                             </Button>
                         </InputGroup>
                     </div>
-                </div>
+                </div> */}
             </Navbar>
         </nav >
     );

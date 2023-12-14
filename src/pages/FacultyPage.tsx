@@ -1,29 +1,19 @@
 
 import { ref, onValue, getDatabase } from "firebase/database";
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { parseDataToComponents } from "../utils/parseAndRenderComponents";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import ConfirmDraftModal from "../components/ConfirmDraftModal";
-import { handleEditButtonClick, createNewDraft } from '../utils/createNewDraft';
-import { UserContext } from "../App";
-import { useLocation, useNavigate } from "react-router-dom";
-import useToastContext from "../components/toasts/useToastContext";
+import { useLocation} from "react-router-dom";
 
-
+// Page for individual faculty member's
 function FacultyPage() {
-    const addToast = useToastContext();
     const [snapShot, setSnapshot] = useState({});
     const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>([]);
-    const [showDraftModal, setShowDraftModal] = useState<boolean>(false);
 
+    // Gets faculty member's id
     const location = useLocation();
     const { id } = location.state as { id: string };
 
-    console.log(id);
-
-    const user = useContext(UserContext);
     const db = getDatabase();
-    const navigate = useNavigate();
 
     // Gets all of the components based on the passed ID
     useEffect(() => {
@@ -47,23 +37,11 @@ function FacultyPage() {
 
     // Calls function that parses database information so it can be converted into project list and event carousel components
     useEffect(() => {
-        parseDataToComponents(snapShot, setRenderedComponents);
-    }, [snapShot]);
-
-    //  Wrapper function for handling the create new draft
-    const createNewDraftWrapper = (makeNewDraft: boolean) => {
-        createNewDraft(makeNewDraft, db, snapShot, navigate, `drafts/${user.name}/faculty/components`, addToast);
-    };
+        parseDataToComponents(snapShot, setRenderedComponents, id);
+    }, [id, snapShot]);
 
     return (
-        <div>
-            {/* If the user has already decided to edit and the user isnt null */}
-            {showDraftModal && user !== null &&
-                <ConfirmDraftModal show={showDraftModal}
-                    onHide={() => setShowDraftModal(false)}
-                    onCreateDraft={(value) => createNewDraftWrapper(value)}
-                    name={user.name} />
-            }
+        <div style={{paddingBottom: '150px'}}>
             {renderedComponents}
         </div >
     )

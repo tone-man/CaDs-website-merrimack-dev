@@ -6,7 +6,6 @@ import '../../css/editableCSS/editableTextComponent.css'
 
 import EditableFormComponent from './EditableFormComponent';
 import { handleTextAreaChange } from '../../utils/editingComponents';
-import EditableImageForm from './EditableImageForm';
 
 export interface editableHeaderProps {
     departmentName: string,
@@ -34,17 +33,14 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
     const [departmentName, setDepartmentName] = useState('');
     const [name, setName] = useState('');
     const [facultyTitle, setFacultyTitle] = useState('');
-    const [imgSource, setImageSource] = useState('');
 
   // Initialize content and label usestates using data from props in the useEffect (once on initial render).
   useEffect(() => {
         setDepartmentName(myProps.data.departmentName);
         setName(myProps.data.facultyName);
         setFacultyTitle(myProps.data.facultyTitle);
-        setImageSource(myProps.data.imgSource);
     }, []);
     
-
     return (
         <div>
             <Container fluid className='background-container'>
@@ -52,7 +48,7 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                     <h1 className='title' style={{ color: 'white' }}> Your Information</h1>
                     <Container fluid className='styling'>
                         <EditableFormComponent
-                            changedValue='/name'
+                            changedValue='/facultyName'
                             myRef={myRef}
                             value={name}
                             setValue={setName}
@@ -61,7 +57,8 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                             label="Faculty Name"
                             handleTextAreaChange={handleTextAreaChange}
                             rows={1}
-                            delete={false} />
+                            delete={false}
+                            required={true} /> 
                         <Row>
                             <Col md={6}>
                                 <EditableFormComponent
@@ -74,7 +71,8 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                                     label="Faculty Title"
                                     handleTextAreaChange={handleTextAreaChange}
                                     rows={1}
-                                    delete={false} />
+                                    delete={false} 
+                                    required={true} />
                             </Col>
                             <Col md={6}>
                                 <EditableFormComponent
@@ -87,20 +85,10 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                                     label="Department Name"
                                     handleTextAreaChange={handleTextAreaChange}
                                     rows={1}
-                                    delete={false} />
+                                    delete={false} 
+                                    required={true} />
                             </Col>
                         </Row>
-
-                        <EditableImageForm
-                            changedValue='/imgSource'
-                            myRef={myRef}
-                            value={imgSource}
-                            setValue={setImageSource}
-                            pathName={myProps.pathName}
-                            componentKey={myProps.componentKey}
-                            label="Image Source"
-                            handleTextAreaChange={handleTextAreaChange}
-                            />
                     </Container>
                 </Container>
             </Container>

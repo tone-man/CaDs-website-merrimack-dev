@@ -1,16 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import { Container, Col, Row, Button } from 'react-bootstrap'
-import '../css/pageSection.css'
-import ConfirmDraftModal from './ConfirmDraftModal';
-import { UserContext } from '../App';
+import { useEffect } from 'react';
+import '../../css/dashboardCSS/pageSection.css'
+import ConfirmDraftModal from '../Modals/ConfirmDraftModal';
+import { UserContext } from '../../App';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDatabase } from 'firebase/database';
-import FireBaseApp from '../firebase';
-import { createNewDraft, handleEditButtonClick } from '../utils/createNewDraft';
-import useToastContext from './toasts/useToastContext';
-import { useEffect } from 'react';
+import FireBaseApp from '../../firebase';
+import { createNewDraft, handleEditButtonClick } from '../../utils/createNewDraft';
+import useToastContext from '../toasts/useToastContext';
+
 
 export interface pageProps {
     name: string,
@@ -22,33 +22,53 @@ interface myPageProps {
     pages: pageProps[],
 }
 
-const db = getDatabase(FireBaseApp);
 // Returns the page section of the dashboard
 function PageSection(myProps: myPageProps) {
-    const [showDraftModal, setShowDraftModal] = useState(false);
-    const [pageToEdit, setPageToEdit] = useState(null);
-    
+
+
+    const db = getDatabase(FireBaseApp);
     const user = useContext(UserContext);
     const navigate = useNavigate();
     const addToast = useToastContext();
 
-    console.log(myProps.pages);
-    
-    useEffect(() => {
-        if (pageToEdit !== null){
-           handleEditButtonClick(db, pageToEdit, createNewDraft(true, db, pageToEdit.components, navigate, `drafts/${user.id}/${pageToEdit.key}/components`, addToast), setShowDraftModal, navigate, `drafts/${user.id}/${pageToEdit.id}`, addToast);
-        }
-       }, [pageToEdit, user]);
+    const [showDraftModal, setShowDraftModal] = useState(false);
+    const [selectedPage, setSelectedPage] = useState(null);
+    const [makeNewDraft, setMakeNewDraft] = useState<null | boolean>(null)
 
-    //  Wrapper function for handling the click event on the "Edit Page" button.
-    const handleEditButtonClickWrapper = (page) => {
-        setPageToEdit(page);
-        
+    // Use effect that checks if a page has been selected to "edit", and then calls the logic for creating a new
+    //draft or continuing to edit more
+    useEffect(() => {
+        if (selectedPage && user) {
+            handleEditButtonClick(
+                db,
+                selectedPage.components,
+                setShowDraftModal,
+                navigate,
+                `drafts/${user['id']}/${selectedPage.key}/components`,
+                addToast
+            );
+            setMakeNewDraft(null)
+        }
+
+    }, [addToast, db, makeNewDraft, navigate, selectedPage, user]);
+
+    // Sets the page being edited to the current page that was clicked
+    const handleEditButtonClickWrapper = (page: pageProps) => {
+        setSelectedPage(page);
     };
-    
-    //  Wrapper function for handling the create new draft
+
+    // Function which either creates new draft or continues editing old one
     const createNewDraftWrapper = (makeNewDraft: boolean) => {
-        createNewDraft(makeNewDraft, db, pageToEdit, navigate, `drafts/${user.id}/${pageToEdit.key}/components`, addToast);
+        if (selectedPage && user){
+            createNewDraft(
+                makeNewDraft,
+                db,
+                selectedPage.components,
+                navigate,
+                `drafts/${user['id']}/${selectedPage.key}/components`,
+                addToast
+            )
+        }
     };
 
     return (
@@ -92,7 +112,7 @@ function PageSection(myProps: myPageProps) {
                                 </div>
                             )}
                     </div>
-                            
+
                 </div>
             </Container >
 
@@ -100,7 +120,7 @@ function PageSection(myProps: myPageProps) {
                 <ConfirmDraftModal show={showDraftModal}
                     onHide={() => setShowDraftModal(false)}
                     onCreateDraft={(value) => createNewDraftWrapper(value)}
-                    name={user.name} />
+                    name={user['name']} />
             }
         </div >
     )

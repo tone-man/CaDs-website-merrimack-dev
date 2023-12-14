@@ -1,7 +1,7 @@
 import { Modal, Button, Row } from 'react-bootstrap';
-import Request from '../firebase/requests';
+import Request from '../../firebase/requests';
 import { Form } from 'react-bootstrap';
-import '../css/formModal.css'
+import '../../css/formModal.css'
 
 interface myProps {
   show: boolean,
@@ -9,6 +9,7 @@ interface myProps {
   request: Request
 }
 
+// This request modal is what pops up when users want to view requests
 const RequestModal = (props: myProps) => {
   return (
     

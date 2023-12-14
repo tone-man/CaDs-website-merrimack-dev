@@ -9,7 +9,6 @@ import ProfileImage from '../ProfileImage';
 
 
 // Interface for the faculty members. Each faculty member should have a name and image
-//TODO: Load image in properly 
 export interface facultyMembers {
     name: string,
     image: string
@@ -27,7 +26,6 @@ function FacultyCarousel(myProps: myFacultyCarouselProps) {
 
     const facultyMembersNum = myProps.faculty.length;
     const facultyMembers = myProps.faculty;
-    console.log(facultyMembers, 'faculty members')
 
     return (
         <div>

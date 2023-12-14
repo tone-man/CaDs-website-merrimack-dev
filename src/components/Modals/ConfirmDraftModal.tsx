@@ -1,5 +1,5 @@
 import { Modal, Button, Row, Col } from 'react-bootstrap';
-import '../css/formModal.css'
+import '../../css/formModal.css'
 
 // Interface for modal
 interface ConfirmDraftModalProps {
@@ -29,17 +29,17 @@ function ConfirmDraftModal({ show, onHide, onCreateDraft, name }: ConfirmDraftMo
             <Modal.Footer>
                 <Modal.Body>
                     <Row style={{textAlign: 'center'}}>
-                        <Col md ={3} sm={12} xs ={12}  style={{margin: '10px'}}>
+                        <Col md ={3} sm={3} xs ={4} className='new-draft-button'>
                             <Button variant="secondary" onClick={onHide} aria-label='Cancel Button' className='extraSmallFont metropolisRegular'>
                                 Cancel
                             </Button>
                         </Col>
-                        <Col md ={3} sm ={12} xs ={12}  style={{margin: '10px'}}>
+                        <Col md ={3} sm ={3} xs ={6} className='new-draft-button'>
                             <Button variant="light" onClick={handleCreateNewDraft} aria-label='New Draft Button' className='extraSmallFont metropolisRegular'>
                                 New Draft
                             </Button>
                         </Col>
-                        <Col md ={4} sm ={12} xs ={12} style={{margin: '10px'}}>
+                        <Col md ={4} sm ={3} xs ={10} className='new-draft-button'>
                             <Button type='submit' variant="light" aria-label='Continue Editing Old Draft Button' onClick={handleContinueEditingOldDraft} className='extraSmallFont metropolisRegular'>
                                 Continue Editing Old Draft
                             </Button>

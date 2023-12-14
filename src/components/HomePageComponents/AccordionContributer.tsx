@@ -1,12 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
 import '../../css/homepageCSS/contributer.css';
 
 import { Accordion, Col, Row } from 'react-bootstrap';
-import FormModal from '../FormModal';
+import FormModal from '../Modals/FormModal';
 import ProjectContributer, { contributerProps } from './ProjectContributer';
-
 
 interface accordionProps {
     number: number

@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 
 import '../../css/editableCSS/editableProject.css'
 
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal';
 import EditableFormComponent from './EditableFormComponent';
-import { deleteNestedComponent, getMaxProjectOrder, handleTextAreaChange } from '../../utils/editingComponents';
 import EditableImageForm from './EditableImageForm';
+
+import { deleteNestedComponent, getMaxProjectOrder, handleTextAreaChange } from '../../utils/editingComponents';
 
 interface editableFacultyProps {
     name: string,
@@ -21,6 +22,10 @@ interface editableContributerProps {
     addToast: (message: string, type: 'success' | 'warning' | 'danger') => void;
 }
 
+/**
+ * Component for displaying and editing faculty member data
+ * Allows edit and deletion privileges to users.
+ */
 function EditableFaculty(myProps: editableContributerProps) {
 
     const db = getDatabase();
@@ -37,19 +42,12 @@ function EditableFaculty(myProps: editableContributerProps) {
     useEffect(() => {
         setImage(myProps.data.image);
         setName(myProps.data.name);
-
     }, []);
 
     // Get max nested order of the faculty carousel
     useEffect(() => {
         getMaxProjectOrder(myProps, db, setLastNestedOrder)
     }, [db, lastNestedOrder, myProps]);
-
-    // Get max nested order of the faculty carousel
-    useEffect(() => {
-        console.log(lastNestedOrder, 'LAST NESTED ORDER')
-    }, [lastNestedOrder]);
-
 
     // Handles confirmed deletion and hiding the modal
     function remove() {
@@ -79,7 +77,8 @@ function EditableFaculty(myProps: editableContributerProps) {
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
                 delete={lastNestedOrder !== 1}
-                handleOpenConfirmationModal={handleOpenConfirmationModal} />
+                handleOpenConfirmationModal={handleOpenConfirmationModal} 
+                required={true} />
             <EditableImageForm
                 changedValue='/image'
                 myRef={myRef}

@@ -5,7 +5,7 @@ import { getDatabase, ref } from 'firebase/database';
 import '../../css/editableCSS/editableTextComponent.css';
 
 import EditableFormComponent from './EditableFormComponent';
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal';
 import { handleTextAreaChange, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents';
 
 export interface editableTextProps {
@@ -118,7 +118,8 @@ function EditableTextArea(myProps: editableComponentProps) {
                   label="Label"
                   handleTextAreaChange={handleTextAreaChange}
                   rows={1}
-                  delete={false} />
+                  delete={false} 
+                  required={true} />
                 <EditableFormComponent
                   changedValue='/content'
                   myRef={myRef}
@@ -129,7 +130,8 @@ function EditableTextArea(myProps: editableComponentProps) {
                   label="Content"
                   handleTextAreaChange={handleTextAreaChange}
                   rows={4}
-                  delete={false} />
+                  delete={false} 
+                  required={true} />
               </Col>
             </Row>
           </Container>

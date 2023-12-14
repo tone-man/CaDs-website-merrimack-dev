@@ -98,8 +98,6 @@ function App() {
 
     onValue(pageListener, (snapshot) => {
       // Move page to a key with the uid
-      console.log("PAGE OBJECT", snapshot.val());
-      console.log(uid);
 
       // If snapshot does not exist unsubscribe listener
       if (!snapshot.val()) {

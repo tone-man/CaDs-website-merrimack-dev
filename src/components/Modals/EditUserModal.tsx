@@ -1,10 +1,10 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import '../css/formModal.css'
-import '../css/whiteListSection.css'
-import TextInputFormGroup from './TextInputFormGroup';
-import User from '../firebase/user';
-import ToastContext from './toasts/ToastContext';
+import '../../css/formModal.css'
+import '../../css/dashboardCSS/whiteListSection.css'
+import TextInputFormGroup from '../TextInputFormGroup';
+import User from '../../firebase/user';
+import useToastContext from '../toasts/useToastContext';
 
 interface editUserProps {
     updateUser: (user: User) => void;
@@ -32,7 +32,7 @@ function EditUserModal(props: editUserProps) {
     const officeLocationRef = useRef<HTMLInputElement | null>(null);
     const photoURLRef = useRef<HTMLInputElement | null>(null);
 
-    const addToast = useContext(ToastContext);
+    const addToast = useToastContext();
 
     // Handles opening/closing the modal
     const handleClose = () => setShow(false);
@@ -45,25 +45,42 @@ function EditUserModal(props: editUserProps) {
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-
-        event.preventDefault(); // Stops typical form behavior like reloading the page
-        event.stopPropagation(); // Stops other event handlers from receiving this event
+        event.preventDefault();
+        event.stopPropagation();
+    
         const form = event.currentTarget;
-
+    
         // Checks form validity
-        if (form.checkValidity()) {
-            // Gets form information and calls addUser() with respective info
-            if (!fullNameRef.current || !emailRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current || !photoURLRef.current) {
-                console.error("error");
-            } else {
-                let updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, photoURLRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
-                updateUser(updatedUser);
-
-                addToast?.addToast(`Successfully edited ${updatedUser.name}`, "success")
-            }
+        if (!form.checkValidity()) {
+            // If the form is not valid, set the validation flag and return early to prevent submission
+            setValidated(true);
+            return;
         }
-        setValidated(true);
-        handleClose();
+    
+        const fieldsToCheck = [
+            fullNameRef.current,
+            emailRef.current,
+            phoneNumberRef.current,
+            titleRef.current,
+            departmentRef.current,
+            prounounsRef.current,
+            officeLocationRef.current
+        ];
+    
+        // Check if any of the required fields are empty
+        const isAnyFieldEmpty = fieldsToCheck.some(field => !field || field.value.trim() === '');
+    
+        if (isAnyFieldEmpty) {
+            console.error('Please fill in all the fields');
+            // Set validation flag to true to display validation messages
+            setValidated(true);
+        } else {
+            const updatedUser = new User(user.id, emailRef.current!.value, fullNameRef.current!.value, photoURLRef.current!.value ? photoURLRef.current!.value: "https://drive.google.com/uc?export=view&id=1kO-8WJd676RzfngMpoINoD5OddO2ay0A" , userLevel, phoneNumberRef.current!.value, titleRef.current!.value, prounounsRef.current!.value, departmentRef.current!.value, officeLocationRef.current!.value);
+            updateUser(updatedUser);
+    
+            addToast(`Successfully edited ${updatedUser.name}`, "success");
+            handleClose();
+        }
     };
 
     return (
@@ -77,7 +94,7 @@ function EditUserModal(props: editUserProps) {
             {/* Modal with nested form components */}
             <Modal size="lg" show={show} onHide={handleClose} className='customized-modal'>
                 <Modal.Header closeButton>
-                    <Modal.Title><h1 className='mediumFont metropolisBold'>Edit User {name}</h1></Modal.Title>
+                    <Modal.Title><h1 className='mediumFont metropolisBold'>Edit User {user.name}</h1></Modal.Title>
                 </Modal.Header>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}  >
                     <Modal.Body>
@@ -109,6 +126,7 @@ function EditUserModal(props: editUserProps) {
                                     alt='Email Text Input'
                                     inputRef={emailRef}
                                     default={user.email}
+                                    disabled={!isAdmin}
                                     feedbackMessage='Please enter a valid email' />
                             </Col>
                         </Row>
@@ -221,7 +239,7 @@ function EditUserModal(props: editUserProps) {
                                 controlId='validationCustom09'
                                 label='Profile Image URL'
                                 type='text'
-                                required={true}
+                                required={false}
                                 placeholder='Ex: http://url.com'
                                 alt='Photo Url Input'
                                 inputRef={photoURLRef}

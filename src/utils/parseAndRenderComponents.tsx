@@ -16,7 +16,7 @@ import EditableTextArea, { editableTextProps } from '../components/EditableCompo
 import EditableContact, { editableContactProps } from '../components/EditableComponents/EditableContact';
 import EditableProjectList from '../components/EditableComponents/EditableProjectList';
 import { editableEventProps } from '../components/EditableComponents/EditableEventComponent';
-import { DataSnapshot } from "firebase/database";
+import { get, getDatabase, ref, set } from "firebase/database";
 
 interface valueType {
     pageOrder: number
@@ -86,8 +86,23 @@ export function makeEventObject(
  * @param snapShot - The snapshot data to be parsed.
  * @param setRenderedComponents - The state setter for the rendered components.
  */
-export function parseDataToComponents(snapShot: unknown, setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[]>>) {
+export function parseDataToComponents(snapShot: unknown, setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[]>>, id: string | undefined) {
     const containerArr: unknown[][] = [];
+    const db = getDatabase()
+
+    const usersRef = ref(db, `/users/${id}`);
+    const facultyRef = ref(db, `/pages/${id}/components/header/imgSource`);
+
+    // Stores a listener for the database in a useState variable
+    get(usersRef)
+        .then((snapshot) => {
+            // If no draft exists at the specified path, create a new draft
+            const val = snapshot.val();
+            set(facultyRef, val.photoURL)
+        })
+        .catch((error) => {
+            console.error("Error reading data: ", error);
+        });
 
     if (snapShot) {
 
@@ -143,8 +158,8 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             });
                         }
 
-                         // Sort the array based on 'pageOrder' and 'nestedOrder'
-                         contributersArr.sort(function (a, b) {
+                        // Sort the array based on 'pageOrder' and 'nestedOrder'
+                        contributersArr.sort(function (a, b) {
                             return (
                                 a.nestedOrder - b.nestedOrder
                             );
@@ -182,7 +197,6 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 
                     // If the data is of type header, Create a FACULTY Page header object
                     case 'header':
-                        console.log(component);
                         newObj = {
                             departmentName: component.departmentName,
                             facultyName: component.facultyName,
@@ -199,7 +213,6 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
                             content: component.content,
                             type: 'text',
                         };
-                        console.log('text', component.pageOrder);
                         break;
 
                     // If the data is of type accordion, create a FACULTY PAGE accordion object
@@ -213,7 +226,6 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 
                     // If the data is of type accordion, create a FACULTY PAGE accordion object
                     case 'contact':
-                        console.log(component.location, 'LOCATION')
                         newObj = {
                             email: component.email,
                             phone: component.phone,
@@ -263,7 +275,6 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
                 tempArr.push(<ProjectList projectArray={component} />);
                 break;
             case 'header':
-                console.log("firstItem", firstItem)
                 tempArr.push(
                     <FacultyMemberHeader
                         departmentName={firstItem.departmentName}
@@ -311,134 +322,134 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
  * @param addToast - Function to add a toast notification.
  */
 export function createEditableRenderArray(
-    componentsSnapshot:  unknown,
-     setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[] | undefined>>, 
-     pathName: string, 
-     addToast:(message: string, type: 'success' | 'warning' | 'danger')=> void) {
+    componentsSnapshot: unknown,
+    setRenderedComponents: React.Dispatch<React.SetStateAction<JSX.Element[] | undefined>>,
+    pathName: string,
+    addToast: (message: string, type: 'success' | 'warning' | 'danger') => void) {
     let arr: JSX.Element[] = [];
 
-        if (componentsSnapshot) {
+    if (componentsSnapshot) {
 
-            const events: editableComponentProps[][] = [];
-            const projects: editableComponentProps[][] = [];
-            let component = undefined;
+        const events: editableComponentProps[][] = [];
+        const projects: editableComponentProps[][] = [];
+        let component = undefined;
 
-            // Iterate through every component in the snapshot
-            for (const [key, value] of Object.entries(componentsSnapshot)) {
-                if (key !== 'submitted') {
-                    const newvalue = value as valueType;
+        // Iterate through every component in the snapshot
+        for (const [key, value] of Object.entries(componentsSnapshot)) {
+            if (key !== 'submitted') {
+                const newvalue = value as valueType;
 
-                    // Generate specific components based on newvalue's type:
-                    switch (newvalue.type) {
-                        // If the component is a text or accordion component 
-                        case 'text':
-                        case 'accordion':
-                            component = value as editableTextProps;
-                            arr.push(
-                                <EditableTextArea
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                    type={newvalue.type}
-                                    addToast={addToast}
-                                />
-                            );
-                            break;
-                        // If the component is an event
-                        case 'event':
-                            component = value as editableEventProps;
-                            if (events[newvalue.pageOrder] === undefined) {
-                                events[newvalue.pageOrder] = [];
-                            }
-                            if (events[newvalue.pageOrder]) {
-                                events[newvalue.pageOrder].push({
-                                    pageOrder: newvalue.pageOrder,
-                                    nestedOrder: newvalue.nestedOrder,
-                                    data: component,
-                                    componentKey: key,
-                                    pathName: pathName,
-                                });
-                            }
-                            break;
-                        // If the component is a project
-                        case 'project':
-                            if (projects[newvalue.pageOrder] === undefined) {
-                                projects[newvalue.pageOrder] = [];
-                            }
-                            if (projects[newvalue.pageOrder]) {
-                                projects[newvalue.pageOrder].push({
-                                    pageOrder: newvalue.pageOrder,
-                                    nestedOrder: newvalue.nestedOrder,
-                                    data: value,
-                                    componentKey: key,
-                                    pathName: pathName,
-                                });
-                            }
-                            break;
-                        // If the component is a header (specifically for the faculty page)
-                        case 'header':
-                            component = value as editableHeaderProps;
-                            arr.push(
-                                <EditableFacultyHeader
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                />
-                            );
-                            break;
-                        // If the component is a contact component
-                        case 'contact':
-                            component = value as editableContactProps;
-                            arr.push(
-                                <EditableContact
-                                    key={key}
-                                    pageOrder={newvalue.pageOrder}
-                                    nestedOrder={newvalue.nestedOrder}
-                                    componentKey={key}
-                                    data={component}
-                                    pathName={pathName}
-                                    type="Contact Page"
-                                    addToast={addToast}
-                                />
-                            );
-                            break;
-                        default:
-                            console.log(`Unexpected type encountered: ${value}`);
-                            break;
-                    }
+                // Generate specific components based on newvalue's type:
+                switch (newvalue.type) {
+                    // If the component is a text or accordion component 
+                    case 'text':
+                    case 'accordion':
+                        component = value as editableTextProps;
+                        arr.push(
+                            <EditableTextArea
+                                key={key}
+                                pageOrder={newvalue.pageOrder}
+                                nestedOrder={newvalue.nestedOrder}
+                                componentKey={key}
+                                data={component}
+                                pathName={pathName}
+                                type={newvalue.type}
+                                addToast={addToast}
+                            />
+                        );
+                        break;
+                    // If the component is an event
+                    case 'event':
+                        component = value as editableEventProps;
+                        if (events[newvalue.pageOrder] === undefined) {
+                            events[newvalue.pageOrder] = [];
+                        }
+                        if (events[newvalue.pageOrder]) {
+                            events[newvalue.pageOrder].push({
+                                pageOrder: newvalue.pageOrder,
+                                nestedOrder: newvalue.nestedOrder,
+                                data: component,
+                                componentKey: key,
+                                pathName: pathName,
+                            });
+                        }
+                        break;
+                    // If the component is a project
+                    case 'project':
+                        if (projects[newvalue.pageOrder] === undefined) {
+                            projects[newvalue.pageOrder] = [];
+                        }
+                        if (projects[newvalue.pageOrder]) {
+                            projects[newvalue.pageOrder].push({
+                                pageOrder: newvalue.pageOrder,
+                                nestedOrder: newvalue.nestedOrder,
+                                data: value,
+                                componentKey: key,
+                                pathName: pathName,
+                            });
+                        }
+                        break;
+                    // If the component is a header (specifically for the faculty page)
+                    case 'header':
+                        component = value as editableHeaderProps;
+                        arr.push(
+                            <EditableFacultyHeader
+                                key={key}
+                                pageOrder={newvalue.pageOrder}
+                                nestedOrder={newvalue.nestedOrder}
+                                componentKey={key}
+                                data={component}
+                                pathName={pathName}
+                            />
+                        );
+                        break;
+                    // If the component is a contact component
+                    case 'contact':
+                        component = value as editableContactProps;
+                        arr.push(
+                            <EditableContact
+                                key={key}
+                                pageOrder={newvalue.pageOrder}
+                                nestedOrder={newvalue.nestedOrder}
+                                componentKey={key}
+                                data={component}
+                                pathName={pathName}
+                                type="Contact Page"
+                                addToast={addToast}
+                            />
+                        );
+                        break;
+                    default:
+                        console.log(`Unexpected type encountered: ${value}`);
+                        break;
                 }
             }
-            // Maps each of the events in the events array to a carousel item
-            {
-                events.map((_array, index) => (
-                    <>
-                        {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} addToast={addToast} />)}
-                    </>
-                ))
-            }
-            // Maps each of the projects in the projects array to an editable project item
-            {
-                projects.map((_array, index) => (
-                    <>
-                        {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast} />)}
-                    </>
-                ))
-            }
-
-            // Sort the array based on 'pageOrder' and 'nestedOrder'
-            arr = arr.sort(function (a, b) {
-                return (
-                    a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
-                );
-            });
-
-            // Update state variable 'updatedComponents' with the sorted array
-            setRenderedComponents(arr);
         }
+        // Maps each of the events in the events array to a carousel item
+        {
+            events.map((_array, index) => (
+                <>
+                    {arr.push(<EditableCarousel key={index} array={events[index]} pageOrder={events[index][0].pageOrder} type={'event'} addToast={addToast} />)}
+                </>
+            ))
+        }
+        // Maps each of the projects in the projects array to an editable project item
+        {
+            projects.map((_array, index) => (
+                <>
+                    {arr.push(<EditableProjectList key={index} array={projects[index]} pageOrder={projects[index][0].pageOrder} type={'project'} addToast={addToast} />)}
+                </>
+            ))
+        }
+
+        // Sort the array based on 'pageOrder' and 'nestedOrder'
+        arr = arr.sort(function (a, b) {
+            return (
+                a.props.pageOrder - b.props.pageOrder || a.props.nestedOrder - b.props.nestedOrder
+            );
+        });
+
+        // Update state variable 'updatedComponents' with the sorted array
+        setRenderedComponents(arr);
+    }
 }

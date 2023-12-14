@@ -1,26 +1,24 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { getDatabase, set, ref } from "firebase/database";
-import FireBaseApp from "../firebase";
-import User from "../firebase/user";
-import "../css/whiteListSection.css"
-import "../css/whiteListIndividual.css"
-import "../css/editProfile.css"
-import EditUserModal from "./EditUserModal";
-import ProfileImage from "./ProfileImage";
+import FireBaseApp from "../../firebase";
+import User from "../../firebase/user";
+import "../../css/dashboardCSS/whiteListSection.css"
+import "../../css/dashboardCSS/whiteListIndividual.css"
+import "../../css/editProfile.css"
+import EditUserModal from "../Modals/EditUserModal";
+import ProfileImage from "../ProfileImage";
 
 interface ProfileProps {
     user: User | null;
 }
 
 // Edits user information in the whitelist
-// TODO: Pass edited user information back to database
 function editUser(user: User) {
     const db = getDatabase(FireBaseApp);
     set(ref(db, `users/${user.id}`), user.toFirebaseObject());
 }
 export default function EditProfile(props: ProfileProps) {
     const user = props.user;
-
 
     return (
         <div>

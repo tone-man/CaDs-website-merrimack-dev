@@ -1,9 +1,12 @@
 import { Container, Row, Col, Form, FormControl, InputGroup, Button } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
+
 import '../../css/DirectoryCSS/facultyDirectory.css';
+
 import { getDatabase, ref, onValue } from "firebase/database";
 import FireBaseApp from "../../firebase";
 import User from "../../firebase/user";
+
 import FacultyMemberDirectory from "./FacultyMemberDirectory";
 import Header from "../Header";
 
@@ -13,7 +16,6 @@ function FacultyDirectory() {
     const searchBarRef = useRef<HTMLInputElement | null>(null);
     const [usersList, setUsersList] = useState<User[] | null>([]);
     const [visibleUsers, setVisibleUsers] = useState<User[] | null>(usersList);
-
 
     // gets the list of users from the database (ADMIN ONLY FEATURE)
     useEffect(() => {
@@ -41,14 +43,16 @@ function FacultyDirectory() {
     // Search function for faculty members
     function search() {
         if (searchBarRef.current) {
-            const searchElement = searchBarRef.current.value.trim().toLowerCase();
-            const foundUsers = usersList.filter(user => user.name.toLowerCase().includes(searchElement));
-            setVisibleUsers(foundUsers);
+            if (usersList){
+                const searchElement = searchBarRef.current.value.trim().toLowerCase();
+                const foundUsers = usersList.filter(user => user.name.toLowerCase().includes(searchElement));
+                setVisibleUsers(foundUsers);
+            }
         }
     }
     return (
         <div>
-            <Header img={'src/imgs/OBCenter.jpg'} title='Faculty Directory' />
+            <Header img={'https://drive.google.com/uc?id=1-eNEc4RxR4EQP7AINFCvGUSd6NKp5d92'} title='Faculty Directory' />
             <Container className="faculty-page">
                 <Row>
                     {/* Search Bar */}

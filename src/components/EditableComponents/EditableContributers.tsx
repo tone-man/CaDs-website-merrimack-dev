@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react'
 
 import '../../css/editableCSS/editableProject.css'
 
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal';
 import EditableFormComponent from './EditableFormComponent';
-import { deleteNestedComponent, handleTextAreaChange } from '../../utils/editingComponents';
-import { getMaxProjectOrder } from '../../utils/editingComponents';
 import EditableImageForm from './EditableImageForm';
+
+import { deleteNestedComponent, handleTextAreaChange, getMaxProjectOrder} from '../../utils/editingComponents';
 
 interface editableContributerProps {
     name: string,
@@ -69,7 +69,7 @@ function EditableContributers(myProps: editableComponentProps) {
                 show={showDeleteModal}
                 onHide={() => setShowDeletionModal(false)}
                 onConfirm={remove}
-                name={'contributer ' + myProps.data.name} />
+                name={'this contributer'}  />
             <EditableFormComponent
                 changedValue='/name'
                 myRef={myRef}
@@ -81,7 +81,8 @@ function EditableContributers(myProps: editableComponentProps) {
                 handleTextAreaChange={handleTextAreaChange}
                 rows={1}
                 delete={lastNestedOrder !== 1}
-                handleOpenConfirmationModal={handleOpenConfirmationModal} />
+                handleOpenConfirmationModal={handleOpenConfirmationModal}
+                required={true} />
             <EditableFormComponent
                 changedValue='/description'
                 myRef={myRef}
@@ -92,7 +93,8 @@ function EditableContributers(myProps: editableComponentProps) {
                 label="Description"
                 handleTextAreaChange={handleTextAreaChange}
                 rows={5}
-                delete={false} />
+                delete={false}
+                required={true} />
             <EditableImageForm
                 changedValue='/image'
                 myRef={myRef}

@@ -440,7 +440,6 @@ export async function getMaxProjectOrder(component: any, db: Database, setLastNe
         }
       }
       if (setLastNestedOrder) {
-        console.log(max, 'max here')
         setLastNestedOrder(max);
       }
       return max;
