@@ -102,7 +102,7 @@ const EditPage = () => {
                     })
                 }
                 else {
-                    if (!hasVisibleText(newValue) && nk !=='projectLink') {
+                    if (!hasVisibleText(newValue) && nk !=='projectLink' && nk !=='imgSource') {
                         notvalid++;
                         setCannotSubmit(true);
                         break
@@ -152,7 +152,6 @@ const EditPage = () => {
                         set(myRef, value)
                             .then(() => {
                                 set(draft, null);
-                                addToast('Successfully Published Draft', 'success')
                                 console.log('Data added successfully!');
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                                 navigate('/dashboard');
