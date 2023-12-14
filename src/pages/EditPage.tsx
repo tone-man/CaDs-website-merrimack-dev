@@ -87,7 +87,6 @@ const EditPage = () => {
                         // Check if entry is an object and iterate through its keys
                         if (typeof entry === 'object') {
                             Object.keys(entry).forEach(innerK => {
-                                // console.log(innerK,' this is innerK')
                                 if (!hasVisibleText(entry[innerK])) {
                                     notvalid++;
                                     setCannotSubmit(true);

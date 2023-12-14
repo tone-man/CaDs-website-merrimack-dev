@@ -197,7 +197,6 @@ export function parseDataToComponents(snapShot: unknown, setRenderedComponents: 
 
                     // If the data is of type header, Create a FACULTY Page header object
                     case 'header':
-                        console.log(component);
                         newObj = {
                             departmentName: component.departmentName,
                             facultyName: component.facultyName,
@@ -276,7 +275,6 @@ export function createRenderArray(containerArr: unknown[][], setRenderedComponen
                 tempArr.push(<ProjectList projectArray={component} />);
                 break;
             case 'header':
-                console.log("firstItem", firstItem)
                 tempArr.push(
                     <FacultyMemberHeader
                         departmentName={firstItem.departmentName}

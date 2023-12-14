@@ -12,7 +12,6 @@ const db = getDatabase(); //Global DB Connection
 
 // Dashboard page is the equivalent of a profile page for all users.
 const Dashboard = () => {
-  console.log("In dashboard page")
   const [requests, setRequests] = useState<requestProps[]>([]);
   const [allowedUsersList, setAllowedUsersList] = useState<UserInterface[]>([]);
   const [pageArray, setPageArray] = useState<[]>([]);

@@ -15,7 +15,6 @@ interface whitelistProps {
 
 // This component creates the basic container for those on the whitelist
 function WhiteListSection(props: whitelistProps) {
-    console.log("In whitelist section")
 
     const searchBarRef = useRef<HTMLInputElement | null>(null);
     const [filterUserList, setFilterUserList] = useState<UserInterface[]>(props.userArray);

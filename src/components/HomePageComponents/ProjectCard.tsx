@@ -89,7 +89,7 @@ function projectCardContent(
                         <div className='no-scrollbar description-div'>
                             <h2 className='description-text' dangerouslySetInnerHTML={{ __html: description }}></h2>
                         </div>
-                        {link && (
+                        {link!=='<p><br></p>' && (
                             <a href={link} id="project-link">
                                 <h1 className='featured-text' id="read-more"> Read More</h1>
                             </a>
