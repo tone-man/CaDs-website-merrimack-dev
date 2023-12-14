@@ -45,25 +45,42 @@ function EditUserModal(props: editUserProps) {
 
     // Handles submission of the form and closing of the modal in one. 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-
-        event.preventDefault(); // Stops typical form behavior like reloading the page
-        event.stopPropagation(); // Stops other event handlers from receiving this event
+        event.preventDefault();
+        event.stopPropagation();
+    
         const form = event.currentTarget;
-
+    
         // Checks form validity
-        if (form.checkValidity()) {
-            // Gets form information and calls addUser() with respective info
-            if (!fullNameRef.current || !emailRef.current || !phoneNumberRef.current || !titleRef.current || !departmentRef.current || !prounounsRef.current || !officeLocationRef.current || !photoURLRef.current) {
-                console.error("error");
-            } else {
-                const updatedUser = new User(user.id, emailRef.current.value, fullNameRef.current.value, photoURLRef.current.value, userLevel, phoneNumberRef.current.value, titleRef.current.value, prounounsRef.current.value, departmentRef.current.value, officeLocationRef.current.value);
-                updateUser(updatedUser);
-
-                addToast(`Successfully edited ${updatedUser.name}`, "success")
-            }
+        if (!form.checkValidity()) {
+            // If the form is not valid, set the validation flag and return early to prevent submission
+            setValidated(true);
+            return;
         }
-        setValidated(true);
-        handleClose();
+    
+        const fieldsToCheck = [
+            fullNameRef.current,
+            emailRef.current,
+            phoneNumberRef.current,
+            titleRef.current,
+            departmentRef.current,
+            prounounsRef.current,
+            officeLocationRef.current
+        ];
+    
+        // Check if any of the required fields are empty
+        const isAnyFieldEmpty = fieldsToCheck.some(field => !field || field.value.trim() === '');
+    
+        if (isAnyFieldEmpty) {
+            console.error('Please fill in all the fields');
+            // Set validation flag to true to display validation messages
+            setValidated(true);
+        } else {
+            const updatedUser = new User(user.id, emailRef.current!.value, fullNameRef.current!.value, photoURLRef.current!.value, userLevel, phoneNumberRef.current!.value, titleRef.current!.value, prounounsRef.current!.value, departmentRef.current!.value, officeLocationRef.current!.value);
+            updateUser(updatedUser);
+    
+            addToast(`Successfully edited ${updatedUser.name}`, "success");
+            handleClose();
+        }
     };
 
     return (
@@ -221,7 +238,7 @@ function EditUserModal(props: editUserProps) {
                                 controlId='validationCustom09'
                                 label='Profile Image URL'
                                 type='text'
-                                required={true}
+                                required={false}
                                 placeholder='Ex: http://url.com'
                                 alt='Photo Url Input'
                                 inputRef={photoURLRef}
