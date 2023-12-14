@@ -48,7 +48,7 @@ function EditableFacultyHeader(myProps: editableComponentProps) {
                     <h1 className='title' style={{ color: 'white' }}> Your Information</h1>
                     <Container fluid className='styling'>
                         <EditableFormComponent
-                            changedValue='/name'
+                            changedValue='/facultyName'
                             myRef={myRef}
                             value={name}
                             setValue={setName}

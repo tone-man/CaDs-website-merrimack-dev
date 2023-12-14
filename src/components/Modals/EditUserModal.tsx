@@ -126,6 +126,7 @@ function EditUserModal(props: editUserProps) {
                                     alt='Email Text Input'
                                     inputRef={emailRef}
                                     default={user.email}
+                                    disabled={!isAdmin}
                                     feedbackMessage='Please enter a valid email' />
                             </Col>
                         </Row>
