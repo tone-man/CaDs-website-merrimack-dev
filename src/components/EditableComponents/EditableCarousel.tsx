@@ -1,10 +1,11 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
-import { getDatabase, ref } from "firebase/database"
 import { useEffect, useState } from "react"
+
+import { getDatabase, ref } from "firebase/database"
 
 import '../../css/editableCSS/editableList.css'
 
-import DeleteConfirmationModal from "../DeleteConfirmationModal"
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal"
 import EditableEventComponent, { editableEventProps } from "../EditableComponents/EditableEventComponent"
 import { addNestedComponent, reorderPageComponents, deletePageComponents, getMaxPageOrder } from '../../utils/editingComponents'
 

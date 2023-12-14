@@ -2,6 +2,7 @@ import { ref, set, get, Database } from "firebase/database";
 import { NavigateFunction } from "react-router-dom";
 import User from "../firebase/user";
 import { FacultyPage } from "./PageInterfaces";
+
 type AddToastFunction = (
   message: string,
   type: "success" | "warning" | "danger"
@@ -20,14 +21,6 @@ type AddToastFunction = (
 export const handleEditButtonClick = (
   db: Database,
   snapShot: object,
-  createNewDraft: (
-    makeNewDraft: boolean,
-    db: Database,
-    snapShot: object,
-    navigate: NavigateFunction,
-    path: string,
-    addToast: AddToastFunction
-  ) => void,
   setShowDraftModal: React.Dispatch<React.SetStateAction<boolean>>,
   navigate: NavigateFunction,
   path: string,
@@ -48,6 +41,7 @@ export const handleEditButtonClick = (
     })
     .catch((error) => {
       console.error("Error reading data: ", error);
+      addToast("Error retrieving draft", "danger");
     });
 };
 

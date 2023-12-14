@@ -8,8 +8,6 @@ import { Container, Col, Row } from 'react-bootstrap';
 import ProjectCard, { myProjectProps } from './ProjectCard';
 import Header from '../Header';
 
-
-
 interface projectProps {
     projectArray: myProjectProps[];
 }
@@ -20,7 +18,6 @@ function ProjectList(myProps: projectProps) {
         <>
             <Container fluid style={{ background: 'rgb(224, 224, 224)' }}>
                 <Container className='projects-container'>
-              
                     <Row>
                         {/* Header text */}
                         <Col md={{ span: 12 }} style={{ padding: '20px' }} className='black-color'>

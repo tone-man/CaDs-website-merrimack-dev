@@ -1,5 +1,7 @@
 import { Container, Row, Col, Button } from "react-bootstrap"
-import { Navigate, useNavigate } from "react-router-dom"
+
+import { useNavigate } from "react-router-dom"
+
 import '../../css/DirectoryCSS/facultyMemberDirectory.css'
 
 import ProfileImage from "../ProfileImage";
@@ -12,7 +14,6 @@ export interface facultyMember {
     department: string,
     pronouns: string,
     title: string,
-    pageLink?: string,
     photoURL: string
 }
 
@@ -24,11 +25,8 @@ interface FacultyMemberDirectoryProps {
 // Creates an individual faculty member component for the faculty directory
 function FacultyMemberDirectory(props: FacultyMemberDirectoryProps) {
 
-
     const { facultyMember, isLast } = props;
     const navigate = useNavigate();
-
-    facultyMember.pageLink == '/faculty'
 
     return (
         <Container className="faculty-directory" style={isLast === true ? { borderBottom: '1px black solid' } : {}}>

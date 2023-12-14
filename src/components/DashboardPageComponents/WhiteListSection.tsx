@@ -1,14 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Col, FormControl, InputGroup, Row } from 'react-bootstrap'
 import { useRef, useState, useEffect } from 'react';
 import WhiteListIndividual from './WhiteListIndividual';
-import AddUserModal from './FacultyPage/AddUserModal';
-import '../css/requestSection.css'
-import '../css/whiteListSection.css'
-import User, { UserInterface } from '../firebase/user';
+import AddUserModal from '../Modals/AddUserModal';
+import '../../css/dashboardCSS/requestSection.css'
+import '../../css/dashboardCSS/whiteListSection.css'
+import User, { UserInterface } from '../../firebase/user';
 import { getDatabase, ref, remove, set } from 'firebase/database';
-import FireBaseApp from '../firebase';
+import FireBaseApp from '../../firebase';
+import useToastContext from '../toasts/useToastContext';
 
 interface whitelistProps {
     userArray:  UserInterface[];
@@ -16,10 +15,12 @@ interface whitelistProps {
 
 // This component creates the basic container for those on the whitelist
 function WhiteListSection(props: whitelistProps) {
+    console.log("In whitelist section")
 
     const searchBarRef = useRef<HTMLInputElement | null>(null);
     const [filterUserList, setFilterUserList] = useState<UserInterface[]>(props.userArray);
     const [userList, setUserList] = useState<UserInterface[]>(props.userArray);
+    const addToast = useToastContext()
 
     useEffect(() => {
         setUserList(props.userArray);
@@ -38,9 +39,10 @@ function WhiteListSection(props: whitelistProps) {
 
     // Deletes user from whitelist
     // TODO: Pass deleted user info back to database
-    function deleteUser(id: string) {
+    function deleteUser(id: string, name: string) {
         const db = getDatabase(FireBaseApp);
         remove(ref(db, `users/${id}`));
+        addToast(`Successfully removed user ${name} from users`, 'success')
     }
 
     // Edits user information in the whitelist
@@ -87,7 +89,7 @@ function WhiteListSection(props: whitelistProps) {
                                 // Maps each user  in the array to a whitelist 
                                 filterUserList.map((user, index) => (
                                     <div key={index} style={index !== filterUserList.length - 1 || filterUserList.length < 3 ? { borderBottom: '1px black solid' } : {}}>
-                                        <WhiteListIndividual onDelete={() => deleteUser(user.id)} onEdit={editUser} user={user} />
+                                        <WhiteListIndividual onDelete={() => deleteUser(user.id, user.name)} onEdit={editUser} user={user} />
                                     </div>
                                 ))
                             ) :

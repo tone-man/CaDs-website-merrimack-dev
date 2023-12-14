@@ -8,7 +8,7 @@ import '../../css/editableCSS/editableProject.css'
 import EditableFaculty from "./EditableFaculty"
 import EditableFormComponent from "./EditableFormComponent"
 import EditableContributers from "./EditableContributers"
-import DeleteConfirmationModal from "../DeleteConfirmationModal"
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal"
 import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder, addProjectComponent } from '../../utils/editingComponents';
 import EditableImageForm from "./EditableImageForm"
 
@@ -159,7 +159,8 @@ function EditableProject(myProps: editableComponentProps) {
                                 handleTextAreaChange={handleTextAreaChange}
                                 rows={1}
                                 delete={lastNestedOrder !== 0}
-                                handleOpenConfirmationModal={handleOpenConfirmationModal} />
+                                handleOpenConfirmationModal={handleOpenConfirmationModal}
+                                required={true} />
                             <EditableFormComponent
                                 changedValue='/description'
                                 myRef={myRef}
@@ -170,7 +171,8 @@ function EditableProject(myProps: editableComponentProps) {
                                 label="Description"
                                 handleTextAreaChange={handleTextAreaChange}
                                 rows={3}
-                                delete={false} />
+                                delete={false} 
+                                required={true} />
                             <EditableImageForm
                                 changedValue='/image'
                                 myRef={myRef}
@@ -190,7 +192,8 @@ function EditableProject(myProps: editableComponentProps) {
                                 label="Image Description"
                                 handleTextAreaChange={handleTextAreaChange}
                                 delete={false}
-                                rows={1} />
+                                rows={1}
+                                required={true} />
                             <EditableFormComponent
                                 changedValue='/projectLink'
                                 myRef={myRef}
@@ -201,7 +204,8 @@ function EditableProject(myProps: editableComponentProps) {
                                 label="Link"
                                 handleTextAreaChange={handleTextAreaChange}
                                 delete={false}
-                                rows={1} />
+                                rows={1}
+                                required={false} />
                         </Row>
 
                         {/*Go through and map each contributer object to an editable contributer component  */}

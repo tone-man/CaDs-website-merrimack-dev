@@ -6,7 +6,6 @@ interface myEventListProps {
     eventsArray: myEventProps[];
 }
 
-
 // This component creates an events carousel component and populates it with events
 function EventsCarousel(myProps: myEventListProps) {
 

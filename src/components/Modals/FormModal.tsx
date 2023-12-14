@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Button, ButtonToolbar, Col, Form, Modal, Row, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import '../css/formModal.css'
-import TextInputFormGroup from './TextInputFormGroup';
+import '../../css/formModal.css'
+import TextInputFormGroup from '../TextInputFormGroup';
 import { getDatabase, ref, push, child, set } from 'firebase/database';
+import useToastContext from '../toasts/useToastContext';
 
 interface formProps {
   title: string;
@@ -11,7 +12,6 @@ interface formProps {
 // https://react-bootstrap.netlify.app/docs/forms/validation
 // This modal component has a form nested inside of it that prompts the user for important information that will be sent to 
 //the owner the of the project
-//TODO: Save entered information and send it as a request to the owner of the project
 function FormModal(myProps: formProps) {
   const db = getDatabase();
 
@@ -20,6 +20,7 @@ function FormModal(myProps: formProps) {
   const [requestBody, setRequestBody] = useState('');
   const [requestName, setRequestName] = useState('');
   const [email, setEmail] = useState('');
+  const addToast = useToastContext()
 
   // Handles opening/closing the modal
   const handleClose = () => setShow(false);
@@ -50,9 +51,11 @@ function FormModal(myProps: formProps) {
       // Add it to the requests with the new key
       set(myRef, value)
         .then(() => {
+          addToast('Successfully made request', 'success')
           console.log('Data added successfully!');
         })
         .catch((error) => {
+          addToast('Error occured when attempting to submit request', 'request')
           console.error('Error adding data: ', error);
         });
 
@@ -115,7 +118,7 @@ function FormModal(myProps: formProps) {
 
             {/*Request Text Input */}
             <Row>
-              <Form.Group controlId="validationCustomUsername">
+              <Form.Group>
                 <Form.Label><h2 className='smallFont metropolisRegular'>Request</h2></Form.Label>
                 <Form.Control
                   onChange={(event) => setRequestBody(event.target.value)} // Inline function to update the state

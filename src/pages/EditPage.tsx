@@ -6,7 +6,7 @@ import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
 import '../css/editableCSS/editPage.css';
 
 import Header from '../components/Header';
-import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
+import DeleteConfirmationModal from '../components/Modals/DeleteConfirmationModal';
 
 import eventTemplate from '../utils/events.json';
 import textAreaTemplate from '../utils/textarea.json';
@@ -73,20 +73,22 @@ const EditPage = () => {
     useEffect(() => {
         // Check if the user has all values entered, if not don't allow the user to submit
         let notvalid = 0;
-        for (const [, value] of Object.entries(componentsSnapshot)) {
+        for (const [key, value] of Object.entries(componentsSnapshot)) {
             const nestedValue = value as valueType;
             // If a value doesn't have text, don't allow the user to submit
-            for (const [, newValue] of Object.entries(nestedValue)) {
+            for (const [nk, newValue] of Object.entries(nestedValue)) {
                 if (typeof newValue === 'object') {
                     // Iterate through the keys of newValue
-                    Object.keys(newValue).forEach(key => {
+                    Object.keys(newValue).forEach(k => {
+                        
                         // Access properties of newValue[key]
-                        const entry = newValue[key];
+                        const entry = newValue[k];
 
                         // Check if entry is an object and iterate through its keys
                         if (typeof entry === 'object') {
-                            Object.keys(entry).forEach(innerKey => {
-                                if (!hasVisibleText(entry[innerKey])) {
+                            Object.keys(entry).forEach(innerK => {
+                                // console.log(innerK,' this is innerK')
+                                if (!hasVisibleText(entry[innerK])) {
                                     notvalid++;
                                     setCannotSubmit(true);
                                     return
@@ -100,7 +102,7 @@ const EditPage = () => {
                     })
                 }
                 else {
-                    if (!hasVisibleText(newValue)) {
+                    if (!hasVisibleText(newValue) && nk !=='projectLink') {
                         notvalid++;
                         setCannotSubmit(true);
                         break
@@ -130,8 +132,6 @@ const EditPage = () => {
      */
     const handleSave = () => {
 
-        console.log(pathName, 'pathName')
-
         const splitString = pathName.split('/');
         const newPathName = "pages/" + splitString.slice(2).join('/');
         const draft = ref(db, pathName);
@@ -151,11 +151,14 @@ const EditPage = () => {
                         // Add it to the drafts with the same exact key
                         set(myRef, value)
                             .then(() => {
+                                set(draft, null);
+                                addToast('Successfully Published Draft', 'success')
                                 console.log('Data added successfully!');
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                                 navigate('/dashboard');
                             })
                             .catch((error) => {
+                                addToast('Error occured when attempting to publish draft', 'danger')
                                 console.error('Error adding data: ', error);
                             });
                     }
@@ -168,7 +171,6 @@ const EditPage = () => {
 
 
     /**
-    *  TODO: Get rid of this function because do we want to allow users to actually delete functions
     * Handles the cancellation of the editing process.
     * Deletes the draft in the database and navigates the user back to the home page.
     * Reference: https://firebase.google.com/docs/database/web/read-and-write#basic_write
@@ -181,6 +183,7 @@ const EditPage = () => {
         set(valueRef, null);
 
         // Navigate the user back to the home page
+        addToast("Successfully deleted draft", 'success');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         navigate('/dashboard');
     };

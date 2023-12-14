@@ -3,7 +3,6 @@ import '../../css/homepageCSS/contributer.css'
 import { Col, Row } from 'react-bootstrap'
 import ProfileImage from '../ProfileImage';
 
-
 export interface contributerProps {
     name: string,
     description: string,

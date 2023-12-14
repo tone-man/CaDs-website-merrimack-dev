@@ -1,23 +1,35 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { Container, Col, Row, Button } from "react-bootstrap";
-import "../css/requestSection.css";
-import ProfileImage from "./ProfileImage";
-import Request from "../firebase/requests";
-import { useContext, useState } from "react";
+import "../../css/dashboardCSS/requestSection.css";
+import ProfileImage from "../ProfileImage";
+import Request from "../../firebase/requests";
+import {useState } from "react";
 import ViewRequestModal from "./ViewRequestModal";
-import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal";
 import { getDatabase, ref, set } from "firebase/database";
-import ToastContext from "./toasts/ToastContext";
+import useToastContext from "../toasts/useToastContext";
+
+
+export interface requestProps {
+  value: {
+    requestTitle: string,
+    requestName: string,
+    requestBody: string
+    title: string,
+    email: string,
+    key: string,
+  },
+  key: string
+}
 
 // Interface for the request section component. An array of requests will be passed in
 interface myRequestProps {
-  requests: any;
+  requests: requestProps[];
 }
 
 // This request section component is a container for all requests that have been made
 function RequestSection(myProps: myRequestProps) {
 
+  // Sets use state variables
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeletionModal] = useState<boolean>(false);
   const [requestName, setRequestName] = useState('')
@@ -28,9 +40,9 @@ function RequestSection(myProps: myRequestProps) {
   const db = getDatabase();
   const [key, setKey] = useState('')
 
-  const addToast = useContext(ToastContext);
+  const addToast =useToastContext();
 
-
+  // Sets use state to information passed and shows modal
   function handleShow(requestName: string, requestBody: string, requestTitle: string, email: string, projectTitle: string, k: string) {
     setRequestBody(requestBody);
     setRequestName(requestName);
@@ -42,16 +54,18 @@ function RequestSection(myProps: myRequestProps) {
   }
   const handleClose = () => setShowModal(false);
 
+  // Handles showing deletion modal for request
   function handleShowDeleteModal(k: string) {
     setShowDeletionModal(true);
     setKey(k);
   }
 
+  // Handles deletion modal
   function handleDeletion() {
     const myRef = ref(db, 'requests/' + key);
     set(myRef, null);
     setShowDeletionModal(false);
-    addToast?.addToast(`Successfully deleted request.`, "success");
+    addToast(`Successfully deleted request.`, "success");
   }
 
   return (
@@ -77,10 +91,10 @@ function RequestSection(myProps: myRequestProps) {
           >
             {/* If there are requests, map each element to a div */}
             {myProps.requests.length !== 0 ? (
-              myProps.requests.map((requests, index) => (
+              myProps.requests.map((requests, index: number) => (
                 <div
                   key={index}
-                  style={index !== requests.value.length - 1 || requests.value.length < 3 ? { borderBottom: '1px black solid' } : {}}
+                  style={index !== myProps.requests.length - 1 ||  myProps.requests.length <= 3 ? { borderBottom: '1px black solid' } : {}}
                 >
                   <Row className="rows ml-auto">
                     <Col md={2} sm={2} xs={4} className="profile-image">

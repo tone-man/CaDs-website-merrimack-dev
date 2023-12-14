@@ -10,7 +10,6 @@ interface headerProps {
     facultyName: string,
     facultyTitle: string,
     profileImg: string,
-
 }
 
 // Header that appears on the top of each faculty member's page

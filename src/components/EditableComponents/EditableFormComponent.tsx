@@ -1,17 +1,11 @@
 import { DatabaseReference } from 'firebase/database';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'quill-emoji/dist/quill-emoji.css';
 import 'quill-mention/dist/quill.mention.css';
 import '../../css/editableCSS/editableForm.css'
-
-
-// import * as Emoji from "../../quill-emojis.d.ts"; // For TypeScript file
-
-// References: https://blog.logrocket.com/using-dangerouslysetinnerhtml-in-a-react-application/
-// Reference: https://codesandbox.io/p/sandbox/react-quill-with-markdown-g8193?file=%2Fsrc%2FEditor.tsx%3A58%2C18
 
 interface formProps {
     label: string;
@@ -25,20 +19,21 @@ interface formProps {
     handleTextAreaChange: any;
     setValue: Dispatch<SetStateAction<string>>;
     handleOpenConfirmationModal?: () => void; // Optional function prop
+    required: boolean
 }
-
+//  Function for rendering an editable form with a rich text editor.
 function EditableFormComponent(myProps: formProps) {
     const [editorValidated, setEditorValidated] = useState(true);
 
     // Reference: https://stackoverflow.com/questions/34673544/sanitize-html-string-without-using-dangerouslysetinnerhtml-for-length-check
+    // Checks if form is valid by checking length
     function hasVisibleText(html: string): boolean {
         const temp = document.createElement('div');
         temp.innerHTML = html;
         return temp.innerText.trim().length > 0;
     }
 
-    
-    // Quill.register("emoji", Emoji);
+    // Options in toolbar
     const TOOLBAR_OPTIONS = [
         [
             'bold',
@@ -54,7 +49,6 @@ function EditableFormComponent(myProps: formProps) {
             { 'list': 'ordered' },
             { 'list': 'bullet' },
             'link',
-            // 'emoji',
         ],
     ];
 
@@ -88,8 +82,10 @@ function EditableFormComponent(myProps: formProps) {
                             theme="snow"
                             value={myProps.value}
                             onChange={(text) => {
-                                const isEmpty = !hasVisibleText(text);
-                                setEditorValidated(!isEmpty); // Set validation based on whether the content is empty
+                                if (myProps.required===true){
+                                    const isEmpty = !hasVisibleText(text);
+                                    setEditorValidated(!isEmpty); // Set validation based on whether the content is empty
+                                }
                                 myProps.handleTextAreaChange(
                                     { target: { value: text } },
                                     myProps.changedValue,
@@ -103,9 +99,6 @@ function EditableFormComponent(myProps: formProps) {
                                 toolbar: {
                                     container: TOOLBAR_OPTIONS
                                 },
-                                // "emoji-toolbar": true,
-                                // "emoji-textarea": false,
-                                // "emoji-shortname": true
                             }}
                             style={{ resize: 'none', border: '1px black solid', background: 'white' }}
                         />

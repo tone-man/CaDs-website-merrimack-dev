@@ -5,6 +5,7 @@ export interface facultyPageAccordionInterface {
     content: string
 }
 
+// Drop down component
 function FacultyPageAccordion(myProps: facultyPageAccordionInterface) {
     return (
         <div>

@@ -1,12 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Button, Container, Col, Row } from 'react-bootstrap'
-import ProfileImage from './ProfileImage';
-import '../css/whiteListIndividual.css'
-import DeleteConfirmationModal from './DeleteConfirmationModal'; // Import your ConfirmationModal component
-import EditUserModal from './EditUserModal';
+import ProfileImage from '../ProfileImage';
+import '../../css/dashboardCSS/whiteListIndividual.css'
+import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal'; // Import your ConfirmationModal component
+import EditUserModal from '../Modals/EditUserModal';
 import { useState } from 'react';
-import User from '../firebase/user';
+import User from '../../firebase/user';
 
 // Interface for the indivual in the whitelist
 interface WhiteListIndividualProps {

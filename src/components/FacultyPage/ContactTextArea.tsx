@@ -8,6 +8,7 @@ interface contactProps {
     location: string
 }
 
+// Contact template component
 function ContactTextArea(myProps: contactProps) {
     return (
         <div>

@@ -14,17 +14,16 @@ import { contributerProps } from './ProjectContributer';
 
 
 //This function creates the actual project card content, including styling and positioning
-//TODO:  Add image after images are able to be fetched successfully from database
 function projectCardContent(
     title: string,
     facultyMembers: facultyMembers[],
     imageDescription: string,
     description: string,
-    link: string,
+    link: string | undefined,
     contributers: contributerProps[],
     modal: HTMLElement | null,
-    modalImg: HTMLImageElement |null,
-    captionText: HTMLElement |null,
+    modalImg: HTMLImageElement | null,
+    captionText: HTMLElement | null,
     parity: number,
     image: string) {
 
@@ -63,7 +62,7 @@ function projectCardContent(
                 <Col md={{ span: 9, offset: 0 }}>
                     <h1 className='title-text' dangerouslySetInnerHTML={{ __html: title }}></h1>
                 </Col>
-                <Col md={{ span: 3, offset: 0 }}  sm={12} xs={12}>
+                <Col md={{ span: 3, offset: 0 }} sm={12} xs={12}>
                     <FacultyCarousel faculty={facultyMembers} />
                 </Col>
             </Row>
@@ -90,9 +89,11 @@ function projectCardContent(
                         <div className='no-scrollbar description-div'>
                             <h2 className='description-text' dangerouslySetInnerHTML={{ __html: description }}></h2>
                         </div>
-                        <a href={link} id="project-link">
-                            <h1 className='featured-text' id="read-more"> Read More</h1>
-                        </a>
+                        {link && (
+                            <a href={link} id="project-link">
+                                <h1 className='featured-text' id="read-more"> Read More</h1>
+                            </a>
+                        )}
                     </section>
                 </Col>
             </Row>
@@ -109,12 +110,11 @@ function projectCardContent(
 
 
 //Interface for the the project component props on the home page. 
-//TODO: Add image to interface after images are able to be fetched successfully from database
 export interface myProjectProps {
     type: string,
     title: string,
     description: string,
-    projectLink: string,
+    projectLink: string | undefined,
     imageDescription: string,
     number: number,
     facultyMembers: facultyMembers[],

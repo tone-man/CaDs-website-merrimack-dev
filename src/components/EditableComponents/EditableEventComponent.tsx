@@ -5,9 +5,9 @@ import { useState, useEffect } from "react"
 import '../../css/editableCSS/editableNested.css'
 
 import EditableFormComponent from "./EditableFormComponent"
-import DeleteConfirmationModal from "../DeleteConfirmationModal"
-import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder } from '../../utils/editingComponents';
 import EditableImageForm from "./EditableImageForm"
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal"
+import { handleTextAreaChange, reorderNestedComponents, deleteNestedComponent, getMaxNestedOrder } from '../../utils/editingComponents';
 
 export interface editableEventProps {
     description: string;
@@ -139,7 +139,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 handleTextAreaChange={handleTextAreaChange}
                                 rows={1}
                                 delete={true}
-                                handleOpenConfirmationModal={handleOpenConfirmationModal} />
+                                handleOpenConfirmationModal={handleOpenConfirmationModal}
+                                required={true} />
 
                             <EditableFormComponent
                                 changedValue='/description'
@@ -151,7 +152,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 label="Description"
                                 handleTextAreaChange={handleTextAreaChange}
                                 rows={3}
-                                delete={false} />
+                                delete={false}
+                                required={true} />
                             <Row>
                                 <Col md={6} sm={12} xs={12}>
                                     <EditableFormComponent
@@ -164,7 +166,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                         label="Location"
                                         handleTextAreaChange={handleTextAreaChange}
                                         delete={false}
-                                        rows={1} />
+                                        rows={1}
+                                        required={true} />
                                 </Col>
                                 <Col md={6} sm={12} xs={12}>
                                     <EditableFormComponent
@@ -177,19 +180,20 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                         label="Date"
                                         delete={false}
                                         handleTextAreaChange={handleTextAreaChange}
-                                        rows={1} />
+                                        rows={1}
+                                        required={true} />
                                 </Col>
                             </Row>
                             <Row>
-                            <EditableImageForm
-                                changedValue='/image'
-                                myRef={myRef}
-                                value={image}
-                                setValue={setImage}
-                                pathName={myProps.pathName}
-                                componentKey={myProps.componentKey}
-                                label="Image URL"
-                                handleTextAreaChange={handleTextAreaChange} />
+                                <EditableImageForm
+                                    changedValue='/image'
+                                    myRef={myRef}
+                                    value={image}
+                                    setValue={setImage}
+                                    pathName={myProps.pathName}
+                                    componentKey={myProps.componentKey}
+                                    label="Image URL"
+                                    handleTextAreaChange={handleTextAreaChange} />
                             </Row>
                             <EditableFormComponent
                                 changedValue='/caption'
@@ -201,7 +205,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 label="Image Caption"
                                 handleTextAreaChange={handleTextAreaChange}
                                 delete={false}
-                                rows={1} />
+                                rows={1}
+                                required={true} />
                             <EditableFormComponent
                                 changedValue='/link'
                                 myRef={myRef}
@@ -212,7 +217,8 @@ function EditableEventComponent(myProps: editableComponentProps) {
                                 label="Link"
                                 handleTextAreaChange={handleTextAreaChange}
                                 delete={false}
-                                rows={1} />
+                                rows={1}
+                                required={true} />
                         </Row>
                     </Container>
                 </Container>
